@@ -37,13 +37,14 @@ func queue_text(next_text):
 	
 func display_text():
 	var next_text =  text_queue.pop_front()
+	tween = create_tween()
+	tween.tween_property(label, "visible_ratio",1.0, len(next_text) * CHAR_READ_RATE)
 	label.text = next_text
 	change_state(State.READING)
 	show_textbox()
 	label.visible_ratio = 0.0
-	tween.tween_property(label, "visible_ratio",1.0, len(next_text) * CHAR_READ_RATE).set_trans(Tween.TRANS_LINEAR)
-	tween.connect("finished", on_tween_finished)
-	
+	tween.play()
+	tween.tween_callback(on_tween_finished)
 	
 
 	
@@ -70,5 +71,8 @@ func _process(delta):
 				change_state(State.FINISH)
 		State.FINISH:
 			if Input.is_action_just_pressed("interact"):
-				change_state(State.READY)
-				textbox_container.hide()
+				if !text_queue.is_empty():
+					display_text()
+				else:
+					change_state(State.READY)
+					textbox_container.hide()
