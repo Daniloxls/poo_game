@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5u0f4j6m5k4e"]
+[gd_scene load_steps=8 format=3 uid="uid://c5u0f4j6m5k4e"]
 
 [ext_resource type="Texture2D" uid="uid://bhjnb8txjjc8b" path="res://assets/Topdown Forest - Tileset.png" id="1_6h7ac"]
 [ext_resource type="Texture2D" uid="uid://ec32i50651jb" path="res://assets/Topdown Forest - Props.png" id="2_ewwlc"]
 [ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/player.tscn" id="2_kfhx7"]
+[ext_resource type="Script" path="res://scripts/TileMap.gd" id="3_2unf7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lhxxb"]
 resource_name = "Floresta_tileset"
@@ -450,6 +451,7 @@ layer_3/y_sort_enabled = false
 layer_3/y_sort_origin = 0
 layer_3/z_index = 0
 layer_3/tile_data = PackedInt32Array(131076, 65537, 2, -65534, 65537, 2, -327678, 65537, 2, 196605, 65537, 2, 65531, 65537, 2, -131076, 65537, 2, -262150, 65537, 2, -589820, 1, 2, -851960, 1, 2, -1048573, 1, 2, -1376251, 1, 2, -1441780, 1, 2, -1572861, 1, 2, -1769470, 1, 2, -1900540, 1, 2, -2097150, 1, 2, -1966082, 1, 2, -1769474, 1, 2, -1900555, 1, 2, -2097166, 1, 2, -2228230, 1, 2, -1441799, 1, 2, -1507342, 1, 2, -1114124, 1, 2, -786445, 1, 2, -917508, 1, 2, -589832, 1, 2, -458756, 1, 2, -655362, 65537, 2, -851982, 65537, 2, -1179663, 65537, 2, -1310728, 65537, 2, -1572856, 65537, 2, -1179639, 65537, 2, -1900535, 65537, 2, -2031625, 65537, 2, -2293757, 65537, 2, -2031610, 65537, 2, -1900561, 65537, 2, -1245183, 65537, 2)
+script = ExtResource("3_2unf7")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_kfhx7")]
 position = Vector2(-11, -60)

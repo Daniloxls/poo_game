@@ -25,11 +25,18 @@ func _ready():
 	queue_text("...")
 	queue_text("Player? Eu suponho. Vou te chamar de P.")
 	queue_text("COMO?! Não sabe o que é um objeto? Ops. Falei de mais. Agora não tem mais volta. Rompemos os véu binário da quarta p... Acho que não chegamos nesse ponto ainda. Então tudo bem!")
+	queue_text("Tente usar essas setas que você tem aí para andar um pouco e ver se você pode encontrar alguma coisa")
 	queue_text("Como estamos perdidos, o que posso fazer é te ajudar a lidar com isso no caminho. Na verdade não sou nenhum piscólogo, ou coach, então: Boa Sorte!")
 
 func hide_textbox():
 	label.text = ""
 	textbox_container.hide()
+	
+func get_state():
+	if current_state == State.READY:
+		return "Ready"
+	else:
+		return ""
 	
 func show_textbox():
 	textbox_container.show()
