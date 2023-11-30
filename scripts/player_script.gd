@@ -3,6 +3,9 @@ extends CharacterBody2D
 var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 func read_input():
+	
+	# Movement
+	
 	velocity = Vector2()
 	if Input.is_action_pressed("up"):
 		velocity.y -= 1
@@ -19,11 +22,18 @@ func read_input():
 	elif Input.is_action_pressed("right"):
 		velocity.x += 1
 		direction = Vector2(1, 0)
-		_animated_sprite.play("run_right")
+		_animated_sprite.play("run_right")	
 	else:
 		_animated_sprite.play("idle_down")
+	
 	velocity = velocity.normalized()
 	velocity = velocity * 100
+	
 	move_and_slide()
+	
+	# Interaction
+	if Input.is_key_pressed(KEY_Z):
+		pass
+	
 func _physics_process(delta):
 	read_input()
