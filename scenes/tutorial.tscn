@@ -28,3 +28,6 @@ zoom = Vector2(2.5, 2.5)
 
 [node name="Placa" parent="." instance=ExtResource("6_ovmm3")]
 position = Vector2(49, -16)
+
+[node name="Arbusto" parent="." instance=ExtResource("6_ovmm3")]
+position = Vector2(332, 10)

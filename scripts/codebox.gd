@@ -27,7 +27,7 @@ func queue_text(nome, props):
 	var next_text = ""
 	next_text += nome+"\n"
 	for p in props.keys():
-		next_text += p + ": "+ str(props[p]) + "\n"
+		next_text += p + " = "+ str(props[p]) + "\n"
 	text_queue.push_back(next_text)
 	
 func display_text():

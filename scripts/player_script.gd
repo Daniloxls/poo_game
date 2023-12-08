@@ -62,7 +62,7 @@ func read_input():
 	move_and_slide()
 	
 	# Interaction
-	if textbox.get_state() == "Ready":
+	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready":
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
 				textbox.queue_text(interact_box.get_overlapping_areas()[0].interaction())
