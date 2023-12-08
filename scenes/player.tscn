@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://b1syuuue48xle"]
+[gd_scene load_steps=18 format=3 uid="uid://b1syuuue48xle"]
 
 [ext_resource type="Script" path="res://scripts/player_script.gd" id="1_u113a"]
 [ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/000.png" id="2_0r7yr"]
+[ext_resource type="Script" path="res://scripts/collision_interact.gd" id="2_4gr6s"]
 [ext_resource type="Texture2D" uid="uid://b47paujigay7h" path="res://assets/001.png" id="3_nid4e"]
 [ext_resource type="Texture2D" uid="uid://irjqrfdssnqt" path="res://assets/002.png" id="4_rsh3d"]
 [ext_resource type="Texture2D" uid="uid://jelpq27qf74b" path="res://assets/003.png" id="5_lcxkw"]
@@ -14,6 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://cgp46wp7p278t" path="res://assets/010.png" id="12_eo72a"]
 [ext_resource type="Texture2D" uid="uid://0cjequj8vr0r" path="res://assets/011.png" id="13_dwxhl"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u3w48"]
+size = Vector2(15, 15)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_tu64k"]
 animations = [{
 "frames": [{
@@ -22,6 +26,30 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_lcxkw")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_ro3pm")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_bkqks")
+}],
+"loop": true,
+"name": &"idle_up",
 "speed": 5.0
 }, {
 "frames": [{
@@ -94,19 +122,42 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vq6o"]
-size = Vector2(15.5, 20)
+size = Vector2(15.5, 16)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_u113a")
 
+[node name="Collision_interact" type="Area2D" parent="."]
+collision_layer = 2147483648
+script = ExtResource("2_4gr6s")
+
+[node name="Box_down" type="CollisionShape2D" parent="Collision_interact"]
+position = Vector2(1, 20)
+shape = SubResource("RectangleShape2D_u3w48")
+debug_color = Color(0.94902, 0, 0.564706, 0.419608)
+
+[node name="Box_left" type="CollisionShape2D" parent="Collision_interact"]
+position = Vector2(-15, 4)
+shape = SubResource("RectangleShape2D_u3w48")
+debug_color = Color(0.94902, 0, 0.564706, 0.419608)
+
+[node name="Box_up" type="CollisionShape2D" parent="Collision_interact"]
+position = Vector2(1, -11)
+shape = SubResource("RectangleShape2D_u3w48")
+debug_color = Color(0.94902, 0, 0.564706, 0.419608)
+
+[node name="Box_right" type="CollisionShape2D" parent="Collision_interact"]
+position = Vector2(16, 4)
+shape = SubResource("RectangleShape2D_u3w48")
+debug_color = Color(0.94902, 0, 0.564706, 0.419608)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0.5, 1)
 scale = Vector2(1.0625, 1.1)
 sprite_frames = SubResource("SpriteFrames_tu64k")
-animation = &"idle_down"
-frame_progress = 0.484636
+animation = &"idle_left"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.75, 2)
+[node name="ColisãoPlayer" type="CollisionShape2D" parent="."]
+position = Vector2(0.75, 4)
 shape = SubResource("RectangleShape2D_2vq6o")

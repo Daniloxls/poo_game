@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="RPG POO"
-run/main_scene="res://scenes/floresta1.tscn"
-config/features=PackedStringArray("4.1", "GL Compatibility")
+run/main_scene="res://scenes/tutorial.tscn"
+config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [input]

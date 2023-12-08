@@ -18,15 +18,6 @@ var text_queue = []
 
 func _ready():
 	hide_textbox()
-	queue_text("Arg, onde eu estou?! oOo\nNão sei por quê mas acho que eu deveria dizer [Press Z] ... @~@")
-	queue_text("... Ah, ei você!\nParado aí, você está perdido também? ò_ô")
-	queue_text("Bem, me chamo Textos Boxilianos Doisdê, mas você pode me chamar de Textinho ^u^\nSou um objeto como você!")
-	queue_text("E o seu nome?")
-	queue_text("...")
-	queue_text("Player? Eu suponho. Vou te chamar de P.")
-	queue_text("COMO?! Não sabe o que é um objeto? Ops. Falei de mais. Agora não tem mais volta. Rompemos os véu binário da quarta p... Acho que não chegamos nesse ponto ainda. Então tudo bem!")
-	queue_text("Tente usar essas setas que você tem aí para andar um pouco e ver se você pode encontrar alguma coisa")
-	queue_text("Como estamos perdidos, o que posso fazer é te ajudar a lidar com isso no caminho. Na verdade não sou nenhum piscólogo, ou coach, então: Boa Sorte!")
 
 func hide_textbox():
 	label.text = ""
@@ -45,7 +36,8 @@ func on_tween_finished():
 	change_state(State.FINISH)
 	
 func queue_text(next_text):
-	text_queue.push_back(next_text)
+	for i in next_text:
+		text_queue.push_back(i)
 	
 func display_text():
 	var next_text =  text_queue.pop_front()

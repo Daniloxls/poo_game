@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7uaxfbxnfqyf"]
+[gd_scene load_steps=7 format=3 uid="uid://b7uaxfbxnfqyf"]
 
 [ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_icj2a"]
 [ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/player.tscn" id="1_nvbn5"]
 [ext_resource type="PackedScene" uid="uid://btp3y063s4y6o" path="res://scenes/tileset/forest.tscn" id="1_pq081"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="3_nk2rr"]
 [ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="5_quv0w"]
+[ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/interact.tscn" id="6_ovmm3"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_icj2a")
@@ -24,3 +25,6 @@ zoom = Vector2(2.5, 2.5)
 [node name="Codebox" parent="." instance=ExtResource("5_quv0w")]
 
 [node name="Textbox" parent="." instance=ExtResource("3_nk2rr")]
+
+[node name="Placa" parent="." instance=ExtResource("6_ovmm3")]
+position = Vector2(49, -16)
