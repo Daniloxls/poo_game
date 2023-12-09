@@ -69,5 +69,9 @@ func read_input():
 		if Input.is_action_just_pressed("depure"):
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].name(),interact_box.get_overlapping_areas()[0].depure())
+	if Input.is_action_just_pressed("exit"):
+		if codebox.get_state() != "Ready":
+			interact_box.get_overlapping_areas()[0].update_codigo(codebox.get_props())
+		
 func _physics_process(delta):
 	read_input()

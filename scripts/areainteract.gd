@@ -18,6 +18,9 @@ func set_texto(new_texto):
 func set_codigo(new_nome, new_codigo):
 	nome = new_nome
 	codigo = new_codigo
+
+func update_codigo(new_codigo):
+	codigo = new_codigo
 	
 func interaction():
 	return texto
