@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://01txwu48um7d"
-path="res://.godot/imported/free_torches.png-e16ea13bef3f8d65ede2bb19b2428e14.ctex"
+uid="uid://c3261myw14ptj"
+path="res://.godot/imported/free_switches.png-d6f1af6989da0ffa4770a2756ebded1d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/free_torches.png"
-dest_files=["res://.godot/imported/free_torches.png-e16ea13bef3f8d65ede2bb19b2428e14.ctex"]
+source_file="res://assets/decor/free_switches.png"
+dest_files=["res://.godot/imported/free_switches.png-d6f1af6989da0ffa4770a2756ebded1d.ctex"]
 
 [params]
 

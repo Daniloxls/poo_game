@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kdbkd8wggc3i"
-path="res://.godot/imported/Tree1.png-d3b3a70a2b58f26bcd924349b41eb867.ctex"
+uid="uid://01txwu48um7d"
+path="res://.godot/imported/free_torches.png-94c9892dad5beff941cf10f9486c9941.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tree1.png"
-dest_files=["res://.godot/imported/Tree1.png-d3b3a70a2b58f26bcd924349b41eb867.ctex"]
+source_file="res://assets/decor/free_torches.png"
+dest_files=["res://.godot/imported/free_torches.png-94c9892dad5beff941cf10f9486c9941.ctex"]
 
 [params]
 

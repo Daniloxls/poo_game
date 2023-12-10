@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duh4m84fywbao"
-path="res://.godot/imported/Map1.png-5761937bc682654895b2908850b91198.ctex"
+uid="uid://boba8ff6dnq1y"
+path="res://.godot/imported/Hill1.png-b1ec7530cb2bd1d20da176984863c6a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Map1.png"
-dest_files=["res://.godot/imported/Map1.png-5761937bc682654895b2908850b91198.ctex"]
+source_file="res://assets/map/Hill1.png"
+dest_files=["res://.godot/imported/Hill1.png-b1ec7530cb2bd1d20da176984863c6a5.ctex"]
 
 [params]
 

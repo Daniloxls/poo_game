@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3261myw14ptj"
-path="res://.godot/imported/free_switches.png-2d5dc8eed70bdcf287c128fcdcf59d9c.ctex"
+uid="uid://kdbkd8wggc3i"
+path="res://.godot/imported/Tree1.png-cba900098e0e2a632c78a3e002ba853c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/free_switches.png"
-dest_files=["res://.godot/imported/free_switches.png-2d5dc8eed70bdcf287c128fcdcf59d9c.ctex"]
+source_file="res://assets/map/Tree1.png"
+dest_files=["res://.godot/imported/Tree1.png-cba900098e0e2a632c78a3e002ba853c.ctex"]
 
 [params]
 
