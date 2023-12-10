@@ -3585,6 +3585,16 @@ sources/3 = SubResource("TileSetAtlasSource_kh307")
 [node name="Tutorialbool" type="Node2D"]
 script = ExtResource("1_e8e5a")
 
+[node name="Player" parent="." instance=ExtResource("6_da2qp")]
+position = Vector2(166, 231)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(3.5, 3.5)
+limit_left = -48
+limit_top = 96
+limit_right = 368
+limit_bottom = 352
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_5gopg")
 format = 2
@@ -3597,16 +3607,6 @@ layer_2/name = "props"
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array(458771, 131075, 0)
 script = ExtResource("5_86wsl")
-
-[node name="Player" parent="." instance=ExtResource("6_da2qp")]
-position = Vector2(166, 231)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(3.5, 3.5)
-limit_left = -48
-limit_top = 96
-limit_right = 368
-limit_bottom = 352
 
 [node name="Codebox" parent="." instance=ExtResource("7_mhc0u")]
 
