@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt6h7wq25y315"]
+
+[sub_resource type="TileSet" id="TileSet_vnpf6"]
+
+[node name="Tutorial" type="TileMap"]
+tile_set = SubResource("TileSet_vnpf6")
+format = 2
