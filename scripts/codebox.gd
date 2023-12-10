@@ -23,6 +23,7 @@ var prop = {}
 var cursor_dict = {}
 var classname
 var text_queue = []
+var typing = false
 func _ready():
 	hide_textbox()
 
@@ -75,11 +76,6 @@ func display_text():
 	
 func change_state(next_state):
 	current_state = next_state
-	match current_state:
-		State.READY:
-			print("Ready")
-		State.FINISH:
-			print("FINISH")
 
 func show_cursor():
 	cursor_state = Cursor.SHOWING
@@ -98,14 +94,15 @@ func get_state():
 
 func update_cursor_pos():
 	cursor.set_pos_y(82 + (cursor_pos* 42))
-	
+
+
 func _process(delta):
 	match current_state:
 		State.READY:
 			if !text_queue.is_empty():
 				display_text()
 		State.FINISH:
-			if cursor_state == Cursor.SHOWING:
+			if cursor_state == Cursor.SHOWING and !typing:
 				if Input.is_action_just_pressed("down"):
 					cursor_pos += 1
 					if cursor_pos == len(positions):
@@ -116,12 +113,107 @@ func _process(delta):
 					if cursor_pos == -1:
 						cursor_pos = len(positions)-1
 					update_cursor_pos()
-				if Input.is_action_just_pressed("right") or Input.is_action_just_pressed("left"):
-					if prop[cursor_dict[cursor_pos]]:
-						update_text(cursor_dict[cursor_pos],false)
-					else:
-						update_text(cursor_dict[cursor_pos],true)
+				if "boolean" in cursor_dict[cursor_pos]:
+					if Input.is_action_just_pressed("right") or Input.is_action_just_pressed("left"):
+						if prop[cursor_dict[cursor_pos]]:
+							update_text(cursor_dict[cursor_pos],false)
+						else:
+							update_text(cursor_dict[cursor_pos],true)
+				if "int" in cursor_dict[cursor_pos]:
+					if Input.is_action_just_pressed("right"):
+						update_text(cursor_dict[cursor_pos],prop[cursor_dict[cursor_pos]]+1)
+					if Input.is_action_just_pressed("left"):
+						update_text(cursor_dict[cursor_pos],prop[cursor_dict[cursor_pos]]-1)
+				if "String" in cursor_dict[cursor_pos]:
+					if Input.is_action_just_pressed("enter"):
+						typing = true;
+				if Input.is_action_just_pressed("exit"):
+					change_state(State.READY)
+					hide_textbox()
+			elif typing:
+				if Input.is_action_just_pressed("backspace"):
+					update_text(cursor_dict[cursor_pos],prop[cursor_dict[cursor_pos]].left(len(prop[cursor_dict[cursor_pos]]) - 1))
+				if Input.is_action_just_pressed("a"):
+					update_text(cursor_dict[cursor_pos],prop[cursor_dict[cursor_pos]] + "a")
+				if Input.is_action_just_pressed("b"):
+					update_text(cursor_dict[cursor_pos],prop[cursor_dict[cursor_pos]] + "b")
+				
+				if Input.is_action_just_pressed("c"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "c")
+
+				if Input.is_action_just_pressed("d"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "d")
+
+				if Input.is_action_just_pressed("e"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "e")
+
+				if Input.is_action_just_pressed("f"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "f")
+
+				if Input.is_action_just_pressed("g"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "g")
+
+				if Input.is_action_just_pressed("h"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "h")
+
+				if Input.is_action_just_pressed("i"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "i")
+
+				if Input.is_action_just_pressed("j"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "j")
+
+				if Input.is_action_just_pressed("k"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "k")
+
+				if Input.is_action_just_pressed("l"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "l")
+
+				if Input.is_action_just_pressed("m"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "m")
+
+				if Input.is_action_just_pressed("n"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "n")
+
+				if Input.is_action_just_pressed("o"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "o")
+
+				if Input.is_action_just_pressed("p"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "p")
+
+				if Input.is_action_just_pressed("q"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "q")
+
+				if Input.is_action_just_pressed("r"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "r")
+
+				if Input.is_action_just_pressed("s"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "s")
+
+				if Input.is_action_just_pressed("t"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "t")
+
+				if Input.is_action_just_pressed("u"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "u")
+
+				if Input.is_action_just_pressed("v"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "v")
+
+				if Input.is_action_just_pressed("w"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "w")
+
+				if Input.is_action_just_pressed("x"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "x")
+
+				if Input.is_action_just_pressed("y"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "y")
+
+				if Input.is_action_just_pressed("z"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + "z")
+				
+				if Input.is_action_just_pressed("espaço"):
+					update_text(cursor_dict[cursor_pos], prop[cursor_dict[cursor_pos]] + " ")
 					
-			if Input.is_action_just_pressed("exit"):
-				change_state(State.READY)
-				hide_textbox()
+				if Input.is_action_just_pressed("enter"):
+					typing = false
+
+			

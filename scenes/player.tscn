@@ -122,14 +122,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2vq6o"]
-size = Vector2(15.5, 16)
+size = Vector2(12, 13)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_u113a")
 
 [node name="Collision_interact" type="Area2D" parent="."]
-collision_layer = 2147483648
 script = ExtResource("2_4gr6s")
 
 [node name="Box_down" type="CollisionShape2D" parent="Collision_interact"]
@@ -138,7 +137,7 @@ shape = SubResource("RectangleShape2D_u3w48")
 debug_color = Color(0.94902, 0, 0.564706, 0.419608)
 
 [node name="Box_left" type="CollisionShape2D" parent="Collision_interact"]
-position = Vector2(-15, 4)
+position = Vector2(-13, 4)
 shape = SubResource("RectangleShape2D_u3w48")
 debug_color = Color(0.94902, 0, 0.564706, 0.419608)
 
@@ -148,7 +147,7 @@ shape = SubResource("RectangleShape2D_u3w48")
 debug_color = Color(0.94902, 0, 0.564706, 0.419608)
 
 [node name="Box_right" type="CollisionShape2D" parent="Collision_interact"]
-position = Vector2(16, 4)
+position = Vector2(15, 4)
 shape = SubResource("RectangleShape2D_u3w48")
 debug_color = Color(0.94902, 0, 0.564706, 0.419608)
 
@@ -158,6 +157,6 @@ scale = Vector2(1.0625, 1.1)
 sprite_frames = SubResource("SpriteFrames_tu64k")
 animation = &"idle_left"
 
-[node name="ColisãoPlayer" type="CollisionShape2D" parent="."]
-position = Vector2(0.75, 4)
+[node name="ColisionPlayer" type="CollisionShape2D" parent="."]
+position = Vector2(1, 5.5)
 shape = SubResource("RectangleShape2D_2vq6o")

@@ -54,13 +54,6 @@ func display_text():
 	
 func change_state(next_state):
 	current_state = next_state
-	match current_state:
-		State.READY:
-			print("Ready")
-		State.READING:
-			print("READING")
-		State.FINISH:
-			print("FINISH")
 
 
 func _process(delta):

@@ -3,6 +3,7 @@ extends CharacterBody2D
 var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var interact_box = $Collision_interact
+@onready var colision = $ColisionPlayer
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 

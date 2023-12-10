@@ -10,6 +10,12 @@ size = Vector2(14.5, 15)
 position = Vector2(516, 306)
 script = ExtResource("1_ruw4h")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-20.25, -17.5)
+shape = SubResource("RectangleShape2D_f7cku")
+
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource("2_k4836")
 

@@ -2,7 +2,7 @@ extends Node2D
 @onready var player = $Player
 @onready var textbox = $Textbox
 @onready var codebox = $Codebox
-@onready var placa = $Porta/Area2D
+@onready var porta = $Porta/Area2D
 
 var porta_trancada = true
 var porta_codigo = true
@@ -10,8 +10,9 @@ var porta_codigo = true
 func _ready():
 	textbox.queue_text(["Muito bem, agora que você tem as permissões de desenvolvedor preciso que você chegue até mim.",
 						"Deve haver alguma porta nessa sala entre por ela e você estará mais próximo de mim"])
-	placa.set_texto(["Está trancada."])
-	placa.set_codigo("Porta", {"1boolean trancado": true, "1boolean asdasd": true, "1afufu ababa": false} )
+	porta.set_texto(["Está trancada."])
+	porta.set_codigo("Porta", {"1boolean trancado": true, "1int tabuas" : 5,  "1String lugar" :"Codigo_fonte"} )
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

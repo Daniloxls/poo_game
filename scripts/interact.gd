@@ -1,6 +1,8 @@
 extends Node2D
 
-
+@onready var area = $Area2D
+@onready var player = get_node("../Player")
+@onready var codebox = get_node("../Codebox")
 # Objeto interagivel
 func _ready():
 	pass # Replace with function body.
