@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1k3x0a7fan7"
-path="res://.godot/imported/greySheet.png-980e7e9a81d91785fb621ebf2c31beab.ctex"
+path="res://.godot/imported/greySheet.png-1d3e196c65d4bf83344af44e97d189db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/greySheet.png"
-dest_files=["res://.godot/imported/greySheet.png-980e7e9a81d91785fb621ebf2c31beab.ctex"]
+source_file="res://assets/gui/greySheet.png"
+dest_files=["res://.godot/imported/greySheet.png-1d3e196c65d4bf83344af44e97d189db.ctex"]
 
 [params]
 
