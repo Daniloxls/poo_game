@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/booltutorial.gd" id="1_e8e5a"]
 [ext_resource type="Texture2D" uid="uid://5j1s6m6fwrpv" path="res://assets/Floor.png" id="2_njfy8"]
 [ext_resource type="Texture2D" uid="uid://0ab74wlodcjo" path="res://assets/Wall.png" id="3_5vvo6"]
-[ext_resource type="Texture2D" uid="uid://ct4qolkidaked" path="res://assets/Door0.png" id="4_gk02b"]
+[ext_resource type="Texture2D" uid="uid://ct4qolkidaked" path="res://assets/doors/Door0.png" id="4_gk02b"]
 [ext_resource type="Script" path="res://scripts/TileMap.gd" id="5_86wsl"]
 [ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/characters/player.tscn" id="6_da2qp"]
 [ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="7_mhc0u"]
