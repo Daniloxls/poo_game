@@ -129,6 +129,7 @@ texture_filter = 1
 script = ExtResource("1_u113a")
 
 [node name="Collision_interact" type="Area2D" parent="."]
+collision_mask = 2147483648
 script = ExtResource("2_4gr6s")
 
 [node name="Box_down" type="CollisionShape2D" parent="Collision_interact"]
