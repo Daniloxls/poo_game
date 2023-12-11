@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://c5u0f4j6m5k4e"]
 
-[ext_resource type="Texture2D" uid="uid://bhjnb8txjjc8b" path="res://assets/Topdown Forest - Tileset.png" id="1_6h7ac"]
-[ext_resource type="Texture2D" uid="uid://ec32i50651jb" path="res://assets/Topdown Forest - Props.png" id="2_ewwlc"]
-[ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/player.tscn" id="2_kfhx7"]
+[ext_resource type="Texture2D" uid="uid://bhjnb8txjjc8b" path="res://assets/forest/Topdown Forest - Tileset.png" id="1_6h7ac"]
+[ext_resource type="Texture2D" uid="uid://ec32i50651jb" path="res://assets/forest/Topdown Forest - Props.png" id="2_ewwlc"]
+[ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/characters/player.tscn" id="2_kfhx7"]
 [ext_resource type="Script" path="res://scripts/TileMap.gd" id="3_2unf7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lhxxb"]

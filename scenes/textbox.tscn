@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://co1ntmvskmiex"]
 
 [ext_resource type="Script" path="res://scripts/textbox.gd" id="1_vi0s2"]
-[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/Born2bSportyV2.ttf" id="1_ym8tk"]
+[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="1_ym8tk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8litx"]
 bg_color = Color(0, 0, 0, 1)
