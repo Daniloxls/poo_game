@@ -11,7 +11,7 @@ func _ready():
 	textbox.queue_text(["Muito bem, agora que você tem as permissões de desenvolvedor preciso que você chegue até mim.",
 						"Deve haver alguma porta nessa sala entre por ela e você estará mais próximo de mim"])
 	porta.set_texto(["Está trancada."])
-	porta.set_codigo("Porta", {"1boolean trancado": true, "1int tabuas" : 5,  "1String lugar" :"Codigo_fonte"} )
+	porta.set_codigo("Porta", {"1boolean trancado": true} )
 	
 
 
