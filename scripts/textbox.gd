@@ -4,6 +4,7 @@ extends CanvasLayer
 const CHAR_READ_RATE = 0.03
 @onready var textbox_container = $TextboxContainer
 @onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label2
+@onready var portrait = $Portrait
 
 @onready var tween = create_tween()
 
@@ -15,7 +16,7 @@ enum State{
 
 var current_state = State.READY
 var text_queue = []
-
+var sprite_queue = []
 func _ready():
 	hide_textbox()
 
@@ -38,12 +39,24 @@ func on_tween_finished():
 func queue_text(next_text):
 	for i in next_text:
 		text_queue.push_back(i)
-	
+		sprite_queue.push_back("")
+func queue_char_text(next_text, next_sprite):
+	for i in next_text:
+		text_queue.push_back(i)
+	for i in next_sprite:
+		sprite_queue.push_back(i)
+		
 func display_text():
 	var next_text =  text_queue.pop_front()
+	var next_sprite = sprite_queue.pop_front()
 	tween = create_tween()
 	tween.tween_property(label, "visible_ratio",1.0, len(next_text) * CHAR_READ_RATE)
 	label.text = next_text
+	if next_sprite == "":
+		portrait.hide()
+	else:
+		portrait.texture = load(next_sprite)
+		portrait.show()
 	change_state(State.READING)
 	show_textbox()
 	label.visible_ratio = 0.0
@@ -73,3 +86,4 @@ func _process(delta):
 				else:
 					change_state(State.READY)
 					textbox_container.hide()
+					portrait.hide()

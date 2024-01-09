@@ -39,6 +39,8 @@ func show_textbox():
 	textbox_container.show()
 
 func queue_text(nome, props):
+	if nome == "":
+		return
 	var next_text = ""
 	classname = nome
 	next_text += classname+"\n"

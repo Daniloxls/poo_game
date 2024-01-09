@@ -1,13 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://b86f2356r1et4"]
+[gd_scene load_steps=3 format=3 uid="uid://fh675vm0x6fd"]
 
-[ext_resource type="Script" path="res://scripts/interact.gd" id="1_ruw4h"]
+[ext_resource type="Script" path="res://scripts/interact.gd" id="1_ccd6x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
 size = Vector2(14.5, 15)
 
 [node name="Interact" type="Node2D"]
 position = Vector2(516, 306)
-script = ExtResource("1_ruw4h")
+script = ExtResource("1_ccd6x")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

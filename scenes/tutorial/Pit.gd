@@ -29,14 +29,14 @@ func set_size(size):
 	if size < 0:
 		pass
 	if size > 4:
-		for i in range(4):
+		for i in range(5):
 			lista_colision[i].set_deferred("disabled", true)
 			lista_sprites[i].hide()
 	else:
 		for i in range(size):
 			lista_colision[i].set_disabled(true)
 			lista_sprites[i].hide()
-		for i in range(3, size-1, -1):
+		for i in range(4, size-1, -1):
 			print(i)
 			lista_colision[i].set_deferred("disabled", false)
 			lista_sprites[i].show()

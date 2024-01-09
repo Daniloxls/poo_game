@@ -15,11 +15,11 @@ enum State{
 }
 
 var current_state = State.DOWN
-
+var free_to_move = true
 func read_input():
 	# Movement
 	velocity = Vector2()
-	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready":
+	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready" and free_to_move:
 		if Input.is_action_pressed("up"):
 			velocity.y -= 1
 			direction = Vector2(0, -1)
@@ -66,13 +66,18 @@ func read_input():
 	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready":
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
-				textbox.queue_text(interact_box.get_overlapping_areas()[0].interaction())
+				textbox.queue_char_text((interact_box.get_overlapping_areas()[0]).get_parent().interaction(),
+				(interact_box.get_overlapping_areas()[0]).get_parent().get_portraits())
 		if Input.is_action_just_pressed("depure"):
 			if interact_box.get_overlapping_areas():
-				codebox.queue_text(interact_box.get_overlapping_areas()[0].name(),interact_box.get_overlapping_areas()[0].depure())
+				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
+				interact_box.get_overlapping_areas()[0].get_parent().depure())
 	if Input.is_action_just_pressed("exit"):
 		if codebox.get_state() != "Ready":
-			interact_box.get_overlapping_areas()[0].update_codigo(codebox.get_props())
+			interact_box.get_overlapping_areas()[0].get_parent().update_codigo(codebox.get_props())
 		
 func _physics_process(delta):
 	read_input()
+
+func set_movement(move):
+	free_to_move = move
