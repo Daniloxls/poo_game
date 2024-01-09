@@ -64,6 +64,8 @@ func update_text(chave, valor):
 	for p in prop.keys():
 		if "1" in p:
 			next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
+		else:
+			next_text += p + " = "+ str(prop[p]) + "\n"
 	text_queue.push_back(next_text)
 	display_text()
 	
@@ -130,6 +132,8 @@ func _process(delta):
 					if Input.is_action_just_pressed("enter"):
 						typing = true;
 				if Input.is_action_just_pressed("exit"):
+					cursor_pos = 0
+					update_cursor_pos()
 					change_state(State.READY)
 					hide_textbox()
 			elif typing:

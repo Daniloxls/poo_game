@@ -28,7 +28,7 @@ func set_texto(new_texto):
 	
 func get_portraits():
 	return portraits
-	
+	set_texto(["Eesse teclado deve ser para colocar a senha"])
 func set_portraits(new_portraits):
 	portraits = new_portraits
 func set_codigo(new_nome, new_codigo):

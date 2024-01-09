@@ -40,6 +40,7 @@ func queue_text(next_text):
 	for i in next_text:
 		text_queue.push_back(i)
 		sprite_queue.push_back("")
+		
 func queue_char_text(next_text, next_sprite):
 	for i in next_text:
 		text_queue.push_back(i)

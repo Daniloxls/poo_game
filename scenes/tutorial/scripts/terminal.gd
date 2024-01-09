@@ -53,6 +53,7 @@ func _process(delta):
 		tween.tween_property(player_sprite, "rotation", 0, 1).set_trans(Tween.TRANS_ELASTIC)
 		tween.tween_property(player_sprite, "modulate", Color.WHITE, 1).set_trans(Tween.TRANS_SINE)
 		tween.tween_callback(player.set_movement.bind(true))
+		tween.tween_callback(player.set_sudo.bind(true))
 	pass
 
 
