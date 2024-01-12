@@ -59,6 +59,18 @@ func read_input():
 					_animated_sprite.play("idle_down")
 				State.LEFT:
 					_animated_sprite.play("idle_left")
+	else:
+		match(current_state):
+			State.RIGHT:
+				_animated_sprite.play("idle_right")
+			State.UP:
+				_animated_sprite.play("idle_up")
+			State.DOWN:
+				_animated_sprite.play("idle_down")
+			State.LEFT:
+				_animated_sprite.play("idle_left")
+				
+			
 				
 			
 	
