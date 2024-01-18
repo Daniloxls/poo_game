@@ -17,38 +17,49 @@ enum State{
 
 var current_state = State.DOWN
 var free_to_move = true
-
+var in_scene = false
 func _ready():
 	event.monitorable = true
 	
 func read_input():
 	# Movement
 	velocity = Vector2()
-	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready" and free_to_move:
-		if Input.is_action_pressed("up"):
-			velocity.y -= 1
-			direction = Vector2(0, -1)
-			_animated_sprite.play("run_up")
-			current_state = State.UP
-			interact_box.top()
-		elif Input.is_action_pressed("down"):
-			velocity.y += 1
-			direction = Vector2(0, 1)
-			_animated_sprite.play("run_down")
-			current_state = State.DOWN
-			interact_box.bottom()
-		elif Input.is_action_pressed("left"):
-			velocity.x -= 1
-			direction = Vector2(-1, 0)
-			_animated_sprite.play("run_left")
-			current_state = State.LEFT
-			interact_box.left()
-		elif Input.is_action_pressed("right"):
-			velocity.x += 1
-			direction = Vector2(1, 0)
-			_animated_sprite.play("run_right")	
-			current_state = State.RIGHT
-			interact_box.right()
+	if !in_scene:
+		if free_to_move:
+			if Input.is_action_pressed("up"):
+				velocity.y -= 1
+				direction = Vector2(0, -1)
+				_animated_sprite.play("run_up")
+				current_state = State.UP
+				interact_box.top()
+			elif Input.is_action_pressed("down"):
+				velocity.y += 1
+				direction = Vector2(0, 1)
+				_animated_sprite.play("run_down")
+				current_state = State.DOWN
+				interact_box.bottom()
+			elif Input.is_action_pressed("left"):
+				velocity.x -= 1
+				direction = Vector2(-1, 0)
+				_animated_sprite.play("run_left")
+				current_state = State.LEFT
+				interact_box.left()
+			elif Input.is_action_pressed("right"):
+				velocity.x += 1
+				direction = Vector2(1, 0)
+				_animated_sprite.play("run_right")	
+				current_state = State.RIGHT
+				interact_box.right()
+			else:
+				match(current_state):
+					State.RIGHT:
+						_animated_sprite.play("idle_right")
+					State.UP:
+						_animated_sprite.play("idle_up")
+					State.DOWN:
+						_animated_sprite.play("idle_down")
+					State.LEFT:
+						_animated_sprite.play("idle_left")
 		else:
 			match(current_state):
 				State.RIGHT:
@@ -59,17 +70,7 @@ func read_input():
 					_animated_sprite.play("idle_down")
 				State.LEFT:
 					_animated_sprite.play("idle_left")
-	else:
-		match(current_state):
-			State.RIGHT:
-				_animated_sprite.play("idle_right")
-			State.UP:
-				_animated_sprite.play("idle_up")
-			State.DOWN:
-				_animated_sprite.play("idle_down")
-			State.LEFT:
-				_animated_sprite.play("idle_left")
-				
+					
 			
 				
 			
@@ -80,7 +81,7 @@ func read_input():
 	move_and_slide()
 	
 	# Interaction
-	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready":
+	if free_to_move:
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
 				textbox.queue_char_text((interact_box.get_overlapping_areas()[0]).get_parent().interaction(),
@@ -98,3 +99,30 @@ func _physics_process(delta):
 
 func set_movement(move):
 	free_to_move = move
+	
+func set_in_scene(scene):
+	in_scene = scene
+	
+func set_animation(animation, direction):
+	match(animation):
+		"idle":
+			match(direction):
+				"right":
+					_animated_sprite.play("idle_right")
+				"up":
+					_animated_sprite.play("idle_up")
+				"down":
+					_animated_sprite.play("idle_down")
+				"left":
+					_animated_sprite.play("idle_left")
+		"walk":
+			match(direction):
+				"right":
+					_animated_sprite.play("run_right")
+				"up":
+					_animated_sprite.play("run_up")
+				"down":
+					_animated_sprite.play("run_down")
+				"left":
+					_animated_sprite.play("run_left")
+					

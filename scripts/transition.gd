@@ -6,13 +6,14 @@ extends Node2D
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
 var nome
-var texto = []
-var codigo = [""]
-var portraits = [""]
+var texto
+var codigo
+var portraits
 var depuring = false
 
 
 func _ready():
+	area.monitoring = true
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,3 +46,7 @@ func depure():
 	
 func name():
 	return nome
+
+func _on_area_2d_area_entered(area):
+	print("Foi")
+	pass # Replace with function body.

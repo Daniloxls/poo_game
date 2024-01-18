@@ -1,11 +1,13 @@
 extends CanvasLayer
 
+signal text_finish
 
 const CHAR_READ_RATE = 0.03
 @onready var textbox_container = $TextboxContainer
 @onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label2
 @onready var portrait = $Portrait
-
+@onready var player = get_node("../Player")
+@onready var codebox = get_node("../Codebox")
 @onready var tween = create_tween()
 
 enum State{
@@ -59,6 +61,7 @@ func display_text():
 		portrait.texture = load(next_sprite)
 		portrait.show()
 	change_state(State.READING)
+	player.set_movement(false)
 	show_textbox()
 	label.visible_ratio = 0.0
 	tween.play()
@@ -86,5 +89,8 @@ func _process(delta):
 					display_text()
 				else:
 					change_state(State.READY)
+					if codebox.get_state() == "Ready":
+						player.set_movement(true)
 					textbox_container.hide()
 					portrait.hide()
+					text_finish.emit()

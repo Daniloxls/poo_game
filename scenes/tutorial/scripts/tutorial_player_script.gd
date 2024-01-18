@@ -25,7 +25,7 @@ func _ready():
 func read_input():
 	# Movement
 	velocity = Vector2()
-	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready" and free_to_move:
+	if free_to_move:
 		if Input.is_action_pressed("up"):
 			velocity.y -= 1
 			direction = Vector2(0, -1)
@@ -79,7 +79,7 @@ func read_input():
 	move_and_slide()
 	
 	# Interaction
-	if textbox.get_state() == "Ready" and codebox.get_state() == "Ready":
+	if free_to_move:
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
 				textbox.queue_char_text((interact_box.get_overlapping_areas()[0]).get_parent().interaction(),

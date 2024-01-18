@@ -21,6 +21,7 @@ func _process(delta):
 
 
 func interaction():
+	#Começar a batalha
 	return texto
 
 func set_texto(new_texto):

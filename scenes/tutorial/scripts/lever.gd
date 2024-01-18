@@ -1,10 +1,15 @@
 extends Node2D
 
 @onready var area = $Area2D
-@onready var colision = $StaticBody2D
+@onready var sprite = $Sprite
+@onready var colision = $Porta/PortaShape
 @onready var player = get_node("../Player")
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
+
+const OPEN_FRAME = 2
+const CLOSED_FRAME = 1
+
 var nome
 var texto = []
 var codigo = [""]
@@ -21,6 +26,9 @@ func _process(delta):
 
 
 func interaction():
+	map.set_layer_enabled(3, false)
+	colision.set_disabled(true)
+	sprite.set_frame_and_progress(OPEN_FRAME,0)
 	return texto
 
 func set_texto(new_texto):

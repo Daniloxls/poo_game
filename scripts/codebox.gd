@@ -5,7 +5,8 @@ const CHAR_READ_RATE = 0.03
 @onready var textbox_container = $TextboxContainer
 @onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label2
 @onready var cursor = $Cursor
-
+@onready var player = get_node("../Player")
+@onready var textbox = get_node("../Textbox")
 
 enum State{
 	READY,
@@ -74,6 +75,7 @@ func display_text():
 	var next_text =  text_queue.pop_front()
 	label.text = next_text
 	change_state(State.FINISH)
+	player.set_movement(false)
 	show_textbox()
 	
 
@@ -135,6 +137,8 @@ func _process(delta):
 					cursor_pos = 0
 					update_cursor_pos()
 					change_state(State.READY)
+					if textbox.get_state() == "Ready":
+						player.set_movement(true)
 					hide_textbox()
 			elif typing:
 				if Input.is_action_just_pressed("backspace"):

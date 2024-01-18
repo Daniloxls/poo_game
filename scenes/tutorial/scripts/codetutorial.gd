@@ -7,8 +7,6 @@ extends Node2D
 @onready var ponte_colision =  $PonteInt/StaticBody2D
 @onready var porta = $PortaBool
 @onready var stringdoor = $PortaString
-var porta_trancada = true
-var porta_codigo = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	textbox.queue_char_text(["Vejo que você estava explorando e acabou caindo aqui por aquela rachadura",

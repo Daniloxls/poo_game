@@ -25,6 +25,12 @@ func _process(delta):
 		colision.set_collision_layer_value(1, codigo["1boolean trancado"])
 		map.set_layer_enabled(4, codigo["1boolean trancado"])
 		depuring = false
+		if !codigo["1boolean trancado"]:
+			set_texto([])
+			set_portraits([])
+		else:
+			set_texto(["Está trancada."])
+			set_portraits([""])
 	if Input.is_action_just_pressed("depure"):
 		if dialogue and area.has_overlapping_areas():
 			dialogue = false

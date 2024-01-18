@@ -37,6 +37,5 @@ func set_size(size):
 			lista_colision[i].set_disabled(true)
 			lista_sprites[i].hide()
 		for i in range(4, size-1, -1):
-			print(i)
 			lista_colision[i].set_deferred("disabled", false)
 			lista_sprites[i].show()
