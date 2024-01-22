@@ -1,0 +1,265 @@
+[gd_scene load_steps=8 format=3 uid="uid://clklobjclo4tp"]
+
+[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="1_lsld8"]
+[ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_5h2dd"]
+[ext_resource type="Script" path="res://scripts/Cursor.gd" id="3_fa23b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryce2"]
+bg_color = Color(0, 0, 0.243137, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6dc6"]
+bg_color = Color(0.894118, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4da3"]
+bg_color = Color(0, 0.858824, 0.0156863, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cqbr"]
+bg_color = Color(0, 0, 0.243137, 1)
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="BattleMenu" type="Node2D"]
+
+[node name="MonsterStatus" type="MarginContainer" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = 552.0
+offset_right = 1119.0
+offset_bottom = 621.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = -67
+theme_override_constants/margin_right = -16
+theme_override_constants/margin_bottom = -16
+
+[node name="Panel" type="Panel" parent="MonsterStatus"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ryce2")
+
+[node name="MarginContainer" type="MarginContainer" parent="MonsterStatus"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MonsterStatus/MarginContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MonsterStatus/MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_font_sizes/font_size = 40
+text = "Monstro 1
+Monstro 2
+Monstro 3"
+autowrap_mode = 2
+clip_text = true
+
+[node name="Actions" type="MarginContainer" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 576.0
+offset_top = 508.0
+offset_right = 760.0
+offset_bottom = 629.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = -67
+theme_override_constants/margin_right = -16
+theme_override_constants/margin_bottom = -16
+
+[node name="Panel" type="Panel" parent="Actions"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ryce2")
+
+[node name="MarginContainer" type="MarginContainer" parent="Actions"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Actions/MarginContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Actions/MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_font_sizes/font_size = 37
+text = "Lutar
+Funções
+Item"
+autowrap_mode = 2
+clip_text = true
+
+[node name="Cursor" type="Sprite2D" parent="Actions"]
+position = Vector2(15, -50)
+scale = Vector2(0.564, 0.564)
+texture = ExtResource("2_5h2dd")
+script = ExtResource("3_fa23b")
+
+[node name="PlayerStatus" type="MarginContainer" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 758.0
+offset_top = 552.0
+offset_right = 1119.0
+offset_bottom = 621.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = -67
+theme_override_constants/margin_right = -16
+theme_override_constants/margin_bottom = -16
+
+[node name="Panel" type="Panel" parent="PlayerStatus"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ryce2")
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerStatus"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerStatus/MarginContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_font_sizes/font_size = 29
+text = "Hero 1
+Hero 2
+Hero 3 
+Hero 4 "
+autowrap_mode = 2
+clip_text = true
+
+[node name="Health" type="Node2D" parent="."]
+position = Vector2(881, 597)
+
+[node name="HP1" type="Panel" parent="Health"]
+offset_top = -99.0
+offset_right = 138.0
+offset_bottom = -83.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+
+[node name="Life1" type="Panel" parent="Health"]
+offset_top = -99.0
+offset_right = 138.0
+offset_bottom = -83.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+
+[node name="HP2" type="Panel" parent="Health"]
+offset_top = -67.0
+offset_right = 138.0
+offset_bottom = -51.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+
+[node name="Life2" type="Panel" parent="Health"]
+offset_top = -67.0
+offset_right = 138.0
+offset_bottom = -51.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+
+[node name="HP3" type="Panel" parent="Health"]
+offset_top = -34.0
+offset_right = 138.0
+offset_bottom = -18.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+
+[node name="Life3" type="Panel" parent="Health"]
+offset_top = -34.0
+offset_right = 138.0
+offset_bottom = -18.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+
+[node name="HP4" type="Panel" parent="Health"]
+offset_right = 138.0
+offset_bottom = 16.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+
+[node name="Life4" type="Panel" parent="Health"]
+offset_right = 138.0
+offset_bottom = 16.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+
+[node name="PlayerMana" type="MarginContainer" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1008.0
+offset_top = 552.0
+offset_right = 1119.0
+offset_bottom = 621.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = -67
+theme_override_constants/margin_right = -16
+theme_override_constants/margin_bottom = -16
+
+[node name="Panel" type="Panel" parent="PlayerMana"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2cqbr")
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerMana"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerMana/MarginContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PlayerMana/MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_font_sizes/font_size = 29
+text = "MP 000
+MP 000
+MP 000
+MP 000"
+autowrap_mode = 2
+clip_text = true

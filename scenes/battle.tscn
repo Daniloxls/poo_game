@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4bax87kqk6po"]
+
+[ext_resource type="Script" path="res://scenes/battle.gd" id="1_c4w7k"]
+[ext_resource type="Texture2D" uid="uid://crj1a7pxbsidn" path="res://assets/battle/BG/battleback5.png" id="1_uxafu"]
+[ext_resource type="PackedScene" uid="uid://clklobjclo4tp" path="res://scenes/battle_box.tscn" id="2_gn1u4"]
+[ext_resource type="Texture2D" uid="uid://d3i71fbpe3l6b" path="res://assets/battle/image.png" id="3_kjw6k"]
+[ext_resource type="Texture2D" uid="uid://b1tmaj25wsq82" path="res://assets/battle/char1.png" id="4_nvb7t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_buigd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_kjw6k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jpclp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nvb7t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_c4w7k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(575, 325.75)
+scale = Vector2(1.03986, 1.03784)
+texture = ExtResource("1_uxafu")
+
+[node name="BattleMenu" parent="." instance=ExtResource("2_gn1u4")]
+
+[node name="Enemy" type="AnimatedSprite2D" parent="."]
+position = Vector2(-112, 299)
+scale = Vector2(3.765, 3.765)
+sprite_frames = SubResource("SpriteFrames_buigd")
+
+[node name="Player" type="AnimatedSprite2D" parent="."]
+position = Vector2(1258, 201)
+scale = Vector2(3.765, 3.765)
+sprite_frames = SubResource("SpriteFrames_jpclp")
