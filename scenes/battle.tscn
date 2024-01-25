@@ -1,21 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4bax87kqk6po"]
+[gd_scene load_steps=9 format=3 uid="uid://c4bax87kqk6po"]
 
 [ext_resource type="Script" path="res://scenes/battle.gd" id="1_c4w7k"]
 [ext_resource type="Texture2D" uid="uid://crj1a7pxbsidn" path="res://assets/battle/BG/battleback5.png" id="1_uxafu"]
 [ext_resource type="PackedScene" uid="uid://clklobjclo4tp" path="res://scenes/battle_box.tscn" id="2_gn1u4"]
-[ext_resource type="Texture2D" uid="uid://d3i71fbpe3l6b" path="res://assets/battle/image.png" id="3_kjw6k"]
+[ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://scenes/enemy.tscn" id="4_5kxrv"]
 [ext_resource type="Texture2D" uid="uid://b1tmaj25wsq82" path="res://assets/battle/char1.png" id="4_nvb7t"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_buigd"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_kjw6k")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="5_rvb1y"]
+[ext_resource type="Script" path="res://scripts/Cursor.gd" id="6_v5kcj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jpclp"]
 animations = [{
@@ -38,12 +29,20 @@ texture = ExtResource("1_uxafu")
 
 [node name="BattleMenu" parent="." instance=ExtResource("2_gn1u4")]
 
-[node name="Enemy" type="AnimatedSprite2D" parent="."]
+[node name="Enemies" type="Node2D" parent="."]
 position = Vector2(-112, 299)
 scale = Vector2(3.765, 3.765)
-sprite_frames = SubResource("SpriteFrames_buigd")
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("4_5kxrv")]
 
 [node name="Player" type="AnimatedSprite2D" parent="."]
 position = Vector2(1258, 201)
 scale = Vector2(3.765, 3.765)
 sprite_frames = SubResource("SpriteFrames_jpclp")
+
+[node name="EnemyCursor" type="Sprite2D" parent="."]
+position = Vector2(-118, 150)
+scale = Vector2(0.77223, 0.82423)
+texture = ExtResource("5_rvb1y")
+flip_h = true
+script = ExtResource("6_v5kcj")

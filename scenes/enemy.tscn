@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://cr71ho5tuj7bn"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_yj3lc"]
+[ext_resource type="Texture2D" uid="uid://bakbubb0ggx34" path="res://assets/battle/boneco.png" id="2_7ik4c"]
+[ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="3_2ys7c"]
+[ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="4_1wklw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_htfvh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7ik4c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_7lblk"]
+resource_name = "get_hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(5.8956e-05, 2.15792e-05, 0.00306478, 1.2394e-05, 4.78872e-05),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_2ys7c")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_1wklw")
+}],
+"times": PackedFloat32Array(0, 0.0467)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
+_data = {
+"get_hit": SubResource("Animation_7lblk")
+}
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_yj3lc")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_htfvh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uup1h")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
