@@ -6,6 +6,7 @@ extends Node2D
 @onready var player_stats = $PlayerStatus
 @onready var player_mana = $PlayerMana
 @onready var player_health = $PlayerHealth
+@onready var monster_list = $MonsterStatus/MarginContainer/HBoxContainer/Label2
 const CURSOR_INITIAL_Y = -50
 
 
@@ -45,3 +46,12 @@ func get_cursor_pos():
 
 func hide_cursor():
 	cursor.hide()
+	
+func show_cursor():
+	cursor.show()
+	
+func set_monster_names(list):
+	var names = ''
+	for monstro in list:
+		names += monstro + '\n'
+	monster_list.set_text(names)

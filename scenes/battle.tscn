@@ -19,7 +19,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[node name="Battle" type="Node2D"]
 script = ExtResource("1_c4w7k")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -31,14 +31,10 @@ texture = ExtResource("1_uxafu")
 
 [node name="Enemies" type="Node2D" parent="."]
 position = Vector2(-112, 299)
-scale = Vector2(3.765, 3.765)
+scale = Vector2(4, 4)
 
 [node name="Enemy" parent="Enemies" instance=ExtResource("4_5kxrv")]
-
-[node name="Player" type="AnimatedSprite2D" parent="."]
-position = Vector2(1258, 201)
-scale = Vector2(3.765, 3.765)
-sprite_frames = SubResource("SpriteFrames_jpclp")
+position = Vector2(-3.25, 3.5)
 
 [node name="EnemyCursor" type="Sprite2D" parent="."]
 position = Vector2(-118, 150)
@@ -46,3 +42,14 @@ scale = Vector2(0.77223, 0.82423)
 texture = ExtResource("5_rvb1y")
 flip_h = true
 script = ExtResource("6_v5kcj")
+
+[node name="Party" type="Node2D" parent="."]
+position = Vector2(1311, 86)
+
+[node name="Player" type="AnimatedSprite2D" parent="Party"]
+position = Vector2(-53, 115)
+scale = Vector2(3.765, 3.765)
+sprite_frames = SubResource("SpriteFrames_jpclp")
+
+[connection signal="animation_end" from="Enemies/Enemy" to="." method="_on_enemy_animation_end"]
+[connection signal="death" from="Enemies/Enemy" to="." method="_on_enemy_death"]
