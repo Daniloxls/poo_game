@@ -1,36 +1,46 @@
-[gd_scene load_steps=16 format=3 uid="uid://cr71ho5tuj7bn"]
+[gd_scene load_steps=18 format=3 uid="uid://mje13m0bdoj2"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_yj3lc"]
-[ext_resource type="Texture2D" uid="uid://bakbubb0ggx34" path="res://assets/battle/boneco.png" id="2_7ik4c"]
-[ext_resource type="Script" path="res://scripts/healthbar.gd" id="2_qxhjg"]
-[ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="3_2ys7c"]
-[ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="4_1wklw"]
-[ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="6_mrpxx"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_qgrjs"]
+[ext_resource type="Texture2D" uid="uid://b1tmaj25wsq82" path="res://assets/battle/char1.png" id="2_h2yyt"]
+[ext_resource type="Texture2D" uid="uid://gcfse55iwhvh" path="res://assets/battle/char1_healed.png" id="3_jwor4"]
+[ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_2nl2y"]
+[ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_jxdku"]
+[ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_de2uv"]
+[ext_resource type="Script" path="res://scripts/DamageText.gd" id="7_74ut4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fgtos"]
-bg_color = Color(0, 0.670588, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hu2i"]
+atlas = ExtResource("2_h2yyt")
+region = Rect2(0, 0, 31, 32)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3aa0j"]
-bg_color = Color(0.803922, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_wal15"]
+atlas = ExtResource("3_jwor4")
+region = Rect2(0, 0, 31, 32)
 
-[sub_resource type="LabelSettings" id="LabelSettings_by1mp"]
-font_size = 13
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_84eu4"]
+atlas = ExtResource("3_jwor4")
+region = Rect2(31, 0, 31, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_htfvh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_7ik4c")
+"texture": SubResource("AtlasTexture_0hu2i")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_wal15")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_84eu4")
+}],
+"loop": true,
+"name": &"heal",
+"speed": 5.0
 }]
-
-[sub_resource type="Animation" id="Animation_kk0q7"]
-resource_name = "damage_number"
 
 [sub_resource type="Animation" id="Animation_kqvds"]
 resource_name = "death"
@@ -57,11 +67,11 @@ tracks/1/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("3_2ys7c")
+"stream": ExtResource("4_2nl2y")
 }, {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("6_mrpxx")
+"stream": ExtResource("5_jxdku")
 }],
 "times": PackedFloat32Array(0.0562, 0.1)
 }
@@ -118,67 +128,50 @@ tracks/1/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("3_2ys7c")
+"stream": ExtResource("4_2nl2y")
 }, {
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("4_1wklw")
+"stream": ExtResource("6_de2uv")
 }],
 "times": PackedFloat32Array(0, 0.0467)
 }
 tracks/1/use_blend = true
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
-_data = {
-"damage_number": SubResource("Animation_kk0q7"),
-"death": SubResource("Animation_kqvds"),
-"default": SubResource("Animation_6ykin"),
-"get_hit": SubResource("Animation_7lblk")
+[sub_resource type="Animation" id="Animation_ji6jx"]
+resource_name = "heal"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"heal", &"default"]
 }
 
-[node name="Enemy" type="Node2D"]
-script = ExtResource("1_yj3lc")
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
+_data = {
+"death": SubResource("Animation_kqvds"),
+"default": SubResource("Animation_6ykin"),
+"get_hit": SubResource("Animation_7lblk"),
+"heal": SubResource("Animation_ji6jx")
+}
 
-[node name="Healthbar" type="Node2D" parent="."]
-visible = false
-z_index = 2
-script = ExtResource("2_qxhjg")
+[sub_resource type="LabelSettings" id="LabelSettings_ly8eg"]
+font_size = 13
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
-[node name="Green" type="Panel" parent="Healthbar"]
-z_index = 1
-offset_left = -22.0
-offset_top = -24.0
-offset_right = 23.0
-offset_bottom = -17.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_fgtos")
-metadata/_edit_use_anchors_ = true
-
-[node name="Red" type="Panel" parent="Healthbar"]
-offset_left = -22.0
-offset_top = -24.0
-offset_right = 23.0
-offset_bottom = -17.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_3aa0j")
-metadata/_edit_use_anchors_ = true
-
-[node name="DamageText" type="Label" parent="Healthbar"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -9.0
-offset_right = 23.0
-offset_bottom = 9.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "9545"
-label_settings = SubResource("LabelSettings_by1mp")
-horizontal_alignment = 1
+[node name="Character" type="Node2D"]
+script = ExtResource("1_qgrjs")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_htfvh")
+frame_progress = 0.217676
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -187,4 +180,13 @@ libraries = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
-[connection signal="animation_end" from="Healthbar" to="." method="_on_healthbar_animation_end"]
+[node name="DamageText" type="Label" parent="."]
+visible = false
+offset_left = -23.0
+offset_top = -9.0
+offset_right = 23.0
+offset_bottom = 9.0
+text = "9545"
+label_settings = SubResource("LabelSettings_ly8eg")
+horizontal_alignment = 1
+script = ExtResource("7_74ut4")

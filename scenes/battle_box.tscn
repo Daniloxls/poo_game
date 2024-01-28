@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://clklobjclo4tp"]
+[gd_scene load_steps=10 format=3 uid="uid://dkrrrbfnsa5lw"]
 
-[ext_resource type="Script" path="res://scenes/battle_menu.gd" id="1_ameej"]
-[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="1_lsld8"]
-[ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_5h2dd"]
-[ext_resource type="Script" path="res://scripts/Cursor.gd" id="3_fa23b"]
+[ext_resource type="Script" path="res://scenes/battle_menu.gd" id="1_a61xi"]
+[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="2_ts4pm"]
+[ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_6yefv"]
+[ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_02h83"]
+[ext_resource type="Script" path="res://scripts/PlayerStatus.gd" id="5_ew3lm"]
+[ext_resource type="Script" path="res://scripts/character_status.gd" id="6_yi885"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryce2"]
 bg_color = Color(0, 0, 0.243137, 1)
@@ -20,14 +22,8 @@ bg_color = Color(0.894118, 0, 0, 1)
 bg_color = Color(0, 0.858824, 0.0156863, 1)
 shadow_color = Color(0, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cqbr"]
-bg_color = Color(0, 0, 0.243137, 1)
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-
-[node name="BattleMenu" type="Node2D"]
-script = ExtResource("1_ameej")
+[node name="BattleMenuTest" type="Node2D"]
+script = ExtResource("1_a61xi")
 
 [node name="MonsterStatus" type="MarginContainer" parent="."]
 anchors_preset = 14
@@ -66,7 +62,7 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_fonts/font = ExtResource("2_ts4pm")
 theme_override_font_sizes/font_size = 40
 text = "Monstro 1
 Monstro 2
@@ -111,7 +107,7 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_fonts/font = ExtResource("2_ts4pm")
 theme_override_font_sizes/font_size = 37
 text = "Lutar
 Funções
@@ -122,8 +118,8 @@ clip_text = true
 [node name="Cursor" type="Sprite2D" parent="Actions"]
 position = Vector2(15, -50)
 scale = Vector2(0.564, 0.564)
-texture = ExtResource("2_5h2dd")
-script = ExtResource("3_fa23b")
+texture = ExtResource("3_6yefv")
+script = ExtResource("4_02h83")
 
 [node name="PlayerStatus" type="MarginContainer" parent="."]
 anchors_preset = 14
@@ -142,6 +138,7 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = -67
 theme_override_constants/margin_right = -16
 theme_override_constants/margin_bottom = -16
+script = ExtResource("5_ew3lm")
 
 [node name="Panel" type="Panel" parent="PlayerStatus"]
 layout_mode = 2
@@ -154,114 +151,193 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerStatus/MarginContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="PlayerStatus/MarginContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer"]
+[node name="Char1" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
+visible = false
+script = ExtResource("6_yi885")
+
+[node name="Name" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char1"]
 texture_filter = 1
-layout_mode = 2
+offset_right = 345.0
+offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_fonts/font = ExtResource("2_ts4pm")
 theme_override_font_sizes/font_size = 29
 text = "Hero 1
-Hero 2
-Hero 3 
-Hero 4 "
-autowrap_mode = 2
+"
 clip_text = true
 
-[node name="PlayerHealth" type="Node2D" parent="."]
-position = Vector2(881, 597)
-
-[node name="HP1" type="Panel" parent="PlayerHealth"]
-offset_top = -99.0
-offset_right = 138.0
-offset_bottom = -83.0
+[node name="HP1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char1"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
 
-[node name="Life1" type="Panel" parent="PlayerHealth"]
-offset_top = -99.0
-offset_right = 138.0
-offset_bottom = -83.0
+[node name="Life1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char1"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
 
-[node name="HP2" type="Panel" parent="PlayerHealth"]
-offset_top = -67.0
-offset_right = 138.0
-offset_bottom = -51.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
-
-[node name="Life2" type="Panel" parent="PlayerHealth"]
-offset_top = -67.0
-offset_right = 138.0
-offset_bottom = -51.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
-
-[node name="HP3" type="Panel" parent="PlayerHealth"]
-offset_top = -34.0
-offset_right = 138.0
-offset_bottom = -18.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
-
-[node name="Life3" type="Panel" parent="PlayerHealth"]
-offset_top = -34.0
-offset_right = 138.0
-offset_bottom = -18.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
-
-[node name="HP4" type="Panel" parent="PlayerHealth"]
-offset_right = 138.0
-offset_bottom = 16.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
-
-[node name="Life4" type="Panel" parent="PlayerHealth"]
-offset_right = 138.0
-offset_bottom = 16.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
-
-[node name="PlayerMana" type="MarginContainer" parent="."]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 1008.0
-offset_top = 552.0
-offset_right = 1119.0
-offset_bottom = 621.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = -67
-theme_override_constants/margin_right = -16
-theme_override_constants/margin_bottom = -16
-
-[node name="Panel" type="Panel" parent="PlayerMana"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2cqbr")
-
-[node name="MarginContainer" type="MarginContainer" parent="PlayerMana"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerMana/MarginContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="PlayerMana/MarginContainer/HBoxContainer"]
+[node name="Mana" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char1"]
 texture_filter = 1
-layout_mode = 2
+offset_left = 251.0
+offset_right = 344.0
+offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("1_lsld8")
+theme_override_fonts/font = ExtResource("2_ts4pm")
 theme_override_font_sizes/font_size = 29
-text = "MP 000
-MP 000
-MP 000
-MP 000"
-autowrap_mode = 2
+text = "MP"
 clip_text = true
+
+[node name="Char2" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2(0, 32)
+script = ExtResource("6_yi885")
+
+[node name="Name" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char2"]
+texture_filter = 1
+offset_right = 345.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_font_sizes/font_size = 29
+text = "Hero 1
+"
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="HP1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char2"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+metadata/_edit_use_anchors_ = true
+
+[node name="Life1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char2"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Mana" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char2"]
+texture_filter = 1
+offset_left = 251.0
+offset_right = 344.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_font_sizes/font_size = 29
+text = "MP"
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Char3" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2(0, 64)
+script = ExtResource("6_yi885")
+
+[node name="Name" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char3"]
+texture_filter = 1
+offset_right = 345.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_font_sizes/font_size = 29
+text = "Hero 1
+"
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="HP1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char3"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+metadata/_edit_use_anchors_ = true
+
+[node name="Life1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char3"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Mana" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char3"]
+texture_filter = 1
+offset_left = 251.0
+offset_right = 344.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_font_sizes/font_size = 29
+text = "MP"
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Char4" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
+visible = false
+position = Vector2(0, 96)
+script = ExtResource("6_yi885")
+
+[node name="Name" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char4"]
+texture_filter = 1
+offset_right = 345.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_font_sizes/font_size = 29
+text = "Hero 1
+"
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[node name="HP1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char4"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u6dc6")
+metadata/_edit_use_anchors_ = true
+
+[node name="Life1" type="Panel" parent="PlayerStatus/MarginContainer/HBoxContainer/Char4"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k4da3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Mana" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char4"]
+texture_filter = 1
+offset_left = 251.0
+offset_right = 344.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_font_sizes/font_size = 29
+text = "MP"
+clip_text = true
+metadata/_edit_use_anchors_ = true
+
+[connection signal="animation_end" from="PlayerStatus/MarginContainer/HBoxContainer/Char1" to="." method="_on_char_1_animation_end"]
+[connection signal="animation_end" from="PlayerStatus/MarginContainer/HBoxContainer/Char2" to="." method="_on_char_2_animation_end"]
+[connection signal="animation_end" from="PlayerStatus/MarginContainer/HBoxContainer/Char3" to="." method="_on_char_3_animation_end"]
+[connection signal="animation_end" from="PlayerStatus/MarginContainer/HBoxContainer/Char4" to="." method="_on_char_4_animation_end"]

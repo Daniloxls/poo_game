@@ -2,21 +2,22 @@ extends Node2D
 
 signal death
 signal animation_end
+signal health_change
 
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite
-@onready var healthbar = $Healthbar
+@onready var damage_text = $DamageText
 
-var nome = "Boneco"
-var hp
-
-const MAX_HP = 320
+var nome = "Alan"
+var hp = 32
+const MAX_HP = 32
+var mp = 32
+const MAX_MP = 32
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#healthbar.hide()
 	animation.play("default")
-	hp = MAX_HP
 	pass # Replace with function body.
 
 
@@ -26,56 +27,58 @@ func _process(delta):
 
 func hit_animation():
 	animation.play("get_hit")
+
+func heal_animation():
+	animation.play("heal")
 	
 func get_cursor_pos():
 	var current_animation : String = $Sprite.animation
 	var sprite_texture : Texture2D = $Sprite.sprite_frames.get_frame_texture(current_animation, 0)
 	var size = sprite_texture.get_size()
-	
-	return(Vector2(position) + Vector2(size.x, size.y/3))
+	return(Vector2(position) + Vector2(0, size.y/3))
 
+func get_turn_cursor_pos():
+	var current_animation : String = $Sprite.animation
+	var sprite_texture : Texture2D = $Sprite.sprite_frames.get_frame_texture(current_animation, 0)
+	var size = sprite_texture.get_size()
+	return(Vector2(position) + Vector2(size.x, size.y/3))
+	
 func get_nome():
 	return nome
 
 func get_hp():
 	return hp
-
+	
+func get_mp():
+	return mp
+	
+func get_health_percentage():
+	return float(hp)/MAX_HP
+	
+func is_alive():
+	if hp> 0:
+		return true
+	else:
+		return false
 func gain_health(value):
 	hp += value
 	if hp > MAX_HP:
 		hp = MAX_HP
+	animation.play("heal")
+	return float(hp)/MAX_HP
 	
-	healthbar.show()
-	var hp_percentage = float(hp)/MAX_HP
-	healthbar.change_hp_percent(hp_percentage, value)
-	
-func lose_health(damage):
-	hp -= damage
+func lose_health(value):
+	hp -= value
 	if hp < 0:
 		hp = 0
-	var hp_percentage = float(hp)/MAX_HP
-	healthbar.show()
-	healthbar.change_hp_percent(hp_percentage, -damage)
 	if hp == 0:
 		animation.play("death")
 		death.emit()
 	else:
 		animation.play("get_hit")
-	
+	damage_text.number_animation(value)
+	return float(hp)/MAX_HP
 
-func logic(character_list, menu):
-	var id = randi_range(0,len(character_list)-1)
-	if id == len(character_list):
-		id = 0
-	for i in range(4):
-		if character_list[id].is_alive():
-			break
-		else:
-			id += 1
-			if id == len(character_list):
-				id = 0
-				
-	menu.update_health_slow(id, character_list[id].lose_health(randi_range(2, 5)))
 
 func _on_healthbar_animation_end():
 	animation_end.emit()

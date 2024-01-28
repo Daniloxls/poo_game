@@ -1,12 +1,13 @@
 extends Node2D
 
+signal animation_end
+
 @onready var monster_stats = $MonsterStatus
 @onready var actions = $Actions
 @onready var cursor = $Actions/Cursor
-@onready var player_stats = $PlayerStatus
-@onready var player_mana = $PlayerMana
-@onready var player_health = $PlayerHealth
+@onready var characters = $PlayerStatus/MarginContainer/HBoxContainer.get_children()
 @onready var monster_list = $MonsterStatus/MarginContainer/HBoxContainer/Label2
+
 const CURSOR_INITIAL_Y = -50
 
 
@@ -55,3 +56,41 @@ func set_monster_names(list):
 	for monstro in list:
 		names += monstro + '\n'
 	monster_list.set_text(names)
+	
+func hide_char_status(id):
+	characters[id].hide()
+	
+func show_char_status(id):
+	characters[id].show()
+	
+func set_character_name(id, nome):
+	characters[id].set_nome(nome)
+
+func update_health_instant(id, percentage):
+	characters[id].set_health_instant(percentage)
+	
+func update_health_slow(id, percentage):
+	characters[id].set_health_slow(percentage)
+	
+func update_mana_instant(id, value):
+	characters[id].set_mana_instant(value)
+	
+func update_mana_slow(id, value):
+	characters[id].set_mana_slow(value)
+
+
+func _on_char_1_animation_end():
+	animation_end.emit()
+
+
+
+func _on_char_2_animation_end():
+	animation_end.emit()
+
+
+func _on_char_3_animation_end():
+	animation_end.emit()
+
+
+func _on_char_4_animation_end():
+	animation_end.emit()
