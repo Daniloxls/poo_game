@@ -74,7 +74,7 @@ func read_input():
 			
 	
 	velocity = velocity.normalized()
-	velocity = velocity * 100
+	velocity = velocity * 3125 #100
 	
 	move_and_slide()
 	

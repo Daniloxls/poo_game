@@ -117,6 +117,7 @@ func read_input():
 			current_selection = Selecting.ANIMATION
 			cursor.hide()
 			char_turn = update_char_turn()
+			update_turn_cursor_position()
 		elif Input.is_action_just_pressed("exit"):
 			current_selection = Selecting.ACTION
 			cursor.hide()
@@ -147,7 +148,7 @@ func get_entity_positions():
 		enemy_coords.append(enemy.get_cursor_pos()*4 + Vector2(enemies.get_position().x*1.4,enemies.get_position().y*0.8))
 	for char in char_list:
 		character_coords.append(Vector2(party.get_position().x*0.94,party.get_position().y) + char.get_cursor_pos())
-		character_back_coords.append(Vector2(party.get_position().x*1.2,party.get_position().y) + char.get_turn_cursor_pos())
+		character_back_coords.append(Vector2(party.get_position().x*1.01,party.get_position().y) + char.get_turn_cursor_pos())
 
 
 func _on_enemy_death():
@@ -236,4 +237,6 @@ func set_selection(select):
 	current_selection = select
 
 func update_turn_cursor_position():
+	if char_turn == len(char_list):
+		return
 	turn_cursor.set_position(character_back_coords[char_turn])
