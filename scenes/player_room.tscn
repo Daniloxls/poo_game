@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/player_room.gd" id="1_q08nu"]
 [ext_resource type="Texture2D" uid="uid://b2n26gpwfwtxn" path="res://assets/indoor.png" id="1_rq03u"]
-[ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/characters/player.tscn" id="2_gpryw"]
+[ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_gpryw"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="3_rhpa3"]
 [ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="4_6rxli"]
 [ext_resource type="Texture2D" uid="uid://dbt3f5iu5u8k4" path="res://assets/effects/brilho.png" id="5_j7hi2"]
@@ -2272,6 +2272,7 @@ sources/0 = SubResource("TileSetAtlasSource_ff1mo")
 script = ExtResource("1_q08nu")
 
 [node name="TileMap" type="TileMap" parent="."]
+scale = Vector2(31, 31)
 tile_set = SubResource("TileSet_gghly")
 format = 2
 layer_0/name = "ground"
@@ -2285,15 +2286,15 @@ layer_3/z_index = 1
 layer_3/tile_data = PackedInt32Array(0, 524288, 15, 458753, 1048576, 9)
 
 [node name="Player" parent="." instance=ExtResource("2_gpryw")]
-position = Vector2(8, -5)
+position = Vector2(162, 56)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(101, 55)
-zoom = Vector2(3.5, 3.5)
-limit_left = -57
-limit_top = -39
-limit_right = 270
-limit_bottom = 146
+zoom = Vector2(0.15, 0.15)
+limit_left = -2000
+limit_top = -1200
+limit_right = 7600
+limit_bottom = 4700
 
 [node name="Textbox" parent="." instance=ExtResource("3_rhpa3")]
 
@@ -2301,6 +2302,6 @@ limit_bottom = 146
 
 [node name="Brilho" type="Sprite2D" parent="."]
 z_index = 2
-position = Vector2(103, 55)
-scale = Vector2(41.625, 24.9219)
+position = Vector2(3476, 1954)
+scale = Vector2(1467.41, 1360.48)
 texture = ExtResource("5_j7hi2")

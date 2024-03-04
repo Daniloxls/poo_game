@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://2j3byyhg36c6"]
 
 [ext_resource type="Script" path="res://scripts/codebox.gd" id="1_j5dny"]
-[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="2_pcrgl"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_pq3of"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_s2n5h"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_wuxah"]
 
@@ -48,23 +48,22 @@ theme_override_constants/margin_bottom = 8
 [node name="HBoxContainer" type="HBoxContainer" parent="TextboxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="TextboxContainer/MarginContainer/HBoxContainer"]
+[node name="Label2" type="RichTextLabel" parent="TextboxContainer/MarginContainer/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_pcrgl")
-theme_override_font_sizes/font_size = 40
+theme_override_constants/line_separation = 11
+theme_override_fonts/normal_font = ExtResource("2_pq3of")
+theme_override_font_sizes/normal_font_size = 25
 text = "Objeto Nome
 int prop_1 = 4;
 int prop_2 = 8;
 bool prop_3 = true;
 string prop_4 = \"aaaa\";"
 autowrap_mode = 2
-clip_text = true
 
 [node name="Cursor" type="Sprite2D" parent="."]
-position = Vector2(650, 82)
+position = Vector2(646, 67)
 scale = Vector2(0.564, 0.564)
 texture = ExtResource("3_s2n5h")
 script = ExtResource("4_wuxah")

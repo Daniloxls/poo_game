@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dgi27rysml5px"]
+
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_buxoc"]
+
+[resource]
+font = ExtResource("1_buxoc")
+font_size = 27
+font_color = Color(0.74902, 0.741176, 0.713726, 1)

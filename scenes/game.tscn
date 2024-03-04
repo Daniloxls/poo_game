@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://rqh8da2muvx6"]
+
+[ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory.tscn" id="1_5i5st"]
+[ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
+[ext_resource type="PackedScene" uid="uid://wtnrlc4bfiyj" path="res://scenes/tutorial/tutorial.tscn" id="3_blk37"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Inventory" parent="." instance=ExtResource("1_5i5st")]
+visible = false
+
+[node name="Battle" parent="." instance=ExtResource("2_j13bi")]
+
+[node name="Tutorial" parent="." instance=ExtResource("3_blk37")]

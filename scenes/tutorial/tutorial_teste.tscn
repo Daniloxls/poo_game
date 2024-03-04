@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://ciieqmfhdtbhv"]
+[gd_scene load_steps=45 format=3 uid="uid://cd5gg20anx26o"]
 
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial.gd" id="1_knswg"]
 [ext_resource type="PackedScene" uid="uid://b1syuuue48xle" path="res://scenes/characters/player.tscn" id="2_6qo1g"]
@@ -6456,7 +6456,6 @@ position = Vector2(55.3503, 44.4512)
 
 [node name="PortaShape" type="CollisionShape2D" parent="Alavanca/Porta"]
 position = Vector2(4.5184, 0.122119)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_2t0ef")
 
 [node name="Dummy" parent="." instance=ExtResource("19_rqeev")]

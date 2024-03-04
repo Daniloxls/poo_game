@@ -48,5 +48,4 @@ func name():
 	return nome
 
 func _on_area_2d_area_entered(area):
-	print("Foi")
 	pass # Replace with function body.

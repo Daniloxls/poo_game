@@ -17,9 +17,12 @@ enum State{
 }
 
 var current_state = State.READY
+var f = load("res://assets/fonts/CONSOLA.TTF")
 var text_queue = []
 var sprite_queue = []
 func _ready():
+	label.add_theme_font_override("font", f)
+	label.add_theme_font_size_override("font_size", 80)
 	hide_textbox()
 
 func hide_textbox():

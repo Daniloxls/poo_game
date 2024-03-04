@@ -3,21 +3,18 @@
 [ext_resource type="Script" path="res://scripts/interact.gd" id="1_ruw4h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
-size = Vector2(14.5, 15)
+size = Vector2(500, 500)
 
 [node name="Interact" type="Node2D"]
-position = Vector2(516, 306)
 script = ExtResource("1_ruw4h")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="Collision" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-20.25, -17.5)
 shape = SubResource("RectangleShape2D_f7cku")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2147483648
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-20.25, -17.5)
 shape = SubResource("RectangleShape2D_f7cku")

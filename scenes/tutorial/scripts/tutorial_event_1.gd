@@ -20,10 +20,8 @@ func _on_area_2d_area_entered(area):
 		return
 	else:
 		triggered = true
-		textbox.queue_char_text(["Você ativou suas habilidades de desenvolvedor,
-		agora você vai ver como as coisas realmente funcionam no seu mundo",
-		"Tente abrir aquela porta agora, aperte C enquanto olha para ela e
-		você verá o codigo que ela contem"],
+		textbox.queue_char_text(["Você ativou suas habilidades de desenvolvedor, agora você vai ver como as coisas realmente funcionam no seu mundo",
+		"Tente abrir aquela porta agora, aperte C enquanto olha para ela e você verá o codigo que ela contem"],
 		["res://assets/portraits/silhueta.png",
 		"res://assets/portraits/silhueta.png"])
 	pass # Replace with function body.

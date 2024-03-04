@@ -4,7 +4,6 @@ extends Node2D
 @onready var colision = $StaticBody2D
 @onready var player = get_node("../Player")
 @onready var codebox = get_node("../Codebox")
-@onready var map = get_node("../TileMap")
 var nome
 var texto = []
 var codigo = [""]

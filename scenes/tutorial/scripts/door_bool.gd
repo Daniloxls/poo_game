@@ -6,18 +6,15 @@ extends Node2D
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
-var nome
-var texto
-var portraits
-var codigo
+var nome = "Porta"
+var texto = ["Está trancada.", "Parece que você ainda não consegue abrir essa porta, tente usar aquele terminal interaja com ele."]
+var portraits = ["", "res://assets/portraits/silhueta.png"]
+var codigo = {"1int idade": 15, "1boolean trancado": true, "Material material": "madeira"}
 var depuring = false
 var dialogue = true
 
 func _ready():
-	set_texto(["Está trancada.", "Parece que você ainda não consegue abrir essa porta,
-	tente usar aquele terminal interaja com ele."])
-	set_portraits(["", "res://assets/portraits/silhueta.png"])
-	set_codigo("Porta", {"1int idade": 15, "1boolean trancado": true, "Material material": "madeira"})
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -51,7 +48,7 @@ func _process(delta):
 
 
 func interaction():
-	if player.get_sudo() and len(texto) > 1:
+	if len(texto) > 1:
 		texto.pop_back()
 		portraits.pop_back()
 	return texto

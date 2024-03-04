@@ -8,29 +8,25 @@ extends Node2D
 @onready var down_arrow = $DownArrow
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	up_arrow.hide()
-	left_arrow.hide()
-	right_arrow.hide()
-	down_arrow .hide()
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("up"):
-		up_arrow.show()
+		up_arrow.set_frame(1)
 	if Input.is_action_just_pressed("down"):
-		down_arrow.show()
+		down_arrow.set_frame(1)
 	if Input.is_action_just_pressed("left"):
-		left_arrow.show()
+		left_arrow.set_frame(1)
 	if Input.is_action_just_pressed("right"):
-		right_arrow.show()
+		right_arrow.set_frame(1)
 	if Input.is_action_just_released("up"):
-		up_arrow.hide()
+		up_arrow.set_frame(0)
 	if Input.is_action_just_released("down"):
-		down_arrow.hide()
+		down_arrow.set_frame(0)
 	if Input.is_action_just_released("left"):
-		left_arrow.hide()
+		left_arrow.set_frame(0)
 	if Input.is_action_just_released("right"):
-		right_arrow.hide()
+		right_arrow.set_frame(0)
 	pass
 

@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://b6cf5k4q5kd71"]
+
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_qxtev"]
+
+[resource]
+font = ExtResource("1_qxtev")
+font_size = 27
+font_color = Color(0.0588235, 0.552941, 1, 1)

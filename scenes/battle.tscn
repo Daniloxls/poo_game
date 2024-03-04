@@ -12,12 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://c04ien1etnu7m" path="res://scenes/Lenna.tscn" id="9_lmry4"]
 [ext_resource type="PackedScene" uid="uid://s6c7qkb1iee3" path="res://scenes/galuf.tscn" id="10_engk8"]
 
-[node name="Battle" type="Node2D"]
+[node name="Battle" type="CanvasLayer"]
 script = ExtResource("1_c4w7k")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(575, 325.75)
-scale = Vector2(1.03986, 1.03784)
+position = Vector2(576, 324)
+scale = Vector2(1.04348, 1.04348)
 texture = ExtResource("1_uxafu")
 
 [node name="BattleMenu" parent="." instance=ExtResource("3_ymsal")]
@@ -45,11 +45,11 @@ position = Vector2(13, 36)
 scale = Vector2(4, 4)
 
 [node name="Character2" parent="Party" instance=ExtResource("8_v0sm1")]
-position = Vector2(62, 142)
+position = Vector2(88, 146)
 scale = Vector2(4, 4)
 
 [node name="Character3" parent="Party" instance=ExtResource("9_lmry4")]
-position = Vector2(14, 228)
+position = Vector2(18, 241)
 scale = Vector2(4, 4)
 
 [node name="Character4" parent="Party" instance=ExtResource("10_engk8")]

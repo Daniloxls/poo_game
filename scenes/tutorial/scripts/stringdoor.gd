@@ -37,7 +37,7 @@ func _process(delta):
 			"Variáveis String são formadas por conjuntos de caracteres",
 			"Para editar essa string você precisa selecionar ela e apertar Enter, então você entrará no modo de edição",
 			"A partir daí você pode digitar o que quiser para ser a String e para sair do modo de edição basta apertar Enter novamente",
-			"Tente editar a senha dessa porta para alguma coisa que você consiga digitar sem a nem s e depois tente interagir com esse teclado novamente"],
+			"Tente editar a senha dessa porta para alguma coisa que você consiga digitar sem 'a' nem 's' e depois tente interagir com esse teclado novamente"],
 			["res://assets/portraits/silhueta.png",
 			"res://assets/portraits/silhueta.png",
 			"res://assets/portraits/silhueta.png",

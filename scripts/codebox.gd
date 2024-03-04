@@ -99,7 +99,7 @@ func get_state():
 		return ""
 
 func update_cursor_pos():
-	cursor.set_pos_y(82 + (cursor_pos* 42))
+	cursor.set_pos_y(67 + (cursor_pos* 36))
 
 
 func _process(delta):

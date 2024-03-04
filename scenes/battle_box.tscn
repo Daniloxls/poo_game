@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dkrrrbfnsa5lw"]
 
-[ext_resource type="Script" path="res://scenes/battle_menu.gd" id="1_a61xi"]
+[ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_a61xi"]
 [ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="2_ts4pm"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_6yefv"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_02h83"]

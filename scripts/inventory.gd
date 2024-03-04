@@ -1,7 +1,9 @@
-extends Node2D
+extends CanvasLayer
 
 var size
-var items = []
+var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
+							load("res://scenes/itens/repo/armadura_ferro.tres"),
+							load("res://scenes/itens/repo/armadura_couro.tres")]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,6 +15,5 @@ func _process(delta):
 	pass
 
 func get_items():
-	var item_names = []
-	for item in items:
-		item_names.append(item.get_name())
+	return items
+

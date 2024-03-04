@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 signal animation_end
 
@@ -28,14 +28,33 @@ var character_coords = []
 var character_back_coords = []
 var char_index = 0
 var char_turn = -1
-
+var in_battle = false
 var enemy_coords = []
 var enemy_names = []
 var enemy_index = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	hide()
+	pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	read_input()
+	if current_selection == Selecting.ACTION and char_turn >= len(char_list):
+		set_selection(Selecting.ENEMY_PHASE)
+		char_turn = -1
+		char_turn = update_char_turn()
+		enemy_turn()
+
+func select_enemy():
+	current_selection = Selecting.ENEMY
+
+func start_battle():
+	show()
 	var tween = create_tween()
+	in_battle = true
 	menu.hide()
 	tween.set_parallel()
 	for char in char_list:
@@ -56,93 +75,80 @@ func _ready():
 	char_index = update_char_index_down()
 	char_turn = update_char_turn()
 	tween.tween_callback(update_turn_cursor_position)
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	read_input()
-	if current_selection == Selecting.ACTION and char_turn >= len(char_list):
-		set_selection(Selecting.ENEMY_PHASE)
-		char_turn = -1
-		char_turn = update_char_turn()
-		enemy_turn()
-
-func select_enemy():
-	current_selection = Selecting.ENEMY
-
-
+	
+	
 func read_input():
-	if current_selection == Selecting.ACTION:
-		if Input.is_action_just_pressed("up"):
-			menu.move_cursor_up()
-		elif Input.is_action_just_pressed("down"):
-			menu.move_cursor_down()
-		elif Input.is_action_just_pressed("interact"):
-				match(menu.get_cursor_pos()):
-					0:
-						menu.hide_cursor()
-						current_selection = Selecting.ENEMY
-						cursor.set_flip_h(true)
-						cursor.show()
-						cursor.set_position(enemy_coords[0])
-					1:
-						menu.hide_cursor()
-						current_selection = Selecting.ALLIE
-						cursor.set_flip_h(false)
-						cursor.show()
-						cursor.set_position(character_coords[char_index])
-					2:
-						pass
-					3:
-						pass
-	
-	
-	
-	elif current_selection == Selecting.ENEMY:
-		if Input.is_action_just_pressed("up"):
-			if enemy_index == 0:
-				enemy_index = len(enemy_coords) - 1
-			else:
-				enemy_index -= 1
-			cursor.set_position(enemy_coords[enemy_index])
-		elif Input.is_action_just_pressed("down"):
-			if enemy_index == (len(enemy_coords) - 1):
-				enemy_index = 0
-			else:
-				enemy_index += 1
-			cursor.set_position(enemy_coords[enemy_index])
-		elif Input.is_action_just_pressed("interact"):
-			enemy_list[enemy_index].lose_health(randi_range(8, 12))
-			current_selection = Selecting.ANIMATION
-			cursor.hide()
-			char_turn = update_char_turn()
-			update_turn_cursor_position()
-		elif Input.is_action_just_pressed("exit"):
-			current_selection = Selecting.ACTION
-			cursor.hide()
-			menu.show_cursor()
-	
-	
-	
-	elif current_selection == Selecting.ALLIE:
-		if Input.is_action_just_pressed("up"):
-			char_index = update_char_index_up()
-			cursor.set_position(character_coords[char_index])
-		elif Input.is_action_just_pressed("down"):
-			char_index = update_char_index_down()
-			cursor.set_position(character_coords[char_index])
-		elif Input.is_action_just_pressed("interact"):
-			menu.update_health_slow(char_index, char_list[char_index].lose_health(randi_range(8, 12)))
-			current_selection = Selecting.ANIMATION
-		elif Input.is_action_just_pressed("h"):
-			menu.update_health_slow(char_index, char_list[char_index].gain_health(randi_range(8, 12)))
-			current_selection = Selecting.ANIMATION
-		elif Input.is_action_just_pressed("exit"):
-			current_selection = Selecting.ACTION
-			cursor.hide()
-			menu.show_cursor()
-			
+	if in_battle:
+		if current_selection == Selecting.ACTION:
+			if Input.is_action_just_pressed("up"):
+				menu.move_cursor_up()
+			elif Input.is_action_just_pressed("down"):
+				menu.move_cursor_down()
+			elif Input.is_action_just_pressed("interact"):
+					match(menu.get_cursor_pos()):
+						0:
+							menu.hide_cursor()
+							current_selection = Selecting.ENEMY
+							cursor.set_flip_h(true)
+							cursor.show()
+							cursor.set_position(enemy_coords[0])
+						1:
+							menu.hide_cursor()
+							current_selection = Selecting.ALLIE
+							cursor.set_flip_h(false)
+							cursor.show()
+							cursor.set_position(character_coords[char_index])
+						2:
+							pass
+						3:
+							pass
+		
+		
+		
+		elif current_selection == Selecting.ENEMY:
+			if Input.is_action_just_pressed("up"):
+				if enemy_index == 0:
+					enemy_index = len(enemy_coords) - 1
+				else:
+					enemy_index -= 1
+				cursor.set_position(enemy_coords[enemy_index])
+			elif Input.is_action_just_pressed("down"):
+				if enemy_index == (len(enemy_coords) - 1):
+					enemy_index = 0
+				else:
+					enemy_index += 1
+				cursor.set_position(enemy_coords[enemy_index])
+			elif Input.is_action_just_pressed("interact"):
+				enemy_list[enemy_index].lose_health(randi_range(8, 12))
+				current_selection = Selecting.ANIMATION
+				cursor.hide()
+				char_turn = update_char_turn()
+				update_turn_cursor_position()
+			elif Input.is_action_just_pressed("exit"):
+				current_selection = Selecting.ACTION
+				cursor.hide()
+				menu.show_cursor()
+		
+		
+		
+		elif current_selection == Selecting.ALLIE:
+			if Input.is_action_just_pressed("up"):
+				char_index = update_char_index_up()
+				cursor.set_position(character_coords[char_index])
+			elif Input.is_action_just_pressed("down"):
+				char_index = update_char_index_down()
+				cursor.set_position(character_coords[char_index])
+			elif Input.is_action_just_pressed("interact"):
+				menu.update_health_slow(char_index, char_list[char_index].lose_health(randi_range(8, 12)))
+				current_selection = Selecting.ANIMATION
+			elif Input.is_action_just_pressed("h"):
+				menu.update_health_slow(char_index, char_list[char_index].gain_health(randi_range(8, 12)))
+				current_selection = Selecting.ANIMATION
+			elif Input.is_action_just_pressed("exit"):
+				current_selection = Selecting.ACTION
+				cursor.hide()
+				menu.show_cursor()
+				
 func get_entity_positions():
 	for enemy in enemy_list:
 		enemy_coords.append(enemy.get_cursor_pos()*4 + Vector2(enemies.get_position().x*1.4,enemies.get_position().y*0.8))
