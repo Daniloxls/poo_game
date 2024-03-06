@@ -5,7 +5,7 @@ extends Node2D
 @onready var player = get_node("../Player")
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
-@onready var battle = get_node("../../Battle")
+@onready var battle = get_node("../../../Battle")
 var nome
 var texto = []
 var codigo = [""]

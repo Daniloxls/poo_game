@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-
+signal code_closed
 const CHAR_READ_RATE = 0.03
 @onready var textbox_container = $TextboxContainer
 @onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label2
@@ -137,6 +137,7 @@ func _process(delta):
 					cursor_pos = 0
 					update_cursor_pos()
 					change_state(State.READY)
+					code_closed.emit()
 					if textbox.get_state() == "Ready":
 						player.set_movement(true)
 					hide_textbox()

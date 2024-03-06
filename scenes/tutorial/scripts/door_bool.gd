@@ -6,6 +6,7 @@ extends Node2D
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
+@onready var sprite = $AnimatedSprite2D
 var nome = "Porta"
 var texto = ["Está trancada.", "Parece que você ainda não consegue abrir essa porta, tente usar aquele terminal interaja com ele."]
 var portraits = ["", "res://assets/portraits/silhueta.png"]
@@ -18,16 +19,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("exit") and depuring:
-		colision.set_collision_layer_value(1, codigo["1boolean trancado"])
-		map.set_layer_enabled(4, codigo["1boolean trancado"])
-		depuring = false
-		if !codigo["1boolean trancado"]:
-			set_texto([])
-			set_portraits([])
-		else:
-			set_texto(["Está trancada."])
-			set_portraits([""])
 	if Input.is_action_just_pressed("depure"):
 		if dialogue and area.has_overlapping_areas():
 			dialogue = false
@@ -48,7 +39,7 @@ func _process(delta):
 
 
 func interaction():
-	if len(texto) > 1:
+	if player.get_sudo() and len(texto) > 1:
 		texto.pop_back()
 		portraits.pop_back()
 	return texto
@@ -75,3 +66,16 @@ func depure():
 	
 func name():
 	return nome
+
+
+func _on_codebox_code_closed():
+	colision.set_collision_layer_value(1, codigo["1boolean trancado"])
+	depuring = false
+	if !codigo["1boolean trancado"]:
+		set_texto([])
+		set_portraits([])
+		sprite.set_frame_and_progress(1, 0)
+	else:
+		set_texto(["Está trancada."])
+		set_portraits([""])
+		sprite.set_frame_and_progress(0, 0)

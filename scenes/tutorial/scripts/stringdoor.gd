@@ -4,6 +4,8 @@ extends Node2D
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
+@onready var sprite = $AnimatedSprite2D
+@onready var porta = $Porta
 var nome
 var texto
 var codigo
@@ -48,7 +50,8 @@ func _process(delta):
 
 func interaction():
 	if good_password:
-		map.set_layer_enabled(3, false)
+		sprite.set_frame_and_progress(1, 0)
+		porta.unlock()
 	return texto
 
 func set_texto(new_texto):

@@ -36,7 +36,10 @@ func _process(delta):
 
 func _on_textbox_text_finish():
 	var tween = create_tween()
+	var root = get_node("../..")
+	var next_level = load("res://scenes/player_room.tscn")
+	var instance = next_level.instantiate()
 	tween.tween_callback(brilho.show)
 	tween.tween_property(brilho, "scale", Vector2(1200,800), 3).set_trans(Tween.TRANS_SINE)
-	tween.tween_callback(get_tree().change_scene_to_file.bind("res://scenes/player_room.tscn"))
+	tween.tween_callback(root.change_level.bind(instance))
 	pass # Replace with function body.
