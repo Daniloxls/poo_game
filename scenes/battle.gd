@@ -1,9 +1,11 @@
 extends CanvasLayer
 
 signal animation_end
+signal battle_end
 
-@onready var party = $Party
-@onready var char_list = $Party.get_children()
+@onready var party = get_node("../Inventory/Party")
+@onready var char_list = get_node("../Inventory/Party").get_children()
+@onready var player = get_node("../Level").get_child(0).get_child(2)
 @onready var enemies = $Enemies
 @onready var enemy_list = $Enemies.get_children()
 @onready var menu = $BattleMenu
@@ -47,7 +49,16 @@ func _process(delta):
 		char_turn = -1
 		char_turn = update_char_turn()
 		enemy_turn()
-
+func reset_variables():
+	current_selection = Selecting.ANIMATION
+	character_coords = []
+	character_back_coords = []
+	char_index = 0
+	char_turn =  -1
+	enemy_coords = []
+	enemy_names = []
+	enemy_index = 0
+	
 func select_enemy():
 	current_selection = Selecting.ENEMY
 
@@ -165,7 +176,14 @@ func _on_enemy_death():
 			enemy_names.pop_at(id)
 			enemy_coords.pop_at(id)
 			menu.set_monster_names(enemy_names)
-	pass # Replace with function body.
+			if len(enemy_list) == 0:
+				in_battle = false
+				for char in char_list:
+					char.reset_position()
+				player.set_movement(true)
+				battle_end.emit()
+				reset_variables()
+				hide()
 
 
 func _on_enemy_animation_end():
@@ -220,6 +238,8 @@ func update_char_index_down():
 	return id
 
 func update_char_turn():
+	if !in_battle:
+		return -1
 	var id = char_turn + 1
 	if id == len(char_list):
 		return id
@@ -243,6 +263,8 @@ func set_selection(select):
 	current_selection = select
 
 func update_turn_cursor_position():
+	if !in_battle:
+		return
 	if char_turn == len(char_list):
 		return
 	turn_cursor.set_position(character_back_coords[char_turn])

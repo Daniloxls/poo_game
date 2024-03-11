@@ -7,7 +7,7 @@ var direction : Vector2 = Vector2()
 @onready var event = $EventColision
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
-
+@onready var inventory = get_node("../../../Inventory")
 enum State{
 	DOWN,
 	LEFT,
@@ -90,9 +90,12 @@ func read_input():
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
 				interact_box.get_overlapping_areas()[0].get_parent().depure())
+		if Input.is_action_just_pressed("a"):
+			inventory.aparecer()
 	if Input.is_action_just_pressed("exit"):
 		if codebox.get_state() != "Ready":
 			interact_box.get_overlapping_areas()[0].get_parent().update_codigo(codebox.get_props())
+	
 		
 func _physics_process(delta):
 	read_input()

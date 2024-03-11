@@ -34,7 +34,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("depure"):
 		if dialogue and area.has_overlapping_areas():
 			dialogue = false
-			textbox.queue_char_text(["Parece que o idiota que projetou essa sala deixou a senha da porta salva em uma string",
+			textbox.queue_char_text(["Parece que o tolo que projetou essa sala deixou a senha da porta salva em uma string",
 			"Uma que podemos editar ainda por cima",
 			"Variáveis String são formadas por conjuntos de caracteres",
 			"Para editar essa string você precisa selecionar ela e apertar Enter, então você entrará no modo de edição",

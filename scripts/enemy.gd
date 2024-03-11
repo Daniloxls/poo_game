@@ -10,7 +10,7 @@ signal animation_end
 var nome = "Boneco"
 var hp
 
-const MAX_HP = 320
+const MAX_HP = 27
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

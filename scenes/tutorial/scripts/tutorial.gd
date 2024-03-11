@@ -1,4 +1,7 @@
 extends Node2D
+
+signal battle_tutorial_end
+
 @onready var player = $Player
 @onready var textbox = $Textbox
 @onready var codebox = $Codebox
@@ -30,3 +33,7 @@ func _process(delta):
 		right_arrow.set_frame(0)
 	pass
 
+
+
+func _on_battle_battle_end():
+	battle_tutorial_end.emit()

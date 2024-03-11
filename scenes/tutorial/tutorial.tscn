@@ -194,7 +194,7 @@ script = ExtResource("1_nde62")
 
 [node name="Player" parent="." instance=ExtResource("2_1qc1t")]
 z_index = 1
-position = Vector2(-13896, 6135)
+position = Vector2(-3498, 6656)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.15, 0.15)
@@ -298,3 +298,5 @@ visible = false
 position = Vector2(578.5, 327.5)
 scale = Vector2(1.12988, 0.847656)
 sprite_frames = SubResource("SpriteFrames_5u6ad")
+
+[connection signal="battle_tutorial_end" from="." to="Dummy" method="_on_tutorial_battle_tutorial_end"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c2jfv4lnhfpro"]
+[gd_scene load_steps=33 format=3 uid="uid://c2jfv4lnhfpro"]
 
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="1_iwvfi"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_xp6de"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="4_854na"]
 [ext_resource type="LabelSettings" uid="uid://csu2a8jn2lrtm" path="res://assets/fonts/blue_console_text.tres" id="5_dbkao"]
 [ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/player/000.png" id="5_nrekh"]
+[ext_resource type="Script" path="res://scripts/CharContainer.gd" id="6_bj6ti"]
 [ext_resource type="LabelSettings" uid="uid://5mg8308marm6" path="res://assets/fonts/orange_console_text.tres" id="7_1nlpb"]
 [ext_resource type="Texture2D" uid="uid://ctih022bl5pue" path="res://assets/player/Kath.png" id="8_k64md"]
 [ext_resource type="Texture2D" uid="uid://cbyc2qhhkrduh" path="res://assets/player/Ada.png" id="9_1gs13"]
@@ -13,11 +14,12 @@
 [ext_resource type="Script" path="res://scripts/ItemMenu.gd" id="11_uxr24"]
 [ext_resource type="Script" path="res://scripts/ItemContainer.gd" id="12_3iqbq"]
 [ext_resource type="LabelSettings" uid="uid://gts2l8irhv00" path="res://assets/fonts/light_blue_console.tres" id="12_7flin"]
-[ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/icons/potion_icon.png" id="12_xge06"]
+[ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/gui/icons/potion_icon.png" id="12_xge06"]
 [ext_resource type="LabelSettings" uid="uid://cmfsg5d7438bt" path="res://assets/fonts/yellow_console_text.tres" id="13_tm731"]
 [ext_resource type="LabelSettings" uid="uid://dp6o68cs1rv5i" path="res://assets/fonts/light_orange_console.tres" id="14_2m0te"]
 [ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="15_8lktr"]
 [ext_resource type="LabelSettings" uid="uid://dgi27rysml5px" path="res://assets/fonts/gray_console_text.tres" id="18_fcg8q"]
+[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/character.tscn" id="19_y70kq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2i62"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -83,13 +85,13 @@ font_color = Color(0.309804, 0.415686, 0.447059, 1)
 script = ExtResource("1_iwvfi")
 
 [node name="Cursor" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(211, -44)
 scale = Vector2(0.564, 0.564)
 texture = ExtResource("2_xp6de")
 script = ExtResource("3_irinq")
 
 [node name="MenuBackground" type="MarginContainer" parent="."]
+visible = false
 offset_left = 8.0
 offset_top = 5.0
 offset_right = 1141.0
@@ -110,6 +112,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_a2i62")
 
 [node name="MenuContents" type="MarginContainer" parent="."]
+visible = false
 offset_left = 23.0
 offset_top = 22.0
 offset_right = 1122.0
@@ -189,6 +192,7 @@ theme_override_constants/separation = 22
 
 [node name="CharContainer" type="HBoxContainer" parent="MenuContents/HBoxContainer/PartyContainer"]
 layout_mode = 2
+script = ExtResource("6_bj6ti")
 
 [node name="CharPic" type="TextureRect" parent="MenuContents/HBoxContainer/PartyContainer/CharContainer"]
 custom_minimum_size = Vector2(191.95, 120)
@@ -255,6 +259,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 [node name="PpContainer" type="HBoxContainer" parent="MenuContents/HBoxContainer/PartyContainer/CharContainer/CharPvPp"]
 layout_mode = 2
 theme_override_constants/separation = 116
+alignment = 1
 
 [node name="Pp" type="Label" parent="MenuContents/HBoxContainer/PartyContainer/CharContainer/CharPvPp/PpContainer"]
 layout_mode = 2
@@ -578,6 +583,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 
 [node name="ItemMenu" type="Node2D" parent="."]
+visible = false
 script = ExtResource("11_uxr24")
 
 [node name="SelectedItem" type="Panel" parent="ItemMenu"]
@@ -1504,3 +1510,12 @@ autowrap_mode = 2
 custom_minimum_size = Vector2(33.02, 0)
 layout_mode = 2
 size_flags_vertical = 0
+
+[node name="Party" type="Node2D" parent="."]
+position = Vector2(1311, 86)
+
+[node name="Turin" parent="Party" instance=ExtResource("19_y70kq")]
+z_index = 3
+z_as_relative = false
+position = Vector2(-14, 101)
+scale = Vector2(4, 4)

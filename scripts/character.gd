@@ -8,12 +8,14 @@ signal health_change
 @onready var sprite = $Sprite
 @onready var damage_text = $DamageText
 
-var nome = "Alan"
+var nome = "Turin"
 var hp = 32
 const MAX_HP = 32
 var mp = 32
 const MAX_MP = 32
-
+var level = 1
+var xp = 0
+var original_pos = get_position()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#healthbar.hide()
@@ -48,12 +50,24 @@ func get_nome():
 
 func get_hp():
 	return hp
+
+func get_max_hp():
+	return MAX_HP
 	
 func get_mp():
 	return mp
+
+func get_max_mp():
+	return MAX_MP
 	
 func get_health_percentage():
 	return float(hp)/MAX_HP
+
+func get_level():
+	return level
+
+func reset_position():
+	set_position(original_pos)
 	
 func is_alive():
 	if hp> 0:

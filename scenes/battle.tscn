@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4bax87kqk6po"]
+[gd_scene load_steps=8 format=3 uid="uid://c4bax87kqk6po"]
 
 [ext_resource type="Script" path="res://scenes/battle.gd" id="1_c4w7k"]
 [ext_resource type="Texture2D" uid="uid://crj1a7pxbsidn" path="res://assets/battle/BG/battleback5.png" id="1_uxafu"]
@@ -6,11 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://scenes/enemy.tscn" id="4_5kxrv"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="5_rvb1y"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="6_v5kcj"]
-[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/character.tscn" id="7_uvy1q"]
 [ext_resource type="Texture2D" uid="uid://d0nnq665edodf" path="res://assets/gui/TurnCursor.png" id="8_84fjv"]
-[ext_resource type="PackedScene" uid="uid://c6p2qahphkcdn" path="res://scenes/faris.tscn" id="8_v0sm1"]
-[ext_resource type="PackedScene" uid="uid://c04ien1etnu7m" path="res://scenes/Lenna.tscn" id="9_lmry4"]
-[ext_resource type="PackedScene" uid="uid://s6c7qkb1iee3" path="res://scenes/galuf.tscn" id="10_engk8"]
 
 [node name="Battle" type="CanvasLayer"]
 script = ExtResource("1_c4w7k")
@@ -36,25 +32,6 @@ scale = Vector2(0.77223, 0.82423)
 texture = ExtResource("5_rvb1y")
 flip_h = true
 script = ExtResource("6_v5kcj")
-
-[node name="Party" type="Node2D" parent="."]
-position = Vector2(1311, 86)
-
-[node name="Character" parent="Party" instance=ExtResource("7_uvy1q")]
-position = Vector2(13, 36)
-scale = Vector2(4, 4)
-
-[node name="Character2" parent="Party" instance=ExtResource("8_v0sm1")]
-position = Vector2(88, 146)
-scale = Vector2(4, 4)
-
-[node name="Character3" parent="Party" instance=ExtResource("9_lmry4")]
-position = Vector2(18, 241)
-scale = Vector2(4, 4)
-
-[node name="Character4" parent="Party" instance=ExtResource("10_engk8")]
-position = Vector2(60, 336)
-scale = Vector2(4, 4)
 
 [node name="TurnCursor" type="Sprite2D" parent="."]
 position = Vector2(1491, 155)
