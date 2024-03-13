@@ -22,7 +22,7 @@ func _process(delta):
 
 
 func interaction():
-	battle.start_battle()
+	battle.start_battle("res://scenes/encounters/testdummy.tscn")
 	player.set_movement(false)
 	return texto
 

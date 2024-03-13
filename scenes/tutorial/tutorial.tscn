@@ -194,7 +194,7 @@ script = ExtResource("1_nde62")
 
 [node name="Player" parent="." instance=ExtResource("2_1qc1t")]
 z_index = 1
-position = Vector2(-3498, 6656)
+position = Vector2(-12783, 6728)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.15, 0.15)
@@ -248,6 +248,14 @@ position = Vector2(-2850, 6719)
 script = ExtResource("21_oymvg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Dummy"]
+sprite_frames = SubResource("SpriteFrames_u4foa")
+
+[node name="Dummy2" parent="." instance=ExtResource("10_a56yr")]
+z_index = 1
+position = Vector2(-1782, 6719)
+script = ExtResource("21_oymvg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Dummy2"]
 sprite_frames = SubResource("SpriteFrames_u4foa")
 
 [node name="TextureRect" type="TextureRect" parent="."]

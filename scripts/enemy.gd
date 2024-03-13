@@ -80,3 +80,6 @@ func logic(character_list, menu):
 func _on_healthbar_animation_end():
 	animation_end.emit()
 	pass # Replace with function body.
+
+func on_animation():
+	return animation.is_playing()

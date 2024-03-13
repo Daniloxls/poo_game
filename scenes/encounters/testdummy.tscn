@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://450xj56kurdu"]
+
+[ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://scenes/enemy.tscn" id="1_l5ite"]
+
+[node name="Enemies" type="Node2D"]
+position = Vector2(-112, 299)
+scale = Vector2(4, 4)
+
+[node name="Enemy" parent="." instance=ExtResource("1_l5ite")]
+position = Vector2(-34, -23)

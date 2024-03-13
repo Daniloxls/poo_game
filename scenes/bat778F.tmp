@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4bax87kqk6po"]
+[gd_scene load_steps=7 format=3 uid="uid://c4bax87kqk6po"]
 
 [ext_resource type="Script" path="res://scenes/battle.gd" id="1_c4w7k"]
 [ext_resource type="Texture2D" uid="uid://crj1a7pxbsidn" path="res://assets/battle/BG/battleback5.png" id="1_uxafu"]
@@ -6,9 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="5_rvb1y"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="6_v5kcj"]
 [ext_resource type="Texture2D" uid="uid://d0nnq665edodf" path="res://assets/gui/TurnCursor.png" id="8_84fjv"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_gng7a"]
-font_size = 33
 
 [node name="Battle" type="CanvasLayer"]
 script = ExtResource("1_c4w7k")
@@ -31,12 +28,5 @@ script = ExtResource("6_v5kcj")
 [node name="TurnCursor" type="Sprite2D" parent="."]
 position = Vector2(1491, 155)
 texture = ExtResource("8_84fjv")
-
-[node name="Debug" type="Label" parent="."]
-visible = false
-offset_right = 40.0
-offset_bottom = 23.0
-text = "asdasdasdads"
-label_settings = SubResource("LabelSettings_gng7a")
 
 [connection signal="animation_end" from="BattleMenu" to="." method="_on_battle_menu_animation_end"]

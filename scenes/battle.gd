@@ -6,15 +6,15 @@ signal battle_end
 @onready var party = get_node("../Inventory/Party")
 @onready var char_list = get_node("../Inventory/Party").get_children()
 @onready var player = get_node("../Level").get_child(0).get_child(2)
-@onready var enemies = $Enemies
-@onready var enemy_list = $Enemies.get_children()
 @onready var menu = $BattleMenu
 @onready var cursor = $Cursor
 @onready var turn_cursor = $TurnCursor
+@onready var debug = $Debug
  
 const ENEMY_POS_OFFSET = Vector2(128, 0)
 const CHARACTER_POS_OFFSET = Vector2(300,0)
 enum Selecting{
+	STARTING,
 	ACTION,
 	ENEMY,
 	ALLIE,
@@ -25,7 +25,7 @@ enum Selecting{
 	DEFEAT,
 	OTHER
 }
-var current_selection = Selecting.ANIMATION
+var current_selection = Selecting.STARTING
 var character_coords = []
 var character_back_coords = []
 var char_index = 0
@@ -34,6 +34,8 @@ var in_battle = false
 var enemy_coords = []
 var enemy_names = []
 var enemy_index = 0
+var enemies 
+var enemy_list
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -62,7 +64,15 @@ func reset_variables():
 func select_enemy():
 	current_selection = Selecting.ENEMY
 
-func start_battle():
+func start_battle(enemy_group_path):
+	var enemy_group = load(enemy_group_path)
+	var instance = enemy_group.instantiate()
+	add_child(instance)
+	enemies = $Enemies
+	enemy_list = $Enemies.get_children()
+	for enemy in enemy_list:
+		enemy.connect("animation_end", _on_enemy_animation_end)
+		enemy.connect("death", _on_enemy_death)
 	show()
 	var tween = create_tween()
 	in_battle = true
@@ -89,6 +99,8 @@ func start_battle():
 	
 	
 func read_input():
+	if Input.is_action_just_pressed("a"):
+		debug.show()
 	if in_battle:
 		if current_selection == Selecting.ACTION:
 			if Input.is_action_just_pressed("up"):
@@ -180,6 +192,7 @@ func _on_enemy_death():
 				in_battle = false
 				for char in char_list:
 					char.reset_position()
+				enemies.queue_free()
 				player.set_movement(true)
 				battle_end.emit()
 				reset_variables()

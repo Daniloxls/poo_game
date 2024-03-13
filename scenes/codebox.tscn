@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://2j3byyhg36c6"]
+[gd_scene load_steps=7 format=3 uid="uid://2j3byyhg36c6"]
 
 [ext_resource type="Script" path="res://scripts/codebox.gd" id="1_j5dny"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_pq3of"]
@@ -12,6 +12,10 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qoqcm"]
+font = ExtResource("2_pq3of")
+font_size = 26
 
 [node name="Codebox" type="CanvasLayer"]
 script = ExtResource("1_j5dny")
@@ -67,3 +71,11 @@ position = Vector2(646, 67)
 scale = Vector2(0.564, 0.564)
 texture = ExtResource("3_s2n5h")
 script = ExtResource("4_wuxah")
+
+[node name="Sair" type="Label" parent="."]
+offset_left = 997.0
+offset_top = 549.0
+offset_right = 1109.0
+offset_bottom = 576.0
+text = "X - Sair"
+label_settings = SubResource("LabelSettings_qoqcm")
