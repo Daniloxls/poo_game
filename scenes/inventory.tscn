@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c2jfv4lnhfpro"]
+[gd_scene load_steps=34 format=3 uid="uid://c2jfv4lnhfpro"]
 
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="1_iwvfi"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_xp6de"]
@@ -20,6 +20,7 @@
 [ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="15_8lktr"]
 [ext_resource type="LabelSettings" uid="uid://dgi27rysml5px" path="res://assets/fonts/gray_console_text.tres" id="18_fcg8q"]
 [ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/character.tscn" id="19_y70kq"]
+[ext_resource type="Script" path="res://scripts/BattleItemMenu.gd" id="20_jdma5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2i62"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -1510,6 +1511,515 @@ autowrap_mode = 2
 custom_minimum_size = Vector2(33.02, 0)
 layout_mode = 2
 size_flags_vertical = 0
+
+[node name="BattleItemMenu" type="Node2D" parent="."]
+script = ExtResource("20_jdma5")
+
+[node name="Cursor" type="Sprite2D" parent="BattleItemMenu"]
+z_index = 2
+position = Vector2(167, -41)
+scale = Vector2(0.825, 0.825)
+texture = ExtResource("2_xp6de")
+script = ExtResource("3_irinq")
+
+[node name="ItemPanels" type="MarginContainer" parent="BattleItemMenu"]
+offset_left = 255.0
+offset_top = 21.0
+offset_right = 719.0
+offset_bottom = 577.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ItemPanelContainer" type="VBoxContainer" parent="BattleItemMenu/ItemPanels"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Panel" type="Panel" parent="BattleItemMenu/ItemPanels/ItemPanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.97
+theme_override_styles/panel = SubResource("StyleBoxFlat_a2i62")
+
+[node name="Inventorymargin" type="MarginContainer" parent="BattleItemMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 317.0
+offset_top = 38.0
+offset_right = 699.0
+offset_bottom = 560.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="InventoryContainer" type="VBoxContainer" parent="BattleItemMenu/Inventorymargin"]
+custom_minimum_size = Vector2(0, 522)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 11
+
+[node name="ItemTopSpacer" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.5
+
+[node name="ClassMochilaLabel" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemTopSpacer"]
+layout_mode = 2
+text = "public class"
+label_settings = SubResource("LabelSettings_2s1jm")
+
+[node name="ClassMochilaLabel2" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemTopSpacer"]
+layout_mode = 2
+text = "Mochila"
+label_settings = ExtResource("12_7flin")
+
+[node name="ClassMochilaLabel3" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemTopSpacer"]
+layout_mode = 2
+text = "{"
+label_settings = ExtResource("13_tm731")
+
+[node name="ItemLeftSpacer" type="VBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.64
+
+[node name="MochilaText" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ListItem" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "  List"
+label_settings = ExtResource("12_7flin")
+
+[node name="ListItem4" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "<"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ListItem2" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "Item"
+label_settings = ExtResource("12_7flin")
+
+[node name="ListItem3" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="mochila" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "mochila"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="mochila2" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "="
+label_settings = ExtResource("14_2m0te")
+
+[node name="mochila3" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "["
+label_settings = ExtResource("15_8lktr")
+
+[node name="ItemContainer" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="ItemList" type="VBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="ItemContainer" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer2" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer2"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer2"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer2"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer2"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer2"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer3" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer3"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer3"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer3"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer3"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer3"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer4" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer4"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer4"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer4"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer4"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer4"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer5" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer5"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer5"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer5"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer5"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer5"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer6" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer6"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer6"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer6"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer6"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer6"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer7" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer7"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer7"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer7"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer7"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer7"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer8" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer8"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer8"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer8"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer8"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer8"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer9" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer9"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer9"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer9"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer9"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="virgula" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer9"]
+layout_mode = 2
+text = ","
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemContainer10" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList"]
+layout_mode = 2
+script = ExtResource("12_3iqbq")
+
+[node name="ItemIcon" type="TextureRect" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer10"]
+layout_mode = 2
+texture = ExtResource("12_xge06")
+stretch_mode = 2
+
+[node name="ItemName" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer10"]
+clip_contents = true
+custom_minimum_size = Vector2(235, 0)
+layout_mode = 2
+text = "nome"
+label_settings = ExtResource("18_fcg8q")
+vertical_alignment = 3
+text_overrun_behavior = 1
+
+[node name="x" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer10"]
+layout_mode = 2
+text = "x"
+label_settings = SubResource("LabelSettings_q0pds")
+
+[node name="ItemQuantity" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/ItemList/ItemContainer10"]
+custom_minimum_size = Vector2(50.495, 0)
+layout_mode = 2
+text = "100
+"
+label_settings = SubResource("LabelSettings_7q2lo")
+horizontal_alignment = 2
+text_overrun_behavior = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Asterisco2" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/HBoxContainer"]
+layout_mode = 2
+text = "]"
+label_settings = ExtResource("15_8lktr")
+
+[node name="Asterisco3" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/ItemContainer/HBoxContainer"]
+layout_mode = 2
+text = "}"
+label_settings = ExtResource("13_tm731")
+
+[node name="InfoBoxContainer" type="VBoxContainer" parent="BattleItemMenu/Inventorymargin/InventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="ItemInfoLabel" type="Label" parent="BattleItemMenu/Inventorymargin/InventoryContainer/InfoBoxContainer"]
+layout_mode = 2
+text = " // X - Voltar"
+label_settings = SubResource("LabelSettings_x5lsa")
 
 [node name="Party" type="Node2D" parent="."]
 position = Vector2(1311, 86)

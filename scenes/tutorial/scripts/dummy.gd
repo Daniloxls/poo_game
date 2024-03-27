@@ -23,8 +23,6 @@ func _process(delta):
 
 func interaction():
 	battle.start_battle("res://scenes/encounters/testdummy.tscn")
-	player.set_movement(false)
-	return texto
 
 func set_texto(new_texto):
 	texto = new_texto

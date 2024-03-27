@@ -18,6 +18,8 @@ enum State{
 var current_state = State.DOWN
 var free_to_move = true
 var in_scene = false
+var on_battle = false
+
 func _ready():
 	event.monitorable = true
 	
@@ -25,7 +27,7 @@ func read_input():
 	# Movement
 	velocity = Vector2()
 	if !in_scene:
-		if free_to_move:
+		if free_to_move and !on_battle:
 			if Input.is_action_pressed("up"):
 				velocity.y -= 1
 				direction = Vector2(0, -1)
@@ -81,11 +83,10 @@ func read_input():
 	move_and_slide()
 	
 	# Interaction
-	if free_to_move:
+	if free_to_move and !on_battle:
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
-				textbox.queue_char_text((interact_box.get_overlapping_areas()[0]).get_parent().interaction(),
-				(interact_box.get_overlapping_areas()[0]).get_parent().get_portraits())
+				interact_box.get_overlapping_areas()[0].get_parent().interaction()
 		if Input.is_action_just_pressed("depure"):
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
@@ -102,6 +103,9 @@ func _physics_process(delta):
 
 func set_movement(move):
 	free_to_move = move
+	
+func set_on_battle(obt):
+	on_battle = obt
 	
 func set_in_scene(scene):
 	in_scene = scene

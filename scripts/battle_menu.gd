@@ -8,7 +8,7 @@ signal animation_end
 @onready var characters = $PlayerStatus/MarginContainer/HBoxContainer.get_children()
 @onready var monster_list = $MonsterStatus/MarginContainer/HBoxContainer/Label2
 
-const CURSOR_INITIAL_Y = -50
+const CURSOR_INITIAL_Y = -43
 
 
 var cursor_pos = 0
@@ -26,14 +26,14 @@ func update_cursor_pos():
 	
 func move_cursor_up():
 	if cursor_pos == 0:
-		cursor_pos = 3
+		cursor_pos = 2
 		update_cursor_pos()
 	else:
 		cursor_pos -= 1
 		update_cursor_pos()
 
 func move_cursor_down():
-	if cursor_pos == 3:
+	if cursor_pos == 2:
 		cursor_pos = 0
 		update_cursor_pos()
 	else:

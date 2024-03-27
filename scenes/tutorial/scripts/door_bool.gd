@@ -10,7 +10,7 @@ extends Node2D
 var nome = "Porta"
 var texto = ["Está trancada.", "Parece que você ainda não consegue abrir essa porta, tente usar aquele terminal interaja com ele."]
 var portraits = ["", "res://assets/portraits/silhueta.png"]
-var codigo = {"1int idade": 15, "1boolean trancado": true, "Material material": "madeira"}
+var codigo = {"1boolean trancado": true, "Material material": "barreira"}
 var depuring = false
 var dialogue = true
 
@@ -19,22 +19,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("depure"):
-		if dialogue and area.has_overlapping_areas():
-			dialogue = false
-			textbox.queue_char_text(["Veja, esssas são as propiedades da porta.",
-			"Ela tem uma linha de codigo que diz se ela está trancada, por sorte conseguimos editar ela.",
-			"Por ser uma variavel booleana ela só pode verdadeiro ou falso",
-			"Use as setas para cima e para baixo para selecionar a propiedade trancado e as setas esquerda e direita para altera-la",
-			"Mude a variavel trancado para falso(false)",
-			"E para sair da tela de codigo basta apertar X"],
-			["res://assets/portraits/silhueta.png",
-			"res://assets/portraits/silhueta.png",
-			"res://assets/portraits/silhueta.png",
-			"res://assets/portraits/silhueta.png",
-			"res://assets/portraits/silhueta.png",
-			"res://assets/portraits/silhueta.png"])
-			
 	pass
 
 
@@ -42,7 +26,7 @@ func interaction():
 	if player.get_sudo() and len(texto) > 1:
 		texto.pop_back()
 		portraits.pop_back()
-	return texto
+	textbox.queue_char_text(texto, portraits)
 
 func set_texto(new_texto):
 	texto = new_texto
@@ -79,3 +63,20 @@ func _on_codebox_code_closed():
 		set_texto(["Está trancada."])
 		set_portraits([""])
 		sprite.set_frame_and_progress(0, 0)
+
+
+func _on_codebox_code_open():
+	if dialogue and area.has_overlapping_areas():
+		dialogue = false
+		textbox.queue_char_text(["Veja, esssas são as propiedades da porta.",
+		"Ela tem uma linha de codigo que diz se ela está trancada, por sorte conseguimos editar ela.",
+		"Por ser uma variavel booleana ela só pode verdadeiro ou falso",
+		"Use as setas para cima e para baixo para selecionar a propiedade trancado e as setas esquerda e direita para altera-la",
+		"Mude a variavel trancado para falso(false)",
+		"E para sair da tela de codigo basta apertar X"],
+		["res://assets/portraits/silhueta.png",
+		"res://assets/portraits/silhueta.png",
+		"res://assets/portraits/silhueta.png",
+		"res://assets/portraits/silhueta.png",
+		"res://assets/portraits/silhueta.png",
+		"res://assets/portraits/silhueta.png"])

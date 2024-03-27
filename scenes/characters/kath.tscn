@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=3 uid="uid://c7ljtnwyjtgv5"]
+
+[ext_resource type="Script" path="res://scripts/npc_script.gd" id="1_yr5td"]
+[ext_resource type="Texture2D" uid="uid://dyvfyjlmwtwe3" path="res://assets/characters/kath_sheet.png" id="2_shsa1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ngvn"]
+atlas = ExtResource("2_shsa1")
+region = Rect2(1000, 0, 500, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv4gc"]
+atlas = ExtResource("2_shsa1")
+region = Rect2(500, 0, 500, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toowq"]
+atlas = ExtResource("2_shsa1")
+region = Rect2(0, 0, 500, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpoch"]
+atlas = ExtResource("2_shsa1")
+region = Rect2(1500, 0, 500, 700)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_blp0o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ngvn")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv4gc")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toowq")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpoch")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vq6o"]
+size = Vector2(310, 363)
+
+[sub_resource type="Animation" id="Animation_syws6"]
+resource_name = "jump"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(80, -56), Vector2(80, -160), Vector2(80, -56)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rucil"]
+_data = {
+"jump": SubResource("Animation_syws6")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mb2ge"]
+size = Vector2(500, 500)
+
+[node name="Kath" type="CharacterBody2D"]
+y_sort_enabled = true
+texture_filter = 1
+collision_layer = 3
+script = ExtResource("1_yr5td")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 2
+position = Vector2(80, -56)
+scale = Vector2(1.0625, 1.1)
+sprite_frames = SubResource("SpriteFrames_blp0o")
+animation = &"idle_right"
+
+[node name="ColisionPlayer" type="CollisionShape2D" parent="."]
+position = Vector2(79, 133.5)
+shape = SubResource("RectangleShape2D_2vq6o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rucil")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(77, 132)
+scale = Vector2(0.622144, 0.747361)
+collision_layer = 2147483648
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_mb2ge")

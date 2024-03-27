@@ -116,7 +116,7 @@ script = ExtResource("1_yatrg")
 
 [node name="Player" parent="." instance=ExtResource("2_bdtc3")]
 z_index = 3
-position = Vector2(-12260, 6536)
+position = Vector2(-12575, 6356)
 script = ExtResource("3_a0oed")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -162,6 +162,7 @@ texture = ExtResource("6_3n4ds")
 [node name="Textbox" parent="." instance=ExtResource("8_n6ken")]
 
 [node name="PortaBool" parent="." instance=ExtResource("9_vmyxb")]
+z_index = 4
 position = Vector2(-2306, 6507)
 scale = Vector2(0.65, 6.01)
 script = ExtResource("10_lesad")
@@ -505,3 +506,9 @@ position = Vector2(23, 0)
 polygon = PackedVector2Array(-7943, -5456, 13733, -5434, 13316, -1801, 9877, -1765, 9854, -939, 7755, -962, 7755, -1828, -7385, -1807, -7397, 1131, 7781, 1093, 7788, 571, 9895, 571, 9903, 1077, 13330, 1105, 13316, -1788, 13720, -5421, 13727, 5421, -8057, 5469, -8051, 5463)
 
 [connection signal="code_closed" from="Codebox" to="PortaBool" method="_on_codebox_code_closed"]
+[connection signal="code_closed" from="Codebox" to="PonteInt" method="_on_codebox_code_closed"]
+[connection signal="code_closed" from="Codebox" to="PortaString" method="_on_codebox_code_closed"]
+[connection signal="code_open" from="Codebox" to="PortaBool" method="_on_codebox_code_open"]
+[connection signal="code_open" from="Codebox" to="PonteInt" method="_on_codebox_code_open"]
+[connection signal="code_open" from="Codebox" to="PortaString" method="_on_codebox_code_open"]
+[connection signal="text_finish" from="Textbox" to="Terminal" method="_on_textbox_text_finish"]

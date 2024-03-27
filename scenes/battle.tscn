@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://c4bax87kqk6po"]
 
 [ext_resource type="Script" path="res://scenes/battle.gd" id="1_c4w7k"]
-[ext_resource type="Texture2D" uid="uid://crj1a7pxbsidn" path="res://assets/battle/BG/battleback5.png" id="1_uxafu"]
 [ext_resource type="PackedScene" uid="uid://dkrrrbfnsa5lw" path="res://scenes/battle_box.tscn" id="3_ymsal"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="5_rvb1y"]
+[ext_resource type="Texture2D" uid="uid://mcny5mfa0hca" path="res://assets/battle/BG/tutorial.png" id="6_2n1o6"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="6_v5kcj"]
 [ext_resource type="Texture2D" uid="uid://d0nnq665edodf" path="res://assets/gui/TurnCursor.png" id="8_84fjv"]
 
@@ -13,10 +13,13 @@ font_size = 33
 [node name="Battle" type="CanvasLayer"]
 script = ExtResource("1_c4w7k")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(576, 324)
-scale = Vector2(1.04348, 1.04348)
-texture = ExtResource("1_uxafu")
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_right = 1156.0
+offset_bottom = 648.0
+texture = ExtResource("6_2n1o6")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="BattleMenu" parent="." instance=ExtResource("3_ymsal")]
 

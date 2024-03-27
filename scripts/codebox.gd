@@ -1,10 +1,13 @@
 extends CanvasLayer
 
 signal code_closed
+signal code_open
+
 const CHAR_READ_RATE = 0.03
 @onready var textbox_container = $TextboxContainer
 @onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label2
 @onready var cursor = $Cursor
+@onready var sair = $Sair
 @onready var player = get_node("../Player")
 @onready var textbox = get_node("../Textbox")
 
@@ -32,12 +35,14 @@ func hide_textbox():
 	label.text = ""
 	textbox_container.hide()
 	cursor.hide()
+	sair.hide()
 	prop = {}
 	cursor_dict = {}
 	positions = []
 	
 func show_textbox():
 	textbox_container.show()
+	sair.show()
 
 func queue_text(nome, props):
 	if nome == "":
@@ -77,6 +82,7 @@ func display_text():
 	change_state(State.FINISH)
 	player.set_movement(false)
 	show_textbox()
+	code_open.emit()
 	
 
 	

@@ -5,6 +5,7 @@ signal battle_end
 
 @onready var party = get_node("../Inventory/Party")
 @onready var char_list = get_node("../Inventory/Party").get_children()
+@onready var inventory = get_node("../Inventory/BattleItemMenu")
 @onready var player = get_node("../Level").get_child(0).get_child(2)
 @onready var menu = $BattleMenu
 @onready var cursor = $Cursor
@@ -14,11 +15,19 @@ signal battle_end
 const ENEMY_POS_OFFSET = Vector2(128, 0)
 const CHARACTER_POS_OFFSET = Vector2(300,0)
 enum Selecting{
+	ITEM_ALLIE,
+	ITEM_ENEMY,
+	ITEM_ALL_ALLIES,
+	ITEM_ALL_ENEMIES,
+	ITEM_ALL,
+	NONE,
 	STARTING,
 	ACTION,
 	ENEMY,
 	ALLIE,
-	ALL,
+	ALL_ALLIES,
+	ALL_ENEMIES,
+	MENU,
 	ANIMATION,
 	ENEMY_PHASE,
 	VICTORY,
@@ -46,6 +55,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	read_input()
+	debug.text = str(Selecting.keys()[current_selection]) + "\n" + str(inventory.get_item_index())
 	if current_selection == Selecting.ACTION and char_turn >= len(char_list):
 		set_selection(Selecting.ENEMY_PHASE)
 		char_turn = -1
@@ -67,6 +77,7 @@ func select_enemy():
 func start_battle(enemy_group_path):
 	var enemy_group = load(enemy_group_path)
 	var instance = enemy_group.instantiate()
+	player.set_on_battle(true)
 	add_child(instance)
 	enemies = $Enemies
 	enemy_list = $Enemies.get_children()
@@ -122,9 +133,9 @@ func read_input():
 							cursor.show()
 							cursor.set_position(character_coords[char_index])
 						2:
-							pass
-						3:
-							pass
+							menu.hide_cursor()
+							current_selection = Selecting.MENU
+							inventory.aparecer()
 		
 		
 		
@@ -164,13 +175,37 @@ func read_input():
 			elif Input.is_action_just_pressed("interact"):
 				menu.update_health_slow(char_index, char_list[char_index].lose_health(randi_range(8, 12)))
 				current_selection = Selecting.ANIMATION
-			elif Input.is_action_just_pressed("h"):
-				menu.update_health_slow(char_index, char_list[char_index].gain_health(randi_range(8, 12)))
-				current_selection = Selecting.ANIMATION
 			elif Input.is_action_just_pressed("exit"):
 				current_selection = Selecting.ACTION
 				cursor.hide()
 				menu.show_cursor()
+				
+		elif current_selection == Selecting.MENU:
+			if Input.is_action_just_pressed("exit"):
+				current_selection = Selecting.ACTION
+				inventory.esconder()
+				menu.show_cursor()
+			elif Input.is_action_just_pressed("interact"):
+				current_selection = inventory.get_item_selected()
+				inventory.esconder()
+				if current_selection == Selecting.NONE:
+					current_selection =Selecting.MENU
+					inventory.aparecer()
+					#Tocar som de não pode
+		
+		elif current_selection == Selecting.ITEM_ALLIE:
+			if Input.is_action_just_pressed("up"):
+				char_index = update_char_index_up()
+				cursor.set_position(character_coords[char_index])
+			elif Input.is_action_just_pressed("down"):
+				char_index = update_char_index_down()
+				cursor.set_position(character_coords[char_index])
+			elif Input.is_action_just_pressed("interact"):
+				pass
+			elif Input.is_action_just_pressed("exit"):
+				current_selection = Selecting.MENU
+				inventory.aparecer()
+				cursor.hide()
 				
 func get_entity_positions():
 	for enemy in enemy_list:
@@ -193,7 +228,7 @@ func _on_enemy_death():
 				for char in char_list:
 					char.reset_position()
 				enemies.queue_free()
-				player.set_movement(true)
+				player.set_on_battle(false)
 				battle_end.emit()
 				reset_variables()
 				hide()

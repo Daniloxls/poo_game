@@ -110,13 +110,13 @@ size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("2_ts4pm")
 theme_override_font_sizes/font_size = 37
 text = "Lutar
-Funções
+
 Item"
 autowrap_mode = 2
 clip_text = true
 
 [node name="Cursor" type="Sprite2D" parent="Actions"]
-position = Vector2(15, -50)
+position = Vector2(12, -43)
 scale = Vector2(0.564, 0.564)
 texture = ExtResource("3_6yefv")
 script = ExtResource("4_02h83")

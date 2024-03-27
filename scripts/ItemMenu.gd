@@ -5,7 +5,9 @@ extends Node2D
 @onready var right_container = $Inventorymargin/InventoryContainer/ItemContainer/RightItemList
 @onready var item_info = $Inventorymargin/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer/ItemInfoContainer/ItemInfoLabel
 var item_pos = []
-var items : Array[ITEM] = []
+var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
+							load("res://scenes/itens/repo/armadura_ferro.tres"),
+							load("res://scenes/itens/repo/armadura_couro.tres")]
 var item_index = 0
 var position_got = false
 var left_list
@@ -79,3 +81,8 @@ func update_info_text():
 	if items.size() > 0:
 		item_info.set_text(items[item_index].get_item_text())
 	
+func get_items():
+	return items
+	
+func add_item(item):
+	items.append(item)

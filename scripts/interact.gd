@@ -19,8 +19,6 @@ func _process(delta):
 	pass
 
 
-func interaction():
-	return texto
 
 func set_texto(new_texto):
 	texto = new_texto

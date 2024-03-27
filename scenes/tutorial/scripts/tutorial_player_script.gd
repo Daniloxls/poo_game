@@ -17,7 +17,7 @@ enum State{
 
 var current_state = State.DOWN
 var free_to_move = true
-var sudo = false
+var sudo = true
 
 func _ready():
 	event.monitorable = true
@@ -82,8 +82,7 @@ func read_input():
 	if free_to_move:
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
-				textbox.queue_char_text((interact_box.get_overlapping_areas()[0]).get_parent().interaction(),
-				(interact_box.get_overlapping_areas()[0]).get_parent().get_portraits())
+				interact_box.get_overlapping_areas()[0].get_parent().interaction()
 		if Input.is_action_just_pressed("depure") and sudo:
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),

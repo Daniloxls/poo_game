@@ -30,7 +30,6 @@ func interaction():
 	colision.set_disabled(true)
 	sprite.set_frame(DOWN_POSITION)
 	porta_sprite.set_frame(DOWN_POSITION)
-	return texto
 
 func set_texto(new_texto):
 	texto = new_texto

@@ -24,7 +24,6 @@ func interaction():
 	var next_level = load("res://scenes/tutorial/codigofont.tscn")
 	var instance = next_level.instantiate()
 	root.change_level(instance)
-	return texto
 
 func set_texto(new_texto):
 	texto = new_texto

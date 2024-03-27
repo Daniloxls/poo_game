@@ -1,16 +1,16 @@
 [gd_scene load_steps=18 format=3 uid="uid://mje13m0bdoj2"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qgrjs"]
-[ext_resource type="Texture2D" uid="uid://b1tmaj25wsq82" path="res://assets/battle/char1.png" id="2_h2yyt"]
+[ext_resource type="Texture2D" uid="uid://6xm3lmnjv3wm" path="res://assets/battle/turin_batalha.png" id="2_v1xcn"]
 [ext_resource type="Texture2D" uid="uid://gcfse55iwhvh" path="res://assets/battle/char1_healed.png" id="3_jwor4"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_2nl2y"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_jxdku"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_de2uv"]
 [ext_resource type="Script" path="res://scripts/DamageText.gd" id="7_74ut4"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0hu2i"]
-atlas = ExtResource("2_h2yyt")
-region = Rect2(0, 0, 31, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul3ek"]
+atlas = ExtResource("2_v1xcn")
+region = Rect2(0, 0, 800, 1200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wal15"]
 atlas = ExtResource("3_jwor4")
@@ -24,7 +24,7 @@ region = Rect2(31, 0, 31, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0hu2i")
+"texture": SubResource("AtlasTexture_ul3ek")
 }],
 "loop": true,
 "name": &"default",
@@ -170,8 +170,10 @@ outline_color = Color(0, 0, 0, 1)
 script = ExtResource("1_qgrjs")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.035, 0.035)
 sprite_frames = SubResource("SpriteFrames_htfvh")
 frame_progress = 0.217676
+flip_h = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

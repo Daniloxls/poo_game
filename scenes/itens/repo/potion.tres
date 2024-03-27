@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ITEM" load_steps=3 format=3 uid="uid://xqlvgkalx65c"]
 
-[ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/icons/potion_icon.png" id="1_pcvpv"]
+[ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/gui/icons/potion_icon.png" id="1_pcvpv"]
 [ext_resource type="Script" path="res://scenes/itens/classes/item_class.gd" id="1_xhk5p"]
 
 [resource]
@@ -9,3 +9,4 @@ ITEM_NAME = "Poção"
 QUANTITY = 1
 ITEM_ICON = ExtResource("1_pcvpv")
 ITEM_TEXT = "Poção das boas"
+SELECTION = 0

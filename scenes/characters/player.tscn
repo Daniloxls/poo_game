@@ -449,6 +449,7 @@ size = Vector2(310, 363)
 size = Vector2(316.25, 362.25)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 collision_layer = 3
 script = ExtResource("1_g6qgi")
