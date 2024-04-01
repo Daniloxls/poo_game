@@ -31,25 +31,25 @@ func read_input():
 			if Input.is_action_pressed("up"):
 				velocity.y -= 1
 				direction = Vector2(0, -1)
-				_animated_sprite.play("run_up")
+				_animated_sprite.play("walk_up")
 				current_state = State.UP
 				interact_box.top()
 			elif Input.is_action_pressed("down"):
 				velocity.y += 1
 				direction = Vector2(0, 1)
-				_animated_sprite.play("run_down")
+				_animated_sprite.play("walk_down")
 				current_state = State.DOWN
 				interact_box.bottom()
 			elif Input.is_action_pressed("left"):
 				velocity.x -= 1
 				direction = Vector2(-1, 0)
-				_animated_sprite.play("run_left")
+				_animated_sprite.play("walk_left")
 				current_state = State.LEFT
 				interact_box.left()
 			elif Input.is_action_pressed("right"):
 				velocity.x += 1
 				direction = Vector2(1, 0)
-				_animated_sprite.play("run_right")	
+				_animated_sprite.play("walk_right")	
 				current_state = State.RIGHT
 				interact_box.right()
 			else:
@@ -78,7 +78,10 @@ func read_input():
 			
 	
 	velocity = velocity.normalized()
-	velocity = velocity * 2300
+	if Input.is_action_pressed("run"):
+		velocity = velocity * 3600
+	else:
+		velocity = velocity * 2300
 	
 	move_and_slide()
 	
@@ -125,11 +128,14 @@ func set_animation(animation, direction):
 		"walk":
 			match(direction):
 				"right":
-					_animated_sprite.play("run_right")
+					_animated_sprite.play("walk_right")
 				"up":
-					_animated_sprite.play("run_up")
+					_animated_sprite.play("walk_up")
 				"down":
-					_animated_sprite.play("run_down")
+					_animated_sprite.play("walk_down")
 				"left":
-					_animated_sprite.play("run_left")
+					_animated_sprite.play("walk_left")
 					
+
+func set_sprite(sprite):
+	_animated_sprite.play(sprite)

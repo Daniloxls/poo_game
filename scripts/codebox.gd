@@ -28,6 +28,7 @@ var cursor_dict = {}
 var classname
 var text_queue = []
 var typing = false
+
 func _ready():
 	hide_textbox()
 

@@ -18,7 +18,7 @@ var texto = []
 var codigo = [""]
 var portraits = [""]
 var depuring = false
-
+var seq = 1
 var current_state = State.DOWN
 
 func _ready():
@@ -53,10 +53,25 @@ func depure():
 
 func interaction():
 	var tween = create_tween()
-	textbox.queue_char_text(["Você vai ter de correr mais do que isso pra me acompanhar!"], [""])
-	tween.tween_callback(self.set_sprite.bind("idle_up"))
-	tween.tween_property(self, "position",Vector2(4500, -21800), 5)
-	tween.tween_property(self, "position",Vector2(900, -21800), 1)
+	if seq == 0:
+		tween.tween_callback(self.set_seq.bind(1))
+		textbox.queue_char_text(["Você vai ter de correr mais do que isso pra me acompanhar!"], [""])
+		tween.tween_callback(self.set_sprite.bind("walk_up"))
+		tween.tween_property(self, "position",Vector2(4500, -13500), 2.5)
+		tween.tween_property(self, "position",Vector2(900, -13500), 1)
+		tween.tween_property(self, "position",Vector2(900, -21800), 2.5)
+		tween.tween_callback(self.set_sprite.bind("idle_down"))
+	if seq == 1:
+		textbox.queue_char_text(["Te encontro lá dentro, vamos!"], [""])
+		tween.tween_callback(self.set_sprite.bind("walk_up"))
+		tween.tween_property(self, "position",Vector2(900, -26000), 2.5)
+		tween.tween_callback(self.set_process_mode.bind(PROCESS_MODE_DISABLED))
 
 func name():
 	return nome
+
+func get_seq():
+	return seq
+
+func set_seq(event_seq):
+	seq = event_seq

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://wtnrlc4bfiyj"]
+[gd_scene load_steps=40 format=3 uid="uid://wtnrlc4bfiyj"]
 
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial.gd" id="1_nde62"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_1qc1t"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://db1es6t3htq5g" path="res://assets/decor/espinhos.png" id="24_1wmvm"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/sourcecode_portal.gd" id="24_6ir1x"]
 [ext_resource type="Texture2D" uid="uid://cu40hnevtrlbc" path="res://assets/decor/AlavancaPullUp.png" id="24_dvgtu"]
+[ext_resource type="Script" path="res://scenes/tutorial/scripts/glitch_effect.gd" id="24_xk1fj"]
 [ext_resource type="Texture2D" uid="uid://dlm0sevxn22pn" path="res://assets/decor/AlavancaPullDown.png" id="25_60y6o"]
 [ext_resource type="Texture2D" uid="uid://dxd8tyqv4x7p1" path="res://assets/decor/ParedeRetratiuUp.png" id="26_8otyt"]
 [ext_resource type="Texture2D" uid="uid://f3kjcukhb62g" path="res://assets/static.png" id="26_kbgdb"]
@@ -276,6 +277,7 @@ polygon = PackedVector2Array(-9326, -3755, 10631, -3687, 9306, -1240, -7795, -12
 [node name="PortalShow" parent="." instance=ExtResource("23_m0a1s")]
 position = Vector2(-220, 6943)
 scale = Vector2(1, 6.45)
+script = ExtResource("24_xk1fj")
 
 [node name="Portal" parent="PortalShow" instance=ExtResource("10_a56yr")]
 position = Vector2(969, -271.473)

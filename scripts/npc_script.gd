@@ -52,7 +52,6 @@ func depure():
 
 
 func interaction():
-	
 	pass
 
 func name():
