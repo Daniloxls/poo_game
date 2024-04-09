@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://btp3y063s4y6o"]
 
-[ext_resource type="Texture2D" uid="uid://ec32i50651jb" path="res://assets/forest/Topdown Forest - Props.png" id="1_0logt"]
-[ext_resource type="Texture2D" uid="uid://bhjnb8txjjc8b" path="res://assets/forest/Topdown Forest - Tileset.png" id="2_gqhvo"]
+[ext_resource type="Texture2D" uid="uid://ec32i50651jb" path="res://assets/tileset/forest/placeholder/Topdown Forest - Props.png" id="1_0logt"]
+[ext_resource type="Texture2D" uid="uid://bhjnb8txjjc8b" path="res://assets/tileset/forest/placeholder/Topdown Forest - Tileset.png" id="2_gqhvo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5tu1n"]
 resource_name = "props"

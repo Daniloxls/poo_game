@@ -1,4 +1,5 @@
 extends HBoxContainer
+# ItemContainer é uma celula do inventario que mostra um item
 
 @onready var icon = $ItemIcon
 @onready var item_name = $ItemName
@@ -12,6 +13,7 @@ func _ready():
 func _process(delta):
 	pass
 
+# Função que apenas coloca as informações do item na celula
 func set_item(item : ITEM):
 	icon.set_texture(item.get_icon())
 	item_name.set_text(item.get_item_name())

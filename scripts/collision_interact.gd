@@ -21,6 +21,8 @@ func turn_all_off():
 	right_box.disabled = true
 	bottom_box.disabled = true
 	
+# Funções usadas quando o jogador se vira para alguma direção, liga a caixa
+# de interação respectiva e desliga as outras
 func top():
 	turn_all_off()
 	top_box.disabled = false

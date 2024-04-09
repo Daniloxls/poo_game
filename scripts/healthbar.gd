@@ -1,5 +1,8 @@
 extends Node2D
 
+# healthbar é o script que mosta a vida dos inimigos quando eles tomam dano
+# tambem é responsavel por mostrar o numero do dano da mesma forma que DamageText
+# Esse scrip junta os dois em uma animação só e é usado para os inimigos apenas
 signal animation_end
 
 @onready var green_bar = $Green 

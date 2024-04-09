@@ -1,4 +1,5 @@
 extends Node2D
+# Script não utilizado, tentar apagar depois
 @onready var hp_a = $Life1
 @onready var hp_b = $Life2
 @onready var hp_c = $Life3

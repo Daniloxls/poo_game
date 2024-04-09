@@ -1,4 +1,5 @@
 extends MarginContainer
+# Script não utilizado, tentar apagar depois
 @onready var mp_a = $MarginContainer/HBoxContainer/Value
 @onready var mp_b = $MarginContainer/HBoxContainer/Value2
 @onready var mp_c = $MarginContainer/HBoxContainer/Value3

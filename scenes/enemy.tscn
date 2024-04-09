@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://cr71ho5tuj7bn"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_yj3lc"]
-[ext_resource type="Texture2D" uid="uid://bakbubb0ggx34" path="res://assets/battle/boneco.png" id="2_7ik4c"]
+[ext_resource type="Texture2D" uid="uid://bakbubb0ggx34" path="res://assets/battle/enemy_sprites/boneco.png" id="2_7ik4c"]
 [ext_resource type="Script" path="res://scripts/healthbar.gd" id="2_qxhjg"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="3_2ys7c"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="4_1wklw"]

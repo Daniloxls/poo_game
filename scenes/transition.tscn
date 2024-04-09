@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://ch1uc8olfvcbg"]
 
-[ext_resource type="Script" path="res://scripts/transition.gd" id="1_67yfm"]
+[ext_resource type="Script" path="res://scripts/transition.gd" id="1_4kn6m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
 size = Vector2(14.5, 15)
 
 [node name="Transition" type="Node2D"]
 scale = Vector2(31, 31)
-script = ExtResource("1_67yfm")
+script = ExtResource("1_4kn6m")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 2147483648

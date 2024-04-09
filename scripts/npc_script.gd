@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+#scrip de um npc, deriva do script de um objeto interagivel
+# todos os scrips de npc devem extender esse
 var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer

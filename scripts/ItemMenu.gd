@@ -1,15 +1,27 @@
 extends Node2D
+# ItemMenu é a parte do menu que guarda os itens
 
+# 'selected' é o cursor que mostra qual item está selecionado
 @onready var selected = $SelectedItem
+# o inventario é divido em duas partes com 'left_container' e 'right_container'
 @onready var left_container = $Inventorymargin/InventoryContainer/ItemContainer/LeftItemList
 @onready var right_container = $Inventorymargin/InventoryContainer/ItemContainer/RightItemList
+# 'item_info' é a parte de baixo do menu que mostra a descrição do item
 @onready var item_info = $Inventorymargin/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer/ItemInfoContainer/ItemInfoLabel
+# 'item_pos' lista que guarda posições que o cursor pode tomar no inventario 
 var item_pos = []
+
+# Lista de items com alguns itens para teste
 var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
 							load("res://scenes/itens/repo/armadura_ferro.tres"),
 							load("res://scenes/itens/repo/armadura_couro.tres")]
+# Index que o cursor inicia
 var item_index = 0
+# 'positions_got' é a variavel que diz se as posições das celulas de item foram
+# salvas na lista item_pos
+# Como podemos ter varios tamanhos de tela, as posições são pegadas quando o menu está aberto
 var position_got = false
+# Listas que guardam as celulas de cada container do inventario
 var left_list
 var right_list
 # Called when the node enters the scene tree for the first time.
@@ -25,6 +37,7 @@ func _ready():
 func _process(delta):
 	if not position_got:
 		position_got = true
+		# salva a posição de cada celula em item_pos
 		for i in range(left_list.size()):
 			item_pos.append((left_list[i].get_position() + Vector2(343, 69)))
 			item_pos.append((right_list[i].get_position() + Vector2(714, 69)))
@@ -33,6 +46,7 @@ func _process(delta):
 	process_input()
 	
 	
+# Por equanto essa função só lida com o movimento do cursor usando as setas
 func process_input():
 	if Input.is_action_just_pressed("right"):
 		item_index += 1
@@ -48,6 +62,7 @@ func process_input():
 		update_index()
 		
 		
+# Garante que o cursor não vá alem da quantida de itens
 func update_index():
 	if item_index < 0:
 		item_index = 0
@@ -59,6 +74,7 @@ func update_index():
 		selected.set_position(item_pos[item_index])
 		update_info_text()
 
+# Distribui os itens igualmente entre as duas listas
 func display_items():
 	if items.size() % 2 == 0:
 		for i in range(0, items.size(), 2):
@@ -77,6 +93,7 @@ func display_items():
 			left_list[i/2].hide()
 			right_list[i/2].hide()
 
+# Quando um item está selecionado essa função mostra a descrição dele no painel de baixo
 func update_info_text():
 	if items.size() > 0:
 		item_info.set_text(items[item_index].get_item_text())

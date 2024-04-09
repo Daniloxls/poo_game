@@ -1,13 +1,22 @@
 extends CharacterBody2D
 
+# 'player_script' script que contem todas funções do personagem do jogador
+# 'direction' a direção que o personagem se move
 var direction : Vector2 = Vector2()
+# '_animated_sprite' o sprite do personagem
 @onready var _animated_sprite = $AnimatedSprite2D
+# 'interact_box' caixas em volta do jogador que servem para ele interagir com o mundo
 @onready var interact_box = $Collision_interact
+# 'colision' colisão do jogdor
 @onready var colision = $ColisionPlayer
+# 'event' colisão que apenas eventos veem
 @onready var event = $EventColision
+
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 @onready var inventory = get_node("../../../Inventory")
+
+# Direção para onde o player está olhando
 enum State{
 	DOWN,
 	LEFT,
@@ -20,11 +29,14 @@ var free_to_move = true
 var in_scene = false
 var on_battle = false
 
+# event.monitorable faz com que ele possa ser visto pelos eventos
 func _ready():
 	event.monitorable = true
 	
 func read_input():
-	# Movement
+	# Movimento
+	# Muda a animação e acelera o jogador na direção que está sendo apertada
+	# Tambem liga a caixa de interação respectiva
 	velocity = Vector2()
 	if !in_scene:
 		if free_to_move and !on_battle:
@@ -53,6 +65,7 @@ func read_input():
 				current_state = State.RIGHT
 				interact_box.right()
 			else:
+				# Se o jogador não está se movendo mostra sprite de parado na direção atual
 				match(current_state):
 					State.RIGHT:
 						_animated_sprite.play("idle_right")
@@ -76,7 +89,7 @@ func read_input():
 			
 				
 			
-	
+	# Acelera o jogador, se ele segurar shift acelera mais
 	velocity = velocity.normalized()
 	if Input.is_action_pressed("run"):
 		velocity = velocity * 3600
@@ -85,17 +98,23 @@ func read_input():
 	
 	move_and_slide()
 	
-	# Interaction
+	# Interação
 	if free_to_move and !on_battle:
+		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
 				interact_box.get_overlapping_areas()[0].get_parent().interaction()
+		# Se o jogador aperta 'X' pega o codigo do objeto que está em frente ao personagem e
+		# coloca na codebox
 		if Input.is_action_just_pressed("depure"):
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
 				interact_box.get_overlapping_areas()[0].get_parent().depure())
+		# Botão provisorio para abrir o inventario
 		if Input.is_action_just_pressed("a"):
 			inventory.aparecer()
+	# Se o jogador aperta 'X' e se a caixa de codigo está aberta, se for o caso
+	# insere o codigo editado de volta no objeto
 	if Input.is_action_just_pressed("exit"):
 		if codebox.get_state() != "Ready":
 			interact_box.get_overlapping_areas()[0].get_parent().update_codigo(codebox.get_props())

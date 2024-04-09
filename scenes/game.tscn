@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://rqh8da2muvx6"]
 
-[ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory.tscn" id="1_5i5st"]
-[ext_resource type="Script" path="res://scenes/game.gd" id="1_irk2k"]
+[ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory/inventory.tscn" id="1_5i5st"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_irk2k"]
 [ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
 [ext_resource type="PackedScene" uid="uid://wtnrlc4bfiyj" path="res://scenes/tutorial/tutorial.tscn" id="3_blk37"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dkrrrbfnsa5lw"]
 
 [ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_a61xi"]
-[ext_resource type="FontFile" uid="uid://c4h8wulrtqj44" path="res://assets/fonts/Born2bSportyV2.ttf" id="2_ts4pm"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_cbckn"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_6yefv"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_02h83"]
 [ext_resource type="Script" path="res://scripts/PlayerStatus.gd" id="5_ew3lm"]
@@ -62,8 +62,8 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("2_cbckn")
+theme_override_font_sizes/font_size = 31
 text = "Monstro 1
 Monstro 2
 Monstro 3"
@@ -107,7 +107,7 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 37
 text = "Lutar
 
@@ -155,7 +155,6 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 
 [node name="Char1" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
-visible = false
 script = ExtResource("6_yi885")
 
 [node name="Name" type="Label" parent="PlayerStatus/MarginContainer/HBoxContainer/Char1"]
@@ -164,7 +163,7 @@ offset_right = 345.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "Hero 1
 "
@@ -191,13 +190,12 @@ offset_right = 344.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "MP"
 clip_text = true
 
 [node name="Char2" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
-visible = false
 position = Vector2(0, 32)
 script = ExtResource("6_yi885")
 
@@ -207,7 +205,7 @@ offset_right = 345.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "Hero 1
 "
@@ -237,14 +235,13 @@ offset_right = 344.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "MP"
 clip_text = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Char3" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
-visible = false
 position = Vector2(0, 64)
 script = ExtResource("6_yi885")
 
@@ -254,7 +251,7 @@ offset_right = 345.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "Hero 1
 "
@@ -284,14 +281,13 @@ offset_right = 344.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "MP"
 clip_text = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Char4" type="Node2D" parent="PlayerStatus/MarginContainer/HBoxContainer"]
-visible = false
 position = Vector2(0, 96)
 script = ExtResource("6_yi885")
 
@@ -301,7 +297,7 @@ offset_right = 345.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "Hero 1
 "
@@ -331,7 +327,7 @@ offset_right = 344.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_fonts/font = ExtResource("2_ts4pm")
+theme_override_fonts/font = ExtResource("2_cbckn")
 theme_override_font_sizes/font_size = 29
 text = "MP"
 clip_text = true

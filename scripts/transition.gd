@@ -1,51 +1,19 @@
-extends Node2D
+extends "res://scripts/interact.gd"
 
-@onready var area = $Area2D
-@onready var colision = $StaticBody2D
-@onready var player = get_node("../Player")
-@onready var codebox = get_node("../Codebox")
+
 @onready var map = get_node("../TileMap")
-var nome
-var texto
-var codigo
-var portraits
-var depuring = false
 
+#Extende interact, faz alguma coisa quando alguma coisa entra em sua area
+# Todos objetos que fazem alguma coisa ao serem 'pisados' extedem essa classe
+# Talvez seja a mesma coisa que event, tenho de rever isso
 
 func _ready():
 	area.monitoring = true
-	pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	pass
 
-
-func interaction():
-	return texto
-
-func set_texto(new_texto):
-	texto = new_texto
-	
-func get_portraits():
-	return portraits
-	
-func set_portraits(new_portraits):
-	portraits = new_portraits
-	
-func set_codigo(new_nome, new_codigo):
-	nome = new_nome
-	codigo = new_codigo
-
-func update_codigo(new_codigo):
-	codigo = new_codigo
-	
-func depure():
-	depuring = true
-	return codigo
-	
-func name():
-	return nome
-
+#Essa função acontece sempre que alguma coisa entra na colisão da Area2D desse obejto
 func _on_area_2d_area_entered(area):
-	pass # Replace with function body.
+	pass

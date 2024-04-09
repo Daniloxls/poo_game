@@ -17,6 +17,8 @@ func _ready():
 func _process(delta):
 	pass
 
+# Atualiza todas as informações mostradas para as atuais do personagem
+# Controla as barras de pp e hp para terem as porcentagem certa
 func update_char(character):
 	var char_hp = character.get_hp()
 	var char_max_hp = character.get_max_hp()

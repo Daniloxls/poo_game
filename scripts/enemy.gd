@@ -1,5 +1,8 @@
 extends Node2D
 
+# scrip que deve ser a base para todos os inimigos
+
+# sinais de morte e fim de animação
 signal death
 signal animation_end
 
@@ -7,6 +10,7 @@ signal animation_end
 @onready var sprite = $Sprite
 @onready var healthbar = $Healthbar
 
+# variaveis temporarias de teste
 var nome = "Boneco"
 var hp
 
@@ -63,7 +67,9 @@ func lose_health(damage):
 		animation.play("get_hit")
 	
 
+#logica do inimigo
 func logic(character_list, menu):
+	# essa primeira parte serve para procurar um personagem vivo na party
 	var id = randi_range(0,len(character_list)-1)
 	if id == len(character_list):
 		id = 0
@@ -74,12 +80,12 @@ func logic(character_list, menu):
 			id += 1
 			if id == len(character_list):
 				id = 0
-				
+	# E essa parte é o ataque, ele atualiza a vida chamando a função de perder vida do personagem
 	menu.update_health_slow(id, character_list[id].lose_health(randi_range(2, 5)))
 
+# Quando a barra de vida dele termina de transicionar ele emite o sinal de que a animação acabou
 func _on_healthbar_animation_end():
 	animation_end.emit()
-	pass # Replace with function body.
 
 func on_animation():
 	return animation.is_playing()

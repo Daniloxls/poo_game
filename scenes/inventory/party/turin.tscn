@@ -1,0 +1,192 @@
+[gd_scene load_steps=18 format=3 uid="uid://6820ksfkyajx"]
+
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_r46m6"]
+[ext_resource type="Texture2D" uid="uid://b1tmaj25wsq82" path="res://assets/battle/enemy_sprites/char1.png" id="2_4axv2"]
+[ext_resource type="Texture2D" uid="uid://gcfse55iwhvh" path="res://assets/battle/enemy_sprites/char1_healed.png" id="3_yxsxu"]
+[ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_spv6n"]
+[ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_mvcpt"]
+[ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_awxvq"]
+[ext_resource type="Script" path="res://scripts/DamageText.gd" id="7_nxb32"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hu2i"]
+atlas = ExtResource("2_4axv2")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wal15"]
+atlas = ExtResource("3_yxsxu")
+region = Rect2(0, 0, 31, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84eu4"]
+atlas = ExtResource("3_yxsxu")
+region = Rect2(31, 0, 31, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_htfvh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hu2i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_wal15")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_84eu4")
+}],
+"loop": true,
+"name": &"heal",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_kqvds"]
+resource_name = "death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.823529, 0.298039, 1, 1), Color(0.823529, 0.298039, 1, 0)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_spv6n")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_mvcpt")
+}],
+"times": PackedFloat32Array(0.0562, 0.1)
+}
+tracks/1/use_blend = true
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [],
+"times": PackedFloat32Array()
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_6ykin"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7lblk"]
+resource_name = "get_hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(5.8956e-05, 2.15792e-05, 0.00306478, 1.2394e-05, 4.78872e-05),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_spv6n")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_awxvq")
+}],
+"times": PackedFloat32Array(0, 0.0467)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_ji6jx"]
+resource_name = "heal"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"heal", &"default"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
+_data = {
+"death": SubResource("Animation_kqvds"),
+"default": SubResource("Animation_6ykin"),
+"get_hit": SubResource("Animation_7lblk"),
+"heal": SubResource("Animation_ji6jx")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_ly8eg"]
+font_size = 13
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Character" type="Node2D"]
+script = ExtResource("1_r46m6")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_htfvh")
+frame_progress = 0.217676
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uup1h")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="DamageText" type="Label" parent="."]
+visible = false
+offset_left = -23.0
+offset_top = -9.0
+offset_right = 23.0
+offset_bottom = 9.0
+text = "9545"
+label_settings = SubResource("LabelSettings_ly8eg")
+horizontal_alignment = 1
+script = ExtResource("7_nxb32")
