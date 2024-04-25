@@ -18,7 +18,7 @@ var texto = []
 var codigo = [""]
 var portraits = [""]
 var depuring = false
-var seq = 1
+var seq = 0
 var current_state = State.DOWN
 
 func _ready():
@@ -53,15 +53,18 @@ func depure():
 
 func interaction():
 	var tween = create_tween()
-	if seq == 0:
-		tween.tween_callback(self.set_seq.bind(1))
+	if seq == 1:
+		tween.tween_callback(self.set_seq.bind(2))
 		textbox.queue_char_text(["Você vai ter de correr mais do que isso pra me acompanhar!"], [""])
 		tween.tween_callback(self.set_sprite.bind("walk_up"))
-		tween.tween_property(self, "position",Vector2(4500, -13500), 2.5)
+		tween.tween_property(self, "position",Vector2(5200, -13500), 1.5)
+		tween.tween_callback(self.set_sprite.bind("walk_left"))
 		tween.tween_property(self, "position",Vector2(900, -13500), 1)
+		tween.tween_callback(self.set_sprite.bind("walk_up"))
 		tween.tween_property(self, "position",Vector2(900, -21800), 2.5)
 		tween.tween_callback(self.set_sprite.bind("idle_down"))
-	if seq == 1:
+	if seq == 2:
+		tween.tween_callback(self.set_seq.bind(3))
 		textbox.queue_char_text(["Te encontro lá dentro, vamos!"], [""])
 		tween.tween_callback(self.set_sprite.bind("walk_up"))
 		tween.tween_property(self, "position",Vector2(900, -26000), 2.5)

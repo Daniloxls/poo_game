@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://wtnrlc4bfiyj"]
+[gd_scene load_steps=42 format=3 uid="uid://wtnrlc4bfiyj"]
 
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial.gd" id="1_nde62"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_1qc1t"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://dxd8tyqv4x7p1" path="res://assets/props/placeholder/ParedeRetratiuUp.png" id="26_8otyt"]
 [ext_resource type="Texture2D" uid="uid://f3kjcukhb62g" path="res://assets/effects/static.png" id="26_kbgdb"]
 [ext_resource type="Texture2D" uid="uid://b6gkknxt8lmob" path="res://assets/props/placeholder/ParedeRetratiuDown.png" id="27_b25ah"]
+[ext_resource type="Texture2D" uid="uid://bwwa0id1gyqp6" path="res://assets/props/alavanca.png" id="29_5hx6h"]
+[ext_resource type="Texture2D" uid="uid://c54e6xjby4sj8" path="res://assets/props/correndo.png" id="30_mopcp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lmve4"]
 animations = [{
@@ -195,28 +197,28 @@ script = ExtResource("1_nde62")
 
 [node name="Player" parent="." instance=ExtResource("2_1qc1t")]
 z_index = 1
-position = Vector2(-11924, 6458)
+position = Vector2(-2349, 6559)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.15, 0.15)
 
 [node name="LeftArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12683, 5067)
+position = Vector2(-12666.5, 4033)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"left"
 
 [node name="RightArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-11785, 5073)
+position = Vector2(-11768.5, 4039)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"right"
 
 [node name="UpArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12235, 4567)
+position = Vector2(-12218.5, 3533)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"up"
 
 [node name="DownArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12238, 5073)
+position = Vector2(-12221.5, 4039)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"down"
 
@@ -249,14 +251,6 @@ position = Vector2(-2850, 6719)
 script = ExtResource("21_oymvg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Dummy"]
-sprite_frames = SubResource("SpriteFrames_u4foa")
-
-[node name="Dummy2" parent="." instance=ExtResource("10_a56yr")]
-z_index = 1
-position = Vector2(-1782, 6719)
-script = ExtResource("21_oymvg")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Dummy2"]
 sprite_frames = SubResource("SpriteFrames_u4foa")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -308,5 +302,19 @@ visible = false
 position = Vector2(578.5, 327.5)
 scale = Vector2(1.12988, 0.847656)
 sprite_frames = SubResource("SpriteFrames_5u6ad")
+
+[node name="DesenhosParede" type="Node2D" parent="."]
+z_index = 4
+position = Vector2(-8455, 4240)
+
+[node name="Activate" type="Sprite2D" parent="DesenhosParede"]
+position = Vector2(-271, 271)
+scale = Vector2(2.24, 2.24)
+texture = ExtResource("29_5hx6h")
+
+[node name="Run" type="Sprite2D" parent="DesenhosParede"]
+position = Vector2(-3678, 542)
+scale = Vector2(2.24, 2.24)
+texture = ExtResource("30_mopcp")
 
 [connection signal="battle_tutorial_end" from="." to="Dummy" method="_on_tutorial_battle_tutorial_end"]

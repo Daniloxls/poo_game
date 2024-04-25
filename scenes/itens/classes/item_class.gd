@@ -15,6 +15,7 @@ enum Selecting{
 @export var ITEM_ICON : Texture
 @export_multiline var ITEM_TEXT : String
 @export var SELECTION : Selecting
+@export var PRICE : int
 
 func spend_item(quantity):
 	QUANTITY -= quantity

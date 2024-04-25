@@ -11,12 +11,14 @@ func _process(delta):
 	pass
 	
 func _on_area_2d_area_entered(area):
+	if kath.get_seq() == 2:
+		triggered = true
 	if triggered == false:
 		triggered = true
 		var tween = create_tween()
-		tween.tween_callback(kath.set_seq.bind(1))
+		tween.tween_callback(kath.set_seq.bind(2))
 		tween.tween_callback(kath.set_sprite.bind("walk_up"))
-		tween.tween_property(kath, "position",Vector2(4500, -13500), 2.5)
+		tween.tween_property(self, "position",Vector2(5200, -13500), 1.5)
 		tween.tween_callback(kath.set_sprite.bind("walk_left"))
 		tween.tween_property(kath, "position",Vector2(900, -13500), 1)
 		tween.tween_callback(kath.set_sprite.bind("walk_up"))
