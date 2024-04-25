@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwwa0id1gyqp6"
-path="res://.godot/imported/alavanca.png-35be37271bd1a7ded73a5edd6c6e2727.ctex"
+uid="uid://cimue5lfs3aol"
+path="res://.godot/imported/kid.png-afd8456e469bde3f17d10259b3eac200.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/props/alavanca.png"
-dest_files=["res://.godot/imported/alavanca.png-35be37271bd1a7ded73a5edd6c6e2727.ctex"]
+source_file="res://assets/characters/kid.png"
+dest_files=["res://.godot/imported/kid.png-afd8456e469bde3f17d10259b3eac200.ctex"]
 
 [params]
 

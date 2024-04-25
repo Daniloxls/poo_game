@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwwa0id1gyqp6"
-path="res://.godot/imported/alavanca.png-35be37271bd1a7ded73a5edd6c6e2727.ctex"
+uid="uid://crjshtd6xsgiy"
+path="res://.godot/imported/overworld_1.png-12425b06c04f8e7ecdf9f5dcddb6477e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/props/alavanca.png"
-dest_files=["res://.godot/imported/alavanca.png-35be37271bd1a7ded73a5edd6c6e2727.ctex"]
+source_file="res://assets/tileset/overworld_1.png"
+dest_files=["res://.godot/imported/overworld_1.png-12425b06c04f8e7ecdf9f5dcddb6477e.ctex"]
 
 [params]
 

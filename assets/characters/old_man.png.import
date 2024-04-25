@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwwa0id1gyqp6"
-path="res://.godot/imported/alavanca.png-35be37271bd1a7ded73a5edd6c6e2727.ctex"
+uid="uid://gw5y81lv31tr"
+path="res://.godot/imported/old_man.png-71e275cd16748f4a10a031efe068a13f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/props/alavanca.png"
-dest_files=["res://.godot/imported/alavanca.png-35be37271bd1a7ded73a5edd6c6e2727.ctex"]
+source_file="res://assets/characters/old_man.png"
+dest_files=["res://.godot/imported/old_man.png-71e275cd16748f4a10a031efe068a13f.ctex"]
 
 [params]
 
