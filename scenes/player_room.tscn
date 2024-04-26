@@ -59,6 +59,10 @@ sources/3 = SubResource("TileSetAtlasSource_fwjbq")
 [node name="PlayerRoom" type="Node2D"]
 script = ExtResource("1_q08nu")
 
+[node name="Textbox" parent="." instance=ExtResource("3_rhpa3")]
+
+[node name="Codebox" parent="." instance=ExtResource("4_6rxli")]
+
 [node name="Player" parent="." instance=ExtResource("2_gpryw")]
 z_index = 1
 position = Vector2(-116, -94)
@@ -70,10 +74,6 @@ limit_left = -2000
 limit_top = -1200
 limit_right = 7600
 limit_bottom = 4700
-
-[node name="Textbox" parent="." instance=ExtResource("3_rhpa3")]
-
-[node name="Codebox" parent="." instance=ExtResource("4_6rxli")]
 
 [node name="Brilho" type="Sprite2D" parent="."]
 visible = false

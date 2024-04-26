@@ -408,3 +408,6 @@ func update_turn_cursor_position():
 	if char_turn == len(char_list):
 		return
 	turn_cursor.set_position(character_back_coords[char_turn])
+	
+func set_player(player_node):
+	player = player_node

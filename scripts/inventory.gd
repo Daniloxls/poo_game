@@ -60,3 +60,7 @@ func esconder():
 func process_input():
 	if Input.is_action_just_pressed("x"):
 		esconder()
+
+func set_player(player_node):
+	player = player_node
+	print(player)

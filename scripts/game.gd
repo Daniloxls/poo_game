@@ -1,6 +1,7 @@
 extends Node2D
 @onready var level = $Level
-
+@onready var inventory = $Inventory
+@onready var battle = $Battle
 #Game é a cena principal, ela carrega e descarrega os niveis e mantem
 # o inventario intacto entre cenas.
 
@@ -26,3 +27,6 @@ func change_level(instance):
 	for node in level.get_children():
 		node.queue_free()
 	level.call_deferred("add_child", instance)
+	print(instance)
+	inventory.call_deferred("set_player", instance.get_child(2))
+	battle.call_deferred("set_player", instance.get_child(2))

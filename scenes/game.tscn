@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory/inventory.tscn" id="1_5i5st"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_irk2k"]
 [ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
-[ext_resource type="PackedScene" uid="uid://wtnrlc4bfiyj" path="res://scenes/tutorial/tutorial.tscn" id="3_blk37"]
+[ext_resource type="PackedScene" uid="uid://fuhj1dqvf17h" path="res://scenes/tutorial/anti_poo_room.tscn" id="4_j6mhh"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_irk2k")
@@ -16,7 +16,4 @@ layer = 2
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="Tutorial" parent="Level" instance=ExtResource("3_blk37")]
-position = Vector2(3545.69, 7689.52)
-
-[connection signal="battle_end" from="Battle" to="Level/Tutorial" method="_on_battle_battle_end"]
+[node name="AntiPOO_Room" parent="Level" instance=ExtResource("4_j6mhh")]

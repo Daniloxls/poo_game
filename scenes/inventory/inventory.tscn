@@ -92,6 +92,7 @@ texture = ExtResource("2_xp6de")
 script = ExtResource("3_irinq")
 
 [node name="MenuBackground" type="MarginContainer" parent="."]
+visible = false
 offset_left = 8.0
 offset_top = 5.0
 offset_right = 1141.0
@@ -112,6 +113,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_a2i62")
 
 [node name="MenuContents" type="MarginContainer" parent="."]
+visible = false
 offset_left = 23.0
 offset_top = 22.0
 offset_right = 1122.0
