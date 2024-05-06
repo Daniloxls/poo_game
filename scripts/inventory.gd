@@ -63,4 +63,3 @@ func process_input():
 
 func set_player(player_node):
 	player = player_node
-	print(player)

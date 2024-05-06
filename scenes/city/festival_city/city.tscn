@@ -15,6 +15,10 @@
 [node name="City" type="Node2D"]
 y_sort_enabled = true
 
+[node name="Textbox" parent="." instance=ExtResource("2_duvul")]
+
+[node name="Codebox" parent="." instance=ExtResource("3_v8y87")]
+
 [node name="Player" parent="." instance=ExtResource("1_eoyq6")]
 z_index = 1
 position = Vector2(4506, -7103)
@@ -23,10 +27,6 @@ scale = Vector2(1.2, 1.2)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(101, 55)
 zoom = Vector2(0.11, 0.11)
-
-[node name="Textbox" parent="." instance=ExtResource("2_duvul")]
-
-[node name="Codebox" parent="." instance=ExtResource("3_v8y87")]
 
 [node name="TileMap" parent="." instance=ExtResource("4_60gwr")]
 layer_0/y_sort_enabled = true

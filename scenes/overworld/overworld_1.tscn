@@ -1040,6 +1040,10 @@ sources/5 = SubResource("TileSetAtlasSource_mtk40")
 y_sort_enabled = true
 script = ExtResource("1_pv7dr")
 
+[node name="Textbox" parent="." instance=ExtResource("3_5wm8l")]
+
+[node name="Codebox" parent="." instance=ExtResource("4_1sawr")]
+
 [node name="Player" parent="." instance=ExtResource("2_lj1bj")]
 z_index = 1
 position = Vector2(11156, -4642)
@@ -1048,10 +1052,10 @@ scale = Vector2(1.2, 1.2)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(101, 55)
 zoom = Vector2(0.11, 0.11)
-
-[node name="Textbox" parent="." instance=ExtResource("3_5wm8l")]
-
-[node name="Codebox" parent="." instance=ExtResource("4_1sawr")]
+limit_left = -8500
+limit_top = -27500
+limit_right = 14000
+limit_bottom = 30000
 
 [node name="TileMap" parent="." instance=ExtResource("5_yx8pv")]
 tile_set = SubResource("TileSet_c6ngm")

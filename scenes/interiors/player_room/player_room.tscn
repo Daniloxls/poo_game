@@ -362,7 +362,7 @@ position = Vector2(101, 55)
 zoom = Vector2(0.15, 0.15)
 limit_left = -2000
 limit_top = -1200
-limit_right = 7600
+limit_right = 6000
 limit_bottom = 3990
 
 [node name="Brilho" type="Sprite2D" parent="."]

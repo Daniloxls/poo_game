@@ -24,7 +24,6 @@ func get_quantity():
 	return QUANTITY
 
 func get_item_name():
-	print(ITEM_NAME)
 	return ITEM_NAME
 	
 func get_icon():

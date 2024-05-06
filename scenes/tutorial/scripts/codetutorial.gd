@@ -15,7 +15,6 @@ func _ready():
 						"Deixe me ver, eu acho que posso te ajudar a sair daqui, siga para a direita minha sala não deve ser muito distante de onde você está."],
 						["res://assets/portraits/silhueta.png",
 						"res://assets/portraits/silhueta.png"])
-	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
