@@ -18,7 +18,8 @@ var texto = []
 var codigo = [""]
 var portraits = [""]
 var depuring = false
-
+var triggered = false
+var scene = false
 var current_state = State.DOWN
 
 func _ready():
@@ -52,8 +53,40 @@ func depure():
 
 
 func interaction():
-	textbox.queue_text(["Teste aqui sua força para ganhar premios"])
-	pass
+	textbox.queue_text(["Teste sua força para ganhar tickets!"])
+	triggered = true
 
+func _on_textbox_text_finish():
+	if triggered:
+		textbox.display_choice("Você quer tentar garoto ?", ["Sim", "Não"])
+	elif scene:
+		scene = false
+		var tween = create_tween()
+		var current_pos = player.get_position()
+		tween.tween_callback(player.set_in_scene.bind(true))
+		tween.tween_callback(player.set_sprite.bind("walk_right"))
+		current_pos += Vector2(1200, 0)
+		tween.tween_property(player, "position", current_pos, 2)
+		tween.tween_callback(player.set_sprite.bind("idle_up"))
+		tween.tween_interval(1.5)
+		tween.tween_callback(player.set_sprite.bind("walk_right"))
+		current_pos += Vector2(900, 0)
+		tween.tween_property(player, "position", current_pos, 1.5)
+		tween.tween_callback(player.set_sprite.bind("idle_up"))
+		tween.tween_interval(1)
+		tween.tween_property(player, "position", current_pos + Vector2(0, -300), 0.15)
+		tween.tween_property(player, "position", current_pos, 0.1)
+
+
+func _on_textbox_choise_closed():
+	if triggered:
+		triggered = false
+		match(textbox.get_choice()):
+			0:
+				textbox.queue_text(["Certo, pegue o martelo e dê o seu melhor!"])
+				scene = true
+			1:
+				textbox.queue_text(["Tudo bem, quem sabe depois"])
+				
 func name():
 	return nome

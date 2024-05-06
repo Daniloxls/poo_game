@@ -17,7 +17,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_eoyq6")]
 z_index = 1
-position = Vector2(337, -19827)
+position = Vector2(4506, -7103)
 scale = Vector2(1.2, 1.2)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -51,7 +51,7 @@ scale = Vector2(1.2, 1.2)
 script = ExtResource("7_rix1l")
 
 [node name="TesteDeForcaNPC" parent="." instance=ExtResource("5_whr0p")]
-position = Vector2(5652, -7783)
+position = Vector2(4442, -7806)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("8_4p4id")
 
@@ -70,5 +70,7 @@ position = Vector2(442, -20839)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("11_vwgjl")
 
+[connection signal="choise_closed" from="Textbox" to="TesteDeForcaNPC" method="_on_textbox_choise_closed"]
 [connection signal="choise_closed" from="Textbox" to="ExcaliburNPC" method="_on_textbox_choise_closed"]
+[connection signal="text_finish" from="Textbox" to="TesteDeForcaNPC" method="_on_textbox_text_finish"]
 [connection signal="text_finish" from="Textbox" to="ExcaliburNPC" method="_on_textbox_text_finish"]

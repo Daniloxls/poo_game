@@ -4,6 +4,7 @@ extends Node2D
 @onready var codebox = $Codebox
 @onready var kath = $Kath
 
+var entrances = [Vector2(11156, -4642)]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	starting_cutscene()
@@ -35,3 +36,7 @@ func _on_textbox_text_finish():
 		tween.tween_callback(kath.set_position.bind(Vector2(5200, -10300)))
 		tween.tween_callback(kath.set_sprite.bind("idle_down"))
 		kath.set_seq(1)
+
+func enter_stage(entrance : int):
+	player.set_position(entrances[entrance])
+	

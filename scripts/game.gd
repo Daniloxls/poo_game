@@ -23,10 +23,10 @@ func _process(delta):
 #	var instance = next_level.instantiate()
 #	root.change_level(instance)
 
-func change_level(instance):
+func change_level(instance, entrance : int = 0):
 	for node in level.get_children():
 		node.queue_free()
 	level.call_deferred("add_child", instance)
-	print(instance)
+	instance.call_deferred("enter_stage", entrance)
 	inventory.call_deferred("set_player", instance.get_child(2))
 	battle.call_deferred("set_player", instance.get_child(2))

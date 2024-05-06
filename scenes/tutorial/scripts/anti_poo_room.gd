@@ -23,7 +23,7 @@ func _ready():
 	brilho.hide()
 	player.set_in_scene(true)
 	tween.tween_callback(player.set_animation.bind("walk", "up"))
-	tween.tween_property(player, "position", Vector2(9573,9313), 3).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(player, "position", Vector2(9422,9313), 3).set_trans(Tween.TRANS_LINEAR)
 	tween.tween_callback(player.set_animation.bind("idle", "up"))
 	tween.tween_callback(textbox.queue_char_text.bind(dialogo, portraits))
 
@@ -37,9 +37,11 @@ func _process(delta):
 func _on_textbox_text_finish():
 	var tween = create_tween()
 	var root = get_node("../..")
-	var next_level = load("res://scenes/player_room.tscn")
+	var next_level = load("res://scenes/interiors/player_room/player_room.tscn")
 	var instance = next_level.instantiate()
 	tween.tween_callback(brilho.show)
 	tween.tween_property(brilho, "scale", Vector2(1200,800), 3).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(root.change_level.bind(instance))
-	pass # Replace with function body.
+
+func enter_stage(entrance : int):
+	pass

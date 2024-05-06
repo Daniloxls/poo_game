@@ -3,15 +3,19 @@ extends Node2D
 @onready var textbox = $Textbox
 @onready var codebox = $Codebox
 @onready var brilho = $Brilho
-
+var entrances = [Vector2(-116, -94), Vector2(3157, 3635)]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var tween = create_tween()
 	tween.tween_property(brilho, "modulate",Color(255, 255, 255, 0), 3).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(textbox.queue_char_text.bind(["Que sonho esquisito"], [""]))
-	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func enter_stage(entrance : int):
+	player.set_position(entrances[entrance])
+	if entrance == 1:
+		brilho.hide()
