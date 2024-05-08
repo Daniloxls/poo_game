@@ -25,6 +25,7 @@ var texto = []
 # Exemplo: {"1boolean variavel_editavel": true, "boolean variavel_nao_editavel": true}
 var codigo = {}
 
+var metodos = {}
 # 'portraits' guarda uma lista de caminhos para as imagens de personagens,
 # caso a interação envolva diálogo com personagens.
 var portraits = [""]
@@ -74,6 +75,9 @@ func update_codigo(new_codigo):
 func depure():
 	depuring = true
 	return codigo
+	
+func methods():
+	return metodos
 	
 # Retorna o nome do objeto.
 func name():

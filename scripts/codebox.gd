@@ -11,6 +11,7 @@ signal code_open
 # como é o caso do container e da label
 @onready var textbox_container = $TextboxContainer
 @onready var label = $TextboxContainer/MarginContainer/HBoxContainer/Label2
+@onready var method_label = $TextboxContainer/MarginContainer/HBoxContainer/Metodos
 # 'cursor' é o cursor utilizado para selecionar as variaveis
 @onready var cursor = $Cursor
 # 'sair' é apenas o texto na parte de baixo da caixa de codigo
@@ -32,11 +33,14 @@ enum Cursor{
 }
 var cursor_state = Cursor.HIDDEN
 var cursor_pos
+var cursor_id
 # 'positions' guarda todas as posições de variaveis editaveis
 var positions = []
 var current_state = State.READY
 # 'prop' guarda as propiedades do objeto que está sendo editado em um dicionario
 var prop = {}
+
+var methods = {}
 # 'cursor_dict' guarda apenas as propiedades editaveis
 var cursor_dict = {}
 # 'classname' guarda o nome do objeto
@@ -51,10 +55,12 @@ func _ready():
 # Quando a caixa se esconde reinicia todas as variaveis
 func hide_textbox():
 	label.text = ""
+	method_label.set_text("")
 	textbox_container.hide()
 	cursor.hide()
 	sair.hide()
 	prop = {}
+	methods = {}
 	cursor_dict = {}
 	positions = []
 	
@@ -63,7 +69,7 @@ func show_textbox():
 	sair.show()
 
 # Função para mostrar codigo de um objeto, recebe uma string de nome e um dicionario de propiedades
-func queue_text(nome, props):
+func queue_text(nome, props, methods = {}):
 	# Se o nome do objeto é uma string vazia, ele não tem codigo editavel
 	if nome == "":
 		return
@@ -86,8 +92,23 @@ func queue_text(nome, props):
 		else:
 			next_text += p + " = "+ str(prop[p]) + "\n"
 	text_queue.push_back(next_text)
+	if methods:
+		var line_skip = 2
+		var metodos = "//Metodos"
+		for key in methods.keys():
+			metodos = metodos + "\n" + key
+			if "\n" in key:
+				line_skip += 1
+			if methods[key] != [0,0]:
+				show_cursor()
+				positions.append(len(props.keys()) + methods.keys().find(key) + line_skip)
+				cursor_dict[len(props.keys()) + methods.keys().find(key) + line_skip] = key
+		method_label.set_text(metodos)
+	print(cursor_dict)
 	if cursor_state == Cursor.SHOWING:
+		cursor_id = 0
 		cursor_pos = positions[0]
+		update_cursor_pos()
 	
 # Função que cria o texto para ser mostrado, depois que o jogador altera
 # as variaveis
@@ -137,7 +158,7 @@ func get_state():
 
 # Atualiza a posiçao do cursor com base na variavel 'cursor_pos'
 func update_cursor_pos():
-	cursor.set_pos_y(67 + (cursor_pos* 36))
+	cursor.set_pos_y(76 + (cursor_pos* 32.5))
 
 # Função que roda o tempo todo
 func _process(delta):
@@ -151,14 +172,16 @@ func _process(delta):
 		State.FINISH:
 			if cursor_state == Cursor.SHOWING and !typing:
 				if Input.is_action_just_pressed("down"):
-					cursor_pos += 1
-					if cursor_pos == len(positions):
-						cursor_pos = 0
+					cursor_id += 1
+					if cursor_id == len(positions):
+						cursor_id = 0 
+					cursor_pos = positions[cursor_id]
 					update_cursor_pos()
 				if Input.is_action_just_pressed("up"):
-					cursor_pos -= 1
-					if cursor_pos == -1:
-						cursor_pos = len(positions)-1
+					cursor_id -= 1
+					if cursor_id == -1:
+						cursor_id = len(positions) - 1
+					cursor_pos = positions[cursor_id]
 					update_cursor_pos()
 				# Se tem uma variavel booleana selecionada e aperta para esquerda ou direita
 				# ela muda para o inverso do que estava

@@ -6,7 +6,7 @@ var direction : Vector2 = Vector2()
 @onready var player = get_node("../Player")
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
-
+@onready var sword_scene = get_node("../Cutscene")
 enum State{
 	DOWN,
 	LEFT,
@@ -19,6 +19,7 @@ var codigo = [""]
 var portraits = [""]
 var depuring = false
 var triggered = false
+var scene = false
 
 var current_state = State.DOWN
 
@@ -64,7 +65,9 @@ func name():
 func _on_textbox_text_finish():
 	if triggered:
 		textbox.display_choice("Você está pronto para ver os herois do reino tentarem o desafio da espada na pedra ?", ["Sim", "Não"])
-
+	elif scene:
+		scene = false
+		sword_scene.play()
 
 
 func _on_textbox_choise_closed():
@@ -72,7 +75,8 @@ func _on_textbox_choise_closed():
 		triggered = false
 		match(textbox.get_choice()):
 			0:
-				textbox.queue_text(["Então tá bom garotão"])
+				textbox.queue_text(["Certo, me siga então."])
+				scene = true
 			1:
-				textbox.queue_text(["Num quer não boy ?"])
+				textbox.queue_text(["Ok, talvez depois"])
 			

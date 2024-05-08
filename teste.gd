@@ -1,10 +1,23 @@
 extends Node2D
 
-var string = "forca > ahsdhasd"
+var string = "forca > 8"
+
+
+var dict = {
+	"boolean teste_de_forca(int: forca){": [0,0],
+	"\tboolean sucesso;": [0,0],
+	"\tif (forca > 10){": [5,10],
+	"\t\tsucesso = true\n\t}": [0,0],
+	"\telse{": [0,0],
+	"\t\tsucesso = false;\n\t}" : [0,0],
+	"\treturn sucesso;\n}": [0,0]
+}
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	evaluate(string, ["forca"], [9])
-	pass # Replace with function body.
+	for key in dict.keys():
+		if dict[key] != [0,0]:
+			print(key.substr(dict[key][0], dict[key][1]))
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

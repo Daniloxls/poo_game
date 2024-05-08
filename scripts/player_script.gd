@@ -12,6 +12,10 @@ var direction : Vector2 = Vector2()
 # 'event' colisão que apenas eventos veem
 @onready var event = $EventColision
 
+@onready var camera = $Camera2D
+
+@onready var black_screen = $Camera2D/BlackScreen
+
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 @onready var inventory = get_node("../../../Inventory")
@@ -109,7 +113,8 @@ func read_input():
 		if Input.is_action_just_pressed("depure"):
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
-				interact_box.get_overlapping_areas()[0].get_parent().depure())
+				interact_box.get_overlapping_areas()[0].get_parent().depure(),
+				interact_box.get_overlapping_areas()[0].get_parent().methods())
 		# Botão provisorio para abrir o inventario
 		if Input.is_action_just_pressed("a"):
 			inventory.aparecer()
@@ -158,3 +163,5 @@ func set_animation(animation, direction):
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
+
+
