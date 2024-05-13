@@ -22,6 +22,7 @@ var depuring = false
 var current_state = State.DOWN
 
 func _ready():
+	set_sprite("fighter")
 	pass
 
 func set_sprite(sprite):

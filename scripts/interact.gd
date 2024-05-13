@@ -8,11 +8,12 @@ extends Node2D
 
 # 'colision' é o corpo de colisão do objeto, por padrão, está ligado.
 @onready var colision = $StaticBody2D
+
 # 'player' é uma referência ao nó do jogador,
 # permitindo acesso para movê-lo ou alterar suas propriedades.
 @onready var player = get_node("../Player")
 @onready var codebox = get_node("../Codebox")
-
+@onready var textbox = get_node("../Textbox")
 # O nome que aparece na caixa de código.
 var nome
 
@@ -70,6 +71,11 @@ func set_codigo(new_nome, new_codigo):
 func update_codigo(new_codigo):
 	codigo = new_codigo
 	
+func update_methods(new_methods):
+	metodos = new_methods
+	
+func set_colision(value: bool) -> void:
+	colision.set_collision_layer_value(1, value)
 # Função chamada pelo personagem para visualizar
 # e alterar o código deste objeto durante a depuração.
 func depure():

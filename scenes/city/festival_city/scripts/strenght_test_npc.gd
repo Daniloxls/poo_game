@@ -3,25 +3,30 @@ extends CharacterBody2D
 var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer
+@onready var peso = $Peso
+@onready var teste = $TesteDeForca
 @onready var player = get_node("../Player")
+@onready var camera = get_node("../Player/Camera2D")
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
-
+@onready var tickets = get_node("../Tickets")
 enum State{
 	DOWN,
 	LEFT,
 	RIGHT,
 	UP
 }
-var nome
-var texto = []
+var nome = ""
+var texto = [["Estou impressionado! Parabéns tome 10 tickets para você"],
+["Não foi dessa vez, mas não fique triste você pode tentar de novo"]]
 var codigo = [""]
 var portraits = [""]
 var depuring = false
 var triggered = false
 var scene = false
 var current_state = State.DOWN
-
+var game_won = false
+var animation_end = false
 func _ready():
 	pass
 
@@ -52,30 +57,69 @@ func depure():
 	return codigo
 
 
+func methods():
+	return {}
+	
 func interaction():
-	textbox.queue_text(["Teste sua força para ganhar tickets!"])
-	triggered = true
-
+	if !game_won:
+		textbox.queue_text(["Teste sua força para ganhar tickets!"])
+		triggered = true
+	else:
+		textbox.queue_text(["Desculpe garoto, só uma vitoria por pessoa."])
 func _on_textbox_text_finish():
 	if triggered:
 		textbox.display_choice("Você quer tentar garoto ?", ["Sim", "Não"])
 	elif scene:
 		scene = false
+		var comando = teste.methods()["0"][0].substr(5, teste.methods()["0"][2])
+		var result = evaluate(comando, ["forca"], [4])
 		var tween = create_tween()
 		var current_pos = player.get_position()
 		tween.tween_callback(player.set_in_scene.bind(true))
+		if current_pos.y < -12650:
+			tween.tween_callback(player.set_sprite.bind("walk_left"))
+			tween.tween_property(player, "position", Vector2(4500, current_pos.y), abs(current_pos.x - 4500)/500)
+			current_pos = Vector2(4500, current_pos.y)
+		if current_pos.y < -12123:
+			tween.tween_callback(player.set_sprite.bind("walk_down"))
+		else:
+			tween.tween_callback(player.set_sprite.bind("walk_up"))
+		tween.tween_property(player, "position", Vector2(current_pos.x, -12123), abs(current_pos.y + 12123)/500)
+		current_pos = Vector2(current_pos.x, -12123)
+		if current_pos.x < 4973:
+			tween.tween_callback(player.set_sprite.bind("walk_right"))
+			tween.tween_property(player, "position", Vector2(4973, current_pos.y), abs(current_pos.x - 4973)/500)
+			current_pos = Vector2(4973, current_pos.y)
 		tween.tween_callback(player.set_sprite.bind("walk_right"))
-		current_pos += Vector2(1200, 0)
-		tween.tween_property(player, "position", current_pos, 2)
-		tween.tween_callback(player.set_sprite.bind("idle_up"))
-		tween.tween_interval(1.5)
-		tween.tween_callback(player.set_sprite.bind("walk_right"))
-		current_pos += Vector2(900, 0)
-		tween.tween_property(player, "position", current_pos, 1.5)
-		tween.tween_callback(player.set_sprite.bind("idle_up"))
-		tween.tween_interval(1)
+		tween.tween_callback(player.set_z_index.bind(3))
+		tween.tween_callback(teste.set_colision.bind(false))
+		tween.tween_property(player, "position", Vector2(7000, -12326), abs(current_pos.x - 7000)/500)
+		current_pos = Vector2(7000, -12326)
+		tween.tween_callback(player.set_sprite.bind("idle_right"))
+		tween.tween_property(camera, "offset", Vector2(0, -1400), 1)
 		tween.tween_property(player, "position", current_pos + Vector2(0, -300), 0.15)
 		tween.tween_property(player, "position", current_pos, 0.1)
+		if result:
+			tween.tween_property(peso, "position", peso.get_position() + Vector2(0, -2750), 0.6)
+			tween.tween_property(peso, "position", peso.get_position(), 0.9).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
+			game_won = true
+			tween.tween_callback(textbox.queue_text.bind(texto[0]))
+		else:
+			tween.tween_property(peso, "position", peso.get_position() + Vector2(0, -800), 0.3)
+			tween.tween_property(peso, "position", peso.get_position(), 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
+			tween.tween_callback(textbox.queue_text.bind(texto[1]))
+		tween.tween_property(camera, "offset", Vector2(0, 0), 1)
+		animation_end = true
+	elif animation_end:
+		var tween = create_tween()
+		animation_end = false
+		if game_won:
+			tween.tween_callback(tickets.recieve_tickets.bind(10))
+		tween.tween_callback(player.set_sprite.bind("walk_left"))
+		tween.tween_property(player, "position", Vector2(4973, -12123), abs(7000 - 4973)/500)
+		tween.tween_callback(player.set_z_index.bind(1))
+		tween.tween_callback(teste.set_colision.bind(true))
+		tween.tween_callback(player.set_in_scene.bind(false))
 
 
 func _on_textbox_choise_closed():
@@ -90,3 +134,20 @@ func _on_textbox_choise_closed():
 				
 func name():
 	return nome
+
+func evaluate(command, variable_names = [], variable_values = []) -> bool:
+	var expression = Expression.new()
+	var error = expression.parse(command, variable_names)
+	if error != OK:
+		push_error(expression.get_error_text())
+		return false
+
+	var result = expression.execute(variable_values, self)
+
+	if not expression.has_execute_failed():
+		if result:
+			return result
+		else:
+			return false
+	else:
+		return false

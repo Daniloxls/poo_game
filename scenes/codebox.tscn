@@ -100,3 +100,21 @@ offset_right = 1109.0
 offset_bottom = 576.0
 text = "X - Sair"
 label_settings = SubResource("LabelSettings_qoqcm")
+
+[node name="Editar" type="Label" parent="."]
+visible = false
+offset_left = 913.0
+offset_top = 520.0
+offset_right = 1109.0
+offset_bottom = 547.0
+text = "Enter - Editar"
+label_settings = SubResource("LabelSettings_qoqcm")
+
+[node name="Deseditar" type="Label" parent="."]
+visible = false
+offset_left = 885.0
+offset_top = 520.0
+offset_right = 1109.0
+offset_bottom = 547.0
+text = "Enter - Confimar"
+label_settings = SubResource("LabelSettings_qoqcm")

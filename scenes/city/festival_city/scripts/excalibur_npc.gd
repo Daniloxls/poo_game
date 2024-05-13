@@ -24,6 +24,7 @@ var scene = false
 var current_state = State.DOWN
 
 func _ready():
+	set_sprite("campones_4")
 	pass
 
 func set_sprite(sprite):

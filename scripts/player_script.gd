@@ -123,6 +123,7 @@ func read_input():
 	if Input.is_action_just_pressed("exit"):
 		if codebox.get_state() != "Ready":
 			interact_box.get_overlapping_areas()[0].get_parent().update_codigo(codebox.get_props())
+			interact_box.get_overlapping_areas()[0].get_parent().update_methods(codebox.get_methods())
 	
 		
 func _physics_process(delta):
