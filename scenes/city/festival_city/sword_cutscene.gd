@@ -10,6 +10,8 @@ extends Node2D
 @onready var magic = $Magic
 @onready var kath = $Kath
 @onready var continua = $BlackScreen/Label
+@onready var music =  $"../../../AudioPlayer"
+
 var dialogue = [["Certo Turin depois do Nicolas é a sua vez!", "Permitam-me pular na frente."],
 ["O rei realmente ficou desleixado, deixando uma arma tão importante nas mãos de pessoas insignificantes."],
 ["Vamos ao primeiro passo da minha vingança!"],
@@ -43,7 +45,7 @@ func play():
 	tween.tween_callback(player.set_position.bind(Vector2(-13254.001,-35984)))
 	tween.tween_callback(camera_fade_in)
 	tween.tween_callback(textbox.queue_char_text.bind(dialogue[0], portraits[0]))
-
+	music.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))
 func camera_fade_out():
 	var tween = create_tween()
 	tween.tween_property(black_screen,"color" , Color("#000000"), 2)
@@ -74,6 +76,7 @@ func _on_textbox_text_finish():
 		tween.tween_callback(fire.hide)
 		tween.tween_callback(npc_spin.play)
 		tween.tween_property(npc, "position", npc.get_position() + Vector2(-5800, 0), 1)
+		tween.tween_callback(music.play)
 		tween.tween_callback(anti_poo.play.bind("walk_down"))
 		tween.tween_property(anti_poo, "position", anti_poo.get_position() + Vector2(0,1530),3)
 		tween.tween_callback(anti_poo.play.bind("default"))

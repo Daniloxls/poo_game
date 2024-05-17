@@ -91,7 +91,7 @@ func _on_textbox_text_finish():
 			tween.tween_property(player, "position", Vector2(4973, current_pos.y), abs(current_pos.x - 4973)/500)
 			current_pos = Vector2(4973, current_pos.y)
 		tween.tween_callback(player.set_sprite.bind("walk_right"))
-		tween.tween_callback(player.set_z_index.bind(3))
+		tween.tween_callback(player.set_z_index.bind(6))
 		tween.tween_callback(teste.set_colision.bind(false))
 		tween.tween_property(player, "position", Vector2(7000, -12326), abs(current_pos.x - 7000)/500)
 		current_pos = Vector2(7000, -12326)
@@ -118,7 +118,7 @@ func _on_textbox_text_finish():
 			tween.tween_callback(tickets.recieve_tickets.bind(10))
 		tween.tween_callback(player.set_sprite.bind("walk_left"))
 		tween.tween_property(player, "position", Vector2(4973, -12123), abs(7000 - 4973)/500)
-		tween.tween_callback(player.set_z_index.bind(1))
+		tween.tween_callback(player.set_z_index.bind(2))
 		tween.tween_callback(teste.set_colision.bind(true))
 		tween.tween_callback(player.set_in_scene.bind(false))
 
