@@ -82,9 +82,9 @@ func depure():
 	depuring = true
 	return codigo
 	
-func methods():
+func get_methods():
 	return metodos
-	
 # Retorna o nome do objeto.
+
 func name():
 	return nome

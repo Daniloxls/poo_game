@@ -13,4 +13,7 @@ func _process(delta):
 
 func recieve_tickets(quant: int) -> void:
 	tickets += quant
-	label.set_text("Tickets: " + str(tickets))
+	label.set_text("X " + str(tickets))
+
+func get_tickets():
+	return tickets

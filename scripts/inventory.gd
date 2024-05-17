@@ -9,7 +9,7 @@ extends CanvasLayer
 @onready var background = $MenuBackground
 # 'content' são todas as informações do menu
 @onready var content = $MenuContents
-@onready var player = get_node("../Level").get_child(0).get_child(2)
+@onready var player = get_node("../Level").get_child(0).find_child("Player")
 
 # Lista de itens com alguns itens para teste
 var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
@@ -40,6 +40,10 @@ func update_group():
 	for i in len(party.get_children()):
 		party_ui[i].show()
 		party_ui[i].update_char(party.get_children()[i])
+		
+func full_heal():
+	for i in party.get_children():
+		i.set_hp(i.get_max_hp())
 		
 func get_party():
 	return party

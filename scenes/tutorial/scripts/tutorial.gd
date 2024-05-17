@@ -9,8 +9,11 @@ signal battle_tutorial_end
 @onready var left_arrow = $LeftArrow
 @onready var right_arrow = $RightArrow
 @onready var down_arrow = $DownArrow
+@onready var root = $"../.."
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	player.set_movement(false)
+	root.battle_won.connect(_on_tutorial_battle_end)
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,5 +38,5 @@ func _process(delta):
 
 
 
-func _on_battle_battle_end():
+func _on_tutorial_battle_end():
 	battle_tutorial_end.emit()

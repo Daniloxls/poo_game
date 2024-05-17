@@ -21,6 +21,6 @@ func _process(delta):
 
 func _on_area_2d_area_entered(area):
 	var root = get_node("../../..")
-	var next_level = load("res://scenes/city/city.tscn")
+	var next_level = load("res://scenes/city/festival_city/city.tscn")
 	var instance = next_level.instantiate()
 	root.change_level(instance)

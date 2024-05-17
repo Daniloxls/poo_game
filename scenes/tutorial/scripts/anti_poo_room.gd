@@ -3,7 +3,7 @@ extends Node2D
 @onready var textbox = $Textbox
 @onready var codebox = $Codebox
 @onready var brilho = $Brilho
-
+@onready var music =  $"../../AudioPlayer"
 var dialogo = ["Muito bem, você conseguiu chegar até mim.",
 				"O tolo que projetou essa prisão para mim, designou ela de forma patética.",
 				"Até alguem que nunca utilizou programação conseguiu me alcançar.",
@@ -26,7 +26,9 @@ func _ready():
 	tween.tween_property(player, "position", Vector2(9422,9313), 3).set_trans(Tween.TRANS_LINEAR)
 	tween.tween_callback(player.set_animation.bind("idle", "up"))
 	tween.tween_callback(textbox.queue_char_text.bind(dialogo, portraits))
-
+	
+	music.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))
+	music.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

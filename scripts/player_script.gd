@@ -114,7 +114,7 @@ func read_input():
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
 				interact_box.get_overlapping_areas()[0].get_parent().depure(),
-				interact_box.get_overlapping_areas()[0].get_parent().methods())
+				interact_box.get_overlapping_areas()[0].get_parent().get_methods())
 		# Botão provisorio para abrir o inventario
 		if Input.is_action_just_pressed("a"):
 			inventory.aparecer()

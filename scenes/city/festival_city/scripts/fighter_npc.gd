@@ -1,11 +1,8 @@
-extends CharacterBody2D
+extends "res://scripts/interact.gd"
 
 var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer
-@onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
 
 enum State{
 	DOWN,
@@ -13,17 +10,20 @@ enum State{
 	RIGHT,
 	UP
 }
-var nome
-var texto = []
-var codigo = [""]
-var portraits = [""]
-var depuring = false
 
 var current_state = State.DOWN
 
 func _ready():
 	set_sprite("fighter")
-	pass
+	nome = "Lutador"
+	texto = ["Ei garotinho, você acha que pode me derrotar ?",
+	 "Fale com meu gerente, prometo pegar leve com você"]
+	codigo = {}
+	metodos = {
+	"1" : ["void atacar(Personagem jogador){"],
+	"0" : ["\talvo.receber_dano(alvo.get_hp())", 19, 13],
+	"3" : ["\treturn\n}"]
+	}
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
@@ -53,8 +53,8 @@ func depure():
 
 
 func interaction():
-	textbox.queue_text(["Ninguem me derrotou até agora!"])
-	pass
+	textbox.queue_text(texto)
 
+	
 func name():
 	return nome

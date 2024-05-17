@@ -1,13 +1,18 @@
 extends Node2D
+signal battle_won
+signal battle_lost
 @onready var level = $Level
 @onready var inventory = $Inventory
 @onready var battle = $Battle
+@onready var music = $AudioPlayer
 #Game é a cena principal, ela carrega e descarrega os niveis e mantem
 # o inventario intacto entre cenas.
 
 
 # Função que é chamada quando esse nó entra na arvore de cena
 func _ready():
+	music.set_stream(load("res://assets/bgm/Dream Eliot Corley.mp3"))
+	music.play()
 	pass # Replace with function body.
 
 
@@ -28,5 +33,13 @@ func change_level(instance, entrance : int = 0):
 		node.queue_free()
 	level.call_deferred("add_child", instance)
 	instance.call_deferred("enter_stage", entrance)
-	inventory.call_deferred("set_player", instance.get_child(2))
-	battle.call_deferred("set_player", instance.get_child(2))
+	inventory.call_deferred("set_player", instance.find_child("Player"))
+	battle.call_deferred("set_player", instance.find_child("Player"))
+
+
+func _on_battle_battle_lost():
+	battle_lost.emit()
+
+
+func _on_battle_battle_won():
+	battle_won.emit()

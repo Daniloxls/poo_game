@@ -71,7 +71,7 @@ func _on_textbox_text_finish():
 		textbox.display_choice("Você quer tentar garoto ?", ["Sim", "Não"])
 	elif scene:
 		scene = false
-		var comando = teste.methods()["0"][0].substr(5, teste.methods()["0"][2])
+		var comando = teste.get_methods()["0"][0].substr(5, teste.get_methods()["0"][2])
 		var result = evaluate(comando, ["forca"], [4])
 		var tween = create_tween()
 		var current_pos = player.get_position()
@@ -114,6 +114,7 @@ func _on_textbox_text_finish():
 		var tween = create_tween()
 		animation_end = false
 		if game_won:
+			tween.tween_callback(tickets.show)
 			tween.tween_callback(tickets.recieve_tickets.bind(10))
 		tween.tween_callback(player.set_sprite.bind("walk_left"))
 		tween.tween_property(player, "position", Vector2(4973, -12123), abs(7000 - 4973)/500)

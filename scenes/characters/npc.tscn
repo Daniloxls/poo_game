@@ -127,9 +127,6 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h6jy8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bno1p")
 }],
 "loop": true,
 "name": &"dorgival",

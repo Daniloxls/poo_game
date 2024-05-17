@@ -9,6 +9,7 @@ extends "res://scripts/interact.gd"
 @onready var left_label = $VidenteInterface/LeftLabel
 var first_interaction = true
 var correct_answer = false
+var triggered = false
 var retorno
 enum State{
 	FIRST,
@@ -16,6 +17,7 @@ enum State{
 	GUESSING,
 	ERROR,
 	BEATEN,
+	FINISHED,
 	CLOSED
 }
 var current_state = State.FIRST
@@ -24,7 +26,7 @@ func _ready():
 	nome = "LeitorDePensamento"
 	codigo = {}
 	texto =[["Seja bem vindo ao meu jogo jovem.", "As regras são bem simples.",
-	"Pense em uma palavra e escreva ela aí embaixo", "Se eu conseguir advinhar a palavra que você pensou eu ganho.",
+	"Pense em uma palavra e escreva ela aí embaixo, se eu conseguir advinhar a palavra que você pensou eu ganho.",
 	"Se eu errar você ganha, e de bonûs você leva 10 tickets."]]
 	metodos = {
 	"1" : ["String leitor_de_pensamento(Personagem jogador){"],
@@ -41,8 +43,9 @@ func _process(delta):
 
 func interaction():
 	player.set_movement(false)
+	triggered = true
 	open_window()
-	if current_state == State.BEATEN:
+	if current_state == State.FINISHED:
 		return
 	if first_interaction:
 		textbox.queue_text(texto[0])
@@ -51,7 +54,7 @@ func interaction():
 
 func open_window():
 	interface.show()
-	if current_state == State.BEATEN:
+	if current_state == State.FINISHED:
 		return
 	retorno = metodos["0"][0].substr(metodos["0"][1], metodos["0"][2])
 	retorno = retorno.lstrip(" ").rstrip(" ")
@@ -64,10 +67,11 @@ func open_window():
 	
 func close_window():
 	medium.show()
+	triggered = false
 	error_label.hide()
 	interface.hide()
 	player.set_movement(true)
-	if current_state != State.BEATEN:
+	if current_state != State.FINISHED:
 		think_button.show()
 		pensamento_field.show()
 		current_state = State.CLOSED
@@ -94,16 +98,19 @@ func _on_button_pressed():
 		current_state = State.BEATEN
 
 func _on_textbox_text_finish():
-	if first_interaction:
-		first_interaction = false
-		player.set_movement(false)
-		current_state = State.OPEN
-	elif current_state == State.OPEN:
-		close_window()
-	elif current_state == State.BEATEN:
-		tickets.recieve_tickets(10)
-		styleBox.set_texture(load("res://assets/props/city/vidente_left.png"))
-		left_label.show()
-		pensamento_field.hide()
-		think_button.hide()
-		close_window()
+	if triggered:
+		if first_interaction:
+			first_interaction = false
+			player.set_movement(false)
+			current_state = State.OPEN
+		elif current_state == State.OPEN:
+			close_window()
+		elif current_state == State.BEATEN:
+			tickets.show()
+			tickets.recieve_tickets(10)
+			styleBox.set_texture(load("res://assets/props/city/vidente_left.png"))
+			left_label.show()
+			current_state = State.FINISHED
+			pensamento_field.hide()
+			think_button.hide()
+			close_window()

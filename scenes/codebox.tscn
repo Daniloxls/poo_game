@@ -116,5 +116,5 @@ offset_left = 885.0
 offset_top = 520.0
 offset_right = 1109.0
 offset_bottom = 547.0
-text = "Enter - Confimar"
+text = "Enter - Confirmar"
 label_settings = SubResource("LabelSettings_qoqcm")

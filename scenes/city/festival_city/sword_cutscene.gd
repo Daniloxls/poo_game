@@ -9,12 +9,12 @@ extends Node2D
 @onready var npc = $NpcChutado
 @onready var magic = $Magic
 @onready var kath = $Kath
-
-var dialogue = [["Certo Turin depois do NPC é a sua vez!", "Permitam-me pular na frente"],
-["O rei realmente ficou desleixado, deixando uma arma tão importante nas mãos de pessoas insignificantes"],
+@onready var continua = $BlackScreen/Label
+var dialogue = [["Certo Turin depois do Nicolas é a sua vez!", "Permitam-me pular na frente."],
+["O rei realmente ficou desleixado, deixando uma arma tão importante nas mãos de pessoas insignificantes."],
 ["Vamos ao primeiro passo da minha vingança!"],
-["Essa espada me trás lembranças nada agradáveis", "Vamos garantir que ela não caia nas mãos de mais ninguem"],
-["Hm...", "Enquanto a você...", "Devo estar perdendo meu jeito", "Vou garantir que você não se recupere dessa!"],
+["Essa espada me trás lembranças nada agradáveis.", "Vamos garantir que ela não caia nas mãos de mais ninguém."],
+["Hm...", "Enquanto a você...", "Devo estar perdendo meu jeito.", "Vou garantir que você não se recupere dessa!"],
 ["Turin, cuidado!"],
 ["Turin! Turin!", "Acorda, a gente precisa sair daqui!"]]
 var portraits = [["","res://assets/portraits/silhueta.png"],
@@ -103,20 +103,25 @@ func _on_textbox_text_finish():
 		tween.tween_callback(textbox.queue_char_text.bind(dialogue[4], portraits[4]))
 	elif event_seq == 5:
 		event_seq = 6
-		var tween = create_tween()
-		tween.tween_callback(magic.show)
-		tween.tween_callback(magic.play.bind("default"))
-		tween.tween_property(magic, "scale", Vector2(52, 52), 1.5)
-		tween.tween_callback(kath.play.bind("run_left"))
-		tween.set_parallel(true)
-		tween.tween_property(magic, "position", magic.get_position() + Vector2(0,2000), 3).set_ease(Tween.EASE_OUT)
-		tween.tween_property(kath, "position", kath.get_position() + Vector2(-1800, 0), 2.5).set_ease(Tween.EASE_OUT)
-		tween.tween_property(black_screen, "color", Color("#ffffff"), 1.8)
-		tween.tween_callback(textbox.queue_char_text.bind(dialogue[5], portraits[5]))
-		tween.tween_callback(tween.set_parallel.bind(false))
+		var tween_a = create_tween()
+		var tween_b = create_tween()
+		tween_a.tween_callback(magic.show)
+		tween_a.tween_callback(magic.play.bind("default"))
+		tween_a.tween_property(magic, "scale", Vector2(4, 4), 1.5)
+		tween_b.tween_callback(kath.play.bind("run_left"))
+		tween_a.set_parallel(true)
+		tween_a.tween_property(magic, "position", magic.get_position() + Vector2(0,2000), 3).set_ease(Tween.EASE_OUT)
+		tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-900, 0), 0.65).set_ease(Tween.EASE_OUT)
+		tween_b.tween_callback(kath.play.bind("jump"))
+		tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-1800, 0), 1.25).set_ease(Tween.EASE_OUT)
+		tween_a.tween_property(black_screen, "color", Color("#ffffff"), 1.8)
+		tween_a.tween_callback(textbox.queue_char_text.bind(dialogue[5], portraits[5]))
+		tween_a.tween_callback(tween_a.set_parallel.bind(false))
 	elif event_seq == 6:
 		event_seq = 7
 		var tween = create_tween()
 		tween.tween_interval(2)
 		tween.tween_property(black_screen, "color", Color("#000000"), 0)
 		tween.tween_callback(textbox.queue_char_text.bind(dialogue[6], portraits[6]))
+	elif event_seq == 7:
+		continua.show()

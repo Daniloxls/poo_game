@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://rqh8da2muvx6"]
+[gd_scene load_steps=6 format=3 uid="uid://rqh8da2muvx6"]
 
 [ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory/inventory.tscn" id="1_5i5st"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_irk2k"]
 [ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
-[ext_resource type="PackedScene" uid="uid://fuhj1dqvf17h" path="res://scenes/tutorial/anti_poo_room.tscn" id="4_ge7j5"]
+[ext_resource type="PackedScene" uid="uid://bhl2fw3fmtrpc" path="res://scenes/city/festival_city/city.tscn" id="4_1we71"]
+[ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://scenes/tela_titulo.tscn" id="4_1yu0a"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_irk2k")
@@ -16,4 +17,12 @@ layer = 2
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="AntiPOO_Room" parent="Level" instance=ExtResource("4_ge7j5")]
+[node name="City" parent="Level" instance=ExtResource("4_1we71")]
+
+[node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+autoplay = true
+
+[connection signal="battle_lost" from="Battle" to="." method="_on_battle_battle_lost"]
+[connection signal="battle_won" from="Battle" to="." method="_on_battle_battle_won"]
