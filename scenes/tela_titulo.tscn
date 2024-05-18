@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://jsptyuvrdvya"]
+[gd_scene load_steps=9 format=3 uid="uid://jsptyuvrdvya"]
 
 [ext_resource type="Script" path="res://scenes/tela_titulo.gd" id="1_3oi7u"]
 [ext_resource type="Texture2D" uid="uid://cj3q3vpn8gluf" path="res://assets/screens/menu_background.png" id="1_cj47b"]
@@ -40,14 +40,17 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 6
 anti_aliasing_size = 4.417
 
+[sub_resource type="LabelSettings" id="LabelSettings_f6gtn"]
+font_size = 42
+
 [node name="TelaTitulo" type="Node2D"]
 script = ExtResource("1_3oi7u")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-offset_right = 1150.22
-offset_bottom = 647.0
+offset_right = 1154.0
+offset_bottom = 648.0
 texture = ExtResource("1_cj47b")
 expand_mode = 3
 stretch_mode = 4
@@ -101,5 +104,13 @@ theme_override_fonts/font = ExtResource("3_8vrf5")
 theme_override_font_sizes/font_size = 38
 theme_override_styles/normal = SubResource("StyleBoxFlat_qh2ed")
 text = "Créditos"
+
+[node name="version" type="Label" parent="CanvasLayer"]
+offset_left = 9.0
+offset_top = 593.0
+offset_right = 91.0
+offset_bottom = 651.0
+text = "v0.1"
+label_settings = SubResource("LabelSettings_f6gtn")
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

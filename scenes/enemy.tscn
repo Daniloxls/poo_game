@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cr71ho5tuj7bn"]
+[gd_scene load_steps=18 format=3 uid="uid://cr71ho5tuj7bn"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_yj3lc"]
 [ext_resource type="Script" path="res://scripts/healthbar.gd" id="2_qxhjg"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="3_2ys7c"]
 [ext_resource type="Texture2D" uid="uid://cysaqjkew76fv" path="res://assets/battle/enemy_sprites/boneco_treino.png" id="3_exyh3"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_rvifc"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="4_1wklw"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="6_mrpxx"]
 
@@ -13,9 +14,11 @@ bg_color = Color(0, 0.670588, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3aa0j"]
 bg_color = Color(0.803922, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_by1mp"]
-font_size = 13
-outline_size = 5
+[sub_resource type="LabelSettings" id="LabelSettings_eubrh"]
+line_spacing = 60.0
+font = ExtResource("3_rvifc")
+font_size = 320
+outline_size = 100
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jxs3k"]
@@ -171,14 +174,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -9.0
-offset_right = 23.0
-offset_bottom = 9.0
+offset_left = -18.0
+offset_top = -8.0
+offset_right = 686.0
+offset_bottom = 313.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.05, 0.05)
 text = "9545"
-label_settings = SubResource("LabelSettings_by1mp")
+label_settings = SubResource("LabelSettings_eubrh")
 horizontal_alignment = 1
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

@@ -11,8 +11,6 @@ signal battle_lost
 
 # Função que é chamada quando esse nó entra na arvore de cena
 func _ready():
-	music.set_stream(load("res://assets/bgm/Dream Eliot Corley.mp3"))
-	music.play()
 	pass # Replace with function body.
 
 
