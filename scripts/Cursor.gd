@@ -5,6 +5,11 @@ extends Sprite2D
 # Mas essa função vai em tantos scripts que eu tenho preguiça de trocar
 
 # Called when the node enters the scene tree for the first time.
+@onready var hovering = null 
+
+func set_hovering(object):
+	hovering = object 
+
 func _ready():
 	pass # Replace with function body.
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c2jfv4lnhfpro"]
+[gd_scene load_steps=34 format=3 uid="uid://c2jfv4lnhfpro"]
 
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="1_iwvfi"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_xp6de"]
@@ -21,7 +21,6 @@
 [ext_resource type="LabelSettings" uid="uid://dgi27rysml5px" path="res://assets/fonts/gray_console_text.tres" id="18_fcg8q"]
 [ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/character.tscn" id="19_y70kq"]
 [ext_resource type="Script" path="res://scripts/BattleInventory.gd" id="20_eo3gb"]
-[ext_resource type="Script" path="res://scripts/Character_Cursor.gd" id="22_cy8k2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2i62"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -82,14 +81,6 @@ font_color = Color(0.666667, 0.788235, 0.247059, 1)
 font = ExtResource("4_854na")
 font_size = 27
 font_color = Color(0.309804, 0.415686, 0.447059, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_itpx7"]
-draw_center = false
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0.494118, 0.811765, 1)
 
 [node name="Inventory" type="CanvasLayer"]
 script = ExtResource("1_iwvfi")
@@ -284,6 +275,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 
 [node name="CharContainer2" type="HBoxContainer" parent="MenuContents/HBoxContainer/PartyContainer"]
+visible = false
 layout_mode = 2
 
 [node name="CharPic" type="TextureRect" parent="MenuContents/HBoxContainer/PartyContainer/CharContainer2"]
@@ -382,6 +374,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 
 [node name="CharContainer3" type="HBoxContainer" parent="MenuContents/HBoxContainer/PartyContainer"]
+visible = false
 layout_mode = 2
 
 [node name="CharPic" type="TextureRect" parent="MenuContents/HBoxContainer/PartyContainer/CharContainer3"]
@@ -480,6 +473,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 
 [node name="CharContainer4" type="HBoxContainer" parent="MenuContents/HBoxContainer/PartyContainer"]
+visible = false
 layout_mode = 2
 
 [node name="CharPic" type="TextureRect" parent="MenuContents/HBoxContainer/PartyContainer/CharContainer4"]
@@ -2023,11 +2017,3 @@ z_index = 3
 z_as_relative = false
 position = Vector2(-12, 283)
 scale = Vector2(4, 4)
-
-[node name="Character_Cursor" type="Panel" parent="."]
-offset_left = 316.0
-offset_top = -196.0
-offset_right = 1129.0
-offset_bottom = -47.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_itpx7")
-script = ExtResource("22_cy8k2")
