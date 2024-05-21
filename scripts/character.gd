@@ -22,12 +22,13 @@ var mp = 32
 const MAX_MP = 32
 var level = 1
 var xp = 0
-var original_pos = get_position()
+var original_pos
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#healthbar.hide()
 	animation.play("default")
+	original_pos = get_position()
 	pass # Replace with function body.
 
 
@@ -48,14 +49,16 @@ func get_cursor_pos():
 	var current_animation : String = $Sprite.animation
 	var sprite_texture : Texture2D = $Sprite.sprite_frames.get_frame_texture(current_animation, 0)
 	var size = sprite_texture.get_size()
-	return(Vector2(position) + Vector2(0, size.y/3))
+	size = size * sprite.get_scale()
+	return(Vector2(position) + Vector2(0, size.y))
 
 # Mesma função só que pega a parte direita do sprite
 func get_turn_cursor_pos():
 	var current_animation : String = $Sprite.animation
 	var sprite_texture : Texture2D = $Sprite.sprite_frames.get_frame_texture(current_animation, 0)
 	var size = sprite_texture.get_size()
-	return(Vector2(position) + Vector2(size.x, size.y/3))
+	size = size * sprite.get_scale()
+	return(Vector2(position) + Vector2(size.x, size.y))
 	
 func get_nome():
 	return nome
@@ -118,3 +121,9 @@ func lose_health(value):
 func _on_healthbar_animation_end():
 	animation_end.emit()
 	pass # Replace with function body.
+
+func set_hp(new_hp):
+	hp = new_hp
+
+func set_animation(anim):
+	animation.play(anim)

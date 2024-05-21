@@ -15,7 +15,7 @@ enum State{
 	RIGHT,
 	UP
 }
-var nome
+var nome = ""
 var texto = []
 var codigo = [""]
 var portraits = [""]

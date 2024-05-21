@@ -196,11 +196,15 @@ script = ExtResource("1_nde62")
 [node name="Textbox" parent="." instance=ExtResource("9_ums4g")]
 
 [node name="Player" parent="." instance=ExtResource("2_1qc1t")]
-z_index = 1
-position = Vector2(-2349, 6559)
+z_index = 2
+position = Vector2(-13184, 5568)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.15, 0.15)
+limit_left = -15790
+limit_top = 3085
+limit_right = 4162
+limit_bottom = 11103
 
 [node name="LeftArrow" type="AnimatedSprite2D" parent="."]
 position = Vector2(-12666.5, 4033)
@@ -253,6 +257,19 @@ script = ExtResource("21_oymvg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Dummy"]
 sprite_frames = SubResource("SpriteFrames_u4foa")
 
+[node name="Porta" type="StaticBody2D" parent="Dummy"]
+position = Vector2(1260, 162)
+
+[node name="PortaSprite" type="AnimatedSprite2D" parent="Dummy/Porta"]
+position = Vector2(-7, -580)
+sprite_frames = SubResource("SpriteFrames_m6hwy")
+frame_progress = 0.300088
+
+[node name="PortaShape" type="CollisionShape2D" parent="Dummy/Porta"]
+position = Vector2(-4.49805, 61.4995)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_twkmk")
+
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = -1
 offset_left = -15783.0
@@ -304,7 +321,7 @@ scale = Vector2(1.12988, 0.847656)
 sprite_frames = SubResource("SpriteFrames_5u6ad")
 
 [node name="DesenhosParede" type="Node2D" parent="."]
-z_index = 4
+z_index = 1
 position = Vector2(-8455, 4240)
 
 [node name="Activate" type="Sprite2D" parent="DesenhosParede"]

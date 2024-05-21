@@ -6,7 +6,8 @@ var direction : Vector2 = Vector2()
 @onready var player = get_node("../Player")
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
-
+@onready var sword_scene = get_node("../Cutscene")
+@onready var tickets = $"../Tickets"
 enum State{
 	DOWN,
 	LEFT,
@@ -19,11 +20,15 @@ var codigo = [""]
 var portraits = [""]
 var depuring = false
 var triggered = false
+var scene = false
 
 var current_state = State.DOWN
 
 func _ready():
-	pass
+	set_sprite("campones_4")
+	texto = ["Ah olá, Turin.",
+	 "Por aqui fica o evento principal.",
+	 "O rei deixou exibirmos a espada protetora, então fizemos uma atração com ela."]
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
@@ -54,7 +59,8 @@ func depure():
 
 func interaction():
 	triggered = true
-	textbox.queue_text(["Você finalmente chegou Turin, a Kath me fez esperar você chegar para começar o envento principal"])
+	textbox.queue_text(texto)
+	set_texto(["Está pronto para tentar ir agora ?"])
 	
 
 func name():
@@ -63,8 +69,11 @@ func name():
 
 func _on_textbox_text_finish():
 	if triggered:
-		textbox.display_choice("Você está pronto para ver os herois do reino tentarem o desafio da espada na pedra ?", ["Sim", "Não"])
-
+		textbox.display_choice(	"Por 30 tickets você pode tentar tirar ela dá pedra, quer tentar?"
+		, ["Sim", "Não"])
+	elif scene:
+		scene = false
+		sword_scene.play()
 
 
 func _on_textbox_choise_closed():
@@ -72,7 +81,13 @@ func _on_textbox_choise_closed():
 		triggered = false
 		match(textbox.get_choice()):
 			0:
-				textbox.queue_text(["Então tá bom garotão"])
+				if tickets.get_tickets() == 30:
+					textbox.queue_text(["Certo, me siga então."])
+					tickets.hide()
+					scene = true
+				else:
+					textbox.queue_text(["Parece que você não tem tickets suficientes.",
+					"Tente ir nas atrações que estão espalhadas na praça, todas elas dão premios em tickets."])
 			1:
-				textbox.queue_text(["Num quer não boy ?"])
+				textbox.queue_text(["Ok, talvez depois."])
 			

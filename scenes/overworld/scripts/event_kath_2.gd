@@ -18,10 +18,10 @@ func _on_area_2d_area_entered(area):
 		var tween = create_tween()
 		tween.tween_callback(kath.set_seq.bind(2))
 		tween.tween_callback(kath.set_sprite.bind("walk_up"))
-		tween.tween_property(self, "position",Vector2(5200, -13500), 1.5)
+		tween.tween_property(kath, "position",Vector2(5200, -13500), 1.5)
 		tween.tween_callback(kath.set_sprite.bind("walk_left"))
-		tween.tween_property(kath, "position",Vector2(900, -13500), 1)
+		tween.tween_property(kath, "position",Vector2(900, -13500), 1.5)
 		tween.tween_callback(kath.set_sprite.bind("walk_up"))
-		tween.tween_property(kath, "position",Vector2(900, -21800), 2)
+		tween.tween_property(kath, "position",Vector2(900, -21800), 2.5)
 		tween.tween_callback(kath.set_sprite.bind("idle_down"))
 	
