@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var area = $Area2D/CollisionShape2D
 @onready var colision = $StaticBody2D/Collision
+@onready var porta_colision = $Porta/PortaShape
+@onready var porta_sprite = $Porta/PortaSprite
 @onready var player = get_node("../Player")
 @onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
@@ -12,6 +14,8 @@ var codigo = [""]
 var portraits = [""]
 var depuring = false
 
+const UP_POSITION = 0
+const DOWN_POSITION = 1
 
 func _ready():
 	pass
@@ -52,3 +56,5 @@ func _on_tutorial_battle_tutorial_end():
 	hide()
 	colision.set_deferred("disabled", true)
 	area.set_deferred("disabled", true)
+	porta_colision.set_disabled(true)
+	porta_sprite.set_frame(DOWN_POSITION)

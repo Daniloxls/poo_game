@@ -89,7 +89,6 @@ func aparecer():
 	else:
 		cursor.hide()
 	show()
-	print(item_pos)
 
 
 func esconder():

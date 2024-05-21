@@ -82,6 +82,7 @@ autowrap_mode = 2
 clip_text = true
 
 [node name="FunctionContainer" type="MarginContainer" parent="."]
+visible = false
 offset_left = 21.0
 offset_top = 111.0
 offset_right = 398.0
@@ -114,7 +115,7 @@ size_flags_horizontal = 3
 theme = SubResource("Theme_tolph")
 theme_override_fonts/normal_font = ExtResource("2_cbckn")
 bbcode_enabled = true
-text = "[color=#59C2F1]Turin[/color].[color=#FF922E]Item[/color][color=#C2C800]([/color][color=#C2C800])[/color]"
+text = "[color=#59C2F1]Turin[/color].[color=#FF922E]Atacar[/color][color=#C2C800]([/color][color=#C2C800])[/color]"
 autowrap_mode = 2
 
 [node name="Actions" type="MarginContainer" parent="."]
@@ -155,8 +156,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("2_cbckn")
-theme_override_font_sizes/font_size = 37
-text = "Lutar
+theme_override_font_sizes/font_size = 34
+text = "Atacar
 
 Item"
 autowrap_mode = 2

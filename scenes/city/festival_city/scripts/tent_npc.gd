@@ -52,7 +52,7 @@ func depure():
 
 
 func interaction():
-	textbox.queue_text(["Entre e teste suas habilidades de predição com a Madame Cassandra!"])
+	textbox.queue_text(["Entre e teste suas habilidades de predição com o fabuloso Tritomos!"])
 	pass
 
 func name():
