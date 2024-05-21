@@ -25,7 +25,7 @@ func starting_cutscene():
 	 "Você dormiu demais de novo ?",
 	 "A gente tinha combinado de ir pro festival da colheita hoje.",
 	 "Vamos, ainda dá tempo de ver a atração principal.",
-	 "O ultimo que chegar compra uma fatia de torta pro vencedor!"]))
+	 "O último que chegar compra uma fatia de torta pro vencedor!"]))
 
 
 func _on_textbox_text_finish():

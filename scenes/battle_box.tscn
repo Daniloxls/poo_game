@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dkrrrbfnsa5lw"]
+[gd_scene load_steps=13 format=3 uid="uid://dkrrrbfnsa5lw"]
 
 [ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_a61xi"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_cbckn"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_02h83"]
 [ext_resource type="Script" path="res://scripts/PlayerStatus.gd" id="5_ew3lm"]
 [ext_resource type="Script" path="res://scripts/character_status.gd" id="6_yi885"]
+[ext_resource type="Texture2D" uid="uid://cqwwta2lymjp0" path="res://assets/gui/icons/locked.png" id="7_7r2d2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryce2"]
 bg_color = Color(0.00784314, 0.0627451, 0.0980392, 1)
@@ -383,6 +384,11 @@ theme_override_font_sizes/font_size = 29
 text = "MP"
 clip_text = true
 metadata/_edit_use_anchors_ = true
+
+[node name="Locked" type="Sprite2D" parent="."]
+position = Vector2(694, 539)
+scale = Vector2(0.775, 0.775)
+texture = ExtResource("7_7r2d2")
 
 [connection signal="animation_end" from="PlayerStatus/MarginContainer/HBoxContainer/Char1" to="." method="_on_char_1_animation_end"]
 [connection signal="animation_end" from="PlayerStatus/MarginContainer/HBoxContainer/Char2" to="." method="_on_char_2_animation_end"]

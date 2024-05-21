@@ -8,8 +8,8 @@ extends Node2D
 @onready var map = get_node("../TileMap")
 @onready var sprite = $AnimatedSprite2D
 var nome = "Porta"
-var texto = ["Está trancada.", "Parece que você ainda não consegue abrir essa porta, tente usar aquele terminal interaja com ele."]
-var portraits = ["", "res://assets/portraits/silhueta.png"]
+var texto = ["Está trancada.", "Parece que você ainda não consegue abrir essa porta.", "Tente interagir com o terminal lá atrás."]
+var portraits = ["", "res://assets/portraits/silhueta.png", "res://assets/portraits/silhueta.png"]
 var codigo = {"1boolean trancado": true, "Material material": "barreira"}
 var depuring = false
 var dialogue = true
@@ -68,12 +68,12 @@ func _on_codebox_code_closed():
 func _on_codebox_code_open():
 	if dialogue and area.has_overlapping_areas():
 		dialogue = false
-		textbox.queue_char_text(["Veja, esssas são as propiedades da porta.",
-		"Ela tem uma linha de codigo que diz se ela está trancada, por sorte conseguimos editar ela.",
-		"Por ser uma variavel booleana ela só pode verdadeiro ou falso",
-		"Use as setas para cima e para baixo para selecionar a propiedade trancado e as setas esquerda e direita para altera-la",
-		"Mude a variavel trancado para falso(false)",
-		"E para sair da tela de codigo basta apertar X"],
+		textbox.queue_char_text(["Veja, essas são as propriedades da porta.",
+		"Ela tem uma linha de código que diz se ela está trancada e por sorte você consegue editar ela.",
+		"Por ser uma variável booleana ela só pode verdadeira ou falsa.",
+		"Use as setas para cima e para baixo para selecionar a propriedade trancado e as setas esquerda e direita para altera-la.",
+		"Mude a variável trancado para falso(false).",
+		"E para sair da tela de código basta apertar X."],
 		["res://assets/portraits/silhueta.png",
 		"res://assets/portraits/silhueta.png",
 		"res://assets/portraits/silhueta.png",

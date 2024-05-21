@@ -208,9 +208,10 @@ func read_input():
 							cursor.set_position(character_coords[char_index])
 						# Item
 						2:
-							menu.hide_cursor()
-							current_selection = Selecting.MENU
-							inventory.aparecer()
+							pass
+							#menu.hide_cursor()
+							#current_selection = Selecting.MENU
+							#inventory.aparecer()
 		
 		
 		# Se selecionou atacar deve escolher um inimigo

@@ -99,7 +99,10 @@ func queue_text(nome, props, methods = {}):
 		# então adiciona ela 'cursor_dict' e sua posição no 'prop_positions' 
 		if "1" in p:
 			show_cursor()
-			next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
+			if "String" in p:
+				next_text +=  p.right(len(p) - 1) + " = " + "'" + str(prop[p]) + "'" + "\n" 
+			else:
+				next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
 			prop_positions.append(prop.keys().find(p))
 			cursor_dict[prop.keys().find(p)] = p
 		# Caso contrario só mostra ela como texto
@@ -148,9 +151,12 @@ func update_prop_text(chave, valor):
 	prop[chave] = valor
 	for p in prop.keys():
 		if "1" in p:
+			if "String" in p:
+				next_text +=  p.right(len(p) - 1) + " = " + "'" + str(prop[p]) + "'" + "\n" 
 			# Se o 1 está na variavel ele corta ele da string antes de adicionar ela
 			# no texto da codebox
-			next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
+			else:
+				next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
 		else:
 			next_text += p + " = "+ str(prop[p]) + "\n"
 	text_queue.push_back(next_text)

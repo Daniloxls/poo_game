@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://cunpab1ac2q5a"]
+[gd_scene load_steps=18 format=3 uid="uid://cunpab1ac2q5a"]
 
 [ext_resource type="Script" path="res://scenes/encounters/muscleguy.gd" id="1_lc2v6"]
 [ext_resource type="Script" path="res://scripts/healthbar.gd" id="2_mnv27"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_c0xy3"]
 [ext_resource type="Texture2D" uid="uid://1w8676jtjd00" path="res://assets/battle/enemy_sprites/lutador_batalha.png" id="3_fwivw"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_iw5wo"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_kr241"]
@@ -13,9 +14,11 @@ bg_color = Color(0, 0.670588, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3aa0j"]
 bg_color = Color(0.803922, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_by1mp"]
-font_size = 13
-outline_size = 5
+[sub_resource type="LabelSettings" id="LabelSettings_qld48"]
+line_spacing = 60.0
+font = ExtResource("3_c0xy3")
+font_size = 320
+outline_size = 100
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3717"]
@@ -176,14 +179,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -9.0
-offset_right = 23.0
-offset_bottom = 9.0
+offset_left = -18.0
+offset_top = -8.0
+offset_right = 686.0
+offset_bottom = 313.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.05, 0.05)
 text = "9545"
-label_settings = SubResource("LabelSettings_by1mp")
+label_settings = SubResource("LabelSettings_qld48")
 horizontal_alignment = 1
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Lutador"]
@@ -198,6 +202,24 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Lutador"]
+
+[node name="ErrorLabel" type="Label" parent="Lutador"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = 16.25
+offset_right = 3287.0
+offset_bottom = 718.25
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.05, 0.05)
+text = "error:Tipo inválido"
+label_settings = SubResource("LabelSettings_qld48")
+horizontal_alignment = 1
 
 [connection signal="animation_end" from="Lutador/Healthbar" to="Lutador" method="_on_healthbar_animation_end"]
 [connection signal="animation_finished" from="Lutador/AnimationPlayer" to="Lutador" method="_on_animation_player_animation_finished"]

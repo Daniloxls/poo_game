@@ -27,7 +27,7 @@ func _ready():
 	codigo = {}
 	texto =[["Seja bem vindo ao meu jogo jovem.", "As regras são bem simples.",
 	"Pense em uma palavra e escreva ela aí embaixo, se eu conseguir advinhar a palavra que você pensou eu ganho.",
-	"Se eu errar você ganha, e de bonûs você leva 10 tickets."]]
+	"Se eu errar você ganha, e de bônus você leva 10 tickets."]]
 	metodos = {
 	"1" : ["String leitor_de_pensamento(Personagem jogador){"],
 	"2" : ["\tString resposta"] ,

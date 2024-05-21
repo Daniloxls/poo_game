@@ -20,6 +20,6 @@ func _on_area_2d_area_entered(area):
 		return
 	else:
 		triggered = true
-		textbox.queue_char_text(["Ótimo, você só precisa atravessar essa porta e deve chegar onde estou"],
+		textbox.queue_char_text(["Ótimo, você só precisa atravessar essa porta e deve chegar onde estou."],
 		["res://assets/portraits/silhueta.png"])
 	pass # Replace with function body.
