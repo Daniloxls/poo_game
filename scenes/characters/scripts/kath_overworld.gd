@@ -6,14 +6,14 @@ var direction : Vector2 = Vector2()
 @onready var player = get_node("../Player")
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
-
+var metodos = {}
 enum State{
 	DOWN,
 	LEFT,
 	RIGHT,
 	UP
 }
-var nome
+var nome = ""
 var texto = []
 var codigo = [""]
 var portraits = [""]
@@ -78,3 +78,6 @@ func get_seq():
 
 func set_seq(event_seq):
 	seq = event_seq
+
+func get_methods():
+	return metodos

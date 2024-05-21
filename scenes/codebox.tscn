@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://2j3byyhg36c6"]
+[gd_scene load_steps=9 format=3 uid="uid://2j3byyhg36c6"]
 
 [ext_resource type="Script" path="res://scripts/codebox.gd" id="1_j5dny"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_pq3of"]
+[ext_resource type="Texture2D" uid="uid://bwn6m2qvamam4" path="res://assets/gui/keyboard_c.png" id="3_lech8"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_s2n5h"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_wuxah"]
 
@@ -12,6 +13,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwoo6"]
+bg_color = Color(0, 0, 0.305882, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_qoqcm"]
 font = ExtResource("2_pq3of")
@@ -85,6 +98,38 @@ boolean teste_de_forca(int: forca){
 	return sucesso;
 }"
 fit_content = true
+autowrap_mode = 2
+
+[node name="Indicator" type="MarginContainer" parent="."]
+visible = false
+offset_left = 13.0
+offset_top = 531.0
+offset_right = 234.0
+offset_bottom = 613.0
+
+[node name="Panel" type="Panel" parent="Indicator"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pwoo6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Indicator"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Indicator/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_lech8")
+stretch_mode = 4
+
+[node name="Label2" type="RichTextLabel" parent="Indicator/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/line_separation = -16
+theme_override_fonts/normal_font = ExtResource("2_pq3of")
+theme_override_font_sizes/normal_font_size = 32
+text = "
+-Depurar"
 autowrap_mode = 2
 
 [node name="Cursor" type="Sprite2D" parent="."]

@@ -146,7 +146,7 @@ func evaluate(command, variable_names = [], variable_values = []) -> bool:
 	var result = expression.execute(variable_values, self)
 
 	if not expression.has_execute_failed():
-		if result:
+		if result and result is bool:
 			return result
 		else:
 			return false

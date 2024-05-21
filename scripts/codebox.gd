@@ -19,6 +19,7 @@ signal code_open
 @onready var edit = $Editar
 @onready var stop_edit = $Deseditar
 
+@onready var indicator = $Indicator
 # codebox tem acesso ao player e a caixa de texto
 @onready var player = get_node("../Player")
 @onready var textbox = get_node("../Textbox")
@@ -59,7 +60,6 @@ var classname
 var text_queue = []
 # 'typing' é o estado em que o jogador está editando uma string
 var typing = false
-
 func _ready():
 	hide_textbox()
 
@@ -199,7 +199,7 @@ func change_state(next_state):
 func show_cursor():
 	cursor_state = Cursor.SHOWING
 	cursor.show()
-
+	
 func get_props():
 	return prop
 	
@@ -223,6 +223,11 @@ func _process(delta):
 		State.READY:
 			if !text_queue.is_empty():
 				display_text()
+			if player.can_edit_code():
+				print("entrando")
+				indicator.show()
+			else:
+				indicator.hide()
 		# Se está aparecendo a caixa e o cursor aparece, então ele pode mexer o cursor
 		# para cima e baixo para escolher a variavel que vai ser editada
 		State.FINISH:
@@ -281,6 +286,7 @@ func _process(delta):
 					if Input.is_action_just_pressed("exit"):
 						edit.hide()
 						cursor_pos = 0
+						print("apo")
 						update_cursor_pos()
 						change_state(State.READY)
 						code_closed.emit()
@@ -378,11 +384,11 @@ func _process(delta):
 						stop_edit.hide()
 			elif current_edit == Editing.METHODS:
 				if cursor_state == Cursor.SHOWING and !typing:
-					
 					# Se o jogador aperta 'X' ele fecha a caixa de codigo
 					if Input.is_action_just_pressed("exit"):
 						cursor_pos = 0
 						edit.hide()
+						print("gijo")
 						update_cursor_pos()
 						change_state(State.READY)
 						code_closed.emit()

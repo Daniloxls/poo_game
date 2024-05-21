@@ -138,6 +138,13 @@ func set_on_battle(obt):
 func set_in_scene(scene):
 	in_scene = scene
 	
+func can_edit_code():
+	if interact_box.get_overlapping_areas():
+		if interact_box.get_overlapping_areas()[0].get_parent().name() != "":
+			return true
+		else:
+			return false
+			
 func set_animation(animation, direction):
 	match(animation):
 		"idle":

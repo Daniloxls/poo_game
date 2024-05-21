@@ -20,7 +20,7 @@ var texto = []
 var codigo = [""]
 var portraits = [""]
 var depuring = false
-
+var metodos = {}
 var current_state = State.DOWN
 
 func _ready():
@@ -58,3 +58,6 @@ func interaction():
 
 func name():
 	return nome
+
+func get_methods():
+	return metodos

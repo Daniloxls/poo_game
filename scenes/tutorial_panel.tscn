@@ -29,6 +29,7 @@ offset_bottom = 632.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_p8mqd")
 
 [node name="Panel2" type="Panel" parent="TutorialPanel/Panel"]
+layout_mode = 0
 offset_left = 567.0
 offset_top = 109.0
 offset_right = 1101.0
@@ -41,6 +42,7 @@ scale = Vector2(0.305, 0.305)
 texture = ExtResource("1_m4sev")
 
 [node name="Label4" type="RichTextLabel" parent="TutorialPanel/Panel/Panel2"]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 15.0
 offset_right = 554.0

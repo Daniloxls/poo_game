@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=3 uid="uid://bhl2fw3fmtrpc"]
+[gd_scene load_steps=133 format=3 uid="uid://bhl2fw3fmtrpc"]
 
 [ext_resource type="Script" path="res://scenes/city/festival_city/city.gd" id="1_e3xut"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="1_eoyq6"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://ckds0204dlj6x" path="res://assets/tileset/city/casa_reino2.png" id="20_an34w"]
 [ext_resource type="Texture2D" uid="uid://p8ogutr7owmt" path="res://assets/tileset/city/casa_reino3.png" id="21_cn57e"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/sword_cutscene.gd" id="22_irl0a"]
+[ext_resource type="Texture2D" uid="uid://dbw6seicqkxrj" path="res://assets/gui/question.png" id="23_e5ug5"]
 [ext_resource type="Texture2D" uid="uid://dokgyntmcjbrj" path="res://assets/characters/anti_poo_down.png" id="23_n81b1"]
 [ext_resource type="Texture2D" uid="uid://brve6wof3ny6h" path="res://assets/characters/anti_poo_pegando_espada.png" id="24_3fmp8"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/TutorialPanel.gd" id="24_e4kh5"]
@@ -3423,6 +3424,17 @@ sources/14 = SubResource("TileSetAtlasSource_dvq3x")
 sources/17 = SubResource("TileSetAtlasSource_ypcm1")
 sources/18 = SubResource("TileSetAtlasSource_vx4on")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj68f"]
+bg_color = Color(0, 0.101961, 0.184314, 0.772549)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfux5"]
 bg_color = Color(0.137255, 0.14902, 0.180392, 1)
 border_width_left = 3
@@ -3939,14 +3951,67 @@ layer_5/tile_data = PackedInt32Array(-2883602, 3, 0, -2883601, 65539, 0, -288360
 layer = 2
 script = ExtResource("24_e4kh5")
 
+[node name="Button" type="Button" parent="TutorialPanel"]
+visible = false
+offset_left = 1075.0
+offset_top = 27.0
+offset_right = 1181.0
+offset_bottom = 133.0
+scale = Vector2(0.39, 0.39)
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0, 0.909804, 0.776471, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_sj68f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sj68f")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sj68f")
+icon = ExtResource("23_e5ug5")
+
 [node name="Panel" type="Panel" parent="TutorialPanel"]
+visible = false
 offset_left = 14.0
 offset_top = 14.0
 offset_right = 1136.0
 offset_bottom = 632.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_bfux5")
 
+[node name="Label2" type="RichTextLabel" parent="TutorialPanel/Panel"]
+layout_mode = 0
+offset_left = 575.0
+offset_top = 76.0
+offset_right = 1115.0
+offset_bottom = 111.0
+theme_override_fonts/normal_font = ExtResource("41_5mkgm")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[color=#A0A1A7cc]//(Tipo do retorno) Nome_do_Metodo(argumentos)[/color]"
+autowrap_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="TutorialPanel/Panel"]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 33.0
+offset_right = 571.0
+offset_bottom = 634.0
+theme_override_fonts/normal_font = ExtResource("41_5mkgm")
+theme_override_font_sizes/normal_font_size = 27
+bbcode_enabled = true
+text = "//Tutorial de Métodos
+
+Métodos são funções que são definidas dentro de uma classe, eles representam os comportamentos que os objetos dessa classe realizam. 
+Métodos permitem que os objetos interajam, realizem tarefas e manipulem os dados do objeto. Eles podem retornar variáveis de qualquer tipo a quem chamou esse método, ou não retornar nada.
+
+Miar pode ser considerado um método de um gato, ou seja, uma ação que os objetos gatos podem realizar.
+Caso você chame o Miar(1) de um gato, um possível retorno seria a string \"Miau\""
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TutorialPanel/Panel"]
+layout_mode = 0
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 26.0
+offset_bottom = 26.0
+
 [node name="Panel2" type="Panel" parent="TutorialPanel/Panel"]
+layout_mode = 0
 offset_left = 567.0
 offset_top = 109.0
 offset_right = 1101.0
@@ -3959,6 +4024,7 @@ scale = Vector2(0.305, 0.305)
 texture = ExtResource("25_mdouk")
 
 [node name="Label4" type="RichTextLabel" parent="TutorialPanel/Panel/Panel2"]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 15.0
 offset_right = 554.0
@@ -3981,48 +4047,17 @@ text = "[color=#c74ded]String[/color] [color=#FFE66D]Miar[/color]([color=#c74ded
 }"
 autowrap_mode = 2
 
-[node name="Label2" type="RichTextLabel" parent="TutorialPanel"]
-offset_left = 589.0
-offset_top = 90.0
-offset_right = 1129.0
-offset_bottom = 125.0
-theme_override_fonts/normal_font = ExtResource("41_5mkgm")
-theme_override_font_sizes/normal_font_size = 20
-bbcode_enabled = true
-text = "[color=#A0A1A7cc]//(Tipo do retorno) Nome_do_Metodo(argumentos)[/color]"
-autowrap_mode = 2
-
-[node name="Label3" type="RichTextLabel" parent="TutorialPanel"]
-offset_left = 985.0
-offset_top = 556.0
-offset_right = 1113.0
-offset_bottom = 591.0
+[node name="Label3" type="RichTextLabel" parent="TutorialPanel/Panel"]
+layout_mode = 0
+offset_left = 971.0
+offset_top = 542.0
+offset_right = 1099.0
+offset_bottom = 577.0
 theme_override_fonts/normal_font = ExtResource("41_5mkgm")
 theme_override_font_sizes/normal_font_size = 27
 bbcode_enabled = true
-text = "X - Sair"
+text = "Z - Sair"
 autowrap_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="TutorialPanel"]
-offset_left = 45.0
-offset_top = 47.0
-offset_right = 585.0
-offset_bottom = 648.0
-theme_override_fonts/normal_font = ExtResource("41_5mkgm")
-theme_override_font_sizes/normal_font_size = 27
-bbcode_enabled = true
-text = "//Tutorial de Métodos
-
-Métodos são funções que são definidas dentro de uma classe, eles representam os comportamentos que os objetos dessa classe realizam. 
-Métodos permitem que os objetos interajam, realizem tarefas e manipulem os dados do objeto. Eles podem retornar variáveis de qualquer tipo a quem chamou esse método, ou não retornar nada.
-
-Miar pode ser considerado um método de um gato, ou seja, uma ação que os objetos gatos podem realizar.
-Caso você chame o Miar(1) de um gato, um possível retorno seria a string \"Miau\""
-autowrap_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="TutorialPanel"]
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="Cutscene" type="Node2D" parent="."]
 position = Vector2(0.000976563, 0)
@@ -4273,5 +4308,7 @@ stretch_mode = 4
 [connection signal="text_finish" from="Textbox" to="TesteDeForcaNPC" method="_on_textbox_text_finish"]
 [connection signal="text_finish" from="Textbox" to="TatameNPC" method="_on_textbox_text_finish"]
 [connection signal="text_finish" from="Textbox" to="ExcaliburNPC" method="_on_textbox_text_finish"]
+[connection signal="code_closed" from="Codebox" to="TutorialPanel" method="_on_codebox_code_closed"]
 [connection signal="code_open" from="Codebox" to="TutorialPanel" method="_on_codebox_code_open"]
+[connection signal="pressed" from="TutorialPanel/Button" to="TutorialPanel" method="_on_button_pressed"]
 [connection signal="pressed" from="TendaVidente/VidenteInterface/Button" to="TendaVidente" method="_on_button_pressed"]

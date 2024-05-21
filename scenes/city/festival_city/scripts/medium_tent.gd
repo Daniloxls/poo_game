@@ -39,7 +39,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("x") and !pensamento_field.has_focus():
-		close_window()
+		if current_state != State.CLOSED and current_state != State.FIRST:
+			close_window()
 
 func interaction():
 	player.set_movement(false)
