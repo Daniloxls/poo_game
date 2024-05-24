@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://df7qmalmdieo8"]
+
+[ext_resource type="Script" path="res://scripts/TooltipButton.gd" id="1_x08vo"]
+[ext_resource type="Texture2D" uid="uid://dbw6seicqkxrj" path="res://assets/gui/question.png" id="2_s3jfe"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_aywcj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxoev"]
+bg_color = Color(0, 0.101961, 0.184314, 0.772549)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[node name="TooltipButton" type="Node2D"]
+script = ExtResource("1_x08vo")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 649.0
+offset_bottom = 106.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0, 0.909804, 0.776471, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_gxoev")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gxoev")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gxoev")
+icon = ExtResource("2_s3jfe")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+visible = false
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("3_aywcj")
+theme_override_font_sizes/normal_font_size = 42
+bbcode_enabled = true
+text = "Dicas vem aqui"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]

@@ -1,33 +1,17 @@
-extends CharacterBody2D
+extends "res://scripts/npc_script.gd"
 
-var direction : Vector2 = Vector2()
-@onready var _animated_sprite = $AnimatedSprite2D
-@onready var animation_player = $AnimationPlayer
 @onready var peso = $Peso
 @onready var teste = $TesteDeForca
-@onready var player = get_node("../Player")
 @onready var camera = get_node("../Player/Camera2D")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
 @onready var tickets = get_node("../Tickets")
-enum State{
-	DOWN,
-	LEFT,
-	RIGHT,
-	UP
-}
-var nome = ""
-var texto = [["Estou impressionado! Parabéns tome 10 tickets para você"],
-["Não foi dessa vez, mas não fique triste você pode tentar de novo"]]
-var codigo = [""]
-var portraits = [""]
-var depuring = false
 var triggered = false
 var scene = false
-var current_state = State.DOWN
 var game_won = false
 var animation_end = false
+
 func _ready():
+	texto = [["Estou impressionado! Parabéns tome 10 tickets para você"],
+	["Não foi dessa vez, mas não fique triste você pode tentar de novo"]]
 	pass
 
 func set_sprite(sprite):
@@ -61,7 +45,7 @@ func methods():
 	return {}
 	
 func interaction():
-	if !game_won:
+	if !scene and !game_won:
 		textbox.queue_text(["Teste sua força para ganhar tickets!"])
 		triggered = true
 	else:

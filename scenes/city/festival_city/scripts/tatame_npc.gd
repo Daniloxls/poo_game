@@ -23,11 +23,7 @@ var victory_state = Victory.NEITHER
 var triggered = false;
 var start_battle = false
 func _ready():
-	nome = ""
-	texto = []
-	codigo = [""]
-	portraits = [""]
-	depuring = false
+	pass
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)

@@ -179,7 +179,8 @@ func start_battle(enemy_group_path):
 func read_input():
 	# Mostra informações de debug
 	if Input.is_action_just_pressed("a"):
-		debug.show()
+		#debug.show()
+		pass
 	if in_battle:
 		# 'Selecting.ACTION' o jogador está escolhendo uma opção entre
 		# Lutar, Item, Função, etc.

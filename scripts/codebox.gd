@@ -224,7 +224,6 @@ func _process(delta):
 			if !text_queue.is_empty():
 				display_text()
 			if player.can_edit_code():
-				print("entrando")
 				indicator.show()
 			else:
 				indicator.hide()
@@ -286,7 +285,6 @@ func _process(delta):
 					if Input.is_action_just_pressed("exit"):
 						edit.hide()
 						cursor_pos = 0
-						print("apo")
 						update_cursor_pos()
 						change_state(State.READY)
 						code_closed.emit()
@@ -388,7 +386,6 @@ func _process(delta):
 					if Input.is_action_just_pressed("exit"):
 						cursor_pos = 0
 						edit.hide()
-						print("gijo")
 						update_cursor_pos()
 						change_state(State.READY)
 						code_closed.emit()

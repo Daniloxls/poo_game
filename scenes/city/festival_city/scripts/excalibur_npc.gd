@@ -1,28 +1,12 @@
-extends CharacterBody2D
+extends "res://scripts/npc_script.gd"
 
-var direction : Vector2 = Vector2()
-@onready var _animated_sprite = $AnimatedSprite2D
-@onready var animation_player = $AnimationPlayer
-@onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
+
 @onready var sword_scene = get_node("../Cutscene")
 @onready var tickets = $"../Tickets"
-enum State{
-	DOWN,
-	LEFT,
-	RIGHT,
-	UP
-}
-var nome
-var texto = []
-var codigo = [""]
-var portraits = [""]
-var depuring = false
+
 var triggered = false
 var scene = false
-
-var current_state = State.DOWN
+var finished = false
 
 func _ready():
 	set_sprite("campones_4")
@@ -60,7 +44,8 @@ func depure():
 func interaction():
 	triggered = true
 	textbox.queue_text(texto)
-	set_texto(["Está pronto para tentar ir agora ?"])
+	if !finished:
+		set_texto(["Está pronto para tentar ir agora ?"])
 	
 
 func name():
@@ -68,12 +53,15 @@ func name():
 
 
 func _on_textbox_text_finish():
-	if triggered:
-		textbox.display_choice(	"Por 30 tickets você pode tentar tirar ela dá pedra, quer tentar?"
-		, ["Sim", "Não"])
-	elif scene:
-		scene = false
-		sword_scene.play()
+	if !finished:
+		if triggered:
+			textbox.display_choice(	"Por 30 tickets você pode tentar tirar ela dá pedra, quer tentar?"
+			, ["Sim", "Não"])
+		elif scene:
+			scene = false
+			finished = true
+			set_texto([])
+			sword_scene.play()
 
 
 func _on_textbox_choise_closed():
@@ -81,7 +69,7 @@ func _on_textbox_choise_closed():
 		triggered = false
 		match(textbox.get_choice()):
 			0:
-				if tickets.get_tickets() == 30:
+				if tickets.get_tickets() >= 30:
 					textbox.queue_text(["Certo, me siga então."])
 					tickets.hide()
 					scene = true

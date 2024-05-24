@@ -31,6 +31,7 @@ font = ExtResource("2_pq3of")
 font_size = 26
 
 [node name="Codebox" type="CanvasLayer"]
+layer = 0
 script = ExtResource("1_j5dny")
 
 [node name="TextboxContainer" type="MarginContainer" parent="."]
@@ -101,10 +102,9 @@ fit_content = true
 autowrap_mode = 2
 
 [node name="Indicator" type="MarginContainer" parent="."]
-visible = false
-offset_left = 13.0
+offset_left = 26.0
 offset_top = 531.0
-offset_right = 234.0
+offset_right = 247.0
 offset_bottom = 613.0
 
 [node name="Panel" type="Panel" parent="Indicator"]

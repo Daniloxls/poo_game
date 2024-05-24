@@ -1,4 +1,4 @@
-[gd_scene load_steps=133 format=3 uid="uid://bhl2fw3fmtrpc"]
+[gd_scene load_steps=134 format=3 uid="uid://bhl2fw3fmtrpc"]
 
 [ext_resource type="Script" path="res://scenes/city/festival_city/city.gd" id="1_e3xut"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="1_eoyq6"]
@@ -45,6 +45,7 @@
 [ext_resource type="StyleBox" uid="uid://xdtsowj2khkl" path="res://scenes/city/festival_city/resources/medium_style_box.tres" id="34_hc0bm"]
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/interact.tscn" id="35_tlwih"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/scripts/strenght_test.gd" id="36_idl4x"]
+[ext_resource type="PackedScene" uid="uid://df7qmalmdieo8" path="res://scenes/tooltip_button.tscn" id="39_owu87"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/tickets.gd" id="40_u5lbm"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="41_5mkgm"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/scripts/npc1.gd" id="43_hokio"]
@@ -3907,12 +3908,13 @@ y_sort_enabled = true
 script = ExtResource("1_e3xut")
 
 [node name="Textbox" parent="." instance=ExtResource("2_duvul")]
+layer = 2
 
 [node name="Codebox" parent="." instance=ExtResource("3_v8y87")]
 
 [node name="Player" parent="." instance=ExtResource("1_eoyq6")]
 z_index = 2
-position = Vector2(1, -3441)
+position = Vector2(-76, -3433)
 scale = Vector2(1.2, 1.2)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -4086,10 +4088,10 @@ color = Color(0, 0, 0, 0)
 
 [node name="Label" type="Label" parent="Cutscene/BlackScreen"]
 visible = false
-offset_left = 300.0
-offset_top = 228.0
-offset_right = 674.0
-offset_bottom = 290.0
+offset_left = 427.0
+offset_top = 245.0
+offset_right = 801.0
+offset_bottom = 307.0
 text = "Continua..."
 label_settings = SubResource("LabelSettings_2x2i0")
 
@@ -4130,10 +4132,10 @@ layer = 0
 visible = false
 
 [node name="BackPanel" type="Panel" parent="TendaVidente/VidenteInterface"]
-offset_left = 88.0
-offset_top = 56.0
-offset_right = 1051.0
-offset_bottom = 579.0
+offset_left = 14.0
+offset_top = 17.0
+offset_right = 1130.0
+offset_bottom = 622.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vd5i4")
 
 [node name="ErrorLabel" type="Label" parent="TendaVidente/VidenteInterface/BackPanel"]
@@ -4147,6 +4149,10 @@ theme_override_fonts/font = ExtResource("41_5mkgm")
 theme_override_font_sizes/font_size = 36
 text = "Tipos incompatíveis: não se pode converter de int para String"
 autowrap_mode = 2
+
+[node name="TooltipButton" parent="TendaVidente/VidenteInterface/BackPanel/ErrorLabel" instance=ExtResource("39_owu87")]
+position = Vector2(-12, 492)
+scale = Vector2(0.56, 0.56)
 
 [node name="MediumPanel" type="Panel" parent="TendaVidente/VidenteInterface"]
 offset_left = 207.0
@@ -4173,9 +4179,9 @@ text = "Tritomos, O Grande Adivinho"
 
 [node name="Pensamento" type="LineEdit" parent="TendaVidente/VidenteInterface"]
 offset_left = 443.0
-offset_top = 414.0
+offset_top = 434.0
 offset_right = 687.0
-offset_bottom = 465.0
+offset_bottom = 485.0
 theme_override_fonts/font = ExtResource("41_5mkgm")
 theme_override_font_sizes/font_size = 18
 placeholder_text = "Digite seu pensamento..."
@@ -4183,9 +4189,9 @@ caret_blink = true
 
 [node name="Button" type="Button" parent="TendaVidente/VidenteInterface"]
 offset_left = 487.0
-offset_top = 473.0
+offset_top = 508.0
 offset_right = 628.0
-offset_bottom = 519.0
+offset_bottom = 554.0
 theme_override_colors/font_color = Color(0, 0, 0.305882, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0.305882, 1)
 theme_override_constants/outline_size = 0
@@ -4263,7 +4269,7 @@ script = ExtResource("47_v080i")
 
 [node name="NPC2" parent="." instance=ExtResource("5_whr0p")]
 z_index = 2
-position = Vector2(683, -13669)
+position = Vector2(1060, -13696)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("44_oss34")
 

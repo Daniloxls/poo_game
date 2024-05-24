@@ -103,7 +103,7 @@ func read_input():
 	move_and_slide()
 	
 	# Interação
-	if free_to_move and !on_battle:
+	if free_to_move and !on_battle and !in_scene:
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
@@ -117,7 +117,8 @@ func read_input():
 				interact_box.get_overlapping_areas()[0].get_parent().get_methods())
 		# Botão provisorio para abrir o inventario
 		if Input.is_action_just_pressed("a"):
-			inventory.aparecer()
+			#inventory.aparecer()
+			pass
 	# Se o jogador aperta 'X' e se a caixa de codigo está aberta, se for o caso
 	# insere o codigo editado de volta no objeto
 	if Input.is_action_just_pressed("exit"):

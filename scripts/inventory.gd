@@ -86,6 +86,7 @@ func menu_visivel():
 func esconder():
 	background.hide()
 	content.hide()
+	char_cursor.hide()
 	player.set_movement(true)
 	
 func process_input():

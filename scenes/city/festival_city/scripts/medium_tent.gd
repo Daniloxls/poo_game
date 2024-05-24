@@ -1,4 +1,5 @@
 extends "res://scripts/interact.gd"
+
 @onready var interface = $VidenteInterface
 @onready var pensamento_field = $VidenteInterface/Pensamento
 @onready var medium = $VidenteInterface/MediumPanel
@@ -7,14 +8,18 @@ extends "res://scripts/interact.gd"
 @onready var error_label = $VidenteInterface/BackPanel/ErrorLabel
 @onready var tickets = $"../Tickets"
 @onready var left_label = $VidenteInterface/LeftLabel
+@onready var tooltip = $VidenteInterface/BackPanel/ErrorLabel/TooltipButton
+
 var first_interaction = true
 var correct_answer = false
 var triggered = false
 var retorno
+
 enum State{
 	FIRST,
 	OPEN,
 	GUESSING,
+	FIRST_ERROR,
 	ERROR,
 	BEATEN,
 	FINISHED,
@@ -48,7 +53,7 @@ func interaction():
 	open_window()
 	if current_state == State.FINISHED:
 		return
-	if first_interaction:
+	if first_interaction and current_state != State.ERROR:
 		textbox.queue_text(texto[0])
 	else:
 		current_state = State.OPEN
@@ -63,14 +68,17 @@ func open_window():
 		correct_answer = true
 	elif retorno.is_valid_float():
 		show_error("Tipos incompatíveis: não se pode converter de int para String")
+		tooltip.set_text("O vidente precisa retornar uma string e não um inteiro.")
 	elif retorno != "resposta":
 		show_error("Referência a variável " + retorno + "  não pôde ser resolvida")
+		tooltip.set_text("Para declarar uma String, precisamos adicionar aspas no inicio e final.")
 	
 func close_window():
 	medium.show()
 	triggered = false
 	error_label.hide()
 	interface.hide()
+	tooltip.reset()
 	player.set_movement(true)
 	if current_state != State.FINISHED:
 		think_button.show()
