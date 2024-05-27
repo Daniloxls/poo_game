@@ -100,6 +100,7 @@ func process_input():
 				char_count -= 1
 				char_cursor.position.y = party_container.get_children()[char_count].position.y + 10
 		if Input.is_action_just_pressed("z"):
+			cursor.hide()
 			if visualizando == OPTIONS.PRINCIPAL:
 				if cursor.hovering == personagens_label:
 					visualizando = OPTIONS.PERSONAGENS
@@ -118,7 +119,6 @@ func process_input():
 		cursor.position.y = all_options[count].position.y + all_options[count].get_size().y
 		cursor.set_hovering(all_options[count])
 	if Input.is_action_just_pressed("x"):
-		esconder()
 		if visualizando == OPTIONS.PRINCIPAL:
 			visualizando = OPTIONS.FECHADO
 			cursor.position = old_cursor_pos
@@ -129,6 +129,7 @@ func process_input():
 			visualizando = OPTIONS.PRINCIPAL
 			char_cursor.position = old_char_cursor_pos
 			$ItemMenu.hide()
+			cursor.show()
 
 func set_player(player_node):
 	player = player_node
