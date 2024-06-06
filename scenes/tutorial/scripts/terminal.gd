@@ -25,15 +25,15 @@ func _process(delta):
 func interaction():
 	if !active:
 		active = true
-		textbox.queue_char_text(["Certo, tente digitar 'sudo' nesse teclado e apertar enter",
+		textbox.queue_char_text(["Certo, tente digitar 'sudo' nesse teclado e aperte enter.",
 		"tec tec tec...",
 		"Digite a senha para ativar o sudo:",
 		"...",
 		"...",
-		"Pelo que eu me lembro a senha era senha123",
-		"Digite a senha para ativar o sudo: senha123",
+		"Pelo que me lembro, a senha era senha123.",
+		"Digite a senha para ativar o sudo: senha123.",
 		"Acesso garantido",
-		"Ativando permissões de sudo"],
+		"Ativando permissões de sudo."],
 		
 		["res://assets/portraits/silhueta.png",
 		"",
@@ -45,7 +45,7 @@ func interaction():
 		"",
 		 "",])
 	else:
-		textbox.queue_char_text(["Modo sudo ativado"], [""])
+		textbox.queue_char_text(["Modo sudo ativado.	"], [""])
 
 func set_texto(new_texto):
 	texto = new_texto

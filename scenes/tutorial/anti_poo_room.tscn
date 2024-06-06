@@ -95,11 +95,12 @@ layer_1/tile_data = PackedInt32Array()
 [node name="Codebox" parent="." instance=ExtResource("5_16n8n")]
 
 [node name="Player" parent="." instance=ExtResource("6_o84k0")]
-position = Vector2(9573, 12545)
+position = Vector2(9422, 12560)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(1, 4)
 zoom = Vector2(0.15, 0.15)
+limit_bottom = 13000
 
 [node name="Brilho" type="Sprite2D" parent="."]
 z_index = 1
@@ -108,7 +109,7 @@ scale = Vector2(0.109376, 0.0937509)
 texture = ExtResource("7_1nri3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(9468, 7836)
+position = Vector2(9504, 8291)
 sprite_frames = SubResource("SpriteFrames_2cknq")
 
 [connection signal="text_finish" from="Textbox" to="." method="_on_textbox_text_finish"]

@@ -1,25 +1,5 @@
-extends CharacterBody2D
+extends "res://scripts/npc_script.gd"
 
-var direction : Vector2 = Vector2()
-@onready var _animated_sprite = $AnimatedSprite2D
-@onready var animation_player = $AnimationPlayer
-@onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
-
-enum State{
-	DOWN,
-	LEFT,
-	RIGHT,
-	UP
-}
-var nome
-var texto = []
-var codigo = [""]
-var portraits = [""]
-var depuring = false
-
-var current_state = State.DOWN
 
 func _ready():
 	pass
@@ -52,8 +32,7 @@ func depure():
 
 
 func interaction():
-	textbox.queue_text(["Entre e teste suas habilidades de predição com a Madame Cassandra!"])
-	pass
+	textbox.queue_text(["Entre e teste suas habilidades de predição com o fabuloso Tritomos!"])
 
 func name():
 	return nome

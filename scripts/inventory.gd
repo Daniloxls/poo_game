@@ -26,11 +26,10 @@ enum OPTIONS {PRINCIPAL, PERSONAGENS, ITENS, EQUIPAMENTOS, OPCOES, FECHADO}
 @onready var background = $MenuBackground
 # 'content' são todas as informações do menu
 @onready var content = $MenuContents
-
-
 @onready var player = get_node("../Level").get_child(0).find_child("Player")
 @onready var old_cursor_pos = cursor.position
 @onready var old_char_cursor_pos = char_cursor.position
+
 
 # Lista de itens com alguns itens para teste
 var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
@@ -63,6 +62,10 @@ func update_group():
 		party_ui[i].show()
 		party_ui[i].update_char(party.get_children()[i])
 		
+func full_heal():
+	for i in party.get_children():
+		i.set_hp(i.get_max_hp())
+		
 func get_party():
 	return party
 
@@ -83,6 +86,7 @@ func menu_visivel():
 func esconder():
 	background.hide()
 	content.hide()
+	char_cursor.hide()
 	player.set_movement(true)
 	
 func process_input():

@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=3 uid="uid://ibmx0l4bk7gq"]
+
+[ext_resource type="Script" path="res://scripts/tutorial_panel.gd" id="1_h57wg"]
+[ext_resource type="Texture2D" uid="uid://8xdak1jlawhg" path="res://assets/gui/cat.png" id="1_m4sev"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_sintp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p8mqd"]
+bg_color = Color(0.137255, 0.14902, 0.180392, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="TutorialPanel" type="Node2D"]
+script = ExtResource("1_h57wg")
+
+[node name="TutorialPanel" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Panel" type="Panel" parent="TutorialPanel"]
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 1136.0
+offset_bottom = 632.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p8mqd")
+
+[node name="Panel2" type="Panel" parent="TutorialPanel/Panel"]
+layout_mode = 0
+offset_left = 567.0
+offset_top = 109.0
+offset_right = 1101.0
+offset_bottom = 587.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p8mqd")
+
+[node name="Sprite2D" type="Sprite2D" parent="TutorialPanel/Panel/Panel2"]
+position = Vector2(130, 421)
+scale = Vector2(0.305, 0.305)
+texture = ExtResource("1_m4sev")
+
+[node name="Label4" type="RichTextLabel" parent="TutorialPanel/Panel/Panel2"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 15.0
+offset_right = 554.0
+offset_bottom = 474.0
+theme_override_fonts/normal_font = ExtResource("1_sintp")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[color=#c74ded]String[/color] [color=#FFE66D]Miar[/color]([color=#c74ded]int[/color][color=#00e8c6] volume[/color]){
+[color=#A0A1A7cc]// variáveis internas[/color]
+	[color=#c74ded]String[/color] [color=#00e8c6]miado[/color];
+
+	[color=#A0A1A7cc] // lógica do método[/color]
+	[color=#00e8c6]miado[/color][color=#ee5d43] = [/color][color=#96E072]'Mi'[/color];
+	[color=#c74ded]for[/color][color=#7cb7ff]([/color][color=#c74ded]int[/color] [color=#00e8c6]i[/color] [color=#ee5d43]=[/color][color=#f39c12] 0[/color]; i [color=#ee5d43]<[/color] [color=#00e8c6]volume[/color]; i[color=#ee5d43]++[/color][color=#7cb7ff])[/color][color=#c74ded]{[/color]
+		[color=#00e8c6]miado[/color][color=#ee5d43] += [/color][color=#96E072]'a'[/color];
+	[color=#c74ded]}[/color]
+	[color=#00e8c6]miado[/color][color=#ee5d43] += [/color][color=#96E072]'u'[/color];
+
+	[color=#c74ded]return[/color] [color=#00e8c6]miado[/color];
+}"
+autowrap_mode = 2
+
+[node name="Label2" type="RichTextLabel" parent="TutorialPanel"]
+offset_left = 589.0
+offset_top = 90.0
+offset_right = 1129.0
+offset_bottom = 125.0
+theme_override_fonts/normal_font = ExtResource("1_sintp")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[color=#A0A1A7cc]//(Tipo do retorno) Nome_do_Metodo(argumentos)[/color]"
+autowrap_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="TutorialPanel"]
+offset_left = 45.0
+offset_top = 47.0
+offset_right = 585.0
+offset_bottom = 648.0
+theme_override_fonts/normal_font = ExtResource("1_sintp")
+theme_override_font_sizes/normal_font_size = 27
+bbcode_enabled = true
+text = "//Métodos
+
+Métodos são funções que são definidas dentro de uma classe, eles representam os comportamentos que os objetos dessa classe realizam. 
+Métodos permitem que os objetos interajam, realizem tarefas e manipulem os dados do objeto. Eles podem retornar variáveis de qualquer tipo a quem chamou esse método, ou não retornar nada.
+
+Miar pode ser considerado um método de um gato, ou seja, uma ação que os objetos gatos podem realizar.
+Caso você chame o Miar(1) de um gato, um possível retorno seria a string \"Miau\""
+autowrap_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TutorialPanel"]
+offset_right = 40.0
+offset_bottom = 40.0

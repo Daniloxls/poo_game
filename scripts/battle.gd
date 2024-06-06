@@ -5,7 +5,9 @@ extends CanvasLayer
 signal animation_end
 #Sinal que a batalha terminou é usado para que outros nós saibam e façam sua logica pós-batalha
 #Como sumir uma barreira depois que o inimigo é derrotado
-signal battle_end
+signal battle_won
+
+signal battle_lost
 
 # 'party' é o nó que contem todos os personagens
 @onready var party = get_node("../Inventory/Party")
@@ -14,7 +16,11 @@ signal battle_end
 # 'inventory' é a versão para batalha do inventario
 @onready var inventory = get_node("../Inventory/BattleItemMenu")
 # 'player' é somente usado para bloquear o movimento do jogador no mapa
-@onready var player = get_node("../Level").get_child(0).get_child(2)
+@onready var player = get_node("../Level").get_child(0).find_child("Player")
+
+@onready var game_audio = $"../AudioPlayer"
+
+@onready var textbox
 # 'menu' é todo o painel de baixo
 @onready var menu = $BattleMenu
 # 'cursor' esse é o cursor que serve para mirar ataques
@@ -24,6 +30,9 @@ signal battle_end
 # 'debug' são informações de debug que podem ser vistas apertando 'A'
 @onready var debug = $Debug
  
+@onready var background = $Background
+
+@onready var audio_player = $AudioStreamPlayer
 # Os sprites começam fora da tela e entram com uma transição no começo da batalha
 # esses offsets são o quanto eles se movem para chegar nos seus lugares certos
 const ENEMY_POS_OFFSET = Vector2(128, 0)
@@ -113,6 +122,9 @@ func start_battle(enemy_group_path):
 	var instance = enemy_group.instantiate()
 	# Bloqueia movimento do jogador
 	player.set_on_battle(true)
+	
+	game_audio.stop()
+	audio_player.play()
 	add_child(instance)
 	# Pega variaveis que apontam para o grupo de inimigos e faz a lista com os
 	# inimigos
@@ -125,6 +137,9 @@ func start_battle(enemy_group_path):
 		enemy.connect("death", _on_enemy_death)
 	# aparece o cenario da batalha
 	show()
+	
+	textbox = get_node("../Level").get_child(0).find_child("Textbox")
+	textbox.text_finish.connect(_on_text_finish)
 	# cria um tween para fazer as transições de começo
 	var tween = create_tween()
 	in_battle = true
@@ -164,7 +179,8 @@ func start_battle(enemy_group_path):
 func read_input():
 	# Mostra informações de debug
 	if Input.is_action_just_pressed("a"):
-		debug.show()
+		#debug.show()
+		pass
 	if in_battle:
 		# 'Selecting.ACTION' o jogador está escolhendo uma opção entre
 		# Lutar, Item, Função, etc.
@@ -193,9 +209,10 @@ func read_input():
 							cursor.set_position(character_coords[char_index])
 						# Item
 						2:
-							menu.hide_cursor()
-							current_selection = Selecting.MENU
-							inventory.aparecer()
+							pass
+							#menu.hide_cursor()
+							#current_selection = Selecting.MENU
+							#inventory.aparecer()
 		
 		
 		# Se selecionou atacar deve escolher um inimigo
@@ -283,9 +300,10 @@ func read_input():
 func get_entity_positions():
 	for enemy in enemy_list:
 		enemy_coords.append(enemy.get_cursor_pos()*4 + Vector2(enemies.get_position().x*1.4,enemies.get_position().y*0.8))
+		
 	for char in char_list:
 		character_coords.append(Vector2(party.get_position().x*0.94,party.get_position().y) + char.get_cursor_pos())
-		character_back_coords.append(Vector2(party.get_position().x*1.01,party.get_position().y) + char.get_turn_cursor_pos())
+		character_back_coords.append(Vector2(party.get_position().x*1.02,party.get_position().y) + char.get_turn_cursor_pos())
 
 
 # Toda vez que um inimigo morre, ele emite um sinal, quando esse sinal é recebido
@@ -301,15 +319,10 @@ func _on_enemy_death():
 			menu.set_monster_names(enemy_names)
 			# Se não tem mais inimigos a batalha acaba
 			if len(enemy_list) == 0:
-				in_battle = false
-				for char in char_list:
-					char.reset_position()
-				enemies.queue_free()
-				player.set_on_battle(false)
 				# Emite sinal do final da batalha
-				battle_end.emit()
-				reset_variables()
-				hide()
+				current_selection = Selecting.VICTORY
+				textbox.queue_text(["Você venceu!"])
+				battle_won.emit()
 
 # quando uma animação do inimigo acaba ele emite um sinal, quando recebe esse sinal
 # Se ainda existem inimigos continua a batalha, caso contrario entra no estado de vitoria
@@ -340,6 +353,8 @@ func _on_battle_menu_animation_end():
 	current_selection = Selecting.DEFEAT
 	menu.hide()
 	animation_end.emit()
+	textbox.queue_text(["Você foi derrotado."])
+	battle_lost.emit()
 
 # 'update_char_index_up' e 'update_char_index_down' servem para mover o cursor
 # Ele pula os personagens que estão caidos, se só um personagem estiver vivo ele
@@ -394,12 +409,13 @@ func enemy_turn():
 	for enemy in enemy_list:
 		tween.tween_callback(enemy.logic.bind(char_list, menu))
 		tween.tween_interval(0.9)
-		#Talvez essa linha esteja no lugar errado, testar batalha com 2 ou mais inimigos
-		tween.tween_callback(set_selection.bind(Selecting.ACTION))
+	#Talvez essa linha esteja no lugar errado, testar batalha com 2 ou mais inimigos
+	tween.tween_callback(set_selection.bind(Selecting.ACTION))
 
 # Função para mudar o estado da batalha
 func set_selection(select):
-	current_selection = select
+	if current_selection != Selecting.DEFEAT and current_selection != Selecting.VICTORY:
+		current_selection = select
 
 # Função que atualiza posição do cursor de turno
 func update_turn_cursor_position():
@@ -408,3 +424,25 @@ func update_turn_cursor_position():
 	if char_turn == len(char_list):
 		return
 	turn_cursor.set_position(character_back_coords[char_turn])
+	
+func set_player(player_node):
+	player = player_node
+	
+func set_background(bg : CompressedTexture2D):
+	background.set_texture(bg)
+
+func _on_text_finish():
+	if current_selection == Selecting.DEFEAT or current_selection == Selecting.VICTORY:
+		in_battle = false
+		for char in char_list:
+			char.reset_position()
+			char.set_animation("default")
+		enemies.queue_free()
+		player.set_on_battle(false)
+		player.set_movement(true)
+		reset_variables()
+		hide()
+		audio_player.stop()
+		game_audio.play()
+		textbox.text_finish.disconnect(_on_text_finish)
+		

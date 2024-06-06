@@ -480,6 +480,7 @@ shape = SubResource("RectangleShape2D_u3w48")
 debug_color = Color(0.94902, 0, 0.564706, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 texture_filter = 2
 position = Vector2(80, -56)
 scale = Vector2(1.0625, 1.1)

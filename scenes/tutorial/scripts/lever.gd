@@ -1,24 +1,15 @@
-extends Node2D
+extends "res://scripts/interact.gd"
 
-@onready var area = $Area2D
 @onready var sprite = $Sprite
-@onready var colision = $Porta/PortaShape
 @onready var porta_sprite = $Porta/PortaSprite
-@onready var player = get_node("../Player")
-@onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
 
 const UP_POSITION = 0
 const DOWN_POSITION = 1
 
-var nome
-var texto = []
-var codigo = [""]
-var portraits = [""]
-var depuring = false
-
 
 func _ready():
+	colision = $Porta/PortaShape
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

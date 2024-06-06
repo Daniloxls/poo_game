@@ -1,29 +1,18 @@
-extends CharacterBody2D
+extends "res://scripts/npc_script.gd"
 
-var direction : Vector2 = Vector2()
-@onready var _animated_sprite = $AnimatedSprite2D
-@onready var animation_player = $AnimationPlayer
-@onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
 
-enum State{
-	DOWN,
-	LEFT,
-	RIGHT,
-	UP
-}
-var nome
-var texto = []
-var codigo = [""]
-var portraits = [""]
-var depuring = false
+@onready var sword_scene = get_node("../Cutscene")
+@onready var tickets = $"../Tickets"
+
 var triggered = false
-
-var current_state = State.DOWN
+var scene = false
+var finished = false
 
 func _ready():
-	pass
+	set_sprite("campones_4")
+	texto = ["Ah olá, Turin.",
+	 "Por aqui fica o evento principal.",
+	 "O rei deixou exibirmos a espada protetora, então fizemos uma atração com ela."]
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
@@ -54,7 +43,9 @@ func depure():
 
 func interaction():
 	triggered = true
-	textbox.queue_text(["Você finalmente chegou Turin, a Kath me fez esperar você chegar para começar o envento principal"])
+	textbox.queue_text(texto)
+	if !finished:
+		set_texto(["Está pronto para tentar ir agora ?"])
 	
 
 func name():
@@ -62,9 +53,15 @@ func name():
 
 
 func _on_textbox_text_finish():
-	if triggered:
-		textbox.display_choice("Você está pronto para ver os herois do reino tentarem o desafio da espada na pedra ?", ["Sim", "Não"])
-
+	if !finished:
+		if triggered:
+			textbox.display_choice(	"Por 30 tickets você pode tentar tirar ela dá pedra, quer tentar?"
+			, ["Sim", "Não"])
+		elif scene:
+			scene = false
+			finished = true
+			set_texto([])
+			sword_scene.play()
 
 
 func _on_textbox_choise_closed():
@@ -72,7 +69,13 @@ func _on_textbox_choise_closed():
 		triggered = false
 		match(textbox.get_choice()):
 			0:
-				textbox.queue_text(["Então tá bom garotão"])
+				if tickets.get_tickets() >= 30:
+					textbox.queue_text(["Certo, me siga então."])
+					tickets.hide()
+					scene = true
+				else:
+					textbox.queue_text(["Parece que você não tem tickets suficientes.",
+					"Tente ir nas atrações que estão espalhadas na praça, todas elas dão premios em tickets."])
 			1:
-				textbox.queue_text(["Num quer não boy ?"])
+				textbox.queue_text(["Ok, talvez depois."])
 			

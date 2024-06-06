@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://wtnrlc4bfiyj"]
+[gd_scene load_steps=44 format=3 uid="uid://wtnrlc4bfiyj"]
 
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial.gd" id="1_nde62"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_1qc1t"]
@@ -20,16 +20,17 @@
 [ext_resource type="Texture2D" uid="uid://cljgic3buk4cx" path="res://assets/scenario/tutorial_ground.png" id="22_7ylxl"]
 [ext_resource type="PackedScene" uid="uid://dg16vehloexlr" path="res://scenes/event.tscn" id="23_m0a1s"]
 [ext_resource type="Texture2D" uid="uid://yw5heb8uxeyt" path="res://assets/props/Portal.png" id="23_uyqyk"]
-[ext_resource type="Texture2D" uid="uid://db1es6t3htq5g" path="res://assets/props/placeholder/espinhos.png" id="24_1wmvm"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/sourcecode_portal.gd" id="24_6ir1x"]
 [ext_resource type="Texture2D" uid="uid://cu40hnevtrlbc" path="res://assets/props/AlavancaPullUp.png" id="24_dvgtu"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/glitch_effect.gd" id="24_xk1fj"]
 [ext_resource type="Texture2D" uid="uid://dlm0sevxn22pn" path="res://assets/props/AlavancaPullDown.png" id="25_60y6o"]
 [ext_resource type="Texture2D" uid="uid://dxd8tyqv4x7p1" path="res://assets/props/placeholder/ParedeRetratiuUp.png" id="26_8otyt"]
 [ext_resource type="Texture2D" uid="uid://f3kjcukhb62g" path="res://assets/effects/static.png" id="26_kbgdb"]
+[ext_resource type="Texture2D" uid="uid://c7744s6xc38ed" path="res://assets/props/espinhos.png" id="27_8tw21"]
 [ext_resource type="Texture2D" uid="uid://b6gkknxt8lmob" path="res://assets/props/placeholder/ParedeRetratiuDown.png" id="27_b25ah"]
 [ext_resource type="Texture2D" uid="uid://bwwa0id1gyqp6" path="res://assets/props/alavanca.png" id="29_5hx6h"]
 [ext_resource type="Texture2D" uid="uid://c54e6xjby4sj8" path="res://assets/props/correndo.png" id="30_mopcp"]
+[ext_resource type="Texture2D" uid="uid://ddrw2iihnn4hl" path="res://assets/props/z.png" id="31_vhul4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lmve4"]
 animations = [{
@@ -162,6 +163,10 @@ animations = [{
 "speed": 0.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3af3"]
+atlas = ExtResource("27_8tw21")
+region = Rect2(0, 0, 500, 3860)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_2kgxl"]
 animations = [{
 "frames": [{
@@ -169,7 +174,7 @@ animations = [{
 "texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_1wmvm")
+"texture": SubResource("AtlasTexture_a3af3")
 }],
 "loop": true,
 "name": &"default",
@@ -188,6 +193,7 @@ animations = [{
 }]
 
 [node name="Tutorial" type="Node2D"]
+y_sort_enabled = true
 position = Vector2(1, 0)
 script = ExtResource("1_nde62")
 
@@ -196,29 +202,33 @@ script = ExtResource("1_nde62")
 [node name="Textbox" parent="." instance=ExtResource("9_ums4g")]
 
 [node name="Player" parent="." instance=ExtResource("2_1qc1t")]
-z_index = 1
-position = Vector2(-2349, 6559)
+z_as_relative = false
+position = Vector2(-13350, 5763)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.15, 0.15)
+limit_left = -15790
+limit_top = 3085
+limit_right = 4162
+limit_bottom = 11103
 
 [node name="LeftArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12666.5, 4033)
+position = Vector2(-13795.5, 4900)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"left"
 
 [node name="RightArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-11768.5, 4039)
+position = Vector2(-12897.5, 4906)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"right"
 
 [node name="UpArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12218.5, 3533)
+position = Vector2(-13347.5, 4400)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"up"
 
 [node name="DownArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12221.5, 4039)
+position = Vector2(-13350.5, 4906)
 sprite_frames = SubResource("SpriteFrames_lmve4")
 animation = &"down"
 
@@ -246,12 +256,29 @@ rotation = -3.14159
 shape = SubResource("RectangleShape2D_twkmk")
 
 [node name="Dummy" parent="." instance=ExtResource("10_a56yr")]
-z_index = 1
 position = Vector2(-2850, 6719)
 script = ExtResource("21_oymvg")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Dummy"]
+[node name="DummySprite" type="AnimatedSprite2D" parent="Dummy"]
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(6, -114)
 sprite_frames = SubResource("SpriteFrames_u4foa")
+flip_h = true
+
+[node name="Porta" type="StaticBody2D" parent="Dummy"]
+z_index = -1
+position = Vector2(1260, 162)
+
+[node name="PortaSprite" type="AnimatedSprite2D" parent="Dummy/Porta"]
+position = Vector2(-7, -580)
+sprite_frames = SubResource("SpriteFrames_m6hwy")
+frame_progress = 0.300088
+
+[node name="PortaShape" type="CollisionShape2D" parent="Dummy/Porta"]
+position = Vector2(-4.49805, 61.4995)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_twkmk")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = -1
@@ -269,6 +296,7 @@ position = Vector2(-6471, 6757)
 polygon = PackedVector2Array(-9326, -3755, 10631, -3687, 9306, -1240, -7795, -1260, -7791, 1545, 9315, 1556, 9306, -1244, 10655, -3686, 10757, 4319, -7890, 4353, -9314, 4387)
 
 [node name="PortalShow" parent="." instance=ExtResource("23_m0a1s")]
+y_sort_enabled = true
 position = Vector2(-220, 6943)
 scale = Vector2(1, 6.45)
 script = ExtResource("24_xk1fj")
@@ -304,7 +332,7 @@ scale = Vector2(1.12988, 0.847656)
 sprite_frames = SubResource("SpriteFrames_5u6ad")
 
 [node name="DesenhosParede" type="Node2D" parent="."]
-z_index = 4
+y_sort_enabled = true
 position = Vector2(-8455, 4240)
 
 [node name="Activate" type="Sprite2D" parent="DesenhosParede"]
@@ -316,5 +344,10 @@ texture = ExtResource("29_5hx6h")
 position = Vector2(-3678, 542)
 scale = Vector2(2.24, 2.24)
 texture = ExtResource("30_mopcp")
+
+[node name="Run2" type="Sprite2D" parent="DesenhosParede"]
+position = Vector2(5111, 280)
+scale = Vector2(2.24, 2.24)
+texture = ExtResource("31_vhul4")
 
 [connection signal="battle_tutorial_end" from="." to="Dummy" method="_on_tutorial_battle_tutorial_end"]

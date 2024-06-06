@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4bax87kqk6po"]
+[gd_scene load_steps=11 format=3 uid="uid://c4bax87kqk6po"]
 
 [ext_resource type="Script" path="res://scripts/battle.gd" id="1_c4w7k"]
 [ext_resource type="PackedScene" uid="uid://dkrrrbfnsa5lw" path="res://scenes/battle_box.tscn" id="3_ymsal"]
@@ -8,14 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://bd8rsb68jqo4g" path="res://assets/props/ataque.png" id="7_2ixq6"]
 [ext_resource type="Texture2D" uid="uid://c4jqr7anfvuyt" path="res://assets/props/item.png" id="8_45lao"]
 [ext_resource type="Texture2D" uid="uid://d0nnq665edodf" path="res://assets/gui/TurnCursor.png" id="8_84fjv"]
+[ext_resource type="AudioStream" uid="uid://bjku2d4potcs1" path="res://assets/bgm/Random Battle.mp3" id="9_chp6q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gng7a"]
 font_size = 33
+font_color = Color(0, 0, 0, 1)
 
 [node name="Battle" type="CanvasLayer"]
 script = ExtResource("1_c4w7k")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 offset_left = 2.0
 offset_right = 1156.0
 offset_bottom = 648.0
@@ -24,9 +26,10 @@ expand_mode = 3
 stretch_mode = 4
 
 [node name="BattleMenu" parent="." instance=ExtResource("3_ymsal")]
+position = Vector2(-3, -10)
 
 [node name="Cursor" type="Sprite2D" parent="."]
-z_index = 3
+z_index = 5
 position = Vector2(-118, 150)
 scale = Vector2(0.77223, 0.82423)
 texture = ExtResource("5_rvb1y")
@@ -34,6 +37,7 @@ flip_h = true
 script = ExtResource("6_v5kcj")
 
 [node name="TurnCursor" type="Sprite2D" parent="."]
+z_index = 5
 position = Vector2(1491, 155)
 texture = ExtResource("8_84fjv")
 
@@ -45,13 +49,19 @@ text = "asdasdasdads"
 label_settings = SubResource("LabelSettings_gng7a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(442, 238)
 scale = Vector2(0.445, 0.445)
 texture = ExtResource("7_2ixq6")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(781, 219)
 scale = Vector2(0.445, 0.445)
 texture = ExtResource("8_45lao")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_chp6q")
+volume_db = -21.289
 
 [connection signal="animation_end" from="BattleMenu" to="." method="_on_battle_menu_animation_end"]

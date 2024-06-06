@@ -1,45 +1,53 @@
-[gd_scene load_steps=18 format=3 uid="uid://mje13m0bdoj2"]
+[gd_scene load_steps=20 format=3 uid="uid://mje13m0bdoj2"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_qgrjs"]
-[ext_resource type="Texture2D" uid="uid://6xm3lmnjv3wm" path="res://assets/battle/enemy_sprites/turin_batalha.png" id="2_v1xcn"]
-[ext_resource type="Texture2D" uid="uid://gcfse55iwhvh" path="res://assets/battle/enemy_sprites/char1_healed.png" id="3_jwor4"]
+[ext_resource type="Texture2D" uid="uid://6xm3lmnjv3wm" path="res://assets/battle/character_sprites/turin_batalha.png" id="2_hfr65"]
+[ext_resource type="Texture2D" uid="uid://1r1igt6ogl50" path="res://assets/battle/character_sprites/turin_heal.png" id="3_4tuhc"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_2nl2y"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_jxdku"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_de2uv"]
 [ext_resource type="Script" path="res://scripts/DamageText.gd" id="7_74ut4"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="7_v5y1r"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ul3ek"]
-atlas = ExtResource("2_v1xcn")
-region = Rect2(0, 0, 800, 1200)
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3cpm"]
+atlas = ExtResource("2_hfr65")
+region = Rect2(0, 0, 500, 700)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wal15"]
-atlas = ExtResource("3_jwor4")
-region = Rect2(0, 0, 31, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty3yn"]
+atlas = ExtResource("3_4tuhc")
+region = Rect2(0, 0, 500, 700)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_84eu4"]
-atlas = ExtResource("3_jwor4")
-region = Rect2(31, 0, 31, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qrv5e"]
+atlas = ExtResource("3_4tuhc")
+region = Rect2(500, 0, 500, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1pox"]
+atlas = ExtResource("3_4tuhc")
+region = Rect2(1000, 0, 500, 700)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_htfvh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ul3ek")
+"texture": SubResource("AtlasTexture_r3cpm")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_wal15")
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ty3yn")
 }, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_84eu4")
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qrv5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1pox")
 }],
 "loop": true,
 "name": &"heal",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="Animation" id="Animation_kqvds"]
@@ -162,18 +170,18 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_ly8eg"]
-font_size = 13
-outline_size = 5
+line_spacing = 60.0
+font = ExtResource("7_v5y1r")
+font_size = 320
+outline_size = 100
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_qgrjs")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.035, 0.035)
+scale = Vector2(0.04, 0.04)
 sprite_frames = SubResource("SpriteFrames_htfvh")
-frame_progress = 0.217676
-flip_h = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -186,9 +194,11 @@ libraries = {
 visible = false
 offset_left = -23.0
 offset_top = -9.0
-offset_right = 23.0
-offset_bottom = 9.0
+offset_right = 897.0
+offset_bottom = 391.0
+scale = Vector2(0.05, 0.05)
 text = "9545"
 label_settings = SubResource("LabelSettings_ly8eg")
 horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("7_74ut4")

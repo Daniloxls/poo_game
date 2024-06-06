@@ -12,6 +12,10 @@ var direction : Vector2 = Vector2()
 # 'event' colisão que apenas eventos veem
 @onready var event = $EventColision
 
+@onready var camera = $Camera2D
+
+@onready var black_screen = $Camera2D/BlackScreen
+
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 @onready var inventory = get_node("../../../Inventory")
@@ -99,7 +103,7 @@ func read_input():
 	move_and_slide()
 	
 	# Interação
-	if free_to_move and !on_battle:
+	if free_to_move and !on_battle and !in_scene:
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas():
@@ -109,15 +113,18 @@ func read_input():
 		if Input.is_action_just_pressed("depure"):
 			if interact_box.get_overlapping_areas():
 				codebox.queue_text(interact_box.get_overlapping_areas()[0].get_parent().name(),
-				interact_box.get_overlapping_areas()[0].get_parent().depure())
+				interact_box.get_overlapping_areas()[0].get_parent().depure(),
+				interact_box.get_overlapping_areas()[0].get_parent().get_methods())
 		# Botão provisorio para abrir o inventario
 		if Input.is_action_just_pressed("a"):
-			inventory.aparecer()
+			#inventory.aparecer()
+			pass
 	# Se o jogador aperta 'X' e se a caixa de codigo está aberta, se for o caso
 	# insere o codigo editado de volta no objeto
 	if Input.is_action_just_pressed("exit"):
 		if codebox.get_state() != "Ready":
 			interact_box.get_overlapping_areas()[0].get_parent().update_codigo(codebox.get_props())
+			interact_box.get_overlapping_areas()[0].get_parent().update_methods(codebox.get_methods())
 	
 		
 func _physics_process(delta):
@@ -132,6 +139,13 @@ func set_on_battle(obt):
 func set_in_scene(scene):
 	in_scene = scene
 	
+func can_edit_code():
+	if interact_box.get_overlapping_areas():
+		if interact_box.get_overlapping_areas()[0].get_parent().name() != "":
+			return true
+		else:
+			return false
+			
 func set_animation(animation, direction):
 	match(animation):
 		"idle":
@@ -158,3 +172,5 @@ func set_animation(animation, direction):
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
+
+
