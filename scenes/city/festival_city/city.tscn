@@ -4151,6 +4151,7 @@ text = "Tipos incompatíveis: não se pode converter de int para String"
 autowrap_mode = 2
 
 [node name="TooltipButton" parent="TendaVidente/VidenteInterface/BackPanel/ErrorLabel" instance=ExtResource("39_owu87")]
+visible = false
 position = Vector2(-12, 492)
 scale = Vector2(0.56, 0.56)
 
