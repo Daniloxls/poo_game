@@ -1,6 +1,7 @@
 extends Node2D
 # ItemMenu é a parte do menu que guarda os itens
 
+@onready var item_menu = $"."
 # 'selected' é o cursor que mostra qual item está selecionado
 @onready var selected = $SelectedItem
 # o inventario é divido em duas partes com 'left_container' e 'right_container'
@@ -10,6 +11,9 @@ extends Node2D
 @onready var item_info = $Inventorymargin/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer/ItemInfoContainer/ItemInfoLabel
 # 'item_pos' lista que guarda posições que o cursor pode tomar no inventario 
 var item_pos = []
+
+enum options {VISUALIZANDO, ITEM_SELECIONADO, FECHADO, TRANSICAO_MENU}
+@onready var visualizando = options.FECHADO
 
 # Lista de items com alguns itens para teste
 var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
@@ -24,6 +28,7 @@ var position_got = false
 # Listas que guardam as celulas de cada container do inventario
 var left_list
 var right_list
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	left_list = left_container.get_children()
@@ -47,21 +52,37 @@ func _process(delta):
 	
 	
 # Por equanto essa função só lida com o movimento do cursor usando as setas
+
 func process_input():
-	if Input.is_action_just_pressed("right"):
-		item_index += 1
-		update_index()
-	elif Input.is_action_just_pressed("left"):
-		item_index -= 1
-		update_index()
-	elif Input.is_action_just_pressed("up"):
-		item_index -= 2
-		update_index()
-	elif Input.is_action_just_pressed("down"):
-		item_index += 2
-		update_index()
-		
-		
+	if visualizando == options.VISUALIZANDO:
+		if Input.is_action_just_pressed("right"):
+			item_index += 1
+			update_index()
+		elif Input.is_action_just_pressed("left"):
+			item_index -= 1
+			update_index()
+		elif Input.is_action_just_pressed("up"):
+			item_index -= 2
+			update_index()
+		elif Input.is_action_just_pressed("down"):
+			item_index += 2
+			update_index()
+		elif Input.is_action_just_pressed("z"):
+			visualizando = options.ITEM_SELECIONADO
+			#Irá abrir outro menu
+		elif Input.is_action_just_pressed("x"):
+			visualizando = options.FECHADO
+			get_parent().visualizando = get_parent().OPTIONS.PRINCIPAL
+			get_parent().cursor.show()
+			item_menu.hide()
+	elif visualizando == options.ITEM_SELECIONADO:
+		if Input.is_action_just_pressed("x"):
+			visualizando = options.VISUALIZANDO
+	elif visualizando == options.TRANSICAO_MENU: 
+		if Input.is_action_just_pressed("z"):
+			visualizando = options.VISUALIZANDO
+			print("Aqui")
+
 # Garante que o cursor não vá alem da quantida de itens
 func update_index():
 	if item_index < 0:
@@ -97,6 +118,10 @@ func display_items():
 func update_info_text():
 	if items.size() > 0:
 		item_info.set_text(items[item_index].get_item_text())
+		
+func aparecer(): 
+	item_menu.show()
+	visualizando = options.TRANSICAO_MENU
 	
 func get_items():
 	return items

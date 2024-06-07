@@ -117,7 +117,7 @@ func read_input():
 				interact_box.get_overlapping_areas()[0].get_parent().get_methods())
 		# Botão provisorio para abrir o inventario
 		if Input.is_action_just_pressed("a"):
-			#inventory.aparecer()
+			inventory.aparecer()
 			pass
 	# Se o jogador aperta 'X' e se a caixa de codigo está aberta, se for o caso
 	# insere o codigo editado de volta no objeto
