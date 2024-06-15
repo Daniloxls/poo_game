@@ -21,15 +21,15 @@ font_size = 320
 outline_size = 100
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i3717"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfasa"]
 atlas = ExtResource("3_fwivw")
-region = Rect2(0, 0, 920, 1200)
+region = Rect2(0, 0, 500, 700)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xry8i"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_i3717")
+"texture": SubResource("AtlasTexture_mfasa")
 }],
 "loop": true,
 "name": &"default",

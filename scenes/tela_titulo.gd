@@ -5,9 +5,9 @@ extends Node2D
 @onready var tela = $CanvasLayer
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	music.set_stream(load("res://assets/bgm/Dream Eliot Corley.mp3"))
-	music.play()
-
+	#music.set_stream(load("res://assets/bgm/Dream Eliot Corley.mp3"))
+	#music.play()
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -17,7 +17,7 @@ func _process(delta):
 func _on_button_pressed():
 	player.set_movement(true)
 	tela.hide()
-	music.set_stream(load("res://assets/bgm/TremLoadingloopl.mp3"))
-	music.set_volume_db(-24)
-	music.play()
+	#music.set_stream(load("res://assets/bgm/TremLoadingloopl.mp3"))
+	#music.set_volume_db(-24)
+	#music.play()
 	pass # Replace with function body.

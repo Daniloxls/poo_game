@@ -448,7 +448,7 @@ size = Vector2(310, 363)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yxnbv"]
 size = Vector2(316.25, 362.25)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
 texture_filter = 1
 collision_layer = 3

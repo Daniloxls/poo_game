@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvnvin4v3c6wl"]
+
+[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="1_7cowh"]
+[ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="2_b3bfi"]
+[ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="3_03n73"]
+[ext_resource type="PackedScene" uid="uid://bpj0pi0k3gu4h" path="res://scenes/tile_map.tscn" id="4_rp1bq"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Textbox" parent="." instance=ExtResource("1_7cowh")]
+
+[node name="Codebox" parent="." instance=ExtResource("2_b3bfi")]
+
+[node name="Player" parent="." instance=ExtResource("3_03n73")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(101, 55)
+zoom = Vector2(0.11, 0.11)
+
+[node name="TileMap" parent="." instance=ExtResource("4_rp1bq")]
+y_sort_enabled = true
+layer_0/y_sort_enabled = true
+layer_1/y_sort_enabled = true
+layer_2/y_sort_enabled = true
+layer_3/y_sort_enabled = true
+layer_4/y_sort_enabled = true

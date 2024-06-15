@@ -39,7 +39,6 @@ var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	update_group()
-	
 	pass # Replace with function body.
 
 
