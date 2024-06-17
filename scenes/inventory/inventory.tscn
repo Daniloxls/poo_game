@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c2jfv4lnhfpro"]
+[gd_scene load_steps=38 format=3 uid="uid://c2jfv4lnhfpro"]
 
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="1_iwvfi"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_xp6de"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/character.tscn" id="19_y70kq"]
 [ext_resource type="Script" path="res://scripts/BattleInventory.gd" id="20_eo3gb"]
 [ext_resource type="Script" path="res://scripts/Character_Cursor.gd" id="22_cy8k2"]
+[ext_resource type="PackedScene" uid="uid://doblt605go4qx" path="res://scenes/inventory/equipsnpowers/equips_n_powers.tscn" id="23_r2gj6"]
+[ext_resource type="Script" path="res://scenes/inventory/equipsnpowers/equips_n_powers.gd" id="24_2c51a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2i62"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
@@ -102,7 +104,6 @@ texture = ExtResource("2_xp6de")
 script = ExtResource("3_irinq")
 
 [node name="MenuBackground" type="MarginContainer" parent="."]
-visible = false
 offset_left = 8.0
 offset_top = 5.0
 offset_right = 1141.0
@@ -123,7 +124,6 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_a2i62")
 
 [node name="MenuContents" type="MarginContainer" parent="."]
-visible = false
 offset_left = 23.0
 offset_top = 22.0
 offset_right = 1122.0
@@ -151,11 +151,6 @@ label_settings = SubResource("LabelSettings_c30qy")
 [node name="ItemsLabel" type="Label" parent="MenuContents/HBoxContainer/MenuLeft/MenuOptions"]
 layout_mode = 2
 text = "Itens"
-label_settings = SubResource("LabelSettings_c30qy")
-
-[node name="EquipLabel" type="Label" parent="MenuContents/HBoxContainer/MenuLeft/MenuOptions"]
-layout_mode = 2
-text = "Equipamento"
 label_settings = SubResource("LabelSettings_c30qy")
 
 [node name="OptionsLabel" type="Label" parent="MenuContents/HBoxContainer/MenuLeft/MenuOptions"]
@@ -2027,9 +2022,15 @@ position = Vector2(-40, 246)
 scale = Vector2(4, 4)
 
 [node name="Character_Cursor" type="Panel" parent="."]
+z_index = 2
 offset_left = 316.0
 offset_top = -196.0
 offset_right = 1129.0
 offset_bottom = -47.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_itpx7")
 script = ExtResource("22_cy8k2")
+
+[node name="EquipsNPowers" parent="." instance=ExtResource("23_r2gj6")]
+layer = 3
+visible = false
+script = ExtResource("24_2c51a")

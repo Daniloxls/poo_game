@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="4_xvnlh"]
 [ext_resource type="Texture2D" uid="uid://tv80yfu0u1is" path="res://assets/tileset/indoor/player_room.png" id="5_a156y"]
 [ext_resource type="Texture2D" uid="uid://dbt3f5iu5u8k4" path="res://assets/effects/brilho.png" id="5_fowb1"]
+
 [ext_resource type="Texture2D" uid="uid://dgievkln27ypp" path="res://assets/tileset/temp.png" id="6_0kwas"]
 [ext_resource type="PackedScene" uid="uid://ch1uc8olfvcbg" path="res://scenes/transition.tscn" id="7_poxsg"]
 [ext_resource type="Script" path="res://scenes/interiors/player_room/scripts/to_overworld.gd" id="8_8morb"]
@@ -136,6 +137,7 @@ texture_region_size = Vector2i(500, 500)
 9:4/0 = 0
 9:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:4/0/physics_layer_0/angular_velocity = 0.0
+
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w1b3i"]
 texture = ExtResource("6_0kwas")
@@ -338,6 +340,7 @@ tile_size = Vector2i(500, 500)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_yml3g")
 sources/1 = SubResource("TileSetAtlasSource_w1b3i")
+
 
 [node name="PlayerRoom" type="Node2D"]
 script = ExtResource("1_xnrok")

@@ -12,13 +12,13 @@ extends CanvasLayer
 #Labels das opções do menu
 @onready var personagens_label = $MenuContents/HBoxContainer/MenuLeft/MenuOptions/PersonagensLabel
 @onready var items_label = $MenuContents/HBoxContainer/MenuLeft/MenuOptions/ItemsLabel
-@onready var equips_label = $MenuContents/HBoxContainer/MenuLeft/MenuOptions/EquipLabel
 @onready var options_label = $MenuContents/HBoxContainer/MenuLeft/MenuOptions/OptionsLabel
-@onready var all_options = [personagens_label, items_label, equips_label, options_label]
+@onready var item_menu = get_node("ItemMenu")
+@onready var all_options = [personagens_label, items_label, options_label]
 @onready var count = 0 
 @onready var char_count = 0 
-
-enum OPTIONS {PRINCIPAL, PERSONAGENS, ITENS, EQUIPAMENTOS, OPCOES, FECHADO}
+@onready var equipsnpowers = $EquipsNPowers 
+enum OPTIONS {PRINCIPAL, PERSONAGENS, INFO_PERSONAGENS, ITENS, OPCOES, FECHADO}
 @onready var visualizando = OPTIONS.PRINCIPAL
 
 @onready var party_container = $MenuContents/HBoxContainer/PartyContainer
@@ -74,6 +74,7 @@ func aparecer():
 	visualizando = OPTIONS.PRINCIPAL
 	background.show()
 	content.show()
+	char_cursor.show()
 	cursor.position.y = all_options[count].position.y + all_options[count].get_size().y
 	cursor.z_index = 1 
 	player.set_movement(false)
@@ -89,11 +90,13 @@ func esconder():
 	player.set_movement(true)
 	
 func process_input():
-	if menu_visivel():
+	if menu_visivel() && visualizando != OPTIONS.ITENS:
 		if Input.is_action_just_pressed("down"):
 			if visualizando == OPTIONS.PRINCIPAL && count < len(all_options) - 1:
 				count += 1 
-			elif visualizando == OPTIONS.PERSONAGENS && char_count < len(party_container.get_children()) - 1:
+			elif visualizando == OPTIONS.PERSONAGENS && \
+			char_count < len(party.get_children()) - 1\
+			:
 				char_count += 1
 				char_cursor.position.y = party_container.get_children()[char_count].position.y + 10
 		if Input.is_action_just_pressed("up"):
@@ -103,35 +106,36 @@ func process_input():
 				char_count -= 1
 				char_cursor.position.y = party_container.get_children()[char_count].position.y + 10
 		if Input.is_action_just_pressed("z"):
+			cursor.hide()
 			if visualizando == OPTIONS.PRINCIPAL:
 				if cursor.hovering == personagens_label:
 					visualizando = OPTIONS.PERSONAGENS
 					char_cursor.position.y = party_container.get_children()[char_count].position.y + 10
 				elif cursor.hovering == items_label:
 					visualizando = OPTIONS.ITENS
-					$ItemMenu.show()
-				elif cursor.hovering == equips_label:
-					visualizando = OPTIONS.EQUIPAMENTOS
+					item_menu.aparecer()
 				elif cursor.hovering == options_label:
 					visualizando = OPTIONS.OPCOES
-					
-			if visualizando == OPTIONS.PERSONAGENS:
+			elif visualizando == OPTIONS.PERSONAGENS:
 				char_cursor.hovering = (party_container.get_child(char_count).get_child(1).get_child(0).text.strip_edges(true, true))
-				print(char_cursor.hovering)
+				equipsnpowers.show() 
+				visualizando = OPTIONS.INFO_PERSONAGENS
 		cursor.position.y = all_options[count].position.y + all_options[count].get_size().y
 		cursor.set_hovering(all_options[count])
 	if Input.is_action_just_pressed("x"):
-		esconder()
 		if visualizando == OPTIONS.PRINCIPAL:
 			visualizando = OPTIONS.FECHADO
 			cursor.position = old_cursor_pos
 			cursor.z_index = 0
 			count = 0 
 			esconder()
-		else: 
+		elif visualizando == OPTIONS.INFO_PERSONAGENS: 
+			equipsnpowers.hide()
+			visualizando = OPTIONS.PERSONAGENS
+		else:
 			visualizando = OPTIONS.PRINCIPAL
 			char_cursor.position = old_char_cursor_pos
-			$ItemMenu.hide()
+			cursor.show()
 
 func set_player(player_node):
 	player = player_node
