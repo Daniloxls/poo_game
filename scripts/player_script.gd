@@ -106,7 +106,7 @@ func read_input():
 	if free_to_move and !on_battle and !in_scene:
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
-			if interact_box.get_overlapping_areas():
+			if interact_box.get_overlapping_areas() and textbox.get_state() == "Ready":
 				interact_box.get_overlapping_areas()[0].get_parent().interaction()
 		# Se o jogador aperta 'X' pega o codigo do objeto que está em frente ao personagem e
 		# coloca na codebox

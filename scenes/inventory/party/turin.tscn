@@ -171,7 +171,6 @@ script = ExtResource("1_r46m6")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_htfvh")
-frame_progress = 0.217676
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

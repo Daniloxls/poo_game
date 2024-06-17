@@ -3914,7 +3914,7 @@ layer = 2
 
 [node name="Player" parent="." instance=ExtResource("1_eoyq6")]
 z_index = 2
-position = Vector2(-76, -3433)
+position = Vector2(-4927, -16767)
 scale = Vector2(1.2, 1.2)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -3924,7 +3924,7 @@ limit_left = -28498
 limit_top = -52000
 limit_right = 26000
 limit_bottom = -1000
-position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 
 [node name="TileMap" parent="." instance=ExtResource("4_60gwr")]
 y_sort_enabled = true
