@@ -23,6 +23,10 @@ window/stretch/mode="canvas_items"
 
 movie_writer/movie_file="C:/Users/danil/Desktop/Projetos/movies/poo_game.avi"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ColorPreview/plugin.cfg")
+
 [importer_defaults]
 
 wav={

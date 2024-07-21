@@ -15,14 +15,19 @@ signal health_change
 @onready var damage_text = $DamageText
 
 # Status de teste para o personagem
-var nome = "Turin"
-var hp = 32
-const MAX_HP = 32
-var mp = 32
-const MAX_MP = 32
-var level = 1
-var xp = 0
+var nome : String
+var rpg_class : RPG_CLASS
+var hp : int
+var max_hp : int
+var mp : int
+var max_mp  : int
+var level : int
+var atk : int
+var def : int
+var vel : int
+var xp : int
 var original_pos
+var xp_needed = [0,100,300,650,1200,2000,3000,4200,5600]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,20 +72,51 @@ func get_hp():
 	return hp
 
 func get_max_hp():
-	return MAX_HP
+	return max_hp
 	
 func get_mp():
 	return mp
 
 func get_max_mp():
-	return MAX_MP
+	return max_mp
 	
 func get_health_percentage():
-	return float(hp)/MAX_HP
+	return float(hp)/max_hp
 
 func get_level():
 	return level
 
+func get_xp():
+	return xp
+
+func get_next_level_xp():
+	if level >= 9:
+		return 99999
+	return xp_needed[level] - xp
+	
+func get_atk():
+	return atk
+
+func get_def():
+	return def
+	
+func get_vel():
+	return vel
+	
+func get_skills():
+	return rpg_class.get_skills()
+	
+func get_class_name():
+	return rpg_class.get_class_name()
+	
+func get_sprite():
+	var frameIndex: int = sprite.get_frame()
+	var animationName: String = sprite.animation
+	var spriteFrames: SpriteFrames = sprite.get_sprite_frames()
+	var currentTexture: Texture2D = spriteFrames.get_frame_texture(animationName, frameIndex)
+	return currentTexture
+	
+	
 func reset_position():
 	set_position(original_pos)
 	
@@ -93,10 +129,10 @@ func is_alive():
 # Função de cura do personagem, toca animação de cura e retorna porcentagem da vida atual
 func gain_health(value):
 	hp += value
-	if hp > MAX_HP:
-		hp = MAX_HP
+	if hp > max_hp:
+		hp = max_hp
 	animation.play("heal")
-	return float(hp)/MAX_HP
+	return float(hp)/max_hp
 	
 # Função de receber dano
 func lose_health(value):
@@ -114,7 +150,7 @@ func lose_health(value):
 	#Numero do dano aparece na tela conforme o dano é tomado
 	damage_text.number_animation(value)
 	# retorna porcentagem do hp
-	return float(hp)/MAX_HP
+	return float(hp)/max_hp
 
 # emite o sinal de fim de animação quando recebe o sinal da barra de vida
 # Usado no monstro mas não aqui, remover depois

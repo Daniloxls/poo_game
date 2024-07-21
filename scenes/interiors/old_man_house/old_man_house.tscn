@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d1nhjrpvjy6pw"]
+[gd_scene load_steps=18 format=3 uid="uid://d1nhjrpvjy6pw"]
 
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="1_oi3xm"]
 [ext_resource type="Script" path="res://scenes/interiors/old_man_house/old_man_house.gd" id="1_trdu3"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://7qulmx3lsbgj" path="res://scenes/characters/old_man.tscn" id="6_eyq01"]
 [ext_resource type="PackedScene" uid="uid://c5i2qofkkkqvo" path="res://scenes/cutscene.tscn" id="7_yjood"]
 [ext_resource type="Script" path="res://scenes/characters/old_man.gd" id="8_btede"]
+[ext_resource type="Texture2D" uid="uid://gw5y81lv31tr" path="res://assets/characters/old_man.png" id="9_rypyo"]
 [ext_resource type="PackedScene" uid="uid://c7ljtnwyjtgv5" path="res://scenes/characters/kath.tscn" id="10_ptea2"]
 [ext_resource type="Script" path="res://scenes/interiors/old_man_house/scripts/kath.gd" id="11_kdgni"]
 
@@ -360,6 +361,21 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_h2r2e")
 sources/2 = SubResource("TileSetAtlasSource_wsd2u")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypuc4"]
+atlas = ExtResource("9_rypyo")
+region = Rect2(0, 0, 500, 700)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_epjtm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypuc4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="OldManHouse" type="Node2D"]
 script = ExtResource("1_trdu3")
 
@@ -399,6 +415,7 @@ z_index = 0
 position = Vector2(4276, -297)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("8_btede")
+SPRITE = SubResource("SpriteFrames_epjtm")
 
 [node name="Cutscene" parent="." instance=ExtResource("7_yjood")]
 

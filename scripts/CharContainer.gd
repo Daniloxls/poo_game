@@ -1,12 +1,13 @@
 extends HBoxContainer
 
 @onready var level = $CharInfo/Level
-@onready var pv_green_bar  = $CharPvPp/PvBar/GreenBar
-@onready var pv_red_bar  = $CharPvPp/PvBar/RedBar
-@onready var pv_num = $CharPvPp/PvContainer/PvNumber
-@onready var pp_blue_bar = $CharPvPp/PpBar/BlueBar
-@onready var pp_red_bar  = $CharPvPp/PpBar/RedBar
-@onready var pp_num = $CharPvPp/PpContainer/PpNumber
+@onready var char_name = $CharInfo/Name
+@onready var pv_green_bar  = $CharPv/PvBar/GreenBar
+@onready var pv_red_bar  = $CharPv/PvBar/RedBar
+@onready var pv_num = $CharPv/PvContainer/PvNumber
+@onready var pp_blue_bar = $CharPp/PpBar/BlueBar
+@onready var pp_red_bar  = $CharPp/PpBar/RedBar
+@onready var pp_num = $CharPp/PpContainer/PpNumber
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,6 +26,7 @@ func update_char(character):
 	var char_pp = character.get_mp()
 	var char_max_pp = character.get_max_mp()
 	var hp_ratio = float(char_hp)/char_max_hp
+	char_name.set_text(character.get_name())
 	pv_green_bar.set_stretch_ratio(hp_ratio)
 	pv_red_bar.set_stretch_ratio(1 - hp_ratio)
 	pv_num.set_text(str(char_hp) + "/" + str(char_max_hp))

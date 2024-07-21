@@ -28,7 +28,13 @@ enum State{
 	UP
 }
 
+enum Movement{
+	WALKING,
+	IDLE
+}
+
 var current_state = State.DOWN
+var current_movement = Movement.IDLE
 var free_to_move = true
 var in_scene = false
 var on_battle = false
@@ -47,27 +53,39 @@ func read_input():
 			if Input.is_action_pressed("up"):
 				velocity.y -= 1
 				direction = Vector2(0, -1)
-				_animated_sprite.play("walk_up")
 				current_state = State.UP
 				interact_box.top()
+				current_movement = Movement.WALKING
 			elif Input.is_action_pressed("down"):
 				velocity.y += 1
 				direction = Vector2(0, 1)
-				_animated_sprite.play("walk_down")
 				current_state = State.DOWN
 				interact_box.bottom()
-			elif Input.is_action_pressed("left"):
+				current_movement = Movement.WALKING
+			if Input.is_action_pressed("left"):
 				velocity.x -= 1
 				direction = Vector2(-1, 0)
-				_animated_sprite.play("walk_left")
 				current_state = State.LEFT
 				interact_box.left()
+				current_movement = Movement.WALKING
 			elif Input.is_action_pressed("right"):
 				velocity.x += 1
 				direction = Vector2(1, 0)
-				_animated_sprite.play("walk_right")	
 				current_state = State.RIGHT
 				interact_box.right()
+				current_movement = Movement.WALKING
+			elif (!(Input.is_action_pressed("up")) and !(Input.is_action_pressed("down"))):
+				current_movement = Movement.IDLE
+			if current_movement == Movement.WALKING:
+				match(current_state):
+					State.RIGHT:
+						_animated_sprite.play("walk_right")
+					State.UP:
+						_animated_sprite.play("walk_up")
+					State.DOWN:
+						_animated_sprite.play("walk_down")
+					State.LEFT:
+						_animated_sprite.play("walk_left")
 			else:
 				# Se o jogador não está se movendo mostra sprite de parado na direção atual
 				match(current_state):
