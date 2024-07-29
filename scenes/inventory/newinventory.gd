@@ -14,11 +14,14 @@ extends CanvasLayer
 
 @onready var tab_container = $TabContainer
 
+@onready var equipamento = $TabContainer/PersonagemInfo/TabContainer/Equipamento
+
 @onready var char_info = $TabContainer/PersonagemInfo
 # Lista de itens com alguns itens para teste
-var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
-							load("res://scenes/itens/repo/armadura_ferro.tres"),
-							load("res://scenes/itens/repo/armadura_couro.tres")]
+var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres")]
+
+var equipment : Array[EQUIP_ITEM] = [load("res://scenes/itens/repo/armadura_ferro.tres"),
+									load("res://scenes/itens/repo/armadura_couro.tres")]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -92,3 +95,8 @@ func _on_button_2_pressed():
 	tab_container.set_current_tab(6)
 	var personagem = party.get_child(1)
 	char_info.set_personagem(personagem)
+
+
+func _on_tab_container_tab_changed(tab):
+	if tab == 2:
+		equipamento.add_item_buttons(equipment)

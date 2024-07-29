@@ -822,12 +822,10 @@ theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
 theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/panel = SubResource("StyleBoxFlat_c15km")
-current_tab = 2
 tab_focus_mode = 0
 script = ExtResource("11_suue3")
 
 [node name="Status" type="ScrollContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_h2j27")
 horizontal_scroll_mode = 0
@@ -904,6 +902,7 @@ visible = false
 layout_mode = 2
 
 [node name="Equipamento" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -978,11 +977,13 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="ArrowStats" type="TextureRect" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("25_lwknu")
 stretch_mode = 3
 
 [node name="NewStats" type="RichTextLabel" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer"]
+visible = false
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("5_nextx")
 theme_override_font_sizes/normal_font_size = 37
@@ -1002,12 +1003,58 @@ layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer"]
+[node name="EquipContainer" type="VBoxContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="BodyContainer" type="GridContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/VBoxContainer"]
+[node name="CliqueTexto" type="RichTextLabel" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/EquipContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("5_nextx")
+theme_override_font_sizes/normal_font_size = 31
+bbcode_enabled = true
+text = "[color=#808080]
+//Selecione o espaço de armadura para equipar [/color]"
+fit_content = true
+
+[node name="HeadContainer" type="GridContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/EquipContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 95
+theme_override_constants/v_separation = 95
+columns = 11
+
+[node name="BodyContainer" type="GridContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/EquipContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 95
+theme_override_constants/v_separation = 95
+columns = 11
+
+[node name="FeetContainer" type="GridContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/EquipContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 95
+theme_override_constants/v_separation = 95
+columns = 11
+
+[node name="HandContainer" type="GridContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/EquipContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 95
+theme_override_constants/v_separation = 95
+columns = 11
+
+[node name="AcessoryContainer" type="GridContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/EquipmentContainer/EquipContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1046,3 +1093,10 @@ position = Vector2(7, 185)
 
 [connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="tab_changed" from="TabContainer/PersonagemInfo/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HBFContainer/HeadSlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_head_slot_pressed"]
+[connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HBFContainer/BodySlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_body_slot_pressed"]
+[connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HBFContainer/FeetSlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_feet_slot_pressed"]
+[connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HHAContainer/LHandSlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_l_hand_slot_pressed"]
+[connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HHAContainer/RHandSlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_r_hand_slot_pressed"]
+[connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HHAContainer/AcessorySlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_acessory_slot_pressed"]

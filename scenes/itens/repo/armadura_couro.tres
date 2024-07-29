@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="ARMOR_ITEM" load_steps=3 format=3 uid="uid://dxegh7jhrkwtn"]
+[gd_resource type="Resource" script_class="EQUIP_ITEM" load_steps=3 format=3 uid="uid://dxegh7jhrkwtn"]
 
 [ext_resource type="Texture2D" uid="uid://bqd5hueexarwm" path="res://assets/gui/icons/armor_icon.png" id="1_jc1aj"]
 [ext_resource type="Script" path="res://scenes/itens/classes/equip_item.gd" id="1_yg2ni"]
 
 [resource]
 script = ExtResource("1_yg2ni")
-HP = 0
-PP = 0
-DEFENSE = 5
+HP = 2
+PP = -2
+DEFENSE = 3
 ATTACK = 0
 VELOCITY = 0
 SLOT = 3

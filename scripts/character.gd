@@ -29,6 +29,15 @@ var xp : int
 var original_pos
 var xp_needed = [0,100,300,650,1200,2000,3000,4200,5600]
 
+
+var equipment = {
+	"head_slot" : null,
+	"body_slot" :  null,
+	"feet_slot" : null,
+	"lhand_slot" : null,
+	"rhand_slot" :  null,
+	"acessory_slot" : null
+}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#healthbar.hide()
@@ -72,16 +81,28 @@ func get_hp():
 	return hp
 
 func get_max_hp():
-	return max_hp
+	var current_max_hp = max_hp
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_max_hp += equipment[equip].get_hp_bonus()
+	return current_max_hp
 	
 func get_mp():
 	return mp
 
 func get_max_mp():
-	return max_mp
+	var current_max_pp = max_mp
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_max_pp += equipment[equip].get_pp_bonus()
+	return current_max_pp
 	
 func get_health_percentage():
-	return float(hp)/max_hp
+	var current_max_hp = max_hp
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_max_hp += equipment[equip].get_hp_bonus()
+	return float(hp)/current_max_hp
 
 func get_level():
 	return level
@@ -95,13 +116,25 @@ func get_next_level_xp():
 	return xp_needed[level] - xp
 	
 func get_atk():
-	return atk
+	var current_atk = atk
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_atk += equipment[equip].get_atk_bonus()
+	return current_atk
 
 func get_def():
-	return def
+	var current_def = def
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_def += equipment[equip].get_def_bonus()
+	return current_def
 	
 func get_vel():
-	return vel
+	var current_vel = vel
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_vel += equipment[equip].get_vel_bonus()
+	return current_vel
 	
 func get_skills():
 	return rpg_class.get_skills()
@@ -128,14 +161,22 @@ func is_alive():
 
 # Função de cura do personagem, toca animação de cura e retorna porcentagem da vida atual
 func gain_health(value):
+	var current_max_hp = max_hp
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_max_hp += equipment[equip].get_hp_bonus()
 	hp += value
-	if hp > max_hp:
-		hp = max_hp
+	if hp > current_max_hp:
+		hp = current_max_hp
 	animation.play("heal")
-	return float(hp)/max_hp
+	return float(hp)/current_max_hp
 	
 # Função de receber dano
 func lose_health(value):
+	var current_max_hp = max_hp
+	for equip in equipment.keys():
+		if equipment[equip]:
+			current_max_hp += equipment[equip].get_hp_bonus()
 	hp -= value
 	#Checa se o personagem morreu
 	if hp < 0:
@@ -150,16 +191,18 @@ func lose_health(value):
 	#Numero do dano aparece na tela conforme o dano é tomado
 	damage_text.number_animation(value)
 	# retorna porcentagem do hp
-	return float(hp)/max_hp
+	return float(hp)/current_max_hp
 
 # emite o sinal de fim de animação quando recebe o sinal da barra de vida
 # Usado no monstro mas não aqui, remover depois
 func _on_healthbar_animation_end():
 	animation_end.emit()
-	pass # Replace with function body.
 
 func set_hp(new_hp):
 	hp = new_hp
 
 func set_animation(anim):
 	animation.play(anim)
+
+func set_equip(slot, equip_item):
+	equipment[slot] = equip_item

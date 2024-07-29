@@ -6,7 +6,6 @@ signal on_hover
 var item : ITEM
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_item(load("res://scenes/itens/repo/armadura_ferro.tres"))
 	pass # Replace with function body.
 
 

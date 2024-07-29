@@ -19,3 +19,14 @@ enum Slot{
 
 func get_slot():
 	return SLOT
+
+func get_hp_bonus():
+	return HP
+func get_pp_bonus():
+	return PP
+func get_def_bonus():
+	return DEFENSE
+func get_atk_bonus():
+	return ATTACK
+func get_vel_bonus():
+	return VELOCITY
