@@ -28,3 +28,4 @@ icon_alignment = 1
 expand_icon = true
 
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

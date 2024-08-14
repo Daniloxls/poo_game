@@ -1,6 +1,7 @@
 extends Control
 
 signal on_hover
+signal on_click
 @onready var button = $Button
 
 var item : ITEM
@@ -18,7 +19,12 @@ func set_item(new_item : ITEM):
 	item = new_item
 	button.set_button_icon(item.get_icon())
 	
+func get_item():
+	return item
+	
 func _on_button_mouse_entered():
 	on_hover.emit(item)
 
 
+func _on_button_pressed():
+	on_click.emit(self)

@@ -92,7 +92,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	read_input()
-	debug.text = str(Selecting.keys()[current_selection]) + "\n" + str(inventory.get_item_index())
+	debug.text = str(Selecting.keys()[current_selection]) + "\n"
 	# checa se todos os personagens agiram, para dar a vez para os inimigos
 	if current_selection == Selecting.ACTION and char_turn >= len(char_list):
 		set_selection(Selecting.ENEMY_PHASE)

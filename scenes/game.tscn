@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory/inventory.tscn" id="1_5i5st"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_irk2k"]
 [ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
-[ext_resource type="PackedScene" uid="uid://d1nhjrpvjy6pw" path="res://scenes/interiors/old_man_house/old_man_house.tscn" id="4_1kaja"]
 [ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://scenes/tela_titulo.tscn" id="4_1yu0a"]
+[ext_resource type="PackedScene" uid="uid://bhl2fw3fmtrpc" path="res://scenes/city/festival_city/city.tscn" id="4_tvcge"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_irk2k")
@@ -17,10 +17,9 @@ layer = 2
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="OldManHouse" parent="Level" instance=ExtResource("4_1kaja")]
+[node name="City" parent="Level" instance=ExtResource("4_tvcge")]
 
 [node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
-visible = false
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 autoplay = true

@@ -206,3 +206,17 @@ func set_animation(anim):
 
 func set_equip(slot, equip_item):
 	equipment[slot] = equip_item
+
+func get_equip(slot):
+	return equipment[slot]
+
+func get_strict_max_hp():
+	return max_hp
+func get_strict_max_mp():
+	return max_mp
+func get_strict_atk():
+	return atk
+func get_strict_def():
+	return def
+func get_strict_vel():
+	return vel
