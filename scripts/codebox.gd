@@ -19,6 +19,7 @@ signal code_open
 @onready var edit = $Editar
 @onready var stop_edit = $Deseditar
 
+@onready var indicator = $Indicator
 # codebox tem acesso ao player e a caixa de texto
 @onready var player = get_node("../Player")
 @onready var textbox = get_node("../Textbox")
@@ -59,7 +60,6 @@ var classname
 var text_queue = []
 # 'typing' é o estado em que o jogador está editando uma string
 var typing = false
-
 func _ready():
 	hide_textbox()
 
@@ -99,7 +99,10 @@ func queue_text(nome, props, methods = {}):
 		# então adiciona ela 'cursor_dict' e sua posição no 'prop_positions' 
 		if "1" in p:
 			show_cursor()
-			next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
+			if "String" in p:
+				next_text +=  p.right(len(p) - 1) + " = " + "'" + str(prop[p]) + "'" + "\n" 
+			else:
+				next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
 			prop_positions.append(prop.keys().find(p))
 			cursor_dict[prop.keys().find(p)] = p
 		# Caso contrario só mostra ela como texto
@@ -148,9 +151,12 @@ func update_prop_text(chave, valor):
 	prop[chave] = valor
 	for p in prop.keys():
 		if "1" in p:
+			if "String" in p:
+				next_text +=  p.right(len(p) - 1) + " = " + "'" + str(prop[p]) + "'" + "\n" 
 			# Se o 1 está na variavel ele corta ele da string antes de adicionar ela
 			# no texto da codebox
-			next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
+			else:
+				next_text += p.right(len(p) - 1) + " = "+ str(prop[p]) + "\n"
 		else:
 			next_text += p + " = "+ str(prop[p]) + "\n"
 	text_queue.push_back(next_text)
@@ -193,7 +199,7 @@ func change_state(next_state):
 func show_cursor():
 	cursor_state = Cursor.SHOWING
 	cursor.show()
-
+	
 func get_props():
 	return prop
 	
@@ -217,6 +223,10 @@ func _process(delta):
 		State.READY:
 			if !text_queue.is_empty():
 				display_text()
+			if player.can_edit_code():
+				indicator.show()
+			else:
+				indicator.hide()
 		# Se está aparecendo a caixa e o cursor aparece, então ele pode mexer o cursor
 		# para cima e baixo para escolher a variavel que vai ser editada
 		State.FINISH:
@@ -372,7 +382,6 @@ func _process(delta):
 						stop_edit.hide()
 			elif current_edit == Editing.METHODS:
 				if cursor_state == Cursor.SHOWING and !typing:
-					
 					# Se o jogador aperta 'X' ele fecha a caixa de codigo
 					if Input.is_action_just_pressed("exit"):
 						cursor_pos = 0

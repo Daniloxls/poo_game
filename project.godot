@@ -15,9 +15,21 @@ run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+EquipItem="*res://scenes/itens/classes/equip_item.gd"
+
 [display]
 
 window/stretch/mode="canvas_items"
+
+[editor]
+
+movie_writer/movie_file="C:/Users/danil/Desktop/Projetos/movies/poo_game.avi"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ColorPreview/plugin.cfg")
 
 [importer_defaults]
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RPG_CLASS" load_steps=4 format=3 uid="uid://b2kvw50iq6o5g"]
+
+[ext_resource type="Resource" uid="uid://dutwj43v2ybft" path="res://scenes/inventory/classes/skills/attack.tres" id="1_cwgkj"]
+[ext_resource type="Script" path="res://scenes/inventory/classes/rpg_class.gd" id="1_srn4u"]
+[ext_resource type="Resource" uid="uid://bl8mjvs2mwfme" path="res://scenes/inventory/classes/skills/use_item.tres" id="2_ewqwf"]
+
+[resource]
+script = ExtResource("1_srn4u")
+CLASS_NAME = "Personagem"
+ATK_BONUS = 0
+DEF_BONUS = 0
+VEL_BONUS = 0
+SKILLS = Array[Resource("res://scenes/inventory/classes/skills/skill.gd")]([ExtResource("1_cwgkj"), ExtResource("2_ewqwf")])

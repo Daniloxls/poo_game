@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SKILL" load_steps=2 format=3 uid="uid://dutwj43v2ybft"]
+
+[ext_resource type="Script" path="res://scenes/inventory/classes/skills/skill.gd" id="1_esm45"]
+
+[resource]
+script = ExtResource("1_esm45")
+SKLL_NAME = "Atacar"
+TARGET = Array[int]([3])
+DESCRIPTION = "Ataca o Inimigo alvo com sua arma"
+IS_OVERRIDE = false

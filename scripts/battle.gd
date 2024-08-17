@@ -92,7 +92,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	read_input()
-	debug.text = str(Selecting.keys()[current_selection]) + "\n" + str(inventory.get_item_index())
+	debug.text = str(Selecting.keys()[current_selection]) + "\n"
 	# checa se todos os personagens agiram, para dar a vez para os inimigos
 	if current_selection == Selecting.ACTION and char_turn >= len(char_list):
 		set_selection(Selecting.ENEMY_PHASE)
@@ -179,7 +179,8 @@ func start_battle(enemy_group_path):
 func read_input():
 	# Mostra informações de debug
 	if Input.is_action_just_pressed("a"):
-		debug.show()
+		#debug.show()
+		pass
 	if in_battle:
 		# 'Selecting.ACTION' o jogador está escolhendo uma opção entre
 		# Lutar, Item, Função, etc.
@@ -208,9 +209,10 @@ func read_input():
 							cursor.set_position(character_coords[char_index])
 						# Item
 						2:
-							menu.hide_cursor()
-							current_selection = Selecting.MENU
-							inventory.aparecer()
+							pass
+							#menu.hide_cursor()
+							#current_selection = Selecting.MENU
+							#inventory.aparecer()
 		
 		
 		# Se selecionou atacar deve escolher um inimigo

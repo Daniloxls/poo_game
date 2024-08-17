@@ -1,0 +1,890 @@
+[gd_scene load_steps=35 format=3 uid="uid://clr1pqi3mxavn"]
+
+[ext_resource type="Script" path="res://scenes/inventory/newinventory.gd" id="1_bnrs2"]
+[ext_resource type="Script" path="res://scripts/CharContainer.gd" id="2_wngpq"]
+[ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/characters/legacy/Turin.png" id="3_aeroy"]
+[ext_resource type="LabelSettings" uid="uid://5mg8308marm6" path="res://assets/fonts/orange_console_text.tres" id="4_wl8a4"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="5_nextx"]
+[ext_resource type="Texture2D" uid="uid://ctih022bl5pue" path="res://assets/characters/legacy/Kath.png" id="6_4ff0c"]
+[ext_resource type="Texture2D" uid="uid://cbyc2qhhkrduh" path="res://assets/characters/legacy/Ada.png" id="7_vxest"]
+[ext_resource type="Texture2D" uid="uid://bcooopki0wpte" path="res://assets/characters/legacy/Guido.png" id="8_2kg4p"]
+[ext_resource type="LabelSettings" uid="uid://gts2l8irhv00" path="res://assets/fonts/light_blue_console.tres" id="8_jfj1k"]
+[ext_resource type="PackedScene" uid="uid://bbv8vjmfgeck6" path="res://scenes/inventory/item_container.tscn" id="9_tup0q"]
+[ext_resource type="LabelSettings" uid="uid://cmfsg5d7438bt" path="res://assets/fonts/yellow_console_text.tres" id="9_ympai"]
+[ext_resource type="LabelSettings" uid="uid://dp6o68cs1rv5i" path="res://assets/fonts/light_orange_console.tres" id="10_xp1ku"]
+[ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="11_5v8ib"]
+[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="11_15p3a"]
+[ext_resource type="Script" path="res://scenes/inventory/CharInfoTab.gd" id="11_suue3"]
+[ext_resource type="PackedScene" uid="uid://bspvewmvuf474" path="res://scenes/inventory/party/battle_kath.tscn" id="13_n2m06"]
+[ext_resource type="Texture2D" uid="uid://cdosujgmkwpny" path="res://assets/battle/character_sprites/kath_batalha.png" id="13_wcldh"]
+[ext_resource type="Script" path="res://scenes/inventory/PersonagemInfo.gd" id="14_fw4ly"]
+[ext_resource type="Script" path="res://scenes/inventory/party/battle_turin.gd" id="18_fypia"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr4wc"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 2
+expand_margin_left = 11.0
+expand_margin_top = 5.0
+expand_margin_right = 8.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7besx"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 2
+expand_margin_left = 11.0
+expand_margin_top = 5.0
+expand_margin_right = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_10aoo"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umvl5"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+expand_margin_top = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_yph3h"]
+line_spacing = 12.45
+font = ExtResource("5_nextx")
+font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lf0k"]
+bg_color = Color(0.101961, 0.662745, 0.054902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u2b0s"]
+bg_color = Color(1, 0.176471, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1ey5"]
+bg_color = Color(0.054902, 0.333333, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhco7"]
+bg_color = Color(0, 0, 0, 0)
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_117c1"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_m78y7"]
+font = ExtResource("5_nextx")
+font_size = 27
+font_color = Color(1, 0.560784, 0.25098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_18och"]
+font = ExtResource("5_nextx")
+font_size = 27
+
+[sub_resource type="LabelSettings" id="LabelSettings_capk8"]
+font = ExtResource("5_nextx")
+font_size = 27
+font_color = Color(0.666667, 0.788235, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_negui"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 2
+expand_margin_left = 11.0
+expand_margin_top = 5.0
+expand_margin_right = 8.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c15km"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="Inventory" type="CanvasLayer"]
+script = ExtResource("1_bnrs2")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+offset_left = 9.0
+offset_top = 21.0
+offset_right = 1141.0
+offset_bottom = 643.0
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_constants/side_margin = 13
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("5_nextx")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_qr4wc")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/panel = SubResource("StyleBoxFlat_umvl5")
+tab_focus_mode = 0
+
+[node name="Personagens" type="MarginContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Personagens"]
+layout_mode = 2
+theme_override_constants/separation = 47
+
+[node name="PartyContainer" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 22
+
+[node name="CharContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+script = ExtResource("2_wngpq")
+
+[node name="CharPic" type="TextureRect" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer"]
+layout_mode = 2
+texture = ExtResource("3_aeroy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CharInfo" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Name" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharInfo"]
+layout_mode = 2
+text = "Turin"
+label_settings = ExtResource("4_wl8a4")
+
+[node name="Level" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharInfo"]
+layout_mode = 2
+text = "Level 10
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="Class" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer"]
+layout_mode = 2
+text = "Classe"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="CharPv" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PvContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 116
+
+[node name="Pv" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPv/PvContainer"]
+layout_mode = 2
+text = "Pv
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPv/PvContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="GreenBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPv/PvBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5lf0k")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPv/PvBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharPp" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PpContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 116
+alignment = 1
+
+[node name="Pp" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPp/PpContainer"]
+layout_mode = 2
+text = "Pp
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPp/PpContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BlueBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPp/PpBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o1ey5")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer/CharPp/PpBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharContainer2" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+script = ExtResource("2_wngpq")
+
+[node name="CharPic" type="TextureRect" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2"]
+layout_mode = 2
+texture = ExtResource("6_4ff0c")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CharInfo" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Name" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharInfo"]
+layout_mode = 2
+text = "Kath
+"
+label_settings = ExtResource("4_wl8a4")
+
+[node name="Level" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharInfo"]
+layout_mode = 2
+text = "Level 10
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="Class" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2"]
+layout_mode = 2
+text = "Classe"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="CharPv" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="PvContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 116
+
+[node name="Pv" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPv/PvContainer"]
+layout_mode = 2
+text = "Pv
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPv/PvContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="GreenBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPv/PvBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5lf0k")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPv/PvBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharPp" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="PpContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 116
+alignment = 1
+
+[node name="Pp" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPp/PpContainer"]
+layout_mode = 2
+text = "Pp
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPp/PpContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BlueBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPp/PpBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o1ey5")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer2/CharPp/PpBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharContainer3" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+script = ExtResource("2_wngpq")
+
+[node name="CharPic" type="TextureRect" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3"]
+layout_mode = 2
+texture = ExtResource("7_vxest")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CharInfo" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Name" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharInfo"]
+layout_mode = 2
+text = "Ada"
+label_settings = ExtResource("4_wl8a4")
+
+[node name="Level" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharInfo"]
+layout_mode = 2
+text = "Level 10
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="Class" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3"]
+layout_mode = 2
+text = "Classe"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="CharPv" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="PvContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 116
+
+[node name="Pv" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPv/PvContainer"]
+layout_mode = 2
+text = "Pv
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPv/PvContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="GreenBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPv/PvBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5lf0k")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPv/PvBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharPp" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="PpContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 116
+alignment = 1
+
+[node name="Pp" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPp/PpContainer"]
+layout_mode = 2
+text = "Pp
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPp/PpContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BlueBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPp/PpBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o1ey5")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer3/CharPp/PpBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharContainer4" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 72
+script = ExtResource("2_wngpq")
+
+[node name="CharPic" type="TextureRect" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4"]
+layout_mode = 2
+texture = ExtResource("8_2kg4p")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CharInfo" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Name" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharInfo"]
+layout_mode = 2
+text = "Guido"
+label_settings = ExtResource("4_wl8a4")
+
+[node name="Level" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharInfo"]
+layout_mode = 2
+text = "Level 10
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="Class" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4"]
+layout_mode = 2
+text = "Classe"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="CharPv" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4"]
+layout_mode = 2
+alignment = 1
+
+[node name="PvContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 116
+
+[node name="Pv" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPv/PvContainer"]
+layout_mode = 2
+text = "Pv
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPv/PvContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PvBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPv"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="GreenBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPv/PvBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_5lf0k")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPv/PvBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="CharPp" type="VBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4"]
+layout_mode = 2
+alignment = 1
+
+[node name="PpContainer" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 116
+alignment = 1
+
+[node name="Pp" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPp/PpContainer"]
+layout_mode = 2
+text = "Pp
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpNumber" type="Label" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPp/PpContainer"]
+layout_mode = 2
+text = "00/00
+"
+label_settings = SubResource("LabelSettings_yph3h")
+
+[node name="PpBar" type="HBoxContainer" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPp"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BlueBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPp/PpBar"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o1ey5")
+
+[node name="RedBar" type="Panel" parent="TabContainer/Personagens/HBoxContainer/PartyContainer/CharContainer4/CharPp/PpBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u2b0s")
+
+[node name="PartyButtons" type="VBoxContainer" parent="TabContainer/Personagens"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 11
+
+[node name="Button" type="Button" parent="TabContainer/Personagens/PartyButtons"]
+custom_minimum_size = Vector2(1114, 106)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+
+[node name="Button2" type="Button" parent="TabContainer/Personagens/PartyButtons"]
+custom_minimum_size = Vector2(660, 106)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+
+[node name="Button3" type="Button" parent="TabContainer/Personagens/PartyButtons"]
+custom_minimum_size = Vector2(660, 106)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+
+[node name="Button4" type="Button" parent="TabContainer/Personagens/PartyButtons"]
+custom_minimum_size = Vector2(660, 106)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+
+[node name="a" type="Label" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Mochila" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="InventoryContainer" type="VBoxContainer" parent="TabContainer/Mochila"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 16
+
+[node name="ItemTopSpacer" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ClassMochilaLabel" type="Label" parent="TabContainer/Mochila/InventoryContainer/ItemTopSpacer"]
+layout_mode = 2
+text = " public class"
+label_settings = SubResource("LabelSettings_m78y7")
+
+[node name="ClassMochilaLabel2" type="Label" parent="TabContainer/Mochila/InventoryContainer/ItemTopSpacer"]
+layout_mode = 2
+text = "Mochila"
+label_settings = ExtResource("8_jfj1k")
+
+[node name="ClassMochilaLabel3" type="Label" parent="TabContainer/Mochila/InventoryContainer/ItemTopSpacer"]
+layout_mode = 2
+text = "{"
+label_settings = ExtResource("9_ympai")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Mochila/InventoryContainer"]
+custom_minimum_size = Vector2(0, 361.975)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ItemContainer" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.97
+
+[node name="ItemLeftSpacer" type="VBoxContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.64
+
+[node name="MochilaText" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer"]
+layout_mode = 2
+
+[node name="ListItem" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "  List"
+label_settings = ExtResource("8_jfj1k")
+
+[node name="ListItem4" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "<"
+label_settings = SubResource("LabelSettings_18och")
+
+[node name="ListItem2" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "Item"
+label_settings = ExtResource("8_jfj1k")
+
+[node name="ListItem3" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = ">"
+label_settings = SubResource("LabelSettings_18och")
+
+[node name="mochila" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "mochila"
+label_settings = SubResource("LabelSettings_18och")
+
+[node name="mochila2" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "="
+label_settings = ExtResource("10_xp1ku")
+
+[node name="mochila3" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemLeftSpacer/MochilaText"]
+layout_mode = 2
+text = "["
+label_settings = ExtResource("11_5v8ib")
+
+[node name="LeftItemList" type="HFlowContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer"]
+custom_minimum_size = Vector2(730, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+
+[node name="ItemContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/LeftItemList" instance=ExtResource("9_tup0q")]
+layout_mode = 2
+
+[node name="ItemRightSpacer" type="VBoxContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.18
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemRightSpacer"]
+layout_mode = 2
+
+[node name="Asterisco2" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemRightSpacer/HBoxContainer"]
+layout_mode = 2
+text = "]"
+label_settings = ExtResource("11_5v8ib")
+
+[node name="Asterisco3" type="Label" parent="TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemRightSpacer/HBoxContainer"]
+layout_mode = 2
+text = "}"
+label_settings = ExtResource("9_ympai")
+
+[node name="InfoBoxContainer" type="VBoxContainer" parent="TabContainer/Mochila/InventoryContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+
+[node name="ItemDescriptionContainer" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer/InfoBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="DescriptionHSpacer" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer"]
+custom_minimum_size = Vector2(33.02, 0)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Asterisco" type="Label" parent="TabContainer/Mochila/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer/DescriptionHSpacer"]
+layout_mode = 2
+text = " *"
+label_settings = SubResource("LabelSettings_18och")
+
+[node name="ItemInfoContainer" type="HBoxContainer" parent="TabContainer/Mochila/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer"]
+custom_minimum_size = Vector2(33.02, 0)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="ItemInfoLabel" type="Label" parent="TabContainer/Mochila/InventoryContainer/InfoBoxContainer/ItemDescriptionContainer/ItemInfoContainer"]
+custom_minimum_size = Vector2(1081, 0)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_capk8")
+autowrap_mode = 2
+
+[node name="b" type="Label" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Opções" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="c" type="Label" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="PersonagemInfo" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 6
+script = ExtResource("14_fw4ly")
+
+[node name="TabContainer" type="TabContainer" parent="TabContainer/PersonagemInfo"]
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_constants/side_margin = 16
+theme_override_constants/icon_max_width = 54
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("5_nextx")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_negui")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/panel = SubResource("StyleBoxFlat_c15km")
+tab_focus_mode = 0
+script = ExtResource("11_suue3")
+
+[node name="Status" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 17
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/PersonagemInfo/TabContainer/Status"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/PersonagemInfo/TabContainer/Status/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("5_nextx")
+theme_override_font_sizes/normal_font_size = 29
+bbcode_enabled = true
+text = "[color=#cf6d1d]public class [/color][color=#228096]Personagem [/color]{"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/PersonagemInfo/TabContainer/Status/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabContainer/PersonagemInfo/TabContainer/Status/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+texture = ExtResource("13_wcldh")
+expand_mode = 3
+stretch_mode = 4
+flip_h = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/PersonagemInfo/TabContainer/Status/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("5_nextx")
+theme_override_font_sizes/normal_font_size = 31
+bbcode_enabled = true
+text = "[color=#228096]String [/color][color=#66e1f8]nome [/color]= [color=green]“Kath”[/color];
+[color=#cf6d1d]int [/color][color=#66e1f8]hp [/color]= [color=#228096]65[/color];
+[color=#cf6d1d]int [/color][color=#66e1f8]pp [/color]= [color=#228096]48[/color];
+[color=#cf6d1d]int [/color][color=#66e1f8]atk [/color]= [color=#228096]18[/color];
+[color=#cf6d1d]int [/color][color=#66e1f8]def [/color]= [color=#228096]18[/color];
+[color=#cf6d1d]int [/color][color=#66e1f8]vel [/color]= [color=#228096]36[/color];"
+fit_content = true
+autowrap_mode = 0
+
+[node name="a" type="Label" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Equipamento" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="b" type="Label" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Codigo" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="c" type="Label" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Classe" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Party" type="Node2D" parent="."]
+position = Vector2(1311, 86)
+
+[node name="Turin" parent="Party" instance=ExtResource("11_15p3a")]
+z_index = 3
+z_as_relative = false
+position = Vector2(-40, 246)
+scale = Vector2(4, 4)
+script = ExtResource("18_fypia")
+
+[node name="Kath" parent="Party" instance=ExtResource("13_n2m06")]
+position = Vector2(7, 185)
+
+[connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button" to="." method="_on_button_pressed"]

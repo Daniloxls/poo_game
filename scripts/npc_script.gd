@@ -9,6 +9,9 @@ var direction : Vector2 = Vector2()
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
 
+
+@export var SPRITE : SpriteFrames
+
 enum State{
 	DOWN,
 	LEFT,
@@ -20,10 +23,11 @@ var texto = []
 var codigo = [""]
 var portraits = [""]
 var depuring = false
-
+var metodos = {}
 var current_state = State.DOWN
 
 func _ready():
+	_animated_sprite.set_sprite_frames(SPRITE)
 	pass
 
 func set_sprite(sprite):
@@ -58,3 +62,6 @@ func interaction():
 
 func name():
 	return nome
+
+func get_methods():
+	return metodos

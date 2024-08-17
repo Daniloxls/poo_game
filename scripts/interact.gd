@@ -15,7 +15,7 @@ extends Node2D
 @onready var codebox = get_node("../Codebox")
 @onready var textbox = get_node("../Textbox")
 # O nome que aparece na caixa de código.
-var nome
+var nome = ""
 
 # Lista de strings que serão exibidas como diálogo quando o jogador interagir com este objeto.
 var texto = []

@@ -1,13 +1,19 @@
-[gd_resource type="Resource" script_class="ARMOR_ITEM" load_steps=3 format=3 uid="uid://roil3gq7rm5n"]
+[gd_resource type="Resource" script_class="EQUIP_ITEM" load_steps=3 format=3 uid="uid://roil3gq7rm5n"]
 
-[ext_resource type="Script" path="res://scenes/itens/classes/armor_item.gd" id="1_kqx3g"]
-[ext_resource type="Texture2D" uid="uid://bqd5hueexarwm" path="res://assets/gui/icons/armor_icon.png" id="1_ylwml"]
+[ext_resource type="Script" path="res://scenes/itens/classes/equip_item.gd" id="1_kqx3g"]
+[ext_resource type="Texture2D" uid="uid://b2p3b8fdfmn6d" path="res://assets/gui/icons/breastplate.png" id="1_wat7q"]
 
 [resource]
 script = ExtResource("1_kqx3g")
-DEFENSE = 0
+HP = 2
+PP = 4
+DEFENSE = 5
+ATTACK = -2
+VELOCITY = -2
+SLOT = 3
 ITEM_NAME = "Armadura de Ferro"
 QUANTITY = 2
-ITEM_ICON = ExtResource("1_ylwml")
+ITEM_ICON = ExtResource("1_wat7q")
 ITEM_TEXT = "Armadura massa de ferro"
 SELECTION = 5
+PRICE = 0

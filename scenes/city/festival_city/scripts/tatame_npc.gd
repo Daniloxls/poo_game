@@ -21,13 +21,9 @@ enum Victory{
 var current_state = State.DOWN
 var victory_state = Victory.NEITHER
 var triggered = false;
-
+var start_battle = false
 func _ready():
-	nome = ""
-	texto = []
-	codigo = [""]
-	portraits = [""]
-	depuring = false
+	pass
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
@@ -71,9 +67,11 @@ func _on_textbox_choise_closed():
 	if triggered:
 		match(textbox.get_choice()):
 			0:
+				start_battle = true
 				textbox.queue_text(["Então que comece a luta!"])
 				
 			1:
+				start_battle = false
 				textbox.queue_text(["Certo, quem sabe depois então."])
 
 
@@ -82,8 +80,9 @@ func _on_textbox_text_finish():
 		triggered = false
 		match(victory_state):
 			Victory.NEITHER:
-				battle.start_battle("res://scenes/encounters/muscleguy.tscn")
-				tickets.hide()
+				if start_battle:
+					battle.start_battle("res://scenes/encounters/muscleguy.tscn")
+					tickets.hide()
 				
 			Victory.PLAYER:
 				tickets.show()

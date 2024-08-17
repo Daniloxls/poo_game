@@ -5,10 +5,10 @@ extends Node2D
 @onready var brilho = $Brilho
 @onready var music =  $"../../AudioPlayer"
 var dialogo = ["Muito bem, você conseguiu chegar até mim.",
-				"O tolo que projetou essa prisão para mim, designou ela de forma patética.",
-				"Até alguem que nunca utilizou programação conseguiu me alcançar.",
+				"O tolo que projetou essa prisão para mim, construiu ela de forma patética.",
+				"Até alguém que nunca utilizou programação conseguiu me alcançar.",
 				"Quase tão tolo quanto você...",
-				"Agora que estou livre vou fazer quem me prendeu aqui pagar...",
+				"Agora que estou livre eu vou fazer quem me prendeu aqui pagar...",
 				"Ele e toda sua forma de programar pacata!",
 				"Adeus NPC patetico!"]
 var portraits = ["res://assets/portraits/anti_poo_neutro.png",

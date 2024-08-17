@@ -35,7 +35,7 @@ func move_cursor_up():
 		cursor_pos = 2
 		update_cursor_pos()
 	else:
-		cursor_pos -= 1
+		cursor_pos = 0
 		update_cursor_pos()
 		
 # mesma coisa mas faz o cursor voltar para a primeira se ele passou da ultima
@@ -44,7 +44,7 @@ func move_cursor_down():
 		cursor_pos = 0
 		update_cursor_pos()
 	else:
-		cursor_pos += 1
+		cursor_pos = 2
 		update_cursor_pos()
 
 

@@ -124,6 +124,16 @@ func read_input():
 func _physics_process(delta):
 	read_input()
 
+	
+func can_edit_code():
+	if !sudo:
+		return false
+	if interact_box.get_overlapping_areas():
+		if interact_box.get_overlapping_areas()[0].get_parent().name() != "":
+			return true
+		else:
+			return false
+			
 func set_movement(move):
 	free_to_move = move
 	

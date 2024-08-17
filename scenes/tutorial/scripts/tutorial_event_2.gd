@@ -21,7 +21,7 @@ func _on_area_2d_area_entered(area):
 	else:
 		triggered = true
 		textbox.queue_char_text(["Muito bem, parece que tem uma ponte quebrada a seguir...",
-		"Veja o codigo dela, talvez haja algo que possamos fazer"],
+		"Veja o código dela, talvez haja algo que possamos fazer."],
 		["res://assets/portraits/silhueta.png",
 		"res://assets/portraits/silhueta.png"])
 	pass # Replace with function body.

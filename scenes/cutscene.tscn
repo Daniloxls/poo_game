@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5i2qofkkkqvo"]
+
+[ext_resource type="Script" path="res://scripts/cutscene.gd" id="1_521vt"]
+[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="2_l2grg"]
+[ext_resource type="Texture2D" uid="uid://m7adp2wwqu2f" path="res://assets/cutscene/antipoo_past/0.png" id="2_wo445"]
+[ext_resource type="Script" path="res://scenes/scene_textbox.gd" id="4_88dx7"]
+
+[node name="Cutscene" type="CanvasLayer"]
+script = ExtResource("1_521vt")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_left = -63.0
+offset_top = -80.0
+offset_right = 1235.0
+offset_bottom = 650.0
+texture = ExtResource("2_wo445")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Textbox" parent="." instance=ExtResource("2_l2grg")]
+layer = 2
+script = ExtResource("4_88dx7")
+
+[node name="BlackScreen" type="ColorRect" parent="."]
+offset_right = 1155.0
+offset_bottom = 649.0
+color = Color(0, 0, 0, 0)
+
+[connection signal="text_finish" from="Textbox" to="." method="_on_textbox_text_finish"]
