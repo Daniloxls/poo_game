@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyul3h4hucg8n"]
+
+[ext_resource type="Script" path="res://scenes/forest/scripts/broken_bridge.gd" id="1_3l3qy"]
+[ext_resource type="Texture2D" uid="uid://d2diwyyt3wegv" path="res://icon.svg" id="2_s484s"]
+[ext_resource type="Texture2D" uid="uid://x7sdjtxaqlju" path="res://assets/tileset/forest/arvores_tile.png" id="3_dph4m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
+size = Vector2(500, 500)
+
+[node name="Interact" type="Node2D"]
+script = ExtResource("1_3l3qy")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_f7cku")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2147483648
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_f7cku")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.50002, 1.50002)
+scale = Vector2(3.91406, 3.91406)
+texture = ExtResource("2_s484s")
+
+[node name="Bridge" type="Node2D" parent="."]
+visible = false
+
+[node name="ArvoresTile" type="Sprite2D" parent="Bridge"]
+position = Vector2(511, -9.53674e-07)
+scale = Vector2(0.342, 0.342)
+texture = ExtResource("3_dph4m")
+
+[node name="ArvoresTile2" type="Sprite2D" parent="Bridge"]
+position = Vector2(1022, -5.68434e-14)
+scale = Vector2(0.342, 0.342)
+texture = ExtResource("3_dph4m")
+
+[node name="ArvoresTile3" type="Sprite2D" parent="Bridge"]
+position = Vector2(1532, -1.20371e-35)
+scale = Vector2(0.342, 0.342)
+texture = ExtResource("3_dph4m")
