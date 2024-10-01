@@ -21,7 +21,7 @@ func _ready():
 	codigo = {}
 	metodos = {
 	"1" : ["void atacar(Personagem jogador){"],
-	"0" : ["\talvo.receber_dano(alvo.get_hp())", 19, 13],
+	"0" : ["\tjogador.receber_dano(jogador.get_hp())", 19, 13],
 	"3" : ["\treturn\n}"]
 	}
 
