@@ -18,7 +18,7 @@ var direction : Vector2 = Vector2()
 
 @onready var textbox = get_node("../Textbox")
 @onready var codebox = get_node("../Codebox")
-@onready var inventory = get_node("../../../Inventory")
+@onready var inventory = get_node("Inventory")
 
 # Direção para onde o player está olhando
 enum State{
@@ -144,8 +144,8 @@ func read_input():
 			interact_box.get_overlapping_areas()[0].get_parent().update_codigo(codebox.get_props())
 			interact_box.get_overlapping_areas()[0].get_parent().update_methods(codebox.get_methods())
 	
-		
-func _physics_process(delta):
+
+func _physics_process(_delta):
 	read_input()
 
 func set_movement(move):
@@ -190,5 +190,3 @@ func set_animation(animation, direction):
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
-
-

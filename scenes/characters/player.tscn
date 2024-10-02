@@ -452,6 +452,7 @@ size = Vector2(316.25, 362.25)
 y_sort_enabled = true
 texture_filter = 1
 collision_layer = 3
+collision_mask = 5
 script = ExtResource("1_g6qgi")
 
 [node name="Collision_interact" type="Area2D" parent="."]
@@ -486,6 +487,8 @@ position = Vector2(80, -56)
 scale = Vector2(1.0625, 1.1)
 sprite_frames = SubResource("SpriteFrames_tu64k")
 animation = &"walk_left"
+frame = 6
+frame_progress = 0.0147511
 
 [node name="ColisionPlayer" type="CollisionShape2D" parent="."]
 position = Vector2(79, 133.5)

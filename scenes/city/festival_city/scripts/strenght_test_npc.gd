@@ -50,6 +50,7 @@ func interaction():
 		triggered = true
 	else:
 		textbox.queue_text(["Desculpe garoto, só uma vitoria por pessoa."])
+	
 func _on_textbox_text_finish():
 	if triggered:
 		textbox.display_choice("Você quer tentar garoto ?", ["Sim", "Não"])

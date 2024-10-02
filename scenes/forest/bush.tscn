@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3 uid="uid://bqljal0ipsebg"]
+
+[ext_resource type="Texture2D" uid="uid://c1uv6y4noagg3" path="res://assets/tileset/forest/tree_1.png" id="1_iueup"]
+[ext_resource type="Script" path="res://scenes/forest/scripts/bush.gd" id="1_jlu7c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4fyk"]
+size = Vector2(3278, 395)
+
+[sub_resource type="Animation" id="Animation_cucr7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.351563, 0.351563, 0.351563, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_getr0"]
+resource_name = "burn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.0001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.351563, 0.351563, 0.351563, 1), Color(0.788206, 0.179605, 0.156496, 1), Color(0.788235, 0.180392, 0.156863, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"delete"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qupfu"]
+_data = {
+"RESET": SubResource("Animation_cucr7"),
+"burn": SubResource("Animation_getr0")
+}
+
+[node name="Bush" type="CharacterBody2D"]
+modulate = Color(0.351563, 0.351563, 0.351563, 1)
+collision_layer = 4
+script = ExtResource("1_jlu7c")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_iueup")
+
+[node name="Sprite2" type="Sprite2D" parent="."]
+position = Vector2(650, 0)
+texture = ExtResource("1_iueup")
+
+[node name="Sprite3" type="Sprite2D" parent="."]
+position = Vector2(1300, 0)
+texture = ExtResource("1_iueup")
+
+[node name="Sprite4" type="Sprite2D" parent="."]
+position = Vector2(1950, 0)
+texture = ExtResource("1_iueup")
+
+[node name="Sprite5" type="Sprite2D" parent="."]
+position = Vector2(2600, 0)
+texture = ExtResource("1_iueup")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(1308, 187.5)
+shape = SubResource("RectangleShape2D_k4fyk")
+debug_color = Color(0.684694, 0.301702, 0.988527, 0.42)
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qupfu")
+}

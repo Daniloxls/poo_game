@@ -16,6 +16,7 @@ var dict = {
 func _ready():
 	for key in dict.keys():
 		if dict[key] != [0,0]:
+			print(key)
 			print(key.substr(dict[key][0], dict[key][1]))
 	pass
 

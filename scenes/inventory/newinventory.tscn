@@ -29,18 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://bpmjljchkk3fu" path="res://assets/inventory/acessory_icon.png" id="23_tp1sq"]
 [ext_resource type="Texture2D" uid="uid://bsxpxv50u62xl" path="res://assets/inventory/arrow.png" id="25_lwknu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr4wc"]
-bg_color = Color(0.160784, 0.160784, 0.160784, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-corner_radius_top_left = 3
-corner_radius_top_right = 2
-expand_margin_left = 11.0
-expand_margin_top = 5.0
-expand_margin_right = 8.0
-expand_margin_bottom = 1.0
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7besx"]
 bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
 border_width_left = 2
@@ -68,6 +56,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 expand_margin_top = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr4wc"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 2
+expand_margin_left = 11.0
+expand_margin_top = 5.0
+expand_margin_right = 8.0
+expand_margin_bottom = 1.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_yph3h"]
 line_spacing = 12.45
@@ -109,6 +109,13 @@ font = ExtResource("5_nextx")
 font_size = 27
 font_color = Color(0.666667, 0.788235, 0.247059, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c15km"]
+bg_color = Color(0.160784, 0.160784, 0.160784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_negui"]
 bg_color = Color(0.160784, 0.160784, 0.160784, 1)
 border_width_left = 2
@@ -120,13 +127,6 @@ expand_margin_left = 11.0
 expand_margin_top = 5.0
 expand_margin_right = 8.0
 expand_margin_bottom = 1.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c15km"]
-bg_color = Color(0.160784, 0.160784, 0.160784, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2j27"]
 content_margin_left = 25.0
@@ -144,22 +144,23 @@ offset_top = 21.0
 offset_right = 1141.0
 offset_bottom = 643.0
 theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
-theme_override_constants/side_margin = 13
 theme_override_constants/outline_size = 0
+theme_override_constants/side_margin = 13
 theme_override_fonts/font = ExtResource("5_nextx")
 theme_override_font_sizes/font_size = 30
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
+theme_override_styles/panel = SubResource("StyleBoxFlat_umvl5")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_qr4wc")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
-theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
-theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
-theme_override_styles/panel = SubResource("StyleBoxFlat_umvl5")
 current_tab = 6
 tab_focus_mode = 0
 
 [node name="Personagens" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Personagens"]
 layout_mode = 2
@@ -612,44 +613,46 @@ theme_override_constants/separation = 11
 [node name="Button" type="Button" parent="TabContainer/Personagens/PartyButtons"]
 custom_minimum_size = Vector2(1114, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
 
 [node name="Button2" type="Button" parent="TabContainer/Personagens/PartyButtons"]
 custom_minimum_size = Vector2(660, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
 
 [node name="Button3" type="Button" parent="TabContainer/Personagens/PartyButtons"]
 custom_minimum_size = Vector2(660, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
 
 [node name="Button4" type="Button" parent="TabContainer/Personagens/PartyButtons"]
 custom_minimum_size = Vector2(660, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
 theme_override_styles/focus = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fhco7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
 
 [node name="a" type="Label" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Mochila" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
+metadata/_tab_index = 2
 
 [node name="InventoryContainer" type="VBoxContainer" parent="TabContainer/Mochila"]
 layout_mode = 2
@@ -792,14 +795,17 @@ autowrap_mode = 2
 [node name="b" type="Label" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="Opções" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="c" type="Label" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 5
 
 [node name="PersonagemInfo" type="MarginContainer" parent="TabContainer"]
 layout_mode = 2
@@ -807,21 +813,23 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 6
 script = ExtResource("14_fw4ly")
+metadata/_tab_index = 6
 
 [node name="TabContainer" type="TabContainer" parent="TabContainer/PersonagemInfo"]
 layout_mode = 2
 theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_constants/outline_size = 0
 theme_override_constants/side_margin = 16
 theme_override_constants/icon_max_width = 54
-theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("5_nextx")
 theme_override_font_sizes/font_size = 30
+theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
+theme_override_styles/panel = SubResource("StyleBoxFlat_c15km")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_negui")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
-theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_10aoo")
-theme_override_styles/tab_focus = SubResource("StyleBoxFlat_7besx")
-theme_override_styles/panel = SubResource("StyleBoxFlat_c15km")
+current_tab = 0
 tab_focus_mode = 0
 script = ExtResource("11_suue3")
 
@@ -829,6 +837,7 @@ script = ExtResource("11_suue3")
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_h2j27")
 horizontal_scroll_mode = 0
+metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/PersonagemInfo/TabContainer/Status"]
 layout_mode = 2
@@ -900,6 +909,7 @@ autowrap_mode = 0
 [node name="a" type="Label" parent="TabContainer/PersonagemInfo/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Equipamento" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
 visible = false
@@ -909,6 +919,7 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 script = ExtResource("17_8r86p")
+metadata/_tab_index = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/PersonagemInfo/TabContainer/Equipamento"]
 layout_mode = 2
@@ -1089,18 +1100,22 @@ columns = 11
 [node name="b" type="Label" parent="TabContainer/PersonagemInfo/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="Codigo" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="c" type="Label" parent="TabContainer/PersonagemInfo/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 5
 
 [node name="Classe" type="MarginContainer" parent="TabContainer/PersonagemInfo/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 6
 
 [node name="Party" type="Node2D" parent="."]
 position = Vector2(1311, 86)

@@ -548,6 +548,11 @@ func _process(delta):
 					if Input.is_action_just_pressed("9") and !(Input.is_action_pressed("run")):
 						selected_text[1] += "9"
 						self_methods[cursor_dict[cursor_pos]][2] += 1
+					
+					if Input.is_action_just_pressed("dot"):
+						selected_text[1] += "."
+						self_methods[cursor_dict[cursor_pos]][2] += 1
+					
 					if Input.is_action_just_pressed("<"):
 						selected_text[1] += "<"
 						self_methods[cursor_dict[cursor_pos]][2] += 1
