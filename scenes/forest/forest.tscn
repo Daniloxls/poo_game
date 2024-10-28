@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://mkr0b1h1h45h"]
+[gd_scene load_steps=23 format=3 uid="uid://mkr0b1h1h45h"]
 
 [ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="1_c6p51"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="2_saptf"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b7xixqgo4jsk6" path="res://assets/tileset/biblioteca.png" id="9_oyrfe"]
 [ext_resource type="Script" path="res://scenes/forest/scripts/alchemist.gd" id="10_37g44"]
 [ext_resource type="Texture2D" uid="uid://cvpk20t0j6hfo" path="res://assets/characters/ark_olgo.png" id="11_4blie"]
+[ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/interact.tscn" id="13_6i6ig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2frhd"]
 texture = ExtResource("4_tvv56")
@@ -317,3 +318,8 @@ layer_5/tile_data = PackedInt32Array(-4653047, 262144, 5, -4718583, 262144, 5, -
 position = Vector2(-9136, -12200)
 script = ExtResource("10_37g44")
 SPRITE = SubResource("SpriteFrames_pjbtw")
+
+[node name="Coiso" type="Node2D" parent="."]
+
+[node name="Interact" parent="Coiso" instance=ExtResource("13_6i6ig")]
+position = Vector2(121, -3171)

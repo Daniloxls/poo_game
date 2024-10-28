@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://eu7knnly1tvv"]
+
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_3bibu"]
+[ext_resource type="StyleBox" uid="uid://cnd108mesc6bb" path="res://scenes/styles/codebox_borderless.tres" id="1_8ppg6"]
+
+[resource]
+default_font = ExtResource("1_3bibu")
+default_font_size = 19
+LineEdit/styles/normal = ExtResource("1_8ppg6")
+TextEdit/colors/background_color = Color(0, 0, 0.305882, 1)
