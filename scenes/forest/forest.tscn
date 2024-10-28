@@ -282,6 +282,9 @@ metadata/_edit_horizontal_guides_ = [-35630.0]
 
 [node name="Textbox" parent="." instance=ExtResource("2_saptf")]
 
+[node name="NPC2" parent="." groups=["Enemy"] instance=ExtResource("9_at5tk")]
+position = Vector2(-3216, -7062)
+
 [node name="Player" parent="." instance=ExtResource("3_lrpyg")]
 z_index = 1
 position = Vector2(819, -3333)
