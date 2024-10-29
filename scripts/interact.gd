@@ -13,7 +13,7 @@ extends Node2D
 # permitindo acesso para movê-lo ou alterar suas propriedades.
 @onready var player = get_node("../Player")
 @onready var codebox = get_node("../Codebox")
-@onready var textbox = get_node("../Textbox")
+@onready var textbox = get_tree().get_current_scene().get_node("./Textbox")
 # O nome que aparece na caixa de código.
 var nome = ""
 

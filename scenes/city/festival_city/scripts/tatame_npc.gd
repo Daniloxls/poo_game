@@ -7,7 +7,6 @@ var direction : Vector2 = Vector2()
 @onready var inventory = $"../../../Inventory"
 @onready var tickets = $"../Tickets"
 @onready var lutador = $"../LutadorNPC"
-
 enum State{
 	DOWN,
 	LEFT,
@@ -51,6 +50,7 @@ func update_codigo(new_codigo):
 func depure():
 	depuring = true
 	return codigo
+
 
 func interaction():
 	if victory_state == Victory.PLAYER:
