@@ -1,28 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://rqh8da2muvx6"]
+[gd_scene load_steps=8 format=3 uid="uid://rqh8da2muvx6"]
 
 [ext_resource type="PackedScene" uid="uid://c2jfv4lnhfpro" path="res://scenes/inventory/inventory.tscn" id="1_5i5st"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_irk2k"]
 [ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
 [ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://scenes/tela_titulo.tscn" id="4_1yu0a"]
-[ext_resource type="PackedScene" uid="uid://mkr0b1h1h45h" path="res://scenes/forest/forest.tscn" id="4_xth2u"]
+[ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://scenes/new_codebox.tscn" id="4_4vmip"]
+[ext_resource type="PackedScene" uid="uid://bl0foop1gp2xr" path="res://scenes/tutorial/codigofont.tscn" id="5_12msj"]
+[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="5_fvtp8"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_irk2k")
 
 [node name="Battle" parent="." instance=ExtResource("2_j13bi")]
+visible = false
 
 [node name="Inventory" parent="." instance=ExtResource("1_5i5st")]
 layer = 2
 
+[node name="Codebox" parent="." instance=ExtResource("4_4vmip")]
+
+[node name="Textbox" parent="." instance=ExtResource("5_fvtp8")]
+
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="Forest" parent="Level" instance=ExtResource("4_xth2u")]
+[node name="CodeTutorial" parent="Level" instance=ExtResource("5_12msj")]
 
 [node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
-autoplay = true
 
 [connection signal="battle_lost" from="Battle" to="." method="_on_battle_battle_lost"]
 [connection signal="battle_won" from="Battle" to="." method="_on_battle_battle_won"]

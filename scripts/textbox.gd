@@ -28,7 +28,7 @@ const CURSOR_POSITION = Vector2(946,340)
 # 'cursor' é o sprite de cursor que aparece nas escolhas
 @onready var cursor = $Cursor
 # 'player' é o acesso que a caixa de texto possui do personagem para poder afeta-lo
-@onready var player = get_node("../Player")
+@onready var player = get_node("../Level").get_child(0).find_child("Player")
 # 'codebox' é o acesso que a caixa de texto tem da caixa de codigo, usado para evitar conflitos
 @onready var codebox = get_node("../Codebox")
 
@@ -113,7 +113,8 @@ func display_choice(text, choices):
 	tween.tween_property(label, "visible_ratio",1.0, len(next_text) * CHAR_READ_RATE)
 	label.text = next_text
 	change_state(State.READING)
-	player.set_movement(false)
+	if player.get_state() == Player.State.FREE:
+		player.set_state(Player.State.ON_DIALOGUE)
 	show_textbox()
 	portrait.hide()
 	label.visible_ratio = 0.0
@@ -147,7 +148,8 @@ func display_text():
 	# enquanto o tween não acabar ou o player não apertar 'Z' ela fica no estado Reading
 	# e o player fica parado enquanto estiver em um dialogo
 	change_state(State.READING)
-	player.set_movement(false)
+	if player.get_state() == Player.State.FREE:
+		player.set_state(Player.State.ON_DIALOGUE)
 	show_textbox()
 	#Esconde o texto e faz o tween transicionar ele até ficar todo mostrado
 	label.visible_ratio = 0.0
@@ -207,8 +209,8 @@ func _process(delta):
 					display_text()
 				else:
 					change_state(State.READY)
-					if codebox.get_state() == "Ready":
-						player.set_movement(true)
+					if player.get_state() == Player.State.ON_DIALOGUE:
+						player.set_state(Player.State.FREE)
 					textbox_container.hide()
 					portrait.hide()
 					text_finish.emit()
@@ -228,8 +230,8 @@ func _process(delta):
 				set_cursor_pos(CURSOR_POSITION + Vector2(0, 36) * choice_id)
 			if Input.is_action_just_pressed("interact"):
 				change_state(State.READY)
-				if codebox.get_state() == "Ready":
-					player.set_movement(true)
+				if player.get_state() == Player.State.ON_DIALOGUE:
+					player.set_state(Player.State.FREE)
 				textbox_container.hide()
 				choice_container.hide()
 				set_cursor_pos(CURSOR_POSITION)

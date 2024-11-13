@@ -12,8 +12,10 @@ extends Node2D
 # 'player' é uma referência ao nó do jogador,
 # permitindo acesso para movê-lo ou alterar suas propriedades.
 @onready var player = get_node("../Player")
-@onready var codebox = get_node("../Codebox")
+@onready var codebox = get_tree().get_current_scene().get_node("Codebox")
 @onready var textbox = get_tree().get_current_scene().get_node("Textbox")
+@onready var menu_button = $MenuButton
+var popup
 # O nome que aparece na caixa de código.
 var nome = ""
 
@@ -37,13 +39,17 @@ var depuring = false
 
 
 func _ready():
-	print(textbox)
-	pass
-
+	ready_drop_menu()
 # Chamado a cada quadro. 'delta' é o tempo decorrido desde o quadro anterior.
 func _process(delta):
 	pass
 
+func ready_drop_menu():
+	if (codigo == {}) and (metodos == {}):
+		menu_button.hide()
+	popup = menu_button.get_popup()
+	popup.connect("index_pressed", depure)
+	
 # Função chamada pelo personagem quando interage com o objeto ao pressionar 'Z'.
 func interaction():
 	pass
@@ -64,28 +70,31 @@ func set_portraits(new_portraits):
 	
 
 # Usado para alterar tanto o nome quanto o código do objeto.
-func set_codigo(new_nome, new_codigo):
-	nome = new_nome
+func set_codigo(new_codigo):
 	codigo = new_codigo
 
-# Usado para alterar apenas o código do objeto.
-func update_codigo(new_codigo):
-	codigo = new_codigo
-	
-func update_methods(new_methods):
+func set_metodos(new_methods):
 	metodos = new_methods
 	
 func set_colision(value: bool) -> void:
 	colision.set_collision_layer_value(1, value)
+	
 # Função chamada pelo personagem para visualizar
 # e alterar o código deste objeto durante a depuração.
-func depure():
-	depuring = true
+func depure(index):
+	codebox.depure(self)
+	
+func get_codigo():
 	return codigo
 	
-func get_methods():
+func get_metodos():
 	return metodos
+	
 # Retorna o nome do objeto.
-
-func name():
+func get_nome():
 	return nome
+
+
+func _on_menu_button_about_to_popup():
+	popup.set_position(get_viewport().get_mouse_position())
+	print(get_viewport().get_mouse_position())

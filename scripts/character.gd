@@ -43,6 +43,7 @@ func _ready():
 	#healthbar.hide()
 	animation.play("default")
 	original_pos = get_position()
+	print(original_pos)
 	pass # Replace with function body.
 
 

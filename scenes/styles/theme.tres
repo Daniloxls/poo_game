@@ -1,10 +1,18 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://eu7knnly1tvv"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://eu7knnly1tvv"]
 
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_3bibu"]
 [ext_resource type="StyleBox" uid="uid://cnd108mesc6bb" path="res://scenes/styles/codebox_borderless.tres" id="1_8ppg6"]
 
+[sub_resource type="ImageTexture" id="ImageTexture_0nr7o"]
+
 [resource]
 default_font = ExtResource("1_3bibu")
 default_font_size = 19
+Button/styles/disabled = ExtResource("1_8ppg6")
+Button/styles/focus = ExtResource("1_8ppg6")
+Button/styles/hover = ExtResource("1_8ppg6")
+Button/styles/normal = ExtResource("1_8ppg6")
+Button/styles/pressed = ExtResource("1_8ppg6")
 LineEdit/styles/normal = ExtResource("1_8ppg6")
+SpinBox/icons/updown = SubResource("ImageTexture_0nr7o")
 TextEdit/colors/background_color = Color(0, 0, 0.305882, 1)

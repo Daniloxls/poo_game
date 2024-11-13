@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c2jfv4lnhfpro"]
+[gd_scene load_steps=28 format=3 uid="uid://c2jfv4lnhfpro"]
 
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_xp6de"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="3_irinq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/CharContainer.gd" id="6_bj6ti"]
 [ext_resource type="LabelSettings" uid="uid://5mg8308marm6" path="res://assets/fonts/orange_console_text.tres" id="7_1nlpb"]
 [ext_resource type="LabelSettings" uid="uid://gts2l8irhv00" path="res://assets/fonts/light_blue_console.tres" id="12_7flin"]
+[ext_resource type="Script" path="res://scenes/inventory/party/battle_turin.gd" id="13_6bes7"]
 [ext_resource type="LabelSettings" uid="uid://cmfsg5d7438bt" path="res://assets/fonts/yellow_console_text.tres" id="13_tm731"]
 [ext_resource type="LabelSettings" uid="uid://dp6o68cs1rv5i" path="res://assets/fonts/light_orange_console.tres" id="14_2m0te"]
 [ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="15_8lktr"]
@@ -35,6 +36,19 @@ bg_color = Color(1, 0.176471, 0.0705882, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axtrd"]
 bg_color = Color(0.054902, 0.333333, 1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koaf8"]
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_color = Color(0.87451, 0.87451, 0.87451, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 2
+expand_margin_left = 5.0
+expand_margin_top = 2.0
+expand_margin_right = 15.0
+expand_margin_bottom = 1.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b52uu"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
 border_width_left = 2
@@ -48,19 +62,6 @@ expand_margin_left = 5.0
 expand_margin_top = 2.0
 expand_margin_right = 15.0
 shadow_color = Color(0.152941, 0.152941, 0.152941, 0.898039)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koaf8"]
-bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_color = Color(0.87451, 0.87451, 0.87451, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 2
-expand_margin_left = 5.0
-expand_margin_top = 2.0
-expand_margin_right = 15.0
-expand_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_556vg"]
 bg_color = Color(0, 0, 0, 0)
@@ -100,9 +101,9 @@ font_size = 27
 font_color = Color(0.309804, 0.415686, 0.447059, 1)
 
 [node name="Inventory" type="CanvasLayer"]
-visible = false
 
 [node name="MenuBackground" type="MarginContainer" parent="."]
+visible = false
 offset_left = 8.0
 offset_top = 44.0
 offset_right = 1141.0
@@ -114,6 +115,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_a2i62")
 
 [node name="MenuContents" type="MarginContainer" parent="."]
+visible = false
 offset_left = 16.0
 offset_top = 56.0
 offset_right = 1122.0
@@ -561,6 +563,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 
 [node name="MenuButtons" type="MarginContainer" parent="."]
+visible = false
 offset_left = 13.0
 offset_top = 12.0
 offset_right = 1352.0
@@ -579,37 +582,37 @@ theme_override_constants/separation = 22
 
 [node name="PersonagensButton" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/MenuOptions"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.392157, 0.392157, 0.392157, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.392157, 0.392157, 0.392157, 1)
 theme_override_fonts/font = ExtResource("4_854na")
 theme_override_font_sizes/font_size = 29
-theme_override_styles/normal = SubResource("StyleBoxFlat_b52uu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_b52uu")
 theme_override_styles/focus = SubResource("StyleBoxFlat_koaf8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b52uu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_b52uu")
 text = "Personagens"
 alignment = 0
 
 [node name="BagButton" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/MenuOptions"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.392157, 0.392157, 0.392157, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.392157, 0.392157, 0.392157, 1)
 theme_override_fonts/font = ExtResource("4_854na")
 theme_override_font_sizes/font_size = 29
-theme_override_styles/normal = SubResource("StyleBoxFlat_b52uu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_b52uu")
 theme_override_styles/focus = SubResource("StyleBoxFlat_koaf8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b52uu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_b52uu")
 text = "Mochila"
 alignment = 0
 
 [node name="OptionsButton" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/MenuOptions"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.392157, 0.392157, 0.392157, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.392157, 0.392157, 0.392157, 1)
 theme_override_fonts/font = ExtResource("4_854na")
 theme_override_font_sizes/font_size = 29
-theme_override_styles/normal = SubResource("StyleBoxFlat_b52uu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_b52uu")
 theme_override_styles/focus = SubResource("StyleBoxFlat_koaf8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b52uu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_b52uu")
 text = "Opções"
 alignment = 0
 
@@ -622,34 +625,34 @@ theme_override_constants/separation = 8
 [node name="Button" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/PartyButtons"]
 custom_minimum_size = Vector2(1114, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
 theme_override_styles/focus = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
 
 [node name="Button2" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/PartyButtons"]
 custom_minimum_size = Vector2(660, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
 theme_override_styles/focus = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
 
 [node name="Button3" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/PartyButtons"]
 custom_minimum_size = Vector2(660, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
 theme_override_styles/focus = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
 
 [node name="Button4" type="Button" parent="MenuButtons/HBoxContainer/MenuLeft/PartyButtons"]
 custom_minimum_size = Vector2(660, 106)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
-theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
 theme_override_styles/focus = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_556vg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mhuiq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_556vg")
 
 [node name="GoldContainer" type="HBoxContainer" parent="MenuButtons/HBoxContainer/MenuLeft"]
 visible = false
@@ -671,6 +674,7 @@ text = "100"
 label_settings = SubResource("LabelSettings_bsh7n")
 
 [node name="ItemMenu" type="Node2D" parent="."]
+visible = false
 
 [node name="Inventorymargin" type="MarginContainer" parent="ItemMenu"]
 offset_left = 12.0
@@ -985,3 +989,4 @@ z_index = 3
 z_as_relative = false
 position = Vector2(-40, 246)
 scale = Vector2(4, 4)
+script = ExtResource("13_6bes7")

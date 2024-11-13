@@ -3,18 +3,15 @@ extends Node2D
 signal battle_tutorial_end
 
 @onready var player = $Player
-@onready var textbox = $Textbox
-@onready var codebox = $Codebox
-@onready var up_arrow = $UpArrow
-@onready var left_arrow = $LeftArrow
-@onready var right_arrow = $RightArrow
-@onready var down_arrow = $DownArrow
+@onready var up_arrow = $DesenhosParede/UpArrow
+@onready var left_arrow = $DesenhosParede/LeftArrow
+@onready var right_arrow = $DesenhosParede/RightArrow
+@onready var down_arrow = $DesenhosParede/DownArrow
 @onready var root = $"../.."
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player.set_movement(false)
 	root.battle_won.connect(_on_tutorial_battle_end)
-	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -34,7 +31,6 @@ func _process(delta):
 		left_arrow.set_frame(0)
 	if Input.is_action_just_released("right"):
 		right_arrow.set_frame(0)
-	pass
 
 
 

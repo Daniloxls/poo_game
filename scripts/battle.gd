@@ -121,7 +121,7 @@ func start_battle(enemy_group_path):
 	var enemy_group = load(enemy_group_path)
 	var instance = enemy_group.instantiate()
 	# Bloqueia movimento do jogador
-	player.set_on_battle(true)
+	player.set_movement(false)
 	
 	game_audio.stop()
 	audio_player.play()

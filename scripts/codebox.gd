@@ -223,10 +223,6 @@ func _process(delta):
 		State.READY:
 			if !text_queue.is_empty():
 				display_text()
-			if player.can_edit_code():
-				indicator.show()
-			else:
-				indicator.hide()
 		# Se está aparecendo a caixa e o cursor aparece, então ele pode mexer o cursor
 		# para cima e baixo para escolher a variavel que vai ser editada
 		State.FINISH:
