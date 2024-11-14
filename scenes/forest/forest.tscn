@@ -1,4 +1,6 @@
+
 [gd_scene load_steps=29 format=3 uid="uid://mkr0b1h1h45h"]
+
 
 [ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="1_c6p51"]
 [ext_resource type="Script" path="res://scripts/forest.gd" id="1_g7q0x"]
@@ -19,6 +21,7 @@
 [ext_resource type="Script" path="res://scenes/forest/scripts/arbusto_area.gd" id="15_va7ay"]
 [ext_resource type="Texture2D" uid="uid://cyemc2xvcwbf7" path="res://assets/props/down_key_on.png" id="16_wjtw1"]
 [ext_resource type="PackedScene" uid="uid://brvkvtanp7g0o" path="res://scenes/battle_new.tscn" id="17_ac2ua"]
+
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2frhd"]
 texture = ExtResource("4_tvv56")
@@ -326,6 +329,7 @@ position = Vector2(-9136, -12200)
 script = ExtResource("10_37g44")
 SPRITE = SubResource("SpriteFrames_pjbtw")
 
+
 [node name="Campones" parent="." instance=ExtResource("11_s4ko7")]
 z_index = 1
 position = Vector2(-1018, -5411)
@@ -350,3 +354,4 @@ visible = false
 
 [connection signal="choise_closed" from="Textbox" to="NPC" method="_on_textbox_choise_closed"]
 [connection signal="text_finish" from="Textbox" to="NPC" method="_on_textbox_text_finish"]
+

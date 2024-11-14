@@ -3,14 +3,12 @@ extends Node2D
 # esse é o script base, todos eventos devem extender ele
 @onready var area = $Area2D
 @onready var player = get_node("../Player")
-@onready var codebox = get_node("../Codebox")
+@onready var textbox = get_tree().get_current_scene().get_node("Textbox")
 
 var triggered = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	area.monitoring = true
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

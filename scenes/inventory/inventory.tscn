@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c2jfv4lnhfpro"]
+[gd_scene load_steps=28 format=3 uid="uid://c2jfv4lnhfpro"]
 
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="2_xp6de"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="3_irinq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/CharContainer.gd" id="6_bj6ti"]
 [ext_resource type="LabelSettings" uid="uid://5mg8308marm6" path="res://assets/fonts/orange_console_text.tres" id="7_1nlpb"]
 [ext_resource type="LabelSettings" uid="uid://gts2l8irhv00" path="res://assets/fonts/light_blue_console.tres" id="12_7flin"]
+[ext_resource type="Script" path="res://scenes/inventory/party/battle_turin.gd" id="13_6bes7"]
 [ext_resource type="LabelSettings" uid="uid://cmfsg5d7438bt" path="res://assets/fonts/yellow_console_text.tres" id="13_tm731"]
 [ext_resource type="LabelSettings" uid="uid://dp6o68cs1rv5i" path="res://assets/fonts/light_orange_console.tres" id="14_2m0te"]
 [ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="15_8lktr"]
@@ -102,6 +103,7 @@ font_color = Color(0.309804, 0.415686, 0.447059, 1)
 [node name="Inventory" type="CanvasLayer"]
 
 [node name="MenuBackground" type="MarginContainer" parent="."]
+visible = false
 offset_left = 8.0
 offset_top = 44.0
 offset_right = 1141.0
@@ -113,6 +115,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_a2i62")
 
 [node name="MenuContents" type="MarginContainer" parent="."]
+visible = false
 offset_left = 16.0
 offset_top = 56.0
 offset_right = 1122.0
@@ -560,6 +563,7 @@ size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr3lc")
 
 [node name="MenuButtons" type="MarginContainer" parent="."]
+visible = false
 offset_left = 13.0
 offset_top = 12.0
 offset_right = 1352.0
@@ -670,6 +674,7 @@ text = "100"
 label_settings = SubResource("LabelSettings_bsh7n")
 
 [node name="ItemMenu" type="Node2D" parent="."]
+visible = false
 
 [node name="Inventorymargin" type="MarginContainer" parent="ItemMenu"]
 offset_left = 12.0
@@ -984,3 +989,4 @@ z_index = 3
 z_as_relative = false
 position = Vector2(-40, 246)
 scale = Vector2(4, 4)
+script = ExtResource("13_6bes7")

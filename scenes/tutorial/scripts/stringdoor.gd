@@ -1,59 +1,26 @@
-extends Node2D
-@onready var area = $Area2D
-@onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
-@onready var map = get_node("../TileMap")
+extends "res://scripts/interact.gd"
+
 @onready var sprite = $AnimatedSprite2D
 @onready var porta = $Porta
-var nome = "Teclado Numerico"
-var texto = ["Esse teclado deve ser para colocar a senha.", "Estão faltando as teclas 'a' e 's'."]
-var codigo = {"1String senha" : "senha123"}
-var portraits
+
 var good_password = false
-var depuring = false
 var dialogue = true
 var interacted = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	nome = "Teclado Numerico"
+	texto = ["Esse teclado deve ser para colocar a senha.", "Estão faltando as teclas 'a' e 's'."]
+	codigo = {"1String senha" : "senha123"}
+	ready_drop_menu()
+	codebox.connect("codebox_open", _on_codebox_code_open)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
-	
 func interaction():
 	interacted = true
 	if good_password:
 		sprite.set_frame_and_progress(1, 0)
 		porta.unlock()
 	textbox.queue_text(texto)
-
-func set_texto(new_texto):
-	texto = new_texto
-	
-func set_codigo(new_nome, new_codigo):
-	nome = new_nome
-	codigo = new_codigo
-
-func update_codigo(new_codigo):
-	codigo = new_codigo
-	
-func depure():
-	depuring = true
-	return codigo
-	
-func get_portraits():
-	return portraits
-	
-func set_portraits(new_portraits):
-	portraits = new_portraits
-	
-func name():
-	return nome
-
 
 func _on_codebox_code_open():
 	if dialogue and area.has_overlapping_areas():

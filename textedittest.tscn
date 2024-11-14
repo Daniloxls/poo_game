@@ -1,0 +1,163 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhifs0mf1gg5c"]
+
+[ext_resource type="Script" path="res://textedittest.gd" id="1_kxv1q"]
+[ext_resource type="StyleBox" uid="uid://cjjgxmpsej56u" path="res://scenes/styles/codebox.tres" id="2_mkyf4"]
+[ext_resource type="Theme" uid="uid://eu7knnly1tvv" path="res://scenes/styles/theme.tres" id="3_rhts4"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_vweqj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyofc"]
+bg_color = Color(0.0588235, 0, 0.564706, 1)
+
+[sub_resource type="GDScript" id="GDScript_ayesh"]
+script/source = "extends MenuButton
+@onready var line_edit = $\"../LineEdit\"
+
+var codebox
+var popup
+var nome = \"TesteDeForca\"
+var codigo = {\"1String senha\" : \"'senha123'\",
+	\"int idade\" : 5,
+	\"1boolean coisavel\": true
+	}
+var	metodos = {
+	\"1\" : [\"boolean teste_de_forca(Personagem jogador){\"],
+	\"2\" : [\"\\tboolean sucesso;\"] ,
+	\"3\" : [\"\\tint forca = jogador.get_forca()\"],
+	\"0\": [\"\\tif (forca > 10){\", 5, 10] ,
+	\"4\" : [\"\\t\\tsucesso = true\\n\\t}\"],
+	\"5\" : [\"\\telse{\"],
+	\"6\" : [\"\\t\\tsucesso = false;\\n\\t}\"],
+	\"7\" : [\"\\treturn sucesso;\\n}\"]
+	}
+	
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	popup = self.get_popup()
+	popup.connect(\"index_pressed\", depurar)
+	line_edit.set_text(\"AABBCCDD\")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func get_nome():
+	return nome
+	
+func get_codigo():
+	return codigo
+	
+func get_metodos():
+	return metodos
+
+func set_codigo(new_codigo):
+	codigo = new_codigo
+	
+func set_metodos(new_metodos):
+	metodos = new_metodos
+
+func depurar(index):
+	pass
+"
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_2rgsq"]
+
+[node name="Node2D" type="CanvasLayer"]
+script = ExtResource("1_kxv1q")
+
+[node name="MenuButton" type="MenuButton" parent="."]
+offset_left = 66.0
+offset_top = 127.0
+offset_right = 248.0
+offset_bottom = 267.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_pyofc")
+button_mask = 2
+text = "CAramba"
+item_count = 1
+popup/item_0/text = "Depurar"
+script = SubResource("GDScript_ayesh")
+
+[node name="CodeEdit" type="CodeEdit" parent="."]
+offset_left = 62.0
+offset_top = 293.0
+offset_right = 540.0
+offset_bottom = 409.0
+size_flags_horizontal = 3
+text = "ghjghjghjghjghjghjghjghjghj
+dfgdfgjldkjfglkdjfglkjdflkgjdjfgd
+dfgkhdlkfghlkdfghjkd
+[dfkghdlkfghlkdfg"
+wrap_mode = 1
+scroll_fit_content_height = true
+syntax_highlighter = SubResource("CodeHighlighter_2rgsq")
+highlight_all_occurrences = true
+highlight_current_line = true
+code_completion_enabled = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 600.0
+offset_top = 45.0
+offset_right = 1102.0
+offset_bottom = 584.0
+theme_override_styles/panel = ExtResource("2_mkyf4")
+
+[node name="FlowContainer" type="FlowContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 15.0
+offset_right = 490.0
+offset_bottom = 528.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 464.0
+offset_top = -11.0
+offset_right = 524.0
+offset_bottom = 20.0
+theme = ExtResource("3_rhts4")
+text = "Fechar"
+
+[node name="CheckBox" type="CheckBox" parent="."]
+offset_left = 140.0
+offset_top = 274.0
+offset_right = 204.0
+offset_bottom = 352.0
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 130.0
+offset_top = 103.0
+offset_right = 197.063
+offset_bottom = 134.0
+max_length = 5
+
+[node name="SpinBox" type="SpinBox" parent="LineEdit"]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 1.0
+offset_right = 265.063
+offset_bottom = 32.0
+theme = ExtResource("3_rhts4")
+prefix = "sdjhfkjshdfsdfsdf"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+visible = false
+offset_left = 190.0
+offset_top = 445.0
+offset_right = 313.0
+offset_bottom = 485.0
+theme = ExtResource("3_rhts4")
+theme_override_colors/background_color = Color(0, 0, 0.305882, 1)
+theme_override_fonts/font = ExtResource("3_vweqj")
+theme_override_font_sizes/font_size = 25
+text = "int = 5"
+
+[node name="CodeEdit2" type="CodeEdit" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[connection signal="button_up" from="Panel/Button" to="." method="_on_button_button_up"]

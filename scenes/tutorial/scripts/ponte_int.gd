@@ -1,52 +1,25 @@
-extends Node2D
+extends "res://scripts/interact.gd"
 
-@onready var colision = $StaticBody2D
-@onready var area = $Area2D
-@onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
 @onready var map = get_node("../TileMap")
 @onready var pit = get_node("../Pit")
-
-var nome = "Ponte"
-var texto = ["Está quebrada."]
-var codigo = {"1int tamanho" : 1}
 var dialogue = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	colision.set_collision_layer_value(1, false)
-	pass # Replace with function body.
+	nome = "Ponte"
+	texto = ["Está quebrada."]
+	codigo = {"1int tamanho" : 1}
+	ready_drop_menu()
+	codebox.connect("codebox_open", _on_codebox_code_open)
+	codebox.connect("codebox_close", _on_codebox_code_closed)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func set_texto(new_texto):
-	texto = new_texto
-	
-func set_codigo(new_nome, new_codigo):
-	nome = new_nome
-	codigo = new_codigo
-
-func update_codigo(new_codigo):
-	codigo = new_codigo
-	
-func interaction():
-	textbox.queue_text(texto)
-	
-func depure():
-	return codigo
-	
-func name():
-	return nome
 
 func update_code():
 	pit.set_size(codigo["1int tamanho"])
 
 
-func _on_codebox_code_open():
-	if dialogue and area.has_overlapping_areas():
+func _on_codebox_code_open(name):
+	if dialogue and (name == self.get_name()):
 		dialogue = false
 		textbox.queue_char_text(["Ótimo, essa ponte tem uma variável que controla o tamanho dela.",
 		"Uma variável do tipo int tem um valor numérico que podemos aumentar ou diminuir.",
@@ -58,5 +31,5 @@ func _on_codebox_code_open():
 		"res://assets/portraits/silhueta.png"])
 
 
-func _on_codebox_code_closed():
+func _on_codebox_code_closed(name):
 	update_code()

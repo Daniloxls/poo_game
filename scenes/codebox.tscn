@@ -1,18 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://2j3byyhg36c6"]
 
 [ext_resource type="Script" path="res://scripts/codebox.gd" id="1_j5dny"]
+[ext_resource type="StyleBox" uid="uid://cjjgxmpsej56u" path="res://scenes/styles/codebox.tres" id="2_ep384"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_pq3of"]
 [ext_resource type="Texture2D" uid="uid://bwn6m2qvamam4" path="res://assets/gui/keyboard_c.png" id="3_lech8"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_s2n5h"]
 [ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_wuxah"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8litx"]
-bg_color = Color(0, 0, 0.305882, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwoo6"]
 bg_color = Color(0, 0, 0.305882, 1)
@@ -54,7 +47,7 @@ theme_override_constants/margin_bottom = -16
 
 [node name="Panel" type="Panel" parent="TextboxContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8litx")
+theme_override_styles/panel = ExtResource("2_ep384")
 
 [node name="MarginContainer" type="MarginContainer" parent="TextboxContainer"]
 layout_mode = 2

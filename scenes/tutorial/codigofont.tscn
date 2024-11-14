@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bl0foop1gp2xr"]
+[gd_scene load_steps=36 format=3 uid="uid://bl0foop1gp2xr"]
 
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/codetutorial.gd" id="1_yatrg"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_bdtc3"]
@@ -6,8 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cklgjq0tyvewk" path="res://assets/scenario/background/codigofont_background2.png" id="4_3i76b"]
 [ext_resource type="Texture2D" uid="uid://bav3thyva66lq" path="res://assets/props/Terminal.png" id="5_rmyi6"]
 [ext_resource type="Texture2D" uid="uid://cxtfmbl6mxf51" path="res://assets/scenario/codigofont_ground.png" id="6_3n4ds"]
-[ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="7_1jylc"]
-[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="8_n6ken"]
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/interact.tscn" id="9_vmyxb"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/door_bool.gd" id="10_lesad"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/Pit.gd" id="11_6ux6c"]
@@ -24,6 +22,7 @@
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial_event_2.gd" id="19_8ipdb"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial_event_3.gd" id="20_p2kd4"]
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/antipoo_door.gd" id="22_lgbbg"]
+[ext_resource type="PackedScene" uid="uid://cfnbvais4yqn5" path="res://scenes/tutorial/terminal.tscn" id="22_qkk5x"]
 [ext_resource type="Texture2D" uid="uid://biqownj8nbjn0" path="res://assets/props/PortaAntiPoo.png" id="23_6e7rg"]
 [ext_resource type="Texture2D" uid="uid://biac7gfadlqb1" path="res://assets/doors/porta_codigo_font_locked_h.png" id="31_yr2gk"]
 [ext_resource type="Texture2D" uid="uid://cp31q27dx1cff" path="res://assets/doors/porta_codigo_font_h.png" id="32_jakl4"]
@@ -114,13 +113,9 @@ animations = [{
 [node name="CodeTutorial" type="Node2D"]
 script = ExtResource("1_yatrg")
 
-[node name="Codebox" parent="." instance=ExtResource("7_1jylc")]
-
-[node name="Textbox" parent="." instance=ExtResource("8_n6ken")]
-
 [node name="Player" parent="." instance=ExtResource("2_bdtc3")]
 z_index = 3
-position = Vector2(-12575, 6356)
+position = Vector2(-11250, 5704)
 script = ExtResource("3_a0oed")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -483,6 +478,10 @@ position = Vector2(-11177, 4673)
 scale = Vector2(3.07, 1.835)
 script = ExtResource("15_vk38a")
 
+[node name="TerminalInterface" parent="Terminal" instance=ExtResource("22_qkk5x")]
+layer = 0
+visible = false
+
 [node name="Event" parent="." instance=ExtResource("16_y23sq")]
 position = Vector2(-5030, 6609)
 scale = Vector2(1, 8)
@@ -505,10 +504,7 @@ position = Vector2(-6471, 6757)
 position = Vector2(23, 0)
 polygon = PackedVector2Array(-7943, -5456, 13733, -5434, 13316, -1801, 9877, -1765, 9854, -939, 7755, -962, 7755, -1828, -7385, -1807, -7397, 1131, 7781, 1093, 7788, 571, 9895, 571, 9903, 1077, 13330, 1105, 13316, -1788, 13720, -5421, 13727, 5421, -8057, 5469, -8051, 5463)
 
-[connection signal="code_closed" from="Codebox" to="PortaBool" method="_on_codebox_code_closed"]
-[connection signal="code_closed" from="Codebox" to="PonteInt" method="_on_codebox_code_closed"]
-[connection signal="code_closed" from="Codebox" to="PortaString" method="_on_codebox_code_closed"]
-[connection signal="code_open" from="Codebox" to="PortaBool" method="_on_codebox_code_open"]
-[connection signal="code_open" from="Codebox" to="PonteInt" method="_on_codebox_code_open"]
-[connection signal="code_open" from="Codebox" to="PortaString" method="_on_codebox_code_open"]
-[connection signal="text_finish" from="Textbox" to="Terminal" method="_on_textbox_text_finish"]
+[connection signal="command_missed" from="Terminal/TerminalInterface" to="Terminal" method="_on_terminal_interface_command_missed"]
+[connection signal="password_missed" from="Terminal/TerminalInterface" to="Terminal" method="_on_terminal_interface_password_missed"]
+[connection signal="sudo_activated" from="Terminal/TerminalInterface" to="Terminal" method="_on_terminal_interface_sudo_activated"]
+[connection signal="sudo_typed" from="Terminal/TerminalInterface" to="Terminal" method="_on_terminal_interface_sudo_typed"]

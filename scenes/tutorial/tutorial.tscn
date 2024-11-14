@@ -1,10 +1,8 @@
-[gd_scene load_steps=44 format=3 uid="uid://wtnrlc4bfiyj"]
+[gd_scene load_steps=42 format=3 uid="uid://wtnrlc4bfiyj"]
 
 [ext_resource type="Script" path="res://scenes/tutorial/scripts/tutorial.gd" id="1_nde62"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_1qc1t"]
 [ext_resource type="Texture2D" uid="uid://c3261myw14ptj" path="res://assets/props/placeholder/free_switches.png" id="8_s8v17"]
-[ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="8_vw7ns"]
-[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="9_ums4g"]
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/interact.tscn" id="10_a56yr"]
 [ext_resource type="Texture2D" uid="uid://b27u0qs7c81lg" path="res://assets/props/seta_down_off.png" id="14_dcr84"]
 [ext_resource type="Texture2D" uid="uid://cyemc2xvcwbf7" path="res://assets/props/down_key_on.png" id="15_ngnki"]
@@ -31,53 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://bwwa0id1gyqp6" path="res://assets/props/alavanca.png" id="29_5hx6h"]
 [ext_resource type="Texture2D" uid="uid://c54e6xjby4sj8" path="res://assets/props/correndo.png" id="30_mopcp"]
 [ext_resource type="Texture2D" uid="uid://ddrw2iihnn4hl" path="res://assets/props/z.png" id="31_vhul4"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_lmve4"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("14_dcr84")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_ngnki")
-}],
-"loop": true,
-"name": &"down",
-"speed": 0.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("16_tng3m")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_j2vjr")
-}],
-"loop": true,
-"name": &"left",
-"speed": 0.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("18_bsvjr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_5t4e6")
-}],
-"loop": true,
-"name": &"right",
-"speed": 0.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("20_u8615")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_22311")
-}],
-"loop": true,
-"name": &"up",
-"speed": 0.0
-}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m1xv4"]
 atlas = ExtResource("8_s8v17")
@@ -192,18 +143,61 @@ animations = [{
 "speed": 0.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_lmve4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_dcr84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ngnki")
+}],
+"loop": true,
+"name": &"down",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_tng3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_j2vjr")
+}],
+"loop": true,
+"name": &"left",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_bsvjr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_5t4e6")
+}],
+"loop": true,
+"name": &"right",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_u8615")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_22311")
+}],
+"loop": true,
+"name": &"up",
+"speed": 0.0
+}]
+
 [node name="Tutorial" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(1, 0)
 script = ExtResource("1_nde62")
 
-[node name="Codebox" parent="." instance=ExtResource("8_vw7ns")]
-
-[node name="Textbox" parent="." instance=ExtResource("9_ums4g")]
-
 [node name="Player" parent="." instance=ExtResource("2_1qc1t")]
 z_as_relative = false
-position = Vector2(-13350, 5763)
+position = Vector2(-886, 5859)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.15, 0.15)
@@ -211,26 +205,6 @@ limit_left = -15790
 limit_top = 3085
 limit_right = 4162
 limit_bottom = 11103
-
-[node name="LeftArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-13795.5, 4900)
-sprite_frames = SubResource("SpriteFrames_lmve4")
-animation = &"left"
-
-[node name="RightArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-12897.5, 4906)
-sprite_frames = SubResource("SpriteFrames_lmve4")
-animation = &"right"
-
-[node name="UpArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-13347.5, 4400)
-sprite_frames = SubResource("SpriteFrames_lmve4")
-animation = &"up"
-
-[node name="DownArrow" type="AnimatedSprite2D" parent="."]
-position = Vector2(-13350.5, 4906)
-sprite_frames = SubResource("SpriteFrames_lmve4")
-animation = &"down"
 
 [node name="Alavanca" parent="." instance=ExtResource("10_a56yr")]
 position = Vector2(-7808, 5004)
@@ -334,6 +308,26 @@ sprite_frames = SubResource("SpriteFrames_5u6ad")
 [node name="DesenhosParede" type="Node2D" parent="."]
 y_sort_enabled = true
 position = Vector2(-8455, 4240)
+
+[node name="LeftArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-5340.5, 660)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"left"
+
+[node name="RightArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-4442.5, 666)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"right"
+
+[node name="UpArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-4892.5, 160)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"up"
+
+[node name="DownArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-4895.5, 666)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"down"
 
 [node name="Activate" type="Sprite2D" parent="DesenhosParede"]
 position = Vector2(-271, 271)

@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 
-@onready var textbox = get_node("../Textbox")
+@onready var textbox = get_tree().get_current_scene().get_node("Textbox")
 
 var ponte = []
 var current_size = 1
