@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal BattleStart
+
 # 'player_script' script que contem todas funções do personagem do jogador
 # 'direction' a direção que o personagem se move
 var direction : Vector2 = Vector2()
@@ -13,6 +15,7 @@ var direction : Vector2 = Vector2()
 @onready var camera = $Camera2D
 
 @onready var black_screen = $Camera2D/BlackScreen
+
 
 @onready var textbox = get_tree().get_current_scene().get_node("Textbox")
 @onready var codebox = get_tree().get_current_scene().get_node("Codebox")
@@ -120,8 +123,8 @@ func read_input():
 		# Fechar inventario, codebox, qualquer inteface que esteja aberta
 		pass
 	
-		
-func _physics_process(delta):
+
+func _physics_process(_delta):
 	read_input()
 
 func set_movement(move):
@@ -136,3 +139,7 @@ func set_state(new_state):
 	
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
+
+func battle_started():
+	BattleStart.emit()
+

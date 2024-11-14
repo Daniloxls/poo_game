@@ -16,6 +16,7 @@ visible = false
 
 [node name="Inventory" parent="." instance=ExtResource("1_5i5st")]
 layer = 2
+visible = false
 
 [node name="Codebox" parent="." instance=ExtResource("4_4vmip")]
 

@@ -90,7 +90,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	read_input()
 	debug.text = str(Selecting.keys()[current_selection]) + "\n"
 	# checa se todos os personagens agiram, para dar a vez para os inimigos

@@ -68,6 +68,7 @@ func aparecer():
 
 
 func esconder():
+	
 	#player.set_movement(true)
 	pass
 	
