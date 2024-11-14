@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bw3lqy8xuvmo3"]
+
+[ext_resource type="PackedScene" uid="uid://c38n4mwepbbac" path="res://scenes/Enemies/enemy.tscn" id="1_wr3fk"]
+[ext_resource type="Texture2D" uid="uid://cq4myq5d7ijmf" path="res://assets/characters/campones_1.png" id="2_065ux"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7b5ij"]
+size = Vector2(359, 653)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ids8w"]
+size = Vector2(1081, 1057)
+
+[node name="Campones" instance=ExtResource("1_wr3fk")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_065ux")
+
+[node name="Collision" parent="." index="2"]
+position = Vector2(-5.5, 23.5)
+shape = SubResource("RectangleShape2D_7b5ij")
+
+[node name="Collision" parent="Detection_Body" index="0"]
+position = Vector2(-29.5, -12.5)
+shape = SubResource("RectangleShape2D_ids8w")
+debug_color = Color(0.863095, 0.104155, 0.82834, 0.42)

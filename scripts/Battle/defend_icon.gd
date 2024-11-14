@@ -2,21 +2,12 @@ extends TextureRect
 
 var can_click:bool
 
-var position_default:Vector2 
-var global_position_default:Vector2 
-
 var nome = "defender()"
 
-func _ready() -> void:
-	position_default = position
-
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_pressed("left_mouse") and can_click:
-		global_position = get_global_mouse_position() - Vector2(130,16)
-	elif !can_click:
-		position = position_default
-		global_position = global_position_default
-	
+		get_parent().check_icon(nome)
+
 func _on_mouse_entered() -> void:
 	can_click = true
 	var attack_tween:Tween = create_tween()

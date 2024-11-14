@@ -15,6 +15,7 @@ font_size = 33
 font_color = Color(0, 0, 0, 1)
 
 [node name="Battle" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_c4w7k")
 
 [node name="Background" type="TextureRect" parent="."]

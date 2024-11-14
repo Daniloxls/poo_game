@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal BattleStart
+
 # 'player_script' script que contem todas funções do personagem do jogador
 # 'direction' a direção que o personagem se move
 var direction : Vector2 = Vector2()
@@ -190,3 +192,6 @@ func set_animation(animation, direction):
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
+
+func battle_started():
+	BattleStart.emit()

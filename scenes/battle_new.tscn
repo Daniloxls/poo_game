@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/battle_new.gd" id="1_4hpk7"]
 [ext_resource type="FontFile" uid="uid://vw38fsht6n3" path="res://assets/fonts/Juicy Fills.ttf" id="1_llx0n"]
+[ext_resource type="Texture2D" uid="uid://bpt4ajusuebxf" path="res://assets/battle/background/placeholder/battleback1.png" id="2_01mp7"]
 [ext_resource type="FontFile" uid="uid://ds5sieh3ou4ld" path="res://assets/fonts/BreatheFireIii-PKLOB.ttf" id="2_j0mbj"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_orhsh"]
 [ext_resource type="Texture2D" uid="uid://cs2ommg77bsa" path="res://assets/battle/atacar_icone.png" id="3_bavw4"]
@@ -12,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://80e51vpmvf5k" path="res://assets/battle/fugir_icone.png" id="5_vky6y"]
 [ext_resource type="Texture2D" uid="uid://jm530w1tn5vr" path="res://assets/battle/item_icone.png" id="6_mxyqn"]
 [ext_resource type="Script" path="res://scripts/Battle/defend_icon.gd" id="8_vjrb5"]
+[ext_resource type="Script" path="res://scripts/Battle/run_icon.gd" id="11_gs4f6"]
+[ext_resource type="Script" path="res://scripts/Battle/item_icon.gd" id="13_fx7s5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksw8u"]
 bg_color = Color(0, 0.13248, 0.355747, 0.870588)
@@ -24,17 +27,17 @@ border_width_bottom = 2
 bg_color = Color(0, 0.133333, 0.356863, 0.870588)
 border_width_right = 2
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cjoub"]
-size = Vector2(518, 129)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bm06r"]
-size = Vector2(261, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j1que"]
-size = Vector2(260, 32)
-
 [node name="Battle" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_4hpk7")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_01mp7")
 
 [node name="Margin" type="MarginContainer" parent="."]
 offset_left = 14.0
@@ -110,15 +113,7 @@ theme_override_fonts/font = ExtResource("2_orhsh")
 theme_override_font_sizes/font_size = 25
 text = "void ação(){
 
-
 }"
-
-[node name="Detection_icon" type="Area2D" parent="Margin/Battle_Interface/Battle_Panel/Code" groups=["Detection_Icon"]]
-visible = false
-
-[node name="Collision" type="CollisionShape2D" parent="Margin/Battle_Interface/Battle_Panel/Code/Detection_icon"]
-position = Vector2(261, 65.5)
-shape = SubResource("RectangleShape2D_cjoub")
 
 [node name="Movement_Panel" type="Panel" parent="Margin/Battle_Interface"]
 layout_mode = 2
@@ -161,33 +156,23 @@ texture = ExtResource("3_bavw4")
 expand_mode = 5
 script = ExtResource("4_wm4nn")
 
-[node name="Detection_Code" type="Area2D" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots/Attack" groups=["Icon_Movement"]]
-
-[node name="Collision" type="CollisionShape2D" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots/Attack/Detection_Code"]
-position = Vector2(129.5, 17)
-shape = SubResource("RectangleShape2D_bm06r")
-
 [node name="Defend" type="TextureRect" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots" groups=["Icon"]]
 layout_mode = 2
 texture = ExtResource("4_bgx7f")
 expand_mode = 5
 script = ExtResource("8_vjrb5")
 
-[node name="Detection_Code" type="Area2D" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots/Defend" groups=["Icon_Movement"]]
-
-[node name="Collision" type="CollisionShape2D" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots/Defend/Detection_Code"]
-position = Vector2(130, 17)
-shape = SubResource("RectangleShape2D_j1que")
-
-[node name="Run" type="TextureRect" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots"]
+[node name="Run" type="TextureRect" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots" groups=["Icon"]]
 layout_mode = 2
 texture = ExtResource("5_vky6y")
 expand_mode = 5
+script = ExtResource("11_gs4f6")
 
-[node name="Item" type="TextureRect" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots"]
+[node name="Item" type="TextureRect" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots" groups=["Icon"]]
 layout_mode = 2
 texture = ExtResource("6_mxyqn")
 expand_mode = 5
+script = ExtResource("13_fx7s5")
 
 [node name="Enemies_Panel" type="Panel" parent="Margin/Battle_Interface"]
 layout_mode = 2
@@ -249,8 +234,18 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_j0mbj")
 text = "Inimigo5"
 
-[connection signal="area_entered" from="Margin/Battle_Interface/Battle_Panel/Code/Detection_icon" to="Margin/Battle_Interface/Battle_Panel/Code" method="_on_detection_icon_area_entered"]
+[node name="Player" type="Sprite2D" parent="."]
+position = Vector2(1032, 265)
+
+[node name="Enemy" type="Sprite2D" parent="."]
+position = Vector2(139, 265)
+scale = Vector2(0.3, 0.3)
+
 [connection signal="mouse_entered" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Attack" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Attack" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Attack" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Attack" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Defend" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Defend" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Defend" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Defend" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Run" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Run" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Run" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Run" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Item" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Item" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Margin/Battle_Interface/Movement_Panel/Action_Slots/Item" to="Margin/Battle_Interface/Movement_Panel/Action_Slots/Item" method="_on_mouse_exited"]

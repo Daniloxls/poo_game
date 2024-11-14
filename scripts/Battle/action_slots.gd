@@ -5,6 +5,8 @@ extends VBoxContainer
 @onready var run_icon:TextureRect = get_node("Run")
 @onready var item_icon:TextureRect = get_node("Item")
 
+@onready var code = $"../../Battle_Panel/Code"
+
 var can_click:bool
 
 var movement_icon:TextureRect
@@ -12,6 +14,10 @@ var movement_icon:TextureRect
 func check_icon(icon_name:String)->void:
 	match icon_name:
 		"atacar()":
-			defend_icon.can_click = false
+			code.update_text(icon_name)
 		"defender()":
-			attack_icon.can_click = false
+			code.update_text(icon_name)
+		"fugir()":
+			code.update_text(icon_name)
+		"item()":
+			code.update_text(icon_name)

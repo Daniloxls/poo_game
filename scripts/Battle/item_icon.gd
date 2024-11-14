@@ -2,12 +2,12 @@ extends TextureRect
 
 var can_click:bool
 
-var nome = "atacar()"
+var nome = "item()"
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_pressed("left_mouse") and can_click:
 		get_parent().check_icon(nome)
-	
+
 func _on_mouse_entered() -> void:
 	can_click = true
 	var attack_tween:Tween = create_tween()

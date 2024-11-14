@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://mkr0b1h1h45h"]
+[gd_scene load_steps=29 format=3 uid="uid://mkr0b1h1h45h"]
 
 [ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="1_c6p51"]
+[ext_resource type="Script" path="res://scripts/forest.gd" id="1_g7q0x"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="2_saptf"]
 [ext_resource type="Texture2D" uid="uid://dgievkln27ypp" path="res://assets/tileset/temp.png" id="2_yj1nj"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="3_lrpyg"]
@@ -12,10 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://b7xixqgo4jsk6" path="res://assets/tileset/biblioteca.png" id="9_oyrfe"]
 [ext_resource type="Script" path="res://scenes/forest/scripts/alchemist.gd" id="10_37g44"]
 [ext_resource type="Texture2D" uid="uid://cvpk20t0j6hfo" path="res://assets/characters/ark_olgo.png" id="11_4blie"]
+[ext_resource type="PackedScene" uid="uid://bw3lqy8xuvmo3" path="res://scenes/Enemies/campones.tscn" id="11_s4ko7"]
 [ext_resource type="PackedScene" uid="uid://bqljal0ipsebg" path="res://scenes/forest/bush.tscn" id="13_tg1i1"]
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/interact.tscn" id="14_yr1ki"]
 [ext_resource type="Script" path="res://scenes/forest/scripts/arbusto_area.gd" id="15_va7ay"]
 [ext_resource type="Texture2D" uid="uid://cyemc2xvcwbf7" path="res://assets/props/down_key_on.png" id="16_wjtw1"]
+[ext_resource type="PackedScene" uid="uid://brvkvtanp7g0o" path="res://scenes/battle_new.tscn" id="17_ac2ua"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2frhd"]
 texture = ExtResource("4_tvv56")
@@ -276,14 +279,12 @@ animations = [{
 [node name="Forest" type="Node2D"]
 y_sort_enabled = true
 position = Vector2(30, -150)
+script = ExtResource("1_g7q0x")
 metadata/_edit_horizontal_guides_ = [-35630.0]
 
 [node name="Codebox" parent="." instance=ExtResource("1_c6p51")]
 
 [node name="Textbox" parent="." instance=ExtResource("2_saptf")]
-
-[node name="NPC2" parent="." groups=["Enemy"] instance=ExtResource("9_at5tk")]
-position = Vector2(-3216, -7062)
 
 [node name="Player" parent="." instance=ExtResource("3_lrpyg")]
 z_index = 1
@@ -325,6 +326,10 @@ position = Vector2(-9136, -12200)
 script = ExtResource("10_37g44")
 SPRITE = SubResource("SpriteFrames_pjbtw")
 
+[node name="Campones" parent="." instance=ExtResource("11_s4ko7")]
+z_index = 1
+position = Vector2(-1018, -5411)
+
 [node name="Bushes" type="Node2D" parent="."]
 z_index = 1
 position = Vector2(-7210, -13553)
@@ -339,6 +344,9 @@ texture = ExtResource("16_wjtw1")
 
 [node name="Bush" parent="Bushes" instance=ExtResource("13_tg1i1")]
 position = Vector2(-157, 0)
+
+[node name="Battle" parent="." instance=ExtResource("17_ac2ua")]
+visible = false
 
 [connection signal="choise_closed" from="Textbox" to="NPC" method="_on_textbox_choise_closed"]
 [connection signal="text_finish" from="Textbox" to="NPC" method="_on_textbox_text_finish"]
