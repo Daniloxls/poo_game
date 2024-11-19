@@ -11,11 +11,11 @@ signal battle_lost
 
 # Função que é chamada quando esse nó entra na arvore de cena
 func _ready():
-	pass # Replace with function body.
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	pass
 
 # Chamada para trocar o nivel, antes de usar passar instance para como argumento da
@@ -34,10 +34,8 @@ func change_level(instance, entrance : int = 0):
 	inventory.call_deferred("set_player", instance.find_child("Player"))
 	battle.call_deferred("set_player", instance.find_child("Player"))
 
-
 func _on_battle_battle_lost():
 	battle_lost.emit()
-
 
 func _on_battle_battle_won():
 	battle_won.emit()

@@ -10,6 +10,8 @@ extends Node2D
 var entrances  = [Vector2(-12575,6356)]
 
 func _ready():
+	player.current_state = States.Player_State.FREE
+	player.get_state()
 	#textbox.queue_char_text(["Vejo que você estava explorando e acabou caindo aqui por aquela rachadura.",
 	#					"Deixe me ver, acho que posso te ajudar a sair daqui, siga para a direita e minha sala não deve ser muito distante de onde você está."],
 	#					["res://assets/portraits/silhueta.png",

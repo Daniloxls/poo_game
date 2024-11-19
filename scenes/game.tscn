@@ -12,7 +12,6 @@
 script = ExtResource("1_irk2k")
 
 [node name="Battle" parent="." instance=ExtResource("2_j13bi")]
-visible = false
 
 [node name="Inventory" parent="." instance=ExtResource("1_5i5st")]
 layer = 2

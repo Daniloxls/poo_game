@@ -113,8 +113,8 @@ func display_choice(text, choices):
 	tween.tween_property(label, "visible_ratio",1.0, len(next_text) * CHAR_READ_RATE)
 	label.text = next_text
 	change_state(State.READING)
-	if player.get_state() == Player.State.FREE:
-		player.set_state(Player.State.ON_DIALOGUE)
+	if player.get_state() == States.Player_State.FREE:
+		player.set_state(States.Player_State.ON_DIALOGUE)
 	show_textbox()
 	portrait.hide()
 	label.visible_ratio = 0.0
@@ -148,8 +148,10 @@ func display_text():
 	# enquanto o tween não acabar ou o player não apertar 'Z' ela fica no estado Reading
 	# e o player fica parado enquanto estiver em um dialogo
 	change_state(State.READING)
-	if player.get_state() == Player.State.FREE:
-		player.set_state(Player.State.ON_DIALOGUE)
+	if player.current_state == States.Player_State.FREE and player.current_state != States.Player_State.ON_INTERFACE:
+		print("entrou no diálogo")
+		player.current_state = States.Player_State.ON_DIALOGUE
+		print(player.current_state)
 	show_textbox()
 	#Esconde o texto e faz o tween transicionar ele até ficar todo mostrado
 	label.visible_ratio = 0.0
@@ -209,11 +211,13 @@ func _process(delta):
 					display_text()
 				else:
 					change_state(State.READY)
-					if player.get_state() == Player.State.ON_DIALOGUE:
-						player.set_state(Player.State.FREE)
+					if player.get_state() == States.Player_State.ON_DIALOGUE:
+						player.set_state(States.Player_State.FREE)
 					textbox_container.hide()
 					portrait.hide()
 					text_finish.emit()
+					#if player.current_state != Player.State.ON_INTERFACE and player.current_state != Player.State.ON_SCENE:
+						#player.current_state = Player.State.FREE
 		#Se o estado é Choice o jogador pode mover o cursor para cima ou para baixo
 		#Apertando 'Z' o jogador escolhe, então a caixa de texto fecha
 		# e o sinal de escolha é emitido
@@ -230,8 +234,8 @@ func _process(delta):
 				set_cursor_pos(CURSOR_POSITION + Vector2(0, 36) * choice_id)
 			if Input.is_action_just_pressed("interact"):
 				change_state(State.READY)
-				if player.get_state() == Player.State.ON_DIALOGUE:
-					player.set_state(Player.State.FREE)
+				if player.get_state() == States.Player_State.ON_DIALOGUE:
+					player.set_state(States.Player_State.FREE)
 				textbox_container.hide()
 				choice_container.hide()
 				set_cursor_pos(CURSOR_POSITION)

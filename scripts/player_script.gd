@@ -16,18 +16,11 @@ var direction : Vector2 = Vector2()
 
 @onready var black_screen = $Camera2D/BlackScreen
 
-
 @onready var textbox = get_tree().get_current_scene().get_node("Textbox")
 @onready var codebox = get_tree().get_current_scene().get_node("Codebox")
 @onready var inventory = get_node("../../../Inventory")
 
 # Estado que o jogador está, em um dialogo, cena ou com uma interface aberta
-enum State{
-	FREE,
-	ON_DIALOGUE,
-	ON_INTERFACE,
-	ON_SCENE
-}
 
 # Direção para onde o player está olhando
 enum Direction{
@@ -42,7 +35,7 @@ enum Movement{
 	IDLE
 }
 
-var current_state = State.FREE
+var current_state 
 var current_direction = Direction.DOWN
 var current_movement = Movement.IDLE
 var free_to_move = true
@@ -56,7 +49,8 @@ func read_input():
 	# Muda a animação e acelera o jogador na direção que está sendo apertada
 	# Tambem liga a caixa de interação respectiva
 	velocity = Vector2()
-	if current_state == State.FREE:
+	
+	if current_state == States.Player_State.FREE:
 		if Input.is_action_pressed("up"):
 			velocity.y -= 1
 			direction = Vector2(0, -1)
@@ -114,7 +108,7 @@ func read_input():
 	move_and_slide()
 	
 	# Interação
-	if current_state == State.FREE:
+	if current_state == States.Player_State.FREE:
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas() and textbox.get_state() == "Ready":
@@ -126,20 +120,19 @@ func read_input():
 
 func _physics_process(_delta):
 	read_input()
+	print(current_state)
 
 func set_movement(move):
 	free_to_move = move
-	
+
 func get_state():
 	return current_state
-	
+
 func set_state(new_state):
-	print(new_state)
-	current_direction = new_state
+	current_state = new_state
 	
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
 
 func battle_started():
 	BattleStart.emit()
-

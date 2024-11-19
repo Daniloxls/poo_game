@@ -12,7 +12,8 @@ enum State{
 var error_count = 0
 
 func interaction():
-	player.set_state(Player.State.ON_INTERFACE)
+	if player.current_state != States.Player_State.ON_DIALOGUE and player.current_state != States.Player_State.ON_SCENE:
+		player.current_state = States.Player_State.ON_INTERFACE
 	terminal_interface.show()
 	match current_state:
 		State.BEFORE_SUDO:
@@ -20,7 +21,6 @@ func interaction():
 		State.SUDO:
 			textbox.queue_char_text(["Pelo que me lembro, a senha era senha123."], ["res://assets/portraits/silhueta.png"])
 		
-
 
 func sudo_scene():
 	player.set_movement(false)
@@ -34,7 +34,8 @@ func sudo_scene():
 	tween.tween_property(player_sprite, "modulate", Color.WHITE, 1).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(player.set_movement.bind(true))
 	tween.tween_callback(player.set_sudo.bind(true))
-	
+	tween.tween_callback(player.set_state.bind(States.Player_State.FREE))
+	#player.current_state = States.Player_State.FREE
 
 func _on_terminal_interface_sudo_typed():
 	current_state = State.SUDO
@@ -52,7 +53,6 @@ func _on_terminal_interface_command_missed():
 	error_count += 1
 	if error_count > 3:
 		textbox.queue_char_text(["Talvez você não tenha me ouvido... digite sudo nesse terminal e aperte enter"], ["res://assets/portraits/silhueta.png"])
-
 
 func _on_terminal_interface_password_missed():
 	error_count += 1
