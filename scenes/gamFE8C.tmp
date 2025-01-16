@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://scenes/tela_titulo.tscn" id="4_1yu0a"]
 [ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://scenes/new_codebox.tscn" id="4_4vmip"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="5_fvtp8"]
-[ext_resource type="PackedScene" uid="uid://mkr0b1h1h45h" path="res://scenes/forest/forest.tscn" id="7_40cqq"]
+[ext_resource type="PackedScene" uid="uid://mkr0b1h1h45h" path="res://scenes/forest/forest.tscn" id="6_ogjhg"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_irk2k")
@@ -24,7 +24,7 @@ visible = false
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="Forest" parent="Level" instance=ExtResource("7_40cqq")]
+[node name="Forest" parent="Level" instance=ExtResource("6_ogjhg")]
 
 [node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
 

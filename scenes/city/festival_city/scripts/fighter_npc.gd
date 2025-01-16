@@ -40,16 +40,16 @@ func get_portraits():
 func set_portraits(new_portraits):
 	portraits = new_portraits
 	
-func set_codigo(new_nome, new_codigo):
-	nome = new_nome
-	codigo = new_codigo
+#func set_codigo(new_nome, new_codigo):
+	#nome = new_nome
+	#codigo = new_codigo
 
 func update_codigo(new_codigo):
 	codigo = new_codigo
 	
-func depure():
-	depuring = true
-	return codigo
+#func depure():
+	#depuring = true
+	#return codigo
 
 
 func interaction():

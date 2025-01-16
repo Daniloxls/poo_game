@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://brvkvtanp7g0o"]
+[gd_scene load_steps=19 format=3 uid="uid://brvkvtanp7g0o"]
 
 [ext_resource type="Script" path="res://scripts/battle_new.gd" id="1_4hpk7"]
 [ext_resource type="FontFile" uid="uid://vw38fsht6n3" path="res://assets/fonts/Juicy Fills.ttf" id="1_llx0n"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/Battle/action_slots.gd" id="5_uvcl2"]
 [ext_resource type="Texture2D" uid="uid://80e51vpmvf5k" path="res://assets/battle/fugir_icone.png" id="5_vky6y"]
 [ext_resource type="Texture2D" uid="uid://jm530w1tn5vr" path="res://assets/battle/item_icone.png" id="6_mxyqn"]
+[ext_resource type="AudioStream" uid="uid://cjq8txvu852xt" path="res://assets/sounds/interface/click5.mp3" id="7_6hwgs"]
 [ext_resource type="Script" path="res://scripts/Battle/defend_icon.gd" id="8_vjrb5"]
 [ext_resource type="Script" path="res://scripts/Battle/run_icon.gd" id="11_gs4f6"]
 [ext_resource type="Script" path="res://scripts/Battle/item_icon.gd" id="13_fx7s5"]
@@ -149,6 +150,9 @@ offset_right = 266.0
 offset_bottom = 206.0
 theme_override_constants/separation = 10
 script = ExtResource("5_uvcl2")
+
+[node name="Click_Button" type="AudioStreamPlayer" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots"]
+stream = ExtResource("7_6hwgs")
 
 [node name="Attack" type="TextureRect" parent="Margin/Battle_Interface/Movement_Panel/Action_Slots" groups=["Icon"]]
 layout_mode = 2

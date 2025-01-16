@@ -1,5 +1,6 @@
 extends VBoxContainer
 
+@onready var audio_click:AudioStreamPlayer = get_node("Click_Button")
 @onready var attack_icon:TextureRect = get_node("Attack")
 @onready var defend_icon:TextureRect = get_node("Defend")
 @onready var run_icon:TextureRect = get_node("Run")
@@ -12,6 +13,7 @@ var can_click:bool
 var movement_icon:TextureRect
 
 func check_icon(icon_name:String)->void:
+	audio_click.play()
 	match icon_name:
 		"atacar()":
 			code.update_text(icon_name)

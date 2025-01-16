@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://clr1pqi3mxavn"]
+[gd_scene load_steps=47 format=3 uid="uid://clr1pqi3mxavn"]
 
 [ext_resource type="Script" path="res://scenes/inventory/newinventory.gd" id="1_bnrs2"]
 [ext_resource type="Script" path="res://scripts/CharContainer.gd" id="2_wngpq"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://c7g1twlxyqpaf" path="res://assets/inventory/r_hand_icon.png" id="22_ypr8a"]
 [ext_resource type="Texture2D" uid="uid://bpmjljchkk3fu" path="res://assets/inventory/acessory_icon.png" id="23_tp1sq"]
 [ext_resource type="Texture2D" uid="uid://bsxpxv50u62xl" path="res://assets/inventory/arrow.png" id="25_lwknu"]
+[ext_resource type="AudioStream" uid="uid://bdx12agaryr3k" path="res://assets/sounds/interface/click7.mp3" id="29_qpj5l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7besx"]
 bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
@@ -154,7 +155,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_umvl5")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_qr4wc")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
-current_tab = 6
+current_tab = 1
 tab_focus_mode = 0
 
 [node name="Personagens" type="MarginContainer" parent="TabContainer"]
@@ -643,7 +644,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_117c1")
 theme_override_styles/normal = SubResource("StyleBoxFlat_fhco7")
 
 [node name="a" type="Label" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -808,6 +808,7 @@ layout_mode = 2
 metadata/_tab_index = 5
 
 [node name="PersonagemInfo" type="MarginContainer" parent="TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
@@ -1129,6 +1130,9 @@ script = ExtResource("18_fypia")
 
 [node name="Kath" parent="Party" instance=ExtResource("13_n2m06")]
 position = Vector2(7, 185)
+
+[node name="Audio_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("29_qpj5l")
 
 [connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button2" to="." method="_on_button_2_pressed"]
