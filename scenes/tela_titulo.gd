@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var audio: AudioStreamPlayer = get_node("Audio_Start")
 @onready var player = get_node("../Level").get_child(0).find_child("Player")
 @onready var music = get_node("../AudioPlayer")
 @onready var tela = $CanvasLayer
@@ -15,8 +16,10 @@ func _process(delta):
 
 
 func _on_button_pressed():
+	
 	player.set_movement(true)
 	tela.hide()
+	audio.play()
 	#music.set_stream(load("res://assets/bgm/TremLoadingloopl.mp3"))
 	#music.set_volume_db(-24)
 	#music.play()

@@ -14,7 +14,8 @@ extends Node2D
 @onready var player = get_node("../Player")
 @onready var codebox = get_tree().get_current_scene().get_node("Codebox")
 @onready var textbox = get_tree().get_current_scene().get_node("Textbox")
-@onready var menu_button = $MenuButton
+@onready var menu_button = get_node("MenuButton")
+
 var popup
 # O nome que aparece na caixa de código.
 var nome = ""
@@ -97,4 +98,3 @@ func get_nome():
 
 func _on_menu_button_about_to_popup():
 	popup.set_position(get_viewport().get_mouse_position())
-	print(get_viewport().get_mouse_position())

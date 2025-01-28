@@ -1,4 +1,6 @@
+
 [gd_scene load_steps=35 format=3 uid="uid://clr1pqi3mxavn"]
+
 
 [ext_resource type="Script" path="res://scenes/inventory/newinventory.gd" id="1_bnrs2"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="5_nextx"]
@@ -23,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://c7g1twlxyqpaf" path="res://assets/inventory/r_hand_icon.png" id="22_ypr8a"]
 [ext_resource type="Texture2D" uid="uid://bpmjljchkk3fu" path="res://assets/inventory/acessory_icon.png" id="23_tp1sq"]
 [ext_resource type="Texture2D" uid="uid://bsxpxv50u62xl" path="res://assets/inventory/arrow.png" id="25_lwknu"]
+[ext_resource type="AudioStream" uid="uid://bdx12agaryr3k" path="res://assets/sounds/interface/click7.mp3" id="29_qpj5l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7besx"]
 bg_color = Color(0.0823529, 0.0823529, 0.0823529, 1)
@@ -123,7 +126,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_umvl5")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_qr4wc")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
+
 current_tab = 0
+
 tab_focus_mode = 0
 
 [node name="Personagens" type="MarginContainer" parent="TabContainer"]
@@ -140,7 +145,6 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 22
 
 [node name="a" type="Label" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -629,6 +633,12 @@ script = ExtResource("18_fypia")
 [node name="Kath" parent="Party" instance=ExtResource("13_n2m06")]
 position = Vector2(7, 185)
 
+
+[node name="Audio_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("29_qpj5l")
+
+[connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TabContainer/Personagens/PartyButtons/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="tab_changed" from="TabContainer/PersonagemInfo/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HBFContainer/HeadSlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_head_slot_pressed"]
 [connection signal="pressed" from="TabContainer/PersonagemInfo/TabContainer/Equipamento/VBoxContainer/CharInfoContainer/HBFContainer/BodySlot" to="TabContainer/PersonagemInfo/TabContainer/Equipamento" method="_on_body_slot_pressed"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://jsptyuvrdvya"]
+[gd_scene load_steps=10 format=3 uid="uid://jsptyuvrdvya"]
 
 [ext_resource type="Script" path="res://scenes/tela_titulo.gd" id="1_3oi7u"]
 [ext_resource type="Texture2D" uid="uid://cj3q3vpn8gluf" path="res://assets/screens/menu_background.png" id="1_cj47b"]
 [ext_resource type="FontFile" uid="uid://ds5sieh3ou4ld" path="res://assets/fonts/BreatheFireIii-PKLOB.ttf" id="2_h3c2x"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_8vrf5"]
+[ext_resource type="AudioStream" uid="uid://bsyd1j81isrl7" path="res://assets/sounds/interface/snap.mp3" id="5_esjtm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_sssge"]
 font = ExtResource("2_h3c2x")
@@ -47,7 +48,6 @@ font_size = 42
 script = ExtResource("1_3oi7u")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 offset_right = 1154.0
@@ -113,5 +113,8 @@ offset_right = 91.0
 offset_bottom = 651.0
 text = "v0.1"
 label_settings = SubResource("LabelSettings_f6gtn")
+
+[node name="Audio_Start" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_esjtm")
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

@@ -1,5 +1,6 @@
 extends CanvasLayer
 
+@onready var audio_click:AudioStreamPlayer = get_node("Audio_Click")
 # invetory é o script da tela principal do inventario
 # 'party' é o nó que guarda todos os personagens como filhos
 @onready var party = $Party
@@ -100,11 +101,19 @@ func set_player(player_node):
 
 
 func _on_button_pressed():
+	audio_click.play()
 	tab_container.set_tab_hidden(6, false)
 	tab_container.set_current_tab(6)
 	var personagem = party.get_child(0)
 	char_info.set_personagem(personagem)
-	
+
+
+func _on_button_2_pressed():
+	audio_click.play()
+	tab_container.set_tab_hidden(6, false)
+	tab_container.set_current_tab(6)
+	var personagem = party.get_child(1)
+	char_info.set_personagem(personagem)
 
 
 func _on_tab_container_tab_changed(tab):

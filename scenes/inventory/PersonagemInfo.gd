@@ -165,4 +165,3 @@ func set_personagem(personagem):
 	
 	code_label.push_color(Color("#ffffff"))
 	code_label.append_text("\n};")
-
