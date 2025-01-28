@@ -77,6 +77,6 @@ label_settings = SubResource("LabelSettings_18och")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_vlk2r")
-theme_override_styles/hover = SubResource("StyleBoxFlat_dy6eo")
 theme_override_styles/focus = SubResource("StyleBoxFlat_vlk2r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dy6eo")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vlk2r")

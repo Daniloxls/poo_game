@@ -120,8 +120,7 @@ func read_input():
 
 func _physics_process(_delta):
 	read_input()
-	print(current_state)
-
+	
 func set_movement(move):
 	free_to_move = move
 

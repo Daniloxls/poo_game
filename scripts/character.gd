@@ -13,6 +13,8 @@ signal health_change
 @onready var sprite = $Sprite
 # 'damage_text' dano que o personagem tomou aparece nessa label
 @onready var damage_text = $DamageText
+@onready var char_pic = $CharPic
+
 
 # Status de teste para o personagem
 var nome : String
@@ -150,6 +152,9 @@ func get_sprite():
 	var currentTexture: Texture2D = spriteFrames.get_frame_texture(animationName, frameIndex)
 	return currentTexture
 	
+func get_pic():
+	var pic = char_pic.get_texture()
+	return pic
 	
 func reset_position():
 	set_position(original_pos)
