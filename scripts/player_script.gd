@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-signal BattleStart
-
 # 'player_script' script que contem todas funções do personagem do jogador
 # 'direction' a direção que o personagem se move
 var direction : Vector2 = Vector2()
@@ -42,6 +40,7 @@ var free_to_move = true
 
 # event.monitorable faz com que ele possa ser visto pelos eventos
 func _ready():
+	
 	event.monitorable = true
 	
 func read_input():
@@ -112,6 +111,7 @@ func read_input():
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
 			if interact_box.get_overlapping_areas() and textbox.get_state() == "Ready":
+				print(interact_box.get_overlapping_areas()[0].get_parent())
 				interact_box.get_overlapping_areas()[0].get_parent().interaction()
 	if Input.is_action_just_pressed("exit"):
 		# Fechar inventario, codebox, qualquer inteface que esteja aberta
@@ -120,7 +120,6 @@ func read_input():
 
 func _physics_process(_delta):
 	read_input()
-	print(current_state)
 
 func set_movement(move):
 	free_to_move = move
@@ -133,6 +132,3 @@ func set_state(new_state):
 	
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
-
-func battle_started():
-	BattleStart.emit()

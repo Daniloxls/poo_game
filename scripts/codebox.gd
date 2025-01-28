@@ -264,7 +264,7 @@ func _process(delta):
 							else:
 								update_prop_text(cursor_dict[cursor_pos],true)
 					#A variavel int tambem é editada apertando para esquerda e direita
-					# direita aumenta o valor da variavel e esquerda diminui
+					# direita auta o valor da variavel e esquerda diminui
 					if "int" in cursor_dict[cursor_pos]:
 						if Input.is_action_just_pressed("right"):
 							update_prop_text(cursor_dict[cursor_pos],prop[cursor_dict[cursor_pos]]+1)

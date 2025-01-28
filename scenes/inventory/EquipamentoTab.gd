@@ -1,5 +1,7 @@
 extends MarginContainer
 
+@onready var audio_click:AudioStreamPlayer = get_parent().get_parent().get_parent().get_parent().get_node("Audio_Click")
+
 @onready var old_stats = $VBoxContainer/CharInfoContainer/OldStats
 @onready var character_sprite = $VBoxContainer/CharInfoContainer/CharacterSprite
 @onready var new_stats = $VBoxContainer/CharInfoContainer/NewStats
@@ -202,24 +204,28 @@ func add_item_buttons(equip_list : Array[EQUIP_ITEM]):
 
 
 func _on_head_slot_pressed():
+	audio_click.play()
 	for container in equip_container.get_children():
 		container.hide()
 	head_container.show()
 
 
 func _on_body_slot_pressed():
+	audio_click.play()
 	for container in equip_container.get_children():
 		container.hide()
 	body_container.show()
 
 
 func _on_feet_slot_pressed():
+	audio_click.play()
 	for container in equip_container.get_children():
 		container.hide()
 	feet_container.show()
 
 
 func _on_l_hand_slot_pressed():
+	audio_click.play()
 	left_hand = true
 	for container in equip_container.get_children():
 		container.hide()
@@ -227,6 +233,7 @@ func _on_l_hand_slot_pressed():
 
 
 func _on_r_hand_slot_pressed():
+	audio_click.play()
 	left_hand = false
 	for container in equip_container.get_children():
 		container.hide()
@@ -234,6 +241,7 @@ func _on_r_hand_slot_pressed():
 
 
 func _on_acessory_slot_pressed():
+	audio_click.play()
 	for container in equip_container.get_children():
 		container.hide()
 	acessory_container.show()

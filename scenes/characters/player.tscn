@@ -460,7 +460,7 @@ script = ExtResource("1_g6qgi")
 
 [node name="Collision_interact" type="Area2D" parent="."]
 position = Vector2(3, 0)
-collision_mask = 2147483648
+collision_mask = 2147483649
 script = ExtResource("2_nrydn")
 
 [node name="Box_down" type="CollisionShape2D" parent="Collision_interact"]
@@ -506,6 +506,8 @@ position = Vector2(81.875, 134.125)
 shape = SubResource("RectangleShape2D_yxnbv")
 
 [node name="Detection_area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
 
 [node name="Collision" type="CollisionShape2D" parent="Detection_area"]
 position = Vector2(98, 23)
