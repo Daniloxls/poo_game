@@ -9,5 +9,5 @@ ITEM_NAME = "Poção"
 QUANTITY = 1
 ITEM_ICON = ExtResource("1_pcvpv")
 ITEM_TEXT = "Poção das boas"
-SELECTION = 0
-PRICE = 0
+SELECTION = null
+PRICE = null

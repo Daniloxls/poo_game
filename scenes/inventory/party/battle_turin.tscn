@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://mje13m0bdoj2"]
+[gd_scene load_steps=20 format=3 uid="uid://mje13m0bdoj2"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_w8k2v"]
 [ext_resource type="Texture2D" uid="uid://6xm3lmnjv3wm" path="res://assets/battle/character_sprites/turin_batalha.png" id="2_i30wg"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_51ltb"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_s5wn0"]
 [ext_resource type="Script" path="res://scripts/DamageText.gd" id="7_5hj8d"]
+[ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/characters/legacy/Turin.png" id="8_jrt78"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dve58"]
 atlas = ExtResource("2_i30wg")
@@ -198,3 +199,9 @@ text = "9545"
 label_settings = SubResource("LabelSettings_ly8eg")
 horizontal_alignment = 1
 script = ExtResource("7_5hj8d")
+
+[node name="CharPic" type="TextureRect" parent="."]
+visible = false
+texture = ExtResource("8_jrt78")
+expand_mode = 3
+stretch_mode = 4

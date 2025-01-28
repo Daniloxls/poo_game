@@ -34,3 +34,7 @@ func get_item_text():
 
 func get_selection():
 	return SELECTION
+
+func use():
+	pass
+	
