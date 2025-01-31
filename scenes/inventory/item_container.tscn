@@ -54,7 +54,7 @@ layout_mode = 2
 text = "nome"
 label_settings = ExtResource("3_vk6u7")
 vertical_alignment = 3
-text_overrun_behavior = 1
+text_overrun_behavior = 3
 
 [node name="x" type="Label" parent="ItemContainer"]
 layout_mode = 2

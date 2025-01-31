@@ -17,7 +17,7 @@ func _process(delta):
 
 func _on_button_pressed():
 	
-	player.set_movement(true)
+	player.set_state(States.Player_State.FREE)
 	tela.hide()
 	audio.play()
 	#music.set_stream(load("res://assets/bgm/TremLoadingloopl.mp3"))

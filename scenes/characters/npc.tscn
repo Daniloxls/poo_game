@@ -1,18 +1,24 @@
-[gd_scene load_steps=32 format=3 uid="uid://bdpjpq4yd4vic"]
+[gd_scene load_steps=36 format=3 uid="uid://bdpjpq4yd4vic"]
 
 [ext_resource type="Script" path="res://scripts/npc_script.gd" id="1_15wk0"]
 [ext_resource type="Texture2D" uid="uid://c7jypxvtwe62e" path="res://assets/characters/kath_spritesheet.png" id="2_8odfy"]
 [ext_resource type="Texture2D" uid="uid://rk6lnbyog2si" path="res://assets/characters/cabaretier.png" id="2_g18s3"]
+[ext_resource type="Texture2D" uid="uid://crswlvrnaxb7j" path="res://assets/characters/spritesheet.png" id="2_qwa3k"]
 [ext_resource type="Texture2D" uid="uid://b0wclf10aqbt0" path="res://assets/characters/campones_2.png" id="3_l5ufi"]
 [ext_resource type="Texture2D" uid="uid://dfe5s4l7q3aya" path="res://assets/characters/campones_3.png" id="4_olrte"]
 [ext_resource type="Texture2D" uid="uid://bywmw171rf5yg" path="res://assets/characters/campones_4.png" id="5_hrkgu"]
 [ext_resource type="Texture2D" uid="uid://dwdstkmrqlhlw" path="res://assets/characters/campones_5.png" id="6_idiqo"]
 [ext_resource type="Texture2D" uid="uid://cimue5lfs3aol" path="res://assets/characters/kid.png" id="7_jve5i"]
 [ext_resource type="Texture2D" uid="uid://brbpuiij7ay51" path="res://assets/characters/dorjas.png" id="8_kk6ku"]
+[ext_resource type="Texture2D" uid="uid://cy83m4onprq8e" path="res://assets/characters/cmdzinho_afogado.png" id="8_qtami"]
 [ext_resource type="Texture2D" uid="uid://casvtgfky4hy4" path="res://assets/characters/lutador.png" id="9_o8e25"]
 [ext_resource type="Texture2D" uid="uid://bbupfssixvh7o" path="res://assets/characters/veio_aprendiz.png" id="11_g507i"]
 [ext_resource type="Texture2D" uid="uid://gw5y81lv31tr" path="res://assets/characters/old_man.png" id="12_6cjwt"]
 [ext_resource type="Texture2D" uid="uid://kg5b1hyew2f5" path="res://assets/characters/snake_lady.png" id="13_gihbu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mytv"]
+atlas = ExtResource("2_qwa3k")
+region = Rect2(0, 0, 790, 800)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xf7os"]
 atlas = ExtResource("2_g18s3")
@@ -37,6 +43,10 @@ region = Rect2(0, 0, 500, 700)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bno1p"]
 atlas = ExtResource("7_jve5i")
 region = Rect2(0, 0, 500, 700)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvcv0"]
+atlas = ExtResource("8_qtami")
+region = Rect2(0, 0, 600, 600)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h6jy8"]
 atlas = ExtResource("8_kk6ku")
@@ -76,6 +86,14 @@ region = Rect2(0, 0, 500, 700)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_blp0o"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mytv")
+}],
+"loop": true,
+"name": &"automato",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xf7os")
@@ -122,6 +140,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"child",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvcv0")
+}],
+"loop": true,
+"name": &"cmdzinho_afogado",
 "speed": 5.0
 }, {
 "frames": [{

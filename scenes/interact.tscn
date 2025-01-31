@@ -31,6 +31,7 @@ offset_top = -252.0
 offset_right = 252.0
 offset_bottom = 251.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_6i0ow")
+button_pressed = true
 button_mask = 2
 icon = SubResource("PlaceholderTexture2D_p8b8f")
 item_count = 1

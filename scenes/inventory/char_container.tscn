@@ -1,9 +1,38 @@
-[gd_scene load_steps=11 format=3 uid="uid://y4pu0orv8ihn"]
+[gd_scene load_steps=16 format=3 uid="uid://y4pu0orv8ihn"]
 
 [ext_resource type="Script" path="res://scripts/CharContainer.gd" id="1_4lylc"]
 [ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/characters/legacy/Turin.png" id="2_ccg7h"]
 [ext_resource type="LabelSettings" uid="uid://5mg8308marm6" path="res://assets/fonts/orange_console_text.tres" id="3_nmj1l"]
+[ext_resource type="Texture2D" uid="uid://bkkkd74vsqr0s" path="res://assets/effects/empty_frame.png" id="3_r8ea3"]
+[ext_resource type="Texture2D" uid="uid://vq281dkbiuu7" path="res://assets/effects/cura.png" id="3_vb4go"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="4_3uvvt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxgh4"]
+atlas = ExtResource("3_r8ea3")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejf8v"]
+atlas = ExtResource("3_vb4go")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_70ugv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxgh4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejf8v")
+}],
+"loop": true,
+"name": &"healing",
+"speed": 5.0
+}]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yph3h"]
 line_spacing = 12.45
@@ -48,6 +77,11 @@ layout_mode = 2
 texture = ExtResource("2_ccg7h")
 expand_mode = 3
 stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharContainer/CharPic"]
+position = Vector2(41.5, 55)
+scale = Vector2(0.234, 0.232)
+sprite_frames = SubResource("SpriteFrames_70ugv")
 
 [node name="CharInfo" type="VBoxContainer" parent="CharContainer"]
 layout_mode = 2

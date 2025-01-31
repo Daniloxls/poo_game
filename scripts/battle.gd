@@ -20,7 +20,6 @@ signal battle_lost
 
 @onready var game_audio = $"../AudioPlayer"
 
-@onready var textbox
 # 'menu' é todo o painel de baixo
 @onready var menu = $BattleMenu
 # 'cursor' esse é o cursor que serve para mirar ataques
@@ -33,6 +32,9 @@ signal battle_lost
 @onready var background = $Background
 
 @onready var audio_player = $AudioStreamPlayer
+
+@onready var textbox = $"../Textbox"
+
 # Os sprites começam fora da tela e entram com uma transição no começo da batalha
 # esses offsets são o quanto eles se movem para chegar nos seus lugares certos
 const ENEMY_POS_OFFSET = Vector2(128, 0)
@@ -86,7 +88,7 @@ var enemy_list
 func _ready():
 	#Como está sempre instanciada a batalha começa escondida
 	hide()
-	pass
+	textbox.connect("text_finish", _on_text_finish)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -121,7 +123,7 @@ func start_battle(enemy_group_path):
 	var enemy_group = load(enemy_group_path)
 	var instance = enemy_group.instantiate()
 	# Bloqueia movimento do jogador
-	player.set_movement(false)
+	player.set_state(States.Player_State.ON_BATTLE)
 	
 	game_audio.stop()
 	audio_player.play()
@@ -137,9 +139,6 @@ func start_battle(enemy_group_path):
 		enemy.connect("death", _on_enemy_death)
 	# aparece o cenario da batalha
 	show()
-	
-	textbox = get_node("../Level").get_child(0).find_child("Textbox")
-	textbox.text_finish.connect(_on_text_finish)
 	# cria um tween para fazer as transições de começo
 	var tween = create_tween()
 	in_battle = true
@@ -298,9 +297,6 @@ func read_input():
 # E salva elas nas listas apropiadas
 # Faz uns calculos com o tamanho do sprite e a posição onde ele está
 func get_entity_positions():
-	for enemy in enemy_list:
-		enemy_coords.append(enemy.get_cursor_pos()*4 + Vector2(enemies.get_position().x*1.4,enemies.get_position().y*0.8))
-		
 	for char in char_list:
 		character_coords.append(Vector2(party.get_position().x*0.94,party.get_position().y) + char.get_cursor_pos())
 		character_back_coords.append(Vector2(party.get_position().x*1.02,party.get_position().y) + char.get_turn_cursor_pos())

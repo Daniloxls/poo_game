@@ -12,7 +12,7 @@ func _ready():
 	texture = load("res://assets/gui/icons/computing.png")
 	set_tab_icon(4, texture)
 	set_tab_title(4,"")
-	texture = load("res://assets/gui/icons/monk-face.png")
+	texture = load("res://assets/gui/icons/classes.png")
 	set_tab_icon(6, texture)
 	set_tab_title(6,"")
 	

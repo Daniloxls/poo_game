@@ -1,0 +1,222 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl7womewnmnd"]
+
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_flc4q"]
+[ext_resource type="Texture2D" uid="uid://mcny5mfa0hca" path="res://assets/battle/background/tutorial.png" id="1_man6g"]
+[ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://scenes/enemy.tscn" id="2_uiy6r"]
+[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="3_uxcbj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r806y"]
+
+[node name="NewBattleUI" type="CanvasLayer"]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_right = 1156.0
+offset_bottom = 648.0
+texture = ExtResource("1_man6g")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Enemy" parent="." instance=ExtResource("2_uiy6r")]
+position = Vector2(246, 178)
+scale = Vector2(5, 5)
+
+[node name="Character" parent="." instance=ExtResource("3_uxcbj")]
+position = Vector2(1035, 333)
+scale = Vector2(6, 6)
+
+[node name="EnemiesPanel" type="TabContainer" parent="."]
+offset_left = 7.0
+offset_top = 432.0
+offset_right = 220.0
+offset_bottom = 621.0
+current_tab = 0
+
+[node name="Inimigos" type="MarginContainer" parent="EnemiesPanel"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="EnemiesPanel/Inimigos"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="EnemiesPanel/Inimigos/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="Button2" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 2
+"
+
+[node name="Button3" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 3"
+
+[node name="Button4" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 4
+"
+
+[node name="Button5" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 5
+"
+
+[node name="Button6" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="Button7" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="Button8" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="Button9" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="Button10" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="Button11" type="Button" parent="EnemiesPanel/Inimigos/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inimigo 1"
+
+[node name="CodePanel" type="TabContainer" parent="."]
+offset_left = 230.0
+offset_top = 483.0
+offset_right = 1927.0
+offset_bottom = 831.0
+scale = Vector2(0.4, 0.4)
+theme_override_fonts/font = ExtResource("1_flc4q")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_r806y")
+current_tab = 0
+
+[node name="public class Main" type="MarginContainer" parent="CodePanel"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CodePanel/public class Main"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CodePanel/public class Main/PanelContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = -20
+theme_override_fonts/normal_font = ExtResource("1_flc4q")
+theme_override_font_sizes/normal_font_size = 44
+bbcode_enabled = true
+text = "	
+	static void turno(){"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CodePanel/public class Main/PanelContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 21
+theme_override_fonts/normal_font = ExtResource("1_flc4q")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "
+	//Codigo da ação vem aqui
+"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="CodePanel/public class Main/PanelContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_flc4q")
+theme_override_font_sizes/normal_font_size = 44
+bbcode_enabled = true
+text = "
+	
+
+
+
+		}"
+
+[node name="CharactersPanel" type="TabContainer" parent="."]
+offset_left = 924.0
+offset_top = 451.0
+offset_right = 1137.0
+offset_bottom = 622.0
+tab_alignment = 2
+current_tab = 0
+
+[node name="Personagens" type="MarginContainer" parent="CharactersPanel"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CharactersPanel/Personagens"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CharactersPanel/Personagens/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharactersPanel/Personagens/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="CharactersPanel/Personagens/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Personagem 1"
+
+[node name="Button2" type="Button" parent="CharactersPanel/Personagens/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Personagem 2"
+
+[node name="Button3" type="Button" parent="CharactersPanel/Personagens/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Personagem 3"
+
+[node name="Button4" type="Button" parent="CharactersPanel/Personagens/PanelContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Personagem 4"
+
+[node name="BattleOptions" type="VBoxContainer" parent="."]
+offset_left = 792.0
+offset_top = 264.0
+offset_right = 1527.0
+offset_bottom = 896.0
+scale = Vector2(0.25, 0.25)
+theme_override_constants/separation = 49
+
+[node name="Button" type="Button" parent="BattleOptions"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_flc4q")
+theme_override_font_sizes/font_size = 100
+text = " Atacar⚔️ "
+
+[node name="Button2" type="Button" parent="BattleOptions"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("1_flc4q")
+theme_override_font_sizes/font_size = 100
+text = " Item🎒 "
+
+[node name="Button3" type="Button" parent="BattleOptions"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("1_flc4q")
+theme_override_font_sizes/font_size = 100
+text = "Função🔮"
+
+[node name="Button4" type="Button" parent="BattleOptions"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("1_flc4q")
+theme_override_font_sizes/font_size = 100
+text = " Fugir💨 "
+
+[node name="Control" type="Control" parent="BattleOptions"]
+layout_mode = 2

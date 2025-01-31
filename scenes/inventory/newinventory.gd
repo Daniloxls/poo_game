@@ -17,60 +17,42 @@ extends CanvasLayer
 
 @onready var char_info = $TabContainer/PersonagemInfo
 
+@onready var held_item_panel = $TabContainer/Personagens/HeldItemPanel
 
-@onready var item_list_container = $TabContainer/Mochila/InventoryContainer/ScrollContainer/ItemContainer/ItemList
-@onready var info_box_container = $TabContainer/Mochila/InventoryContainer/InfoBoxContainer
+enum Inventory_State{
+	NORMAL,
+	HEALING
+}
 
-# Lista de itens com alguns itens para teste
-var potion : ITEM = load("res://scenes/itens/repo/potion.tres")
-var items : Array[ITEM] = [potion,potion,potion]
 
 var equipment : Array[EQUIP_ITEM] = [load("res://scenes/itens/repo/armadura_ferro.tres"),
 									load("res://scenes/itens/repo/armadura_couro.tres")]
 
-var item_container = preload("res://scenes/inventory/item_container.tscn")
+
 var char_container = preload("res://scenes/inventory/char_container.tscn")
+var held_item
+var current_state : Inventory_State = Inventory_State.NORMAL
 # Called when the node enters the scene tree for the first time.
 func _ready():
-##	update_group()
 	tab_container.set_tab_disabled(1, true)
 	tab_container.set_tab_disabled(3, true)
 	tab_container.set_tab_disabled(5, true)
 	tab_container.set_tab_hidden(6, true)
+	tab_container.set_tab_hidden(7, true)
+	item_menu.connect("item_use", _on_item_use)
 	for char in party.get_children():
 		var instance = char_container.instantiate()
-		instance.call_deferred("update_char", char)
+		instance.call_deferred("set_char", char)
+		instance.connect("pressed", _on_character_click)
 		party_container.add_child(instance)
-	for item in items:
-		var instance = item_container.instantiate()
-		instance.call_deferred("set_item", item)
-		instance.connect("mouseover", _on_item_mouseover)
-		instance.connect("mouseout", _on_item_mouseout)
-		item_list_container.add_child(instance)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	process_input()
 
 func get_items():
-	return items
+	return item_menu.get_items()
 
-# Função que atualiza as informações de todos os personagens no grupo
-##func update_group():
-##	# Primeiro esconde todos os nós do party_container
-##	for i in party_container.get_children():
-##		i.hide()
-##	for i in party_buttons.get_children():
-##		i.set_disabled(true)
-##	# Depois mostra somente os personagens que estão na party
-##	var party_ui = party_container.get_children()
-##	var buttons_ui = party_buttons.get_children()
-##	for i in len(party.get_children()):
-##		party_ui[i].show()
-##		party_ui[i].update_char(party.get_children()[i])
-##		buttons_ui[i].set_disabled(false)
-##		buttons_ui[i].show()
-		
-		
 func full_heal():
 	for i in party.get_children():
 		i.set_hp(i.get_max_hp())
@@ -86,7 +68,6 @@ func aparecer():
 
 
 func esconder():
-	
 	#player.set_movement(true)
 	pass
 	
@@ -98,31 +79,37 @@ func set_player(player_node):
 	#player = player_node
 	pass
 
-
-
-func _on_button_pressed():
-	audio_click.play()
-	tab_container.set_tab_hidden(6, false)
-	tab_container.set_current_tab(6)
-	var personagem = party.get_child(0)
-	char_info.set_personagem(personagem)
-
-
-func _on_button_2_pressed():
-	audio_click.play()
-	tab_container.set_tab_hidden(6, false)
-	tab_container.set_current_tab(6)
-	var personagem = party.get_child(1)
-	char_info.set_personagem(personagem)
-
-
+func get_personagem(nome : String):
+	return party.get_node(nome)
+	
+	
 func _on_tab_container_tab_changed(tab):
 	if tab == 2:
 		equipamento.add_item_buttons(equipment)
 		
 		
-func _on_item_mouseover(text):
-	info_box_container.set_info_text(text)
 
-func _on_item_mouseout():
-	info_box_container.set_info_text("")
+
+func _on_character_click(char_container):
+	match (current_state):
+		Inventory_State.NORMAL:
+			audio_click.play()
+			tab_container.set_tab_hidden(6, false)
+			tab_container.set_current_tab(6)
+			char_info.set_personagem(get_personagem(char_container.get_char_name()))
+		Inventory_State.HEALING:
+			char_container.heal_char(held_item.get_health_restore(), get_personagem(char_container.get_char_name()))
+			get_personagem(char_container.get_char_name()).gain_health(held_item.get_health_restore())
+			item_menu.spend_item(held_item)
+			held_item = null
+			current_state = Inventory_State.NORMAL
+			held_item_panel.hide()
+
+func _on_item_use(item : ITEM):
+	match(item.get_type()):
+		ITEM.Item_type.HEALTH:
+			current_state = Inventory_State.HEALING
+			held_item = item
+			tab_container.set_current_tab(0)
+			held_item_panel.show()
+			held_item_panel.set_item_name(item.get_item_name())

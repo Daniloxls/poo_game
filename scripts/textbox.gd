@@ -148,7 +148,7 @@ func display_text():
 	# enquanto o tween não acabar ou o player não apertar 'Z' ela fica no estado Reading
 	# e o player fica parado enquanto estiver em um dialogo
 	change_state(State.READING)
-	if player.current_state == States.Player_State.FREE and player.current_state != States.Player_State.ON_INTERFACE:
+	if player.current_state == States.Player_State.FREE:
 		print("entrou no diálogo")
 		player.current_state = States.Player_State.ON_DIALOGUE
 		print(player.current_state)
@@ -212,7 +212,7 @@ func _process(delta):
 				else:
 					change_state(State.READY)
 					if player.get_state() == States.Player_State.ON_DIALOGUE:
-						player.set_state(States.Player_State.FREE)
+						player.call_deferred("set_state", States.Player_State.FREE)
 					textbox_container.hide()
 					portrait.hide()
 					text_finish.emit()

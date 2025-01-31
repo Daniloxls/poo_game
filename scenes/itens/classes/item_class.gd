@@ -10,6 +10,12 @@ enum Selecting{
 	NONE
 }
 
+enum Item_type{
+	NORMAL,
+	HEALTH,
+	STAT_INCREASE,
+	CONDITION_HEALING
+}
 @export var ITEM_NAME : String
 @export var QUANTITY: int
 @export var ITEM_ICON : Texture
@@ -35,6 +41,9 @@ func get_item_text():
 func get_selection():
 	return SELECTION
 
+func get_type():
+	return Item_type.NORMAL
+	
 func use():
 	pass
 	

@@ -16,6 +16,8 @@ extends Node2D
 @onready var textbox = get_tree().get_current_scene().get_node("Textbox")
 @onready var menu_button = get_node("MenuButton")
 
+var has_popup := false
+var mouse_over := false 
 var popup
 # O nome que aparece na caixa de código.
 var nome = ""
@@ -40,16 +42,38 @@ var depuring = false
 
 
 func _ready():
+	if (codigo != {}) or (metodos != {}):
+		has_popup = true
 	ready_drop_menu()
+	if has_popup:
+		# Connect the about_to_popup signal to set the popup position
+		menu_button.get_popup().connect("about_to_popup", self._on_menu_button_about_to_popup)
+		# Connect mouse_entered and mouse_exited signals
+		area.connect("mouse_entered", self._on_mouse_entered)
+		area.connect("mouse_exited", self._on_mouse_exited)
+	else:
+		# Hide the MenuButton if the object doesn't need a popup
+		menu_button.hide()
+		
 # Chamado a cada quadro. 'delta' é o tempo decorrido desde o quadro anterior.
 func _process(delta):
 	pass
 
+func _unhandled_input(event: InputEvent):
+	if has_popup and event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			# Check if the mouse is over this object's Area2D
+			print("clicou")
+			if mouse_over:
+				# Open the popup manually
+				menu_button.show_popup()
+				# Set the popup position to the mouse location
+				call_deferred("_set_popup_position")
+			
 func ready_drop_menu():
 	if (codigo == {}) and (metodos == {}):
 		menu_button.hide()
 	popup = menu_button.get_popup()
-	popup.connect("index_pressed", depure)
 	
 # Função chamada pelo personagem quando interage com o objeto ao pressionar 'Z'.
 func interaction():
@@ -97,4 +121,17 @@ func get_nome():
 
 
 func _on_menu_button_about_to_popup():
+	call_deferred("_set_popup_position")
+
+func _set_popup_position():
+	popup = menu_button.get_popup()
+	popup.connect("index_pressed", depure)
 	popup.set_position(get_viewport().get_mouse_position())
+	
+func _on_mouse_entered():
+	# Mouse entered the Area2D
+	mouse_over = true
+
+func _on_mouse_exited():
+	# Mouse exited the Area2D
+	mouse_over = false

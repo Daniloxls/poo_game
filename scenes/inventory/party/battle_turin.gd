@@ -6,7 +6,7 @@ var menu_sprite
 func _ready():
 	# Status de teste para o personagem
 	nome = "Turin"
-	hp = 26
+	hp = 2
 	max_hp = 26
 	mp = 25
 	max_mp = 25

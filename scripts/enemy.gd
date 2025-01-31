@@ -28,12 +28,6 @@ func _process(delta):
 func hit_animation():
 	animation.play("get_hit")
 	
-func get_cursor_pos():
-	var current_animation : String = $Sprite.animation
-	var sprite_texture : Texture2D = $Sprite.sprite_frames.get_frame_texture(current_animation, 0)
-	var size = sprite_texture.get_size()
-	size = size * sprite.get_scale()
-	return(Vector2(position) + Vector2(size.x, size.y))
 
 func get_nome():
 	return nome

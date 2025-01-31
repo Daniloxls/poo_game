@@ -10,7 +10,7 @@ signal battle_tutorial_end
 @onready var root = $"../.."
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player.set_movement(false)
+	#player.set_state(States.Player_State.ON_SCENE)
 	root.battle_won.connect(_on_tutorial_battle_end)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

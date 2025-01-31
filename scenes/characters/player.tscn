@@ -1,6 +1,6 @@
 [gd_scene load_steps=65 format=3 uid="uid://cidaiixe327go"]
 
-[ext_resource type="Script" path="res://scripts/player_script.gd" id="1_g6qgi"]
+[ext_resource type="Script" path="res://scripts/Player/player_script.gd" id="1_g6qgi"]
 [ext_resource type="Script" path="res://scripts/collision_interact.gd" id="2_nrydn"]
 [ext_resource type="Texture2D" uid="uid://bwfawmoxw17wc" path="res://assets/player/turin_spritesheet.png" id="3_g30v2"]
 

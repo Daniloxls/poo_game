@@ -7,5 +7,3 @@ func _ready():
 
 func interaction():
 	textbox.queue_text(["A cidade fica bem animada para o festival.", "Todo mundo sai de casa e tranca suas portas."])
-
-

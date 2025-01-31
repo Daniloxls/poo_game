@@ -5,5 +5,8 @@ class_name HEALTH_ITEM
 @export var HEALTH_RESTORE : int
 
 
-func use(target : Character):
-	target.
+func get_type():
+	return ItemClass.Item_type.HEALTH
+
+func get_health_restore():
+	return HEALTH_RESTORE

@@ -1,6 +1,6 @@
 extends MarginContainer
 
-@onready var audio_click:AudioStreamPlayer = get_parent().get_parent().get_parent().get_parent().get_node("Audio_Click")
+@onready var audio_click:AudioStreamPlayer
 
 @onready var old_stats = $VBoxContainer/CharInfoContainer/OldStats
 @onready var character_sprite = $VBoxContainer/CharInfoContainer/CharacterSprite
@@ -37,6 +37,7 @@ var items : Array[EQUIP_ITEM] = [load("res://scenes/itens/repo/armadura_couro.tr
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_item_buttons(items)
+	audio_click = get_tree().root.get_node("Inventory/Audio_Click")
 	pass # Replace with function body.
 
 

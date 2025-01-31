@@ -48,7 +48,7 @@ func _process(delta):
 			close_window()
 
 func interaction():
-	player.set_movement(false)
+	player.set_state(States.Player_State.ON_INTERFACE )
 	triggered = true
 	open_window()
 	if current_state == State.FINISHED:

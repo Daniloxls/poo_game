@@ -9,4 +9,3 @@ func _ready():
 func interaction():
 	textbox.queue_text(["Eu gosto muito das atividades do festival.",
 	 "Mas nunca consigo ganhar nenhuma."])
-
