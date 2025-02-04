@@ -10,7 +10,7 @@ script = ExtResource("1_eqvlp")
 SKLL_NAME = "Proteger"
 TARGET = Array[int]([2])
 DESCRIPTION = "Protege as variáveis de um aliado"
-IS_OVERRIDE = false
+IS_OVERRIDE = null
 
 [resource]
 script = ExtResource("1_mtv6j")

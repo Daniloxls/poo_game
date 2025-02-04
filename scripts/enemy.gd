@@ -35,6 +35,8 @@ func get_nome():
 func get_hp():
 	return hp
 
+func take_damage(value):
+	pass
 func gain_health(value):
 	hp += value
 	if hp > max_hp:

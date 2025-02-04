@@ -9,11 +9,14 @@ signal animation_end
 # sinal emitido quando a vida é alterada
 signal health_change
 
+signal select_targets
+
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite
 # 'damage_text' dano que o personagem tomou aparece nessa label
 @onready var damage_text = $DamageText
 @onready var char_pic = $CharPic
+@onready var battle_options = $BattleOptions
 
 
 # Status de teste para o personagem
@@ -199,6 +202,16 @@ func lose_health(value):
 	# retorna porcentagem do hp
 	return float(hp)/current_max_hp
 
+func set_action_buttons():
+	var skills = rpg_class.SKILLS
+	
+	for button in battle_options.get_children():
+		button.connect("select_targets", _on_button_select_targets)
+
+
+func _on_button_select_targets(targets):
+	select_targets.emit(targets)
+	
 # emite o sinal de fim de animação quando recebe o sinal da barra de vida
 # Usado no monstro mas não aqui, remover depois
 func _on_healthbar_animation_end():

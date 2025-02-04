@@ -217,6 +217,3 @@ size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("1_flc4q")
 theme_override_font_sizes/font_size = 100
 text = " Fugir💨 "
-
-[node name="Control" type="Control" parent="BattleOptions"]
-layout_mode = 2

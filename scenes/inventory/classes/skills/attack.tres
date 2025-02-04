@@ -1,6 +1,15 @@
-[gd_resource type="Resource" script_class="SKILL" load_steps=2 format=3 uid="uid://dutwj43v2ybft"]
+[gd_resource type="Resource" script_class="SKILL" load_steps=3 format=3 uid="uid://dutwj43v2ybft"]
 
 [ext_resource type="Script" path="res://scenes/inventory/classes/skills/skill.gd" id="1_esm45"]
+
+[sub_resource type="GDScript" id="GDScript_j21ps"]
+script/source = "
+func skill(target, user):
+	var user_speed = user.get_vel()
+	var user_atk = user.get_atk()
+	
+	pass
+"
 
 [resource]
 script = ExtResource("1_esm45")
@@ -8,3 +17,4 @@ SKLL_NAME = "Atacar"
 TARGET = Array[int]([3])
 DESCRIPTION = "Ataca o Inimigo alvo com sua arma"
 IS_OVERRIDE = false
+SKILL_SCRIPT = SubResource("GDScript_j21ps")

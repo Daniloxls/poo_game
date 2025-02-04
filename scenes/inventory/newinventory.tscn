@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://clr1pqi3mxavn"]
+[gd_scene load_steps=23 format=3 uid="uid://clr1pqi3mxavn"]
 
 [ext_resource type="Script" path="res://scenes/inventory/newinventory.gd" id="1_bnrs2"]
 [ext_resource type="Script" path="res://scenes/inventory/held_item_panel.gd" id="3_7swtg"]
@@ -10,10 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://cmfsg5d7438bt" path="res://assets/fonts/yellow_console_text.tres" id="9_ympai"]
 [ext_resource type="LabelSettings" uid="uid://dp6o68cs1rv5i" path="res://assets/fonts/light_orange_console.tres" id="10_xp1ku"]
 [ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="11_5v8ib"]
-[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="11_15p3a"]
-[ext_resource type="PackedScene" uid="uid://bspvewmvuf474" path="res://scenes/inventory/party/battle_kath.tscn" id="13_n2m06"]
 [ext_resource type="Script" path="res://scripts/info_box_container.gd" id="14_uxv63"]
-[ext_resource type="Script" path="res://scenes/inventory/party/battle_turin.gd" id="18_fypia"]
 [ext_resource type="AudioStream" uid="uid://bdx12agaryr3k" path="res://assets/sounds/interface/click7.mp3" id="29_qpj5l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7besx"]
@@ -425,19 +422,6 @@ text = "public class Exemplo {
 
         System.out.println(\"Contador: \" + [color=red][b]contador[/b][/color]);
     }"
-
-[node name="Party" type="Node2D" parent="."]
-position = Vector2(1311, 86)
-
-[node name="Turin" parent="Party" instance=ExtResource("11_15p3a")]
-z_index = 3
-z_as_relative = false
-position = Vector2(-40, 246)
-scale = Vector2(4, 4)
-script = ExtResource("18_fypia")
-
-[node name="Kath" parent="Party" instance=ExtResource("13_n2m06")]
-position = Vector2(7, 185)
 
 [node name="Audio_Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("29_qpj5l")

@@ -3,7 +3,7 @@ extends CanvasLayer
 @onready var audio_click:AudioStreamPlayer = get_node("Audio_Click")
 # invetory é o script da tela principal do inventario
 # 'party' é o nó que guarda todos os personagens como filhos
-@onready var party = $Party
+@onready var party
 # 'party_container' é o painel que guarda as informaçoes dos personagens
 @onready var item_menu = $TabContainer/Mochila
 
@@ -34,6 +34,8 @@ var held_item
 var current_state : Inventory_State = Inventory_State.NORMAL
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	party = get_tree().root.get_node("Game/Party")
+	print(party)
 	tab_container.set_tab_disabled(1, true)
 	tab_container.set_tab_disabled(3, true)
 	tab_container.set_tab_disabled(5, true)
@@ -45,7 +47,7 @@ func _ready():
 		instance.call_deferred("set_char", char)
 		instance.connect("pressed", _on_character_click)
 		party_container.add_child(instance)
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	process_input()
@@ -62,9 +64,7 @@ func get_party():
 
 # Quando o menu aparece, atualiza as informações e bloqueia o movimento do jogador
 func aparecer():
-##	update_group()
-	#player.set_movement(false)
-	pass
+	show()
 
 
 func esconder():
@@ -72,6 +72,8 @@ func esconder():
 	pass
 	
 func process_input():
+	if Input.is_action_just_pressed("e"):
+			aparecer()
 	if Input.is_action_just_pressed("x"):
 			esconder()
 

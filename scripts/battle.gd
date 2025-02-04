@@ -10,9 +10,9 @@ signal battle_won
 signal battle_lost
 
 # 'party' é o nó que contem todos os personagens
-@onready var party = get_node("../Inventory/Party")
+@onready var party = get_node("../Party")
 # 'char_list' é uma lista com todos os nós dos personagens
-@onready var char_list = get_node("../Inventory/Party").get_children()
+@onready var char_list = get_node("../Party").get_children()
 # 'inventory' é a versão para batalha do inventario
 @onready var inventory = get_node("../Inventory/BattleItemMenu")
 # 'player' é somente usado para bloquear o movimento do jogador no mapa
@@ -130,6 +130,8 @@ func start_battle(enemy_group_path):
 	add_child(instance)
 	# Pega variaveis que apontam para o grupo de inimigos e faz a lista com os
 	# inimigos
+	for char in party:
+		char.connect("select_targets", on_char_select_target)
 	enemies = $Enemies
 	enemy_list = $Enemies.get_children()
 	# liga os sinais de "animation_end" e "death" dos inimigos com as respectivas
@@ -441,4 +443,7 @@ func _on_text_finish():
 		audio_player.stop()
 		game_audio.play()
 		textbox.text_finish.disconnect(_on_text_finish)
+
+func on_char_select_target(targets):
+	pass
 		

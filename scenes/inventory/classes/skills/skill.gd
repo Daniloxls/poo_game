@@ -16,6 +16,7 @@ enum Targets {
 @export var TARGET : Array[Targets]
 @export var DESCRIPTION : String
 @export var IS_OVERRIDE : bool
+@export var SKILL_SCRIPT : GDScript
 
 func get_skill_name():
 	return SKLL_NAME
@@ -49,3 +50,6 @@ func get_target_argument():
 				
 	return argument
 			
+
+func get_skill_script():
+	return SKILL_SCRIPT
