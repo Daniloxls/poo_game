@@ -2,13 +2,14 @@ extends "res://scripts/enemy.gd"
 
 @onready var lutador = get_node("../../../Level/City/LutadorNPC")
 @onready var error = $ErrorLabel
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	nome = "Montanha"
 	max_hp = 32
 	animation.play("default")
 	hp = max_hp
-
+	healthbar.set_enemy_hp_bar_name(nome)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

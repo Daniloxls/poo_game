@@ -35,7 +35,6 @@ var current_state : Inventory_State = Inventory_State.NORMAL
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	party = get_tree().root.get_node("Game/Party")
-	print(party)
 	tab_container.set_tab_disabled(1, true)
 	tab_container.set_tab_disabled(3, true)
 	tab_container.set_tab_disabled(5, true)

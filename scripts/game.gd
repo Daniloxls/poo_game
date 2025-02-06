@@ -15,7 +15,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+	if Input.is_action_just_pressed("0"):
+		battle.start_battle("Ableble")
 	pass
 
 # Chamada para trocar o nivel, antes de usar passar instance para como argumento da

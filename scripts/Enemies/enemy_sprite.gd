@@ -14,7 +14,7 @@ func _ready():
 	$Area2D.connect("mouse_entered", self._on_mouse_entered)
 	$Area2D.connect("mouse_exited", self._on_mouse_exited)
 	$Area2D.connect("input_event", self._on_input_event)
-
+	connect("mouse_clicked", _on_sprite_clicked)
 	# Update collision shape size to match the sprite's texture
 	_update_collision_shape()
 
@@ -34,8 +34,8 @@ func _on_mouse_exited():
 	modulate = Color.WHITE  # Reset the sprite's color when the mouse exits
 
 func _on_sprite_clicked():
-	print("Sprite was clicked!")
-	# Add your click handling logic here
+	print("Sprite clicado!")
+	
 	
 func _on_input_event(viewport: Viewport, event: InputEvent, shape_idx: int):
 	# Emit the input_event signal for further processing

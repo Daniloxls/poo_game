@@ -1,4 +1,4 @@
-extends "res://scripts/player_script.gd"
+extends "res://scripts/Player/player_script.gd"
 
 var sudo = true
 

@@ -8,8 +8,7 @@ var current_skill : SKILL
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
-	connect("pressed", _on_press)
-	pass # Replace with function body.
+	connect_signals()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,3 +22,7 @@ func _on_press():
 
 func set_skill(skill : SKILL):
 	current_skill = skill
+
+func connect_signals():
+	connect("pressed", _on_press)
+	

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://scenes/new_codebox.tscn" id="4_4vmip"]
 [ext_resource type="PackedScene" uid="uid://clr1pqi3mxavn" path="res://scenes/inventory/newinventory.tscn" id="4_lfa64"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="5_fvtp8"]
-[ext_resource type="PackedScene" uid="uid://mkr0b1h1h45h" path="res://scenes/forest/forest.tscn" id="6_7px8r"]
+[ext_resource type="PackedScene" uid="uid://wtnrlc4bfiyj" path="res://scenes/tutorial/tutorial.tscn" id="6_j5drt"]
 [ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="8_e1dqr"]
 [ext_resource type="Script" path="res://scenes/inventory/party/battle_turin.gd" id="9_8jwi8"]
 [ext_resource type="PackedScene" uid="uid://bspvewmvuf474" path="res://scenes/inventory/party/battle_kath.tscn" id="10_eiai2"]
@@ -26,15 +26,16 @@ visible = false
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="Forest" parent="Level" instance=ExtResource("6_7px8r")]
+[node name="Tutorial" parent="Level" instance=ExtResource("6_j5drt")]
 
 [node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -80.0
 
-[node name="Party" type="Node2D" parent="."]
-position = Vector2(1311, 86)
+[node name="Party" type="CanvasLayer" parent="."]
+offset = Vector2(1375, 120)
+transform = Transform2D(1, 0, 0, 1, 1375, 120)
 
 [node name="Turin" parent="Party" instance=ExtResource("8_e1dqr")]
 z_index = 3

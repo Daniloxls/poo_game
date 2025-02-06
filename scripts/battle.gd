@@ -10,7 +10,7 @@ signal battle_won
 signal battle_lost
 
 # 'party' é o nó que contem todos os personagens
-@onready var party = get_node("../Party")
+@onready var party
 # 'char_list' é uma lista com todos os nós dos personagens
 @onready var char_list = get_node("../Party").get_children()
 # 'inventory' é a versão para batalha do inventario
@@ -24,8 +24,7 @@ signal battle_lost
 @onready var menu = $BattleMenu
 # 'cursor' esse é o cursor que serve para mirar ataques
 @onready var cursor = $Cursor
-# 'turn_cursor' esse é o cursor que marca de quem é a vez
-@onready var turn_cursor = $TurnCursor
+
 # 'debug' são informações de debug que podem ser vistas apertando 'A'
 @onready var debug = $Debug
  
@@ -89,7 +88,7 @@ func _ready():
 	#Como está sempre instanciada a batalha começa escondida
 	hide()
 	textbox.connect("text_finish", _on_text_finish)
-
+	party = get_tree().root.get_node("Game/Party")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -120,7 +119,8 @@ func select_enemy():
 # caminho para o grupo de inimigos que está na batalha
 func start_battle(enemy_group_path):
 	# Carrega o nó com os inimigos, instancia ele e adiciona como filho de Batalha
-	var enemy_group = load(enemy_group_path)
+	#var enemy_group = load(enemy_group_path)
+	var enemy_group = load("res://scenes/encounters/testdummy.tscn")
 	var instance = enemy_group.instantiate()
 	# Bloqueia movimento do jogador
 	player.set_state(States.Player_State.ON_BATTLE)
@@ -130,7 +130,7 @@ func start_battle(enemy_group_path):
 	add_child(instance)
 	# Pega variaveis que apontam para o grupo de inimigos e faz a lista com os
 	# inimigos
-	for char in party:
+	for char in party.get_children():
 		char.connect("select_targets", on_char_select_target)
 	enemies = $Enemies
 	enemy_list = $Enemies.get_children()
@@ -150,7 +150,7 @@ func start_battle(enemy_group_path):
 	tween.set_parallel()
 	# Seta todas as informações dos personagens no menu e transiciona os sprites
 	# para dentro do cenario
-	for char in char_list:
+	for char in party.get_children():
 		tween.tween_property(char, "position", char.position - CHARACTER_POS_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
 		menu.set_character_name(char_index, char.get_nome())
 		menu.update_health_instant(char_index, char.get_health_percentage())
@@ -167,14 +167,13 @@ func start_battle(enemy_group_path):
 	menu.set_monster_names(enemy_names)
 	# No final da transição dos personagens o menu aparece
 	tween.tween_callback(menu.show)
-	# E quando os personagens estivem em suas posições pega as coordenadas deles
-	tween.tween_callback(get_entity_positions)
+
 	# Volta o index ao inicial
 	char_index = -1
 	char_index = update_char_index_down()
 	char_turn = update_char_turn()
 	# Coloca o cursor de turno na posição do personagem que vai agir primeiro
-	tween.tween_callback(update_turn_cursor_position)
+
 	
 	
 func read_input():
@@ -238,7 +237,7 @@ func read_input():
 				current_selection = Selecting.ANIMATION
 				cursor.hide()
 				char_turn = update_char_turn()
-				update_turn_cursor_position()
+
 			# Se o jogador apertar 'X' ele volta para seleção de ação 
 			elif Input.is_action_just_pressed("exit"):
 				current_selection = Selecting.ACTION
@@ -295,15 +294,6 @@ func read_input():
 				inventory.aparecer()
 				cursor.hide()
 				
-# Função que pega as coordenadas dos sprites dos personagens e dos inimigos
-# E salva elas nas listas apropiadas
-# Faz uns calculos com o tamanho do sprite e a posição onde ele está
-func get_entity_positions():
-	for char in char_list:
-		character_coords.append(Vector2(party.get_position().x*0.94,party.get_position().y) + char.get_cursor_pos())
-		character_back_coords.append(Vector2(party.get_position().x*1.02,party.get_position().y) + char.get_turn_cursor_pos())
-
-
 # Toda vez que um inimigo morre, ele emite um sinal, quando esse sinal é recebido
 # Essa função ocorre
 func _on_enemy_death():
@@ -415,14 +405,7 @@ func set_selection(select):
 	if current_selection != Selecting.DEFEAT and current_selection != Selecting.VICTORY:
 		current_selection = select
 
-# Função que atualiza posição do cursor de turno
-func update_turn_cursor_position():
-	if !in_battle:
-		return
-	if char_turn == len(char_list):
-		return
-	turn_cursor.set_position(character_back_coords[char_turn])
-	
+
 func set_player(player_node):
 	player = player_node
 	

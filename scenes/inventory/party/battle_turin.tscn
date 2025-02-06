@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://mje13m0bdoj2"]
+[gd_scene load_steps=22 format=3 uid="uid://mje13m0bdoj2"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_w8k2v"]
 [ext_resource type="Texture2D" uid="uid://6xm3lmnjv3wm" path="res://assets/battle/character_sprites/turin_batalha.png" id="2_i30wg"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_s5wn0"]
 [ext_resource type="Script" path="res://scripts/DamageText.gd" id="7_5hj8d"]
 [ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/characters/legacy/Turin.png" id="8_jrt78"]
+[ext_resource type="Script" path="res://scenes/inventory/battle_options.gd" id="9_8wyo8"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="9_qxph4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dve58"]
@@ -214,6 +215,7 @@ offset_right = 694.0
 offset_bottom = 621.0
 scale = Vector2(0.04, 0.04)
 theme_override_constants/separation = 49
+script = ExtResource("9_8wyo8")
 
 [node name="Button" type="Button" parent="BattleOptions"]
 layout_mode = 2

@@ -304,8 +304,4 @@ libraries = {
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="animation_end" from="Healthbar" to="." method="_on_healthbar_animation_end"]
-[connection signal="mouse_clicked" from="Sprite2D" to="Sprite2D" method="_on_sprite_clicked"]
-[connection signal="mouse_entered" from="Sprite2D" to="Healthbar" method="_on_sprite_2d_mouse_entered"]
-[connection signal="mouse_exited" from="Sprite2D" to="Healthbar" method="_on_sprite_2d_mouse_exited"]
-[connection signal="texture_changed" from="Sprite2D" to="Sprite2D" method="_on_texture_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

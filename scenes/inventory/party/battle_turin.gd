@@ -5,6 +5,7 @@ var menu_sprite
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Status de teste para o personagem
+	animation.play("default")
 	nome = "Turin"
 	hp = 2
 	max_hp = 26
@@ -17,6 +18,7 @@ func _ready():
 	vel = 13
 	xp = 0
 	rpg_class = load("res://scenes/inventory/classes/protector.tres")
+	battle_options.set_button_functions(rpg_class.SKILLS)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
