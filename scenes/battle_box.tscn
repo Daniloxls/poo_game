@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://dkrrrbfnsa5lw"]
 
-[ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_a61xi"]
+[ext_resource type="Script" uid="uid://r2i17u101wcn" path="res://scripts/battle_menu.gd" id="1_a61xi"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_cbckn"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_6yefv"]
-[ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_02h83"]
-[ext_resource type="Script" path="res://scripts/PlayerStatus.gd" id="5_ew3lm"]
-[ext_resource type="Script" path="res://scripts/character_status.gd" id="6_yi885"]
+[ext_resource type="Script" uid="uid://im2igcsah6vr" path="res://scripts/Cursor.gd" id="4_02h83"]
+[ext_resource type="Script" uid="uid://bftnx5ivadg61" path="res://scripts/PlayerStatus.gd" id="5_ew3lm"]
+[ext_resource type="Script" uid="uid://cpyb7tj4nce6b" path="res://scripts/character_status.gd" id="6_yi885"]
 [ext_resource type="Texture2D" uid="uid://cqwwta2lymjp0" path="res://assets/gui/icons/locked.png" id="7_7r2d2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryce2"]

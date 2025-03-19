@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://y4pu0orv8ihn"]
 
-[ext_resource type="Script" path="res://scripts/CharContainer.gd" id="1_4lylc"]
+[ext_resource type="Script" uid="uid://bkb3o2g6he7xo" path="res://scripts/CharContainer.gd" id="1_4lylc"]
 [ext_resource type="Texture2D" uid="uid://llncv7o7fnvc" path="res://assets/characters/legacy/Turin.png" id="2_ccg7h"]
 [ext_resource type="LabelSettings" uid="uid://5mg8308marm6" path="res://assets/fonts/orange_console_text.tres" id="3_nmj1l"]
 [ext_resource type="Texture2D" uid="uid://bkkkd74vsqr0s" path="res://assets/effects/empty_frame.png" id="3_r8ea3"]

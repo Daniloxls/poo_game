@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bbv8vjmfgeck6"]
 
-[ext_resource type="Script" path="res://scripts/ItemContainer.gd" id="1_l5lol"]
+[ext_resource type="Script" uid="uid://b0ms162tsljcm" path="res://scripts/ItemContainer.gd" id="1_l5lol"]
 [ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/gui/icons/potion_icon.png" id="2_xnke1"]
 [ext_resource type="LabelSettings" uid="uid://dgi27rysml5px" path="res://assets/fonts/gray_console_text.tres" id="3_vk6u7"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="4_v38sh"]

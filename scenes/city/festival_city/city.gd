@@ -4,6 +4,7 @@ extends Node2D
 @onready var sword_scene = $Cutscene
 @onready var player = $Player
 @onready var music =  $"../../AudioPlayer"
+
 signal battle_won
 signal battle_lost
 

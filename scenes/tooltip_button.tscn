@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://df7qmalmdieo8"]
 
-[ext_resource type="Script" path="res://scripts/TooltipButton.gd" id="1_x08vo"]
+[ext_resource type="Script" uid="uid://e3fdt743pq6f" path="res://scripts/TooltipButton.gd" id="1_x08vo"]
 [ext_resource type="Texture2D" uid="uid://dbw6seicqkxrj" path="res://assets/gui/question.png" id="2_s3jfe"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_aywcj"]
 

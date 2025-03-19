@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bqljal0ipsebg"]
 
 [ext_resource type="Texture2D" uid="uid://c1uv6y4noagg3" path="res://assets/tileset/forest/tree_1.png" id="1_iueup"]
-[ext_resource type="Script" path="res://scenes/forest/scripts/bush.gd" id="1_jlu7c"]
+[ext_resource type="Script" uid="uid://dmm0bdtxqf1ro" path="res://scenes/forest/scripts/bush.gd" id="1_jlu7c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4fyk"]
 size = Vector2(3278, 395)
@@ -52,8 +52,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qupfu"]
 _data = {
-"RESET": SubResource("Animation_cucr7"),
-"burn": SubResource("Animation_getr0")
+&"RESET": SubResource("Animation_cucr7"),
+&"burn": SubResource("Animation_getr0")
 }
 
 [node name="Bush" type="CharacterBody2D"]

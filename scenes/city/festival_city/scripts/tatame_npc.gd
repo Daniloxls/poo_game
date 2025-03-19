@@ -23,8 +23,10 @@ var current_state = State.DOWN
 var victory_state = Victory.NEITHER
 var triggered = false;
 var start_battle = false
+
 func _ready():
-	pass
+	textbox.connect("text_finish", _on_textbox_text_finish)
+	textbox.connect("choise_closed", _on_textbox_choise_closed)
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)

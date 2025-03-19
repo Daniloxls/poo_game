@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cfnbvais4yqn5"]
 
-[ext_resource type="Script" path="res://scenes/tutorial/terminal_interface.gd" id="1_nskik"]
+[ext_resource type="Script" uid="uid://clp20xrmebvg2" path="res://scenes/tutorial/terminal_interface.gd" id="1_nskik"]
 [ext_resource type="StyleBox" uid="uid://d4mh8yxlwaquq" path="res://scenes/tutorial/terminal_line_style.tres" id="2_630bv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8r1r"]

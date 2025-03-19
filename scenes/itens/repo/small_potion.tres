@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="HEALTH_ITEM" load_steps=3 format=3 uid="uid://clrhedxbeldc8"]
 
-[ext_resource type="Script" path="res://scenes/itens/classes/health_item.gd" id="1_dnvpr"]
+[ext_resource type="Script" uid="uid://c2rl5l37e0y80" path="res://scenes/itens/classes/health_item.gd" id="1_dnvpr"]
 [ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/gui/icons/potion_icon.png" id="1_xfk6u"]
 
 [resource]
@@ -11,3 +11,4 @@ QUANTITY = 3
 ITEM_ICON = ExtResource("1_xfk6u")
 ITEM_TEXT = "Poção que restaura um pouco de saúde."
 SELECTION = 0
+PRICE = 0

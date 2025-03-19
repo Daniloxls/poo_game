@@ -1,8 +1,8 @@
 [gd_scene load_steps=23 format=3 uid="uid://clr1pqi3mxavn"]
 
-[ext_resource type="Script" path="res://scenes/inventory/newinventory.gd" id="1_bnrs2"]
-[ext_resource type="Script" path="res://scenes/inventory/held_item_panel.gd" id="3_7swtg"]
-[ext_resource type="Script" path="res://scenes/inventory/mochila.gd" id="3_36qjp"]
+[ext_resource type="Script" uid="uid://ctj7btbxbiucj" path="res://scenes/inventory/newinventory.gd" id="1_bnrs2"]
+[ext_resource type="Script" uid="uid://d1s8o0ler1mm6" path="res://scenes/inventory/held_item_panel.gd" id="3_7swtg"]
+[ext_resource type="Script" uid="uid://d4e6ybbvflb3y" path="res://scenes/inventory/mochila.gd" id="3_36qjp"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="5_nextx"]
 [ext_resource type="LabelSettings" uid="uid://gts2l8irhv00" path="res://assets/fonts/light_blue_console.tres" id="8_jfj1k"]
 [ext_resource type="PackedScene" uid="uid://b2340toqvxnfn" path="res://scenes/inventory/personagem_info_tab.tscn" id="9_5c42y"]
@@ -10,7 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://cmfsg5d7438bt" path="res://assets/fonts/yellow_console_text.tres" id="9_ympai"]
 [ext_resource type="LabelSettings" uid="uid://dp6o68cs1rv5i" path="res://assets/fonts/light_orange_console.tres" id="10_xp1ku"]
 [ext_resource type="LabelSettings" uid="uid://b6cf5k4q5kd71" path="res://assets/fonts/dark_blue_console_text.tres" id="11_5v8ib"]
-[ext_resource type="Script" path="res://scripts/info_box_container.gd" id="14_uxv63"]
+[ext_resource type="Script" uid="uid://5861p1ut5n4" path="res://scripts/info_box_container.gd" id="14_uxv63"]
 [ext_resource type="AudioStream" uid="uid://bdx12agaryr3k" path="res://assets/sounds/interface/click7.mp3" id="29_qpj5l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7besx"]

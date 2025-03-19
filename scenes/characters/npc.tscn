@@ -1,9 +1,9 @@
 [gd_scene load_steps=36 format=3 uid="uid://bdpjpq4yd4vic"]
 
-[ext_resource type="Script" path="res://scripts/npc_script.gd" id="1_15wk0"]
+[ext_resource type="Script" uid="uid://ubaumnrarulr" path="res://scripts/npc_script.gd" id="1_15wk0"]
 [ext_resource type="Texture2D" uid="uid://c7jypxvtwe62e" path="res://assets/characters/kath_spritesheet.png" id="2_8odfy"]
 [ext_resource type="Texture2D" uid="uid://rk6lnbyog2si" path="res://assets/characters/cabaretier.png" id="2_g18s3"]
-[ext_resource type="Texture2D" uid="uid://crswlvrnaxb7j" path="res://assets/characters/spritesheet.png" id="2_qwa3k"]
+[ext_resource type="Texture2D" uid="uid://crswlvrnaxb7j" path="res://assets/characters/cmd_spritesheet.png" id="2_qwa3k"]
 [ext_resource type="Texture2D" uid="uid://b0wclf10aqbt0" path="res://assets/characters/campones_2.png" id="3_l5ufi"]
 [ext_resource type="Texture2D" uid="uid://dfe5s4l7q3aya" path="res://assets/characters/campones_3.png" id="4_olrte"]
 [ext_resource type="Texture2D" uid="uid://bywmw171rf5yg" path="res://assets/characters/campones_4.png" id="5_hrkgu"]

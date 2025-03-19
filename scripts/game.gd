@@ -5,6 +5,8 @@ signal battle_lost
 @onready var inventory = $Inventory
 @onready var battle = $Battle
 @onready var music = $AudioPlayer
+@onready var textbox: CanvasLayer = $Textbox
+
 #Game é a cena principal, ela carrega e descarrega os niveis e mantem
 # o inventario intacto entre cenas.
 
@@ -18,10 +20,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("0"):
 		battle.start_battle("Ableble")
 	pass
-
 # Chamada para trocar o nivel, antes de usar passar instance para como argumento da
-#função é necessario instanciar o arquivo dessa forma:
-
+# função é necessario instanciar o arquivo dessa forma:
 # 	var root = get_node("Caminho relativo até esse nó")
 #	var next_level = load("Caminho do nivel que você quer carregar")
 #	var instance = next_level.instantiate()
@@ -34,6 +34,7 @@ func change_level(instance, entrance : int = 0):
 	instance.call_deferred("enter_stage", entrance)
 	inventory.call_deferred("set_player", instance.find_child("Player"))
 	battle.call_deferred("set_player", instance.find_child("Player"))
+	textbox.call_deferred("set_player", instance.find_child("Player"))
 
 func _on_battle_battle_lost():
 	battle_lost.emit()

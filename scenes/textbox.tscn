@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://co1ntmvskmiex"]
 
-[ext_resource type="Script" path="res://scripts/textbox.gd" id="1_vi0s2"]
+[ext_resource type="Script" uid="uid://ch6sc7p0p81ky" path="res://scripts/textbox.gd" id="1_vi0s2"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_03f5e"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="3_ijvgs"]
-[ext_resource type="Script" path="res://scripts/Cursor.gd" id="4_rutai"]
+[ext_resource type="Script" uid="uid://im2igcsah6vr" path="res://scripts/Cursor.gd" id="4_rutai"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8litx"]
 bg_color = Color(0, 0, 0, 1)

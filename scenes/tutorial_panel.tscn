@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ibmx0l4bk7gq"]
 
-[ext_resource type="Script" path="res://scripts/tutorial_panel.gd" id="1_h57wg"]
+[ext_resource type="Script" uid="uid://cqowmitrxwx8y" path="res://scripts/tutorial_panel.gd" id="1_h57wg"]
 [ext_resource type="Texture2D" uid="uid://8xdak1jlawhg" path="res://assets/gui/cat.png" id="1_m4sev"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_sintp"]
 

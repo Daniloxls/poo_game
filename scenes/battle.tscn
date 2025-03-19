@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://c4bax87kqk6po"]
 
-[ext_resource type="Script" path="res://scripts/battle.gd" id="1_c4w7k"]
+[ext_resource type="Script" uid="uid://bhdgcebg1wfmh" path="res://scripts/battle.gd" id="1_c4w7k"]
 [ext_resource type="PackedScene" uid="uid://dkrrrbfnsa5lw" path="res://scenes/battle_box.tscn" id="3_ymsal"]
 [ext_resource type="Texture2D" uid="uid://bgqtptx5id2tk" path="res://assets/gui/Cursor.png" id="5_rvb1y"]
 [ext_resource type="Texture2D" uid="uid://mcny5mfa0hca" path="res://assets/battle/background/tutorial.png" id="6_2n1o6"]
-[ext_resource type="Script" path="res://scripts/Cursor.gd" id="6_v5kcj"]
+[ext_resource type="Script" uid="uid://im2igcsah6vr" path="res://scripts/Cursor.gd" id="6_v5kcj"]
 [ext_resource type="Texture2D" uid="uid://bd8rsb68jqo4g" path="res://assets/props/ataque.png" id="7_2ixq6"]
 [ext_resource type="Texture2D" uid="uid://c4jqr7anfvuyt" path="res://assets/props/item.png" id="8_45lao"]
 [ext_resource type="Texture2D" uid="uid://d0nnq665edodf" path="res://assets/gui/TurnCursor.png" id="8_84fjv"]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=20 format=3 uid="uid://b2340toqvxnfn"]
 
-[ext_resource type="Script" path="res://scenes/inventory/PersonagemInfo.gd" id="1_c7dfc"]
+[ext_resource type="Script" uid="uid://blgv2pkabv5fp" path="res://scenes/inventory/PersonagemInfo.gd" id="1_c7dfc"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_alebi"]
-[ext_resource type="Script" path="res://scenes/inventory/CharInfoTab.gd" id="3_u2oif"]
+[ext_resource type="Script" uid="uid://bx57uyd24xbqu" path="res://scenes/inventory/CharInfoTab.gd" id="3_u2oif"]
 [ext_resource type="Texture2D" uid="uid://cdosujgmkwpny" path="res://assets/battle/character_sprites/kath_batalha.png" id="4_luxgg"]
-[ext_resource type="Script" path="res://scenes/inventory/EquipamentoTab.gd" id="5_iwtvn"]
+[ext_resource type="Script" uid="uid://byrb58yvybcku" path="res://scenes/inventory/EquipamentoTab.gd" id="5_iwtvn"]
 [ext_resource type="Texture2D" uid="uid://drc3a4m5ua1qj" path="res://assets/inventory/item_panel.png" id="6_28yie"]
 [ext_resource type="Texture2D" uid="uid://ce2m5nukf0t8n" path="res://assets/inventory/helmet.png" id="7_5xrww"]
 [ext_resource type="Texture2D" uid="uid://dx22oj5y2ejyy" path="res://assets/inventory/body.png" id="8_utt0s"]

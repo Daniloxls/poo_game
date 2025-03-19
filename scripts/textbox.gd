@@ -28,7 +28,7 @@ const CURSOR_POSITION = Vector2(946,340)
 # 'cursor' é o sprite de cursor que aparece nas escolhas
 @onready var cursor = $Cursor
 # 'player' é o acesso que a caixa de texto possui do personagem para poder afeta-lo
-@onready var player = get_node("../Level").get_child(0).find_child("Player")
+@onready var player = get_parent().get_node("Level").get_child(0).find_child("Player")
 # 'codebox' é o acesso que a caixa de texto tem da caixa de codigo, usado para evitar conflitos
 @onready var codebox = get_node("../Codebox")
 
@@ -179,7 +179,9 @@ func get_choice():
 	var id = choice_id
 	choice_id = 0
 	return id
-	
+
+func set_player(player_node):
+	player = player_node
 
 func _process(delta):
 	#Comportamento da caixa de texto depende do seu estado

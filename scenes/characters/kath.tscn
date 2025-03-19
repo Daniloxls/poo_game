@@ -1,6 +1,6 @@
 [gd_scene load_steps=63 format=3 uid="uid://c7ljtnwyjtgv5"]
 
-[ext_resource type="Script" path="res://scripts/npc_script.gd" id="1_yr5td"]
+[ext_resource type="Script" uid="uid://ubaumnrarulr" path="res://scripts/npc_script.gd" id="1_yr5td"]
 [ext_resource type="Texture2D" uid="uid://c7jypxvtwe62e" path="res://assets/characters/kath_spritesheet.png" id="2_0w2wf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ixbqb"]
@@ -452,7 +452,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rucil"]
 _data = {
-"jump": SubResource("Animation_syws6")
+&"jump": SubResource("Animation_syws6")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mb2ge"]
