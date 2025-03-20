@@ -46,7 +46,8 @@ func read_input():
 	# Muda a animação e acelera o jogador na direção que está sendo apertada
 	# Tambem liga a caixa de interação respectiva
 	velocity = Vector2()
-	
+	if Input.is_action_just_pressed("enter"):
+		print(get_state())
 	if current_state == States.Player_State.FREE:
 		if Input.is_action_pressed("up"):
 			velocity.y -= 1
@@ -105,9 +106,8 @@ func read_input():
 	if current_state == States.Player_State.FREE:
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
-			if interact_box.get_overlapping_areas() and textbox.get_state() == "Ready":
-				print(interact_box.get_overlapping_areas()[0].get_parent())
-				interact_box.get_overlapping_areas()[0].get_parent().interaction()
+				if interact_box.get_overlapping_areas() and textbox.get_state() == "Ready":
+					interact_box.get_overlapping_areas()[0].get_parent().interaction()
 	if Input.is_action_just_pressed("exit"):
 		# Fechar inventario, codebox, qualquer inteface que esteja aberta
 		pass
@@ -122,6 +122,16 @@ func get_state():
 
 func set_state(new_state):
 	current_state = new_state
+	if current_state != States.Player_State.FREE:
+		match(current_direction):
+				Direction.RIGHT:
+					_animated_sprite.play("idle_right")
+				Direction.UP:
+					_animated_sprite.play("idle_up")
+				Direction.DOWN:
+					_animated_sprite.play("idle_down")
+				Direction.LEFT:
+					_animated_sprite.play("idle_left")
 	
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj8pamo3vxngl"]
+
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_10kit"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r5bgf"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+bg_color = Color(0.00784314, 0.0627451, 0.0980392, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7yvs"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+bg_color = Color(0.00784314, 0.0627451, 0.0980392, 1)
+border_color = Color(1, 1, 1, 1)
+
+[node name="EnemyButton" type="Button"]
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_10kit")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/hover = SubResource("StyleBoxFlat_r5bgf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_g7yvs")
+text = "Nome Inimigo"

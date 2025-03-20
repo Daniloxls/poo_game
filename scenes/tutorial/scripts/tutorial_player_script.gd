@@ -1,6 +1,6 @@
 extends "res://scripts/Player/player_script.gd"
 
-var sudo = true
+var sudo = false
 
 func get_sudo():
 	return sudo

@@ -101,7 +101,7 @@ func depure(selected_node):
 			close_text.set_fit_content_height_enabled(true)
 			
 			text.set_editable(false)
-			text.set_custom_minimum_size(Vector2(len(metodos[key][0].substr(0, metodos[key][1]))* 20,0))
+			text.set_custom_minimum_size(Vector2(len(metodos[key][0].substr(0, metodos[key][1]))* 13,0))
 			
 			edit_text.set_editable(true)
 			edit_text.set_h_size_flags(Control.SIZE_EXPAND_FILL)
@@ -110,7 +110,7 @@ func depure(selected_node):
 			
 			close_text.set_editable(false)
 			close_text.set_h_size_flags(Control.SIZE_EXPAND_FILL)
-			close_text.set_custom_minimum_size(Vector2(len(metodos[key][0].substr(metodos[key][1], metodos[key][2])) * 10,0))
+			close_text.set_custom_minimum_size(Vector2(len(metodos[key][0].substr(metodos[key][1], metodos[key][2])) * 14,0))
 			close_text.theme = tema
 			
 			text.text = metodos[key][0].substr(0, metodos[key][1])

@@ -1,6 +1,6 @@
 extends Node2D
 @onready var player = $Player
-@onready var textbox = $Textbox
+@onready var textbox = $"../../Textbox"
 @onready var codebox = $Codebox
 @onready var brilho = $Brilho
 @onready var music =  $"../../AudioPlayer"
@@ -20,11 +20,12 @@ var portraits = ["res://assets/portraits/anti_poo_neutro.png",
 				"res://assets/portraits/anti_poo_serio.png"]
 func _ready():
 	var tween = create_tween()
+	textbox.connect("text_finish", _on_textbox_text_finish)
 	brilho.hide()
-	player.set_in_scene(true)
-	tween.tween_callback(player.set_animation.bind("walk", "up"))
+	player.set_state(States.Player_State.ON_SCENE)
+	tween.tween_callback(player.set_sprite.bind("walk_up"))
 	tween.tween_property(player, "position", Vector2(9422,9313), 3).set_trans(Tween.TRANS_LINEAR)
-	tween.tween_callback(player.set_animation.bind("idle", "up"))
+	tween.tween_callback(player.set_sprite.bind("idle_up"))
 	tween.tween_callback(textbox.queue_char_text.bind(dialogo, portraits))
 	
 	music.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))

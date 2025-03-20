@@ -23,8 +23,12 @@ var current_state = State.DOWN
 var victory_state = Victory.NEITHER
 var triggered = false;
 var start_battle = false
+
 func _ready():
-	pass
+	textbox = get_tree().root.get_node("Game/Textbox")
+	textbox.connect("text_finish", _on_textbox_text_finish)
+	textbox.connect("choice_closed", _on_textbox_choise_closed)
+
 
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
@@ -69,6 +73,7 @@ func _on_textbox_choise_closed():
 			0:
 				start_battle = true
 				textbox.queue_text(["Então que comece a luta!"])
+				player.set_state(States.Player_State.ON_BATTLE)
 				
 			1:
 				start_battle = false

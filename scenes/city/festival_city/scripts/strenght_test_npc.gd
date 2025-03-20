@@ -12,8 +12,8 @@ var animation_end = false
 func _ready():
 	texto = [["Estou impressionado! Parabéns tome 10 tickets para você"],
 	["Não foi dessa vez, mas não fique triste você pode tentar de novo"]]
-	pass
-
+	textbox.connect("text_finish", _on_textbox_text_finish)
+	textbox.connect("choice_closed", _on_textbox_choise_closed)
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
 
@@ -56,11 +56,11 @@ func _on_textbox_text_finish():
 		textbox.display_choice("Você quer tentar garoto ?", ["Sim", "Não"])
 	elif scene:
 		scene = false
-		var comando = teste.get_methods()["0"][0].substr(5, teste.get_methods()["0"][2])
+		var comando = teste.get_metodos()["0"][0].substr(5, teste.get_metodos()["0"][2])
 		var result = evaluate(comando, ["forca"], [4])
 		var tween = create_tween()
 		var current_pos = player.get_position()
-		tween.tween_callback(player.set_in_scene.bind(true))
+		tween.tween_callback(player.set_state.bind(States.Player_State.ON_SCENE))
 		if current_pos.y < -12650:
 			tween.tween_callback(player.set_sprite.bind("walk_left"))
 			tween.tween_property(player, "position", Vector2(4500, current_pos.y), abs(current_pos.x - 4500)/500)
@@ -105,7 +105,7 @@ func _on_textbox_text_finish():
 		tween.tween_property(player, "position", Vector2(4973, -12123), abs(7000 - 4973)/500)
 		tween.tween_callback(player.set_z_index.bind(2))
 		tween.tween_callback(teste.set_colision.bind(true))
-		tween.tween_callback(player.set_in_scene.bind(false))
+		tween.tween_callback(player.set_state.bind(States.Player_State.FREE))
 
 
 func _on_textbox_choise_closed():

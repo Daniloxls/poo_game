@@ -5,6 +5,8 @@ signal battle_lost
 @onready var inventory = $Inventory
 @onready var battle = $Battle
 @onready var music = $AudioPlayer
+@onready var textbox = $Textbox
+
 #Game é a cena principal, ela carrega e descarrega os niveis e mantem
 # o inventario intacto entre cenas.
 
@@ -15,8 +17,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("0"):
-		battle.start_battle("Ableble")
 	pass
 
 # Chamada para trocar o nivel, antes de usar passar instance para como argumento da
@@ -34,7 +34,7 @@ func change_level(instance, entrance : int = 0):
 	instance.call_deferred("enter_stage", entrance)
 	inventory.call_deferred("set_player", instance.find_child("Player"))
 	battle.call_deferred("set_player", instance.find_child("Player"))
-
+	textbox.call_deferred("set_player", instance.find_child("Player"))
 func _on_battle_battle_lost():
 	battle_lost.emit()
 

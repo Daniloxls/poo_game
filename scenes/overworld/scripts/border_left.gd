@@ -1,5 +1,4 @@
 extends "res://scripts/event.gd"
-@onready var textbox = get_node("../Textbox")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

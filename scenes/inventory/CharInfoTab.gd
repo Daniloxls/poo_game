@@ -19,8 +19,3 @@ func _ready():
 	set_tab_disabled(1, true)
 	set_tab_disabled(3, true)
 	set_tab_disabled(5, true)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

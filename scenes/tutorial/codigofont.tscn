@@ -115,7 +115,7 @@ script = ExtResource("1_yatrg")
 
 [node name="Player" parent="." instance=ExtResource("2_bdtc3")]
 z_index = 3
-position = Vector2(-11250, 5704)
+position = Vector2(5966, 5800)
 script = ExtResource("3_a0oed")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

@@ -66,7 +66,7 @@ func set_personagem(personagem):
 	char_status_a.push_color("#ffffff")
 	char_status_a.append_text("= ")
 	char_status_a.push_color(Color("#228096"))
-	char_status_a.append_text(str(personagem.get_max_mp()))
+	char_status_a.append_text(str(personagem.get_max_pp()))
 	char_status_a.push_color("#ffffff")
 	char_status_a.append_text(";\n")
 	
