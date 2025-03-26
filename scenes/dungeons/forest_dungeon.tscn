@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=4 uid="uid://dwipntiqgx5hc"]
 
 [ext_resource type="Texture2D" uid="uid://dgievkln27ypp" path="res://assets/tileset/temp.png" id="1_o64xv"]
-[ext_resource type="Script" path="res://scenes/dungeons/forest_dungeon/scripts/forest_dungeon.gd" id="1_wupk8"]
+[ext_resource type="Script" uid="uid://cpo2hucxeqnco" path="res://scenes/dungeons/forest_dungeon/scripts/forest_dungeon.gd" id="1_wupk8"]
 [ext_resource type="PackedScene" uid="uid://bdpjpq4yd4vic" path="res://scenes/characters/npc.tscn" id="2_5j3tj"]
-[ext_resource type="Script" path="res://scenes/dungeons/forest_dungeon/scripts/automato.gd" id="3_p2a77"]
+[ext_resource type="Script" uid="uid://oyet8lwmoxr2" path="res://scenes/dungeons/forest_dungeon/scripts/automato.gd" id="3_p2a77"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="3_vthos"]
 [ext_resource type="Texture2D" uid="uid://cdsxsx0hlscf3" path="res://assets/tileset/dungeon/biblio-tile.png" id="5_wk68f"]
 [ext_resource type="Texture2D" uid="uid://dnh4hqclo8oj1" path="res://assets/tileset/dungeon/biblio-top-back-tile.png" id="6_cgl56"]

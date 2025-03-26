@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dbt3f5iu5u8k4" path="res://assets/effects/brilho.png" id="5_fowb1"]
 [ext_resource type="Texture2D" uid="uid://dgievkln27ypp" path="res://assets/tileset/temp.png" id="6_0kwas"]
 [ext_resource type="PackedScene" uid="uid://ch1uc8olfvcbg" path="res://scenes/transition.tscn" id="7_poxsg"]
-[ext_resource type="Script" path="res://scenes/interiors/player_room/scripts/to_overworld.gd" id="8_8morb"]
+[ext_resource type="Script" uid="uid://c0g2desphu6g7" path="res://scenes/interiors/player_room/scripts/to_overworld.gd" id="8_8morb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yml3g"]
 texture = ExtResource("5_a156y")

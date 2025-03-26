@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SKILL" load_steps=3 format=3 uid="uid://bl8mjvs2mwfme"]
 
-[ext_resource type="Script" path="res://scenes/inventory/classes/skills/skill.gd" id="1_2t5i3"]
+[ext_resource type="Script" uid="uid://dwcshq4w3gike" path="res://scenes/inventory/classes/skills/skill.gd" id="1_2t5i3"]
 
 [sub_resource type="GDScript" id="GDScript_fgshn"]
 script/source = "extends \"res://scenes/inventory/party/scripts/skill_button.gd\"

@@ -1,0 +1,51 @@
+[gd_scene load_steps=11 format=3 uid="uid://rqh8da2muvx6"]
+
+[ext_resource type="Script" uid="uid://qhlrm6nj76t3" path="res://scripts/game.gd" id="1_irk2k"]
+[ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
+[ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://scenes/tela_titulo.tscn" id="4_1yu0a"]
+[ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://scenes/new_codebox.tscn" id="4_4vmip"]
+[ext_resource type="PackedScene" uid="uid://clr1pqi3mxavn" path="res://scenes/inventory/newinventory.tscn" id="4_lfa64"]
+[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="5_fvtp8"]
+[ext_resource type="PackedScene" uid="uid://bhl2fw3fmtrpc" path="res://scenes/city/festival_city/city.tscn" id="6_5ascw"]
+[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="8_e1dqr"]
+[ext_resource type="Script" uid="uid://do8yvnnkvymxg" path="res://scenes/inventory/party/battle_turin.gd" id="9_8jwi8"]
+[ext_resource type="PackedScene" uid="uid://bspvewmvuf474" path="res://scenes/inventory/party/battle_kath.tscn" id="10_eiai2"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_irk2k")
+
+[node name="Battle" parent="." instance=ExtResource("2_j13bi")]
+
+[node name="Codebox" parent="." instance=ExtResource("4_4vmip")]
+
+[node name="Inventory" parent="." instance=ExtResource("4_lfa64")]
+visible = false
+
+[node name="Textbox" parent="." instance=ExtResource("5_fvtp8")]
+
+[node name="Level" type="Node2D" parent="."]
+position = Vector2(1, 0)
+
+[node name="City" parent="Level" instance=ExtResource("6_5ascw")]
+
+[node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -80.0
+
+[node name="Party" type="CanvasLayer" parent="."]
+offset = Vector2(1375, 120)
+transform = Transform2D(1, 0, 0, 1, 1375, 120)
+
+[node name="Turin" parent="Party" instance=ExtResource("8_e1dqr")]
+z_index = 3
+z_as_relative = false
+position = Vector2(-40, 246)
+scale = Vector2(4, 4)
+script = ExtResource("9_8jwi8")
+
+[node name="Kath" parent="Party" instance=ExtResource("10_eiai2")]
+position = Vector2(7, 185)
+
+[connection signal="battle_lost" from="Battle" to="." method="_on_battle_battle_lost"]
+[connection signal="battle_won" from="Battle" to="." method="_on_battle_battle_won"]

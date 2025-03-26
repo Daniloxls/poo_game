@@ -1,15 +1,15 @@
 [gd_scene load_steps=25 format=3 uid="uid://cunpab1ac2q5a"]
 
-[ext_resource type="Script" path="res://scenes/encounters/muscleguy.gd" id="1_lc2v6"]
-[ext_resource type="Script" path="res://scripts/healthbar.gd" id="2_mnv27"]
+[ext_resource type="Script" uid="uid://dpas06yjwt86v" path="res://scenes/encounters/muscleguy.gd" id="1_lc2v6"]
+[ext_resource type="Script" uid="uid://duslxsh1kx7a6" path="res://scripts/healthbar.gd" id="2_mnv27"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_c0xy3"]
 [ext_resource type="Texture2D" uid="uid://1w8676jtjd00" path="res://assets/battle/enemy_sprites/lutador_batalha.png" id="3_fwivw"]
-[ext_resource type="Script" path="res://scripts/Enemies/enemy_sprite.gd" id="3_lvokv"]
+[ext_resource type="Script" uid="uid://cuu5npfi6wswn" path="res://scripts/Enemies/enemy_sprite.gd" id="3_lvokv"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_iw5wo"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_kr241"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_15j8b"]
-[ext_resource type="Script" path="res://scripts/Battle/damage_text.gd" id="7_4p1qv"]
-[ext_resource type="Script" path="res://scripts/Enemies/enemy_hp_bar.gd" id="9_l7ies"]
+[ext_resource type="Script" uid="uid://dsm6n2deiqfqm" path="res://scripts/Battle/damage_text.gd" id="7_4p1qv"]
+[ext_resource type="Script" uid="uid://cy3ytw11y8ceq" path="res://scripts/Enemies/enemy_hp_bar.gd" id="9_l7ies"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8aqci"]
 
@@ -114,10 +114,10 @@ tracks/1/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
 _data = {
-"damage_number": SubResource("Animation_kk0q7"),
-"death": SubResource("Animation_kqvds"),
-"default": SubResource("Animation_6ykin"),
-"get_hit": SubResource("Animation_7lblk")
+&"damage_number": SubResource("Animation_kk0q7"),
+&"death": SubResource("Animation_kqvds"),
+&"default": SubResource("Animation_6ykin"),
+&"get_hit": SubResource("Animation_7lblk")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_qld48"]

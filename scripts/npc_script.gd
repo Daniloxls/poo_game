@@ -27,7 +27,7 @@ var metodos = {}
 var current_state = State.DOWN
 
 func _ready():
-	_animated_sprite.set_sprite_frames(SPRITE)
+	#_animated_sprite.set_sprite_frames(SPRITE)
 	pass
 
 func set_sprite(sprite):

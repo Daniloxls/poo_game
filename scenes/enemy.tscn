@@ -1,15 +1,15 @@
 [gd_scene load_steps=25 format=3 uid="uid://cr71ho5tuj7bn"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_yj3lc"]
-[ext_resource type="Script" path="res://scripts/Battle/damage_text.gd" id="2_qouqx"]
-[ext_resource type="Script" path="res://scripts/healthbar.gd" id="2_qxhjg"]
+[ext_resource type="Script" uid="uid://c325knatye1uj" path="res://scripts/enemy.gd" id="1_yj3lc"]
+[ext_resource type="Script" uid="uid://dsm6n2deiqfqm" path="res://scripts/Battle/damage_text.gd" id="2_qouqx"]
+[ext_resource type="Script" uid="uid://duslxsh1kx7a6" path="res://scripts/healthbar.gd" id="2_qxhjg"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="3_2ys7c"]
 [ext_resource type="Texture2D" uid="uid://cysaqjkew76fv" path="res://assets/battle/enemy_sprites/boneco_treino.png" id="3_exyh3"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_rvifc"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="4_1wklw"]
-[ext_resource type="Script" path="res://scripts/Enemies/enemy_sprite.gd" id="5_5ymjr"]
+[ext_resource type="Script" uid="uid://cuu5npfi6wswn" path="res://scripts/Enemies/enemy_sprite.gd" id="5_5ymjr"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="6_mrpxx"]
-[ext_resource type="Script" path="res://scripts/Enemies/enemy_hp_bar.gd" id="9_u2547"]
+[ext_resource type="Script" uid="uid://cy3ytw11y8ceq" path="res://scripts/Enemies/enemy_hp_bar.gd" id="9_u2547"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_eubrh"]
 line_spacing = 60.0
@@ -193,11 +193,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
 _data = {
-"RESET": SubResource("Animation_nr8us"),
-"damage_number": SubResource("Animation_kk0q7"),
-"death": SubResource("Animation_kqvds"),
-"default": SubResource("Animation_6ykin"),
-"get_hit": SubResource("Animation_7lblk")
+&"RESET": SubResource("Animation_nr8us"),
+&"damage_number": SubResource("Animation_kk0q7"),
+&"death": SubResource("Animation_kqvds"),
+&"default": SubResource("Animation_6ykin"),
+&"get_hit": SubResource("Animation_7lblk")
 }
 
 [node name="Enemy" type="Node2D"]

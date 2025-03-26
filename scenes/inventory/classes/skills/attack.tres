@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SKILL" load_steps=3 format=3 uid="uid://dutwj43v2ybft"]
 
-[ext_resource type="Script" path="res://scripts/Skills/attack.gd" id="1_0w463"]
-[ext_resource type="Script" path="res://scenes/inventory/classes/skills/skill.gd" id="1_esm45"]
+[ext_resource type="Script" uid="uid://wlsonlrso61x" path="res://scripts/Skills/attack.gd" id="1_0w463"]
+[ext_resource type="Script" uid="uid://dwcshq4w3gike" path="res://scenes/inventory/classes/skills/skill.gd" id="1_esm45"]
 
 [resource]
 script = ExtResource("1_esm45")

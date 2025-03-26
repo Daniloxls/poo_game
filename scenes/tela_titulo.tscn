@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://jsptyuvrdvya"]
 
-[ext_resource type="Script" path="res://scenes/tela_titulo.gd" id="1_3oi7u"]
+[ext_resource type="Script" uid="uid://bviejna0voxf5" path="res://scenes/tela_titulo.gd" id="1_3oi7u"]
 [ext_resource type="Texture2D" uid="uid://cj3q3vpn8gluf" path="res://assets/screens/menu_background.png" id="1_cj47b"]
 [ext_resource type="FontFile" uid="uid://ds5sieh3ou4ld" path="res://assets/fonts/BreatheFireIii-PKLOB.ttf" id="2_h3c2x"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_8vrf5"]

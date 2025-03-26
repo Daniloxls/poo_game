@@ -1,9 +1,19 @@
 extends "res://scripts/npc_script.gd"
 
+var teste_try = 1
+
+var count_errors:int = 0
+
+var dialogo_error = ["Acho que é possível tentar “acessar o código” do teste de força","Às vezes, nem sempre a sua força deve ser grande.","Acho que você pode diminuir o peso desse teste."]
+
+
 @onready var peso = $Peso
 @onready var teste = $TesteDeForca
 @onready var camera = get_node("../Player/Camera2D")
 @onready var tickets = get_node("../Tickets")
+@onready var cmdzinho = $"../Cmdzinho_Follower"
+
+
 var triggered = false
 var scene = false
 var game_won = false
@@ -40,14 +50,10 @@ func depure():
 	depuring = true
 	return codigo
 
-
-func methods():
-	return {}
-	
 func interaction():
 	if !scene and !game_won:
-		textbox.queue_text(["Teste sua força para ganhar tickets!"])
 		triggered = true
+		textbox.queue_text(["Teste sua força para ganhar tickets!"])
 	else:
 		textbox.queue_text(["Desculpe garoto, só uma vitoria por pessoa."])
 	
@@ -92,9 +98,15 @@ func _on_textbox_text_finish():
 		else:
 			tween.tween_property(peso, "position", peso.get_position() + Vector2(0, -800), 0.3)
 			tween.tween_property(peso, "position", peso.get_position(), 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
-			tween.tween_callback(textbox.queue_text.bind(texto[1]))
+			await tween.tween_callback(textbox.queue_text.bind(texto[1])).finished
+			cmdzinho.textbox.queue_char_text([dialogo_error[count_errors]],["res://assets/portraits/cmd_feliz.png"])
+			count_errors += 1
+			if count_errors == 3:
+				count_errors = 2
+			
 		tween.tween_property(camera, "offset", Vector2(0, 0), 1)
 		animation_end = true
+		
 	elif animation_end:
 		var tween = create_tween()
 		animation_end = false

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://rqh8da2muvx6"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_irk2k"]
+[ext_resource type="Script" uid="uid://qhlrm6nj76t3" path="res://scripts/game.gd" id="1_irk2k"]
 [ext_resource type="PackedScene" uid="uid://c4bax87kqk6po" path="res://scenes/battle.tscn" id="2_j13bi"]
 [ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://scenes/tela_titulo.tscn" id="4_1yu0a"]
 [ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://scenes/new_codebox.tscn" id="4_4vmip"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="5_fvtp8"]
 [ext_resource type="PackedScene" uid="uid://wtnrlc4bfiyj" path="res://scenes/tutorial/tutorial.tscn" id="6_8nqqs"]
 [ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="8_e1dqr"]
-[ext_resource type="Script" path="res://scenes/inventory/party/battle_turin.gd" id="9_8jwi8"]
+[ext_resource type="Script" uid="uid://do8yvnnkvymxg" path="res://scenes/inventory/party/battle_turin.gd" id="9_8jwi8"]
 [ext_resource type="PackedScene" uid="uid://bspvewmvuf474" path="res://scenes/inventory/party/battle_kath.tscn" id="10_eiai2"]
 
 [node name="Game" type="Node2D"]

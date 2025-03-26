@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://fuhj1dqvf17h"]
 
-[ext_resource type="Script" path="res://scenes/tutorial/scripts/anti_poo_room.gd" id="1_m46t1"]
+[ext_resource type="Script" uid="uid://5iobqdoyxook" path="res://scenes/tutorial/scripts/anti_poo_room.gd" id="1_m46t1"]
 [ext_resource type="Texture2D" uid="uid://ds3tx46r2mn2a" path="res://assets/tileset/anti_poo_room.png" id="2_5owmr"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="6_o84k0"]
 [ext_resource type="Texture2D" uid="uid://dbt3f5iu5u8k4" path="res://assets/effects/brilho.png" id="7_1nri3"]

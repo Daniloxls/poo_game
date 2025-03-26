@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dkrrrbfnsa5lw"]
 
-[ext_resource type="Script" path="res://scripts/battle_menu.gd" id="1_a61xi"]
+[ext_resource type="Script" uid="uid://r2i17u101wcn" path="res://scripts/battle_menu.gd" id="1_a61xi"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_cbckn"]
 [ext_resource type="Script" path="res://scripts/Battle/method_container.gd" id="5_2mi85"]
 [ext_resource type="Script" path="res://scripts/Battle/battle_char_container.gd" id="5_d28wx"]
