@@ -7,7 +7,7 @@ extends CanvasLayer
 signal text_finish
 
 # 'choice_closed' é emitido quando uma escolha é feita
-signal choise_closed
+signal choice_closed
 
 #Velocidade base que o texto é exibido
 const CHAR_READ_RATE = 0.03
@@ -68,6 +68,10 @@ func hide_textbox():
 	textbox_container.hide()
 	choice_container.hide()
 	cursor.hide()
+	
+
+func set_player(player_node):
+	player = player_node
 	
 #Chamada quando se quer saber se pode aparecer um novo dialogo,
 # se a caixa não estiver ready retorna string vazia
@@ -149,9 +153,7 @@ func display_text():
 	# e o player fica parado enquanto estiver em um dialogo
 	change_state(State.READING)
 	if player.current_state == States.Player_State.FREE:
-		print("entrou no diálogo")
 		player.current_state = States.Player_State.ON_DIALOGUE
-		print(player.current_state)
 	show_textbox()
 	#Esconde o texto e faz o tween transicionar ele até ficar todo mostrado
 	label.visible_ratio = 0.0
@@ -169,6 +171,7 @@ func set_choices(choice_list):
 	for i in choices:
 		escolhas += i + "\n"
 	choice_label.text = escolhas
+
 
 # Atualiza a posição do cursor de escolha
 func set_cursor_pos(pos):
@@ -212,6 +215,7 @@ func _process(delta):
 				else:
 					change_state(State.READY)
 					if player.get_state() == States.Player_State.ON_DIALOGUE:
+						await get_tree().process_frame
 						player.call_deferred("set_state", States.Player_State.FREE)
 					textbox_container.hide()
 					portrait.hide()
@@ -241,5 +245,5 @@ func _process(delta):
 				set_cursor_pos(CURSOR_POSITION)
 				cursor.hide()
 				portrait.hide()
-				choise_closed.emit()
+				choice_closed.emit()
 				choices = []

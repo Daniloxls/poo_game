@@ -28,13 +28,14 @@ enum State{
 var current_state = State.FIRST
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	textbox.connect("text_finish", _on_textbox_text_finish)
 	nome = "LeitorDePensamento"
 	codigo = {}
 	texto =[["Seja bem vindo ao meu jogo jovem.", "As regras são bem simples.",
 	"Pense em uma palavra e escreva ela aí embaixo, se eu conseguir advinhar a palavra que você pensou eu ganho.",
 	"Se eu errar você ganha, e de bônus você leva 10 tickets."]]
 	metodos = {
-	"1" : ["String leitor_de_pensamento(Personagem jogador){"],
+	"1" : ["String leitorDePensamento(Personagem jogador){"],
 	"2" : ["\tString resposta"] ,
 	"3" : ["\tresposta = jogador.get_pensamento()"],
 	"0":  ["\treturn resposta;", 8, 8],
@@ -48,7 +49,7 @@ func _process(delta):
 			close_window()
 
 func interaction():
-	player.set_state(States.Player_State.ON_INTERFACE )
+	player.set_state(States.Player_State.ON_INTERFACE)
 	triggered = true
 	open_window()
 	if current_state == State.FINISHED:
@@ -79,7 +80,7 @@ func close_window():
 	error_label.hide()
 	interface.hide()
 	tooltip.reset()
-	player.set_movement(true)
+	player.set_state(States.Player_State.FREE)
 	if current_state != State.FINISHED:
 		think_button.show()
 		pensamento_field.show()
@@ -110,7 +111,7 @@ func _on_textbox_text_finish():
 	if triggered:
 		if first_interaction:
 			first_interaction = false
-			player.set_movement(false)
+			player.set_state(States.Player_State.FREE)
 			current_state = State.OPEN
 		elif current_state == State.OPEN:
 			close_window()
@@ -123,3 +124,7 @@ func _on_textbox_text_finish():
 			pensamento_field.hide()
 			think_button.hide()
 			close_window()
+
+
+func _on_close_pressed():
+	close_window()

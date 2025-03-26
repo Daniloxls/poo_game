@@ -6,8 +6,9 @@
 [resource]
 script = ExtResource("1_dnvpr")
 HEALTH_RESTORE = 20
-ITEM_NAME = "Poção Pequena"
+ITEM_NAME = "Poção_Pequena"
 QUANTITY = 3
 ITEM_ICON = ExtResource("1_xfk6u")
 ITEM_TEXT = "Poção que restaura um pouco de saúde."
 SELECTION = 0
+PRICE = 0

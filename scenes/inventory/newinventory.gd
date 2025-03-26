@@ -3,7 +3,8 @@ extends CanvasLayer
 @onready var audio_click:AudioStreamPlayer = get_node("Audio_Click")
 # invetory é o script da tela principal do inventario
 # 'party' é o nó que guarda todos os personagens como filhos
-@onready var party
+@onready var party = $"../Party"
+
 # 'party_container' é o painel que guarda as informaçoes dos personagens
 @onready var item_menu = $TabContainer/Mochila
 
@@ -18,6 +19,9 @@ extends CanvasLayer
 @onready var char_info = $TabContainer/PersonagemInfo
 
 @onready var held_item_panel = $TabContainer/Personagens/HeldItemPanel
+
+@onready var battle_inventory = $BattleInventory
+
 
 enum Inventory_State{
 	NORMAL,
@@ -89,8 +93,12 @@ func _on_tab_container_tab_changed(tab):
 		equipamento.add_item_buttons(equipment)
 		
 		
-
-
+func use_item(item : ITEM, character):
+	match (item.get_type()):
+		item.Item_type.HEALTH:
+			party_container.get_node(character.get_char_name()).heal_char(item.get_health_restore(), get_personagem(character.get_char_name()))
+			get_personagem(character.get_name()).gain_health(item.get_health_restore())
+			
 func _on_character_click(char_container):
 	match (current_state):
 		Inventory_State.NORMAL:
@@ -114,3 +122,9 @@ func _on_item_use(item : ITEM):
 			tab_container.set_current_tab(0)
 			held_item_panel.show()
 			held_item_panel.set_item_name(item.get_item_name())
+			
+func show_battle_inventory():
+	battle_inventory.show()
+
+func hide_battle_inventory():
+	battle_inventory.hide()

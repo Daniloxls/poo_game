@@ -13,7 +13,9 @@ func _ready():
 	texto = ["Ah olá, Turin.",
 	 "Por aqui fica o evento principal.",
 	 "O rei deixou exibirmos a espada protetora, então fizemos uma atração com ela."]
-
+	textbox.connect("choice_closed", _on_textbox_choise_closed)
+	textbox.connect("text_finish", _on_textbox_text_finish)
+	
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
 

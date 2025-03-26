@@ -11,6 +11,13 @@ signal health_change
 
 signal select_targets
 
+signal button_mouse_in
+signal button_mouse_out
+
+signal sprite_clicked
+signal mouse_in
+signal mouse_out
+
 @onready var animation = $AnimationPlayer
 @onready var sprite = $Sprite
 # 'damage_text' dano que o personagem tomou aparece nessa label
@@ -18,14 +25,21 @@ signal select_targets
 @onready var char_pic = $CharPic
 @onready var battle_options = $BattleOptions
 
+enum State{
+	DEFAULT,
+	ACTED,
+	ANIMATION,
+	DEFEATED
+}
+var current_state = State.DEFAULT
 
 # Status de teste para o personagem
 var nome : String
 var rpg_class : RPG_CLASS
 var hp : int
 var max_hp : int
-var mp : int
-var max_mp  : int
+var pp : int
+var max_pp  : int
 var level : int
 var atk : int
 var def : int
@@ -47,7 +61,7 @@ var equipment = {
 func _ready():
 	#healthbar.hide()
 	animation.play("default")
-	original_pos = get_position()
+	
 	pass # Replace with function body.
 
 
@@ -79,6 +93,12 @@ func get_turn_cursor_pos():
 	size = size * sprite.get_scale()
 	return(Vector2(position) + Vector2(size.x, size.y))
 	
+func get_state():
+	return current_state
+	
+func set_state(new_state):
+	current_state = new_state
+	
 func get_nome():
 	return nome
 
@@ -92,11 +112,11 @@ func get_max_hp():
 			current_max_hp += equipment[equip].get_hp_bonus()
 	return current_max_hp
 	
-func get_mp():
-	return mp
+func get_pp():
+	return pp
 
-func get_max_mp():
-	var current_max_pp = max_mp
+func get_max_pp():
+	var current_max_pp = max_pp
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_max_pp += equipment[equip].get_pp_bonus()
@@ -170,21 +190,20 @@ func is_alive():
 # Função de cura do personagem, toca animação de cura e retorna porcentagem da vida atual
 func gain_health(value):
 	var current_max_hp = max_hp
+	var old_hp = hp
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_max_hp += equipment[equip].get_hp_bonus()
 	hp += value
 	if hp > current_max_hp:
+		value = current_max_hp - old_hp
 		hp = current_max_hp
 	animation.play("heal")
-	return float(hp)/current_max_hp
+	return value
 	
 # Função de receber dano
-func lose_health(value):
-	var current_max_hp = max_hp
-	for equip in equipment.keys():
-		if equipment[equip]:
-			current_max_hp += equipment[equip].get_hp_bonus()
+func take_damage(value):
+	var current_max_hp = get_max_hp()
 	hp -= value
 	#Checa se o personagem morreu
 	if hp < 0:
@@ -192,6 +211,7 @@ func lose_health(value):
 	if hp == 0:
 		# toca animação de morte e emite o sinal
 		animation.play("death")
+		set_state(State.DEFEATED)
 		death.emit()
 	else:
 		# se o personagem ainda estiver vivo só toca a animação de receber dano
@@ -199,22 +219,23 @@ func lose_health(value):
 	#Numero do dano aparece na tela conforme o dano é tomado
 	damage_text.number_animation(value)
 	# retorna porcentagem do hp
-	return float(hp)/current_max_hp
+	return -value
 
-func set_action_buttons():
-	var skills = rpg_class.SKILLS
-	
+func connect_action_buttons():
 	for button in battle_options.get_children():
-		button.connect("select_targets", _on_button_select_targets)
+		button.connect("select_target", _on_button_select_targets)
+		button.connect("mouse_in", _on_button_mouse_in)
+		button.connect("mouse_out", _on_button_mouse_out)
 
-
-func _on_button_select_targets(targets):
-	select_targets.emit(targets)
+func _on_button_select_targets(targets, id, char_node):
+	select_targets.emit(targets, id, char_node)
 	
-# emite o sinal de fim de animação quando recebe o sinal da barra de vida
-# Usado no monstro mas não aqui, remover depois
-func _on_healthbar_animation_end():
-	animation_end.emit()
+func _on_button_mouse_in(skill_name):
+	button_mouse_in.emit(skill_name)
+
+func _on_button_mouse_out():
+	button_mouse_out.emit()
+	
 
 func set_hp(new_hp):
 	hp = new_hp
@@ -230,11 +251,47 @@ func get_equip(slot):
 
 func get_strict_max_hp():
 	return max_hp
-func get_strict_max_mp():
-	return max_mp
+func get_strict_max_pp():
+	return max_pp
 func get_strict_atk():
 	return atk
 func get_strict_def():
 	return def
 func get_strict_vel():
 	return vel
+
+func execute_skill(id, targets):
+	battle_options.get_child(id).execute_skill(targets, self)
+	set_state(State.ACTED)
+
+func show_options():
+	battle_options.show()
+
+func hide_options():
+	battle_options.hide()
+
+func default_state():
+	current_state = State.DEFAULT
+
+		
+func on_sprite_clicked():
+	sprite_clicked.emit(get_index())
+
+func on_sprite_mouse_in():
+	mouse_in.emit(self.nome)
+
+func on_sprite_mouse_out():
+	mouse_out.emit()
+
+
+func set_acted(option):
+	if option:
+		set_state(State.ACTED)
+	else:
+		set_state(State.DEFAULT)
+
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name != "default":
+		animation_end.emit()

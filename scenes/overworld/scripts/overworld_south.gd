@@ -1,13 +1,14 @@
 extends Node2D
 @onready var player = $Player
-@onready var textbox = $Textbox
-@onready var codebox = $Codebox
+@onready var textbox = $"../../Textbox"
+@onready var codebox = $"../../Codebox"
 @onready var kath = $Kath
 @onready var music =  $"../../AudioPlayer"
 var entrances = [Vector2(11156, -4642)]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	starting_cutscene()
+	textbox.connect("text_finish", _on_textbox_text_finish)
 	music.set_stream(load("res://assets/bgm/Fame Town Marcelo Fernandez.mp3"))
 	music.play()
 
@@ -16,7 +17,7 @@ func _process(delta):
 	pass
 
 func starting_cutscene():
-	player.set_in_scene(true)
+	player.set_state(States.Player_State.ON_SCENE)
 	var tween = create_tween()
 	tween.tween_callback(player.set_sprite.bind("idle_left"))
 	tween.tween_callback(kath.set_sprite.bind("idle_right"))
@@ -35,7 +36,7 @@ func _on_textbox_text_finish():
 		tween.tween_property(kath, "position", Vector2(6000,-4500), 1.6).set_trans(Tween.TRANS_LINEAR)
 		tween.tween_callback(kath.set_sprite.bind("walk_up"))
 		tween.tween_property(kath, "position", Vector2(6000,-8000), 1.6).set_trans(Tween.TRANS_LINEAR)
-		tween.tween_callback(player.set_in_scene.bind(false))
+		tween.tween_callback(player.set_state.bind(States.Player_State.FREE))
 		tween.tween_callback(kath.set_position.bind(Vector2(5200, -10300)))
 		tween.tween_callback(kath.set_sprite.bind("idle_down"))
 		kath.set_seq(1)

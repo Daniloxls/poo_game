@@ -23,8 +23,9 @@ func _on_codebox_code_open(name):
 		dialogue = false
 		textbox.queue_char_text(["Ótimo, essa ponte tem uma variável que controla o tamanho dela.",
 		"Uma variável do tipo int tem um valor numérico que podemos aumentar ou diminuir.",
-		"Basta apertar a seta para a direita para aumentar e a seta esquerda para diminuir a variável selecionada.",
-		"Selecione a variável tamanho e tente aumentar ela para conseguir cruzar esse penhasco."],
+		"Basta selecionar a variável e digitar o valor para colocar nela.",
+		"Selecione a variável tamanho e tente aumentar ela para conseguir cruzar esse penhasco.",
+		"Quando você fechar o menu de código o valor dela deve se atualizar"],
 		["res://assets/portraits/silhueta.png",
 		"res://assets/portraits/silhueta.png",
 		"res://assets/portraits/silhueta.png",

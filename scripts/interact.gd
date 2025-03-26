@@ -63,12 +63,11 @@ func _unhandled_input(event: InputEvent):
 	if has_popup and event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			# Check if the mouse is over this object's Area2D
-			print("clicou")
-			if mouse_over:
-				# Open the popup manually
-				menu_button.show_popup()
-				# Set the popup position to the mouse location
-				call_deferred("_set_popup_position")
+				if mouse_over:
+					# Open the popup manually
+					menu_button.show_popup()
+					# Set the popup position to the mouse location
+					call_deferred("_set_popup_position")
 			
 func ready_drop_menu():
 	if (codigo == {}) and (metodos == {}):

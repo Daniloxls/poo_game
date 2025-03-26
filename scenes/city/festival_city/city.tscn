@@ -1,4 +1,4 @@
-[gd_scene load_steps=132 format=4 uid="uid://bhl2fw3fmtrpc"]
+[gd_scene load_steps=128 format=4 uid="uid://bhl2fw3fmtrpc"]
 
 [ext_resource type="Script" path="res://scenes/city/festival_city/city.gd" id="1_e3xut"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="1_eoyq6"]
@@ -25,12 +25,9 @@
 [ext_resource type="Texture2D" uid="uid://ckds0204dlj6x" path="res://assets/tileset/city/casa_reino2.png" id="20_an34w"]
 [ext_resource type="Texture2D" uid="uid://p8ogutr7owmt" path="res://assets/tileset/city/casa_reino3.png" id="21_cn57e"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/sword_cutscene.gd" id="22_irl0a"]
-[ext_resource type="Texture2D" uid="uid://dbw6seicqkxrj" path="res://assets/gui/question.png" id="23_e5ug5"]
 [ext_resource type="Texture2D" uid="uid://dokgyntmcjbrj" path="res://assets/characters/anti_poo_down.png" id="23_n81b1"]
 [ext_resource type="Texture2D" uid="uid://brve6wof3ny6h" path="res://assets/characters/anti_poo_pegando_espada.png" id="24_3fmp8"]
-[ext_resource type="Script" path="res://scenes/city/festival_city/TutorialPanel.gd" id="24_e4kh5"]
 [ext_resource type="Texture2D" uid="uid://5yjr5om7ssa3" path="res://assets/characters/anti_poo_segurando_espada.png" id="25_ei1qg"]
-[ext_resource type="Texture2D" uid="uid://8xdak1jlawhg" path="res://assets/gui/cat.png" id="25_mdouk"]
 [ext_resource type="Texture2D" uid="uid://d45euhrykdak" path="res://assets/characters/anti-poo_spritesheet.png" id="26_cmpcu"]
 [ext_resource type="Texture2D" uid="uid://ddijei240uigb" path="res://assets/props/city/espada_na_pedra.png" id="27_3q8aw"]
 [ext_resource type="Texture2D" uid="uid://cq4myq5d7ijmf" path="res://assets/characters/campones_1.png" id="27_6he7b"]
@@ -46,6 +43,7 @@
 [ext_resource type="Script" path="res://scenes/city/festival_city/tickets.gd" id="40_u5lbm"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="41_5mkgm"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/scripts/npc1.gd" id="43_hokio"]
+[ext_resource type="Script" path="res://scenes/characters/fighter_sprite.gd" id="43_o88vi"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/scripts/npc2.gd" id="44_oss34"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/scripts/npc3.gd" id="45_ca4es"]
 [ext_resource type="Script" path="res://scenes/city/festival_city/scripts/cmdzinho.gd" id="45_q6mqx"]
@@ -1507,28 +1505,6 @@ sources/14 = SubResource("TileSetAtlasSource_dvq3x")
 sources/17 = SubResource("TileSetAtlasSource_ypcm1")
 sources/18 = SubResource("TileSetAtlasSource_vx4on")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj68f"]
-bg_color = Color(0, 0.101961, 0.184314, 0.772549)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 60
-corner_radius_top_right = 60
-corner_radius_bottom_right = 60
-corner_radius_bottom_left = 60
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfux5"]
-bg_color = Color(0.137255, 0.14902, 0.180392, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_26v0d"]
 atlas = ExtResource("23_n81b1")
 region = Rect2(0, 0, 500, 700)
@@ -2043,117 +2019,6 @@ tile_map_data = PackedByteArray("AADu/9P/AwAAAAAAAADv/9P/AwABAAAAAADw/9P/AwACAAA
 tile_set = SubResource("TileSet_rcbio")
 y_sort_origin = 1
 
-[node name="TutorialPanel" type="CanvasLayer" parent="."]
-layer = 2
-visible = false
-script = ExtResource("24_e4kh5")
-
-[node name="Button" type="Button" parent="TutorialPanel"]
-offset_left = 1075.0
-offset_top = 27.0
-offset_right = 1181.0
-offset_bottom = 133.0
-scale = Vector2(0.39, 0.39)
-focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0, 0.909804, 0.776471, 1)
-theme_override_styles/hover = SubResource("StyleBoxFlat_sj68f")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_sj68f")
-theme_override_styles/normal = SubResource("StyleBoxFlat_sj68f")
-icon = ExtResource("23_e5ug5")
-
-[node name="Panel" type="Panel" parent="TutorialPanel"]
-offset_left = 14.0
-offset_top = 14.0
-offset_right = 1136.0
-offset_bottom = 632.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_bfux5")
-
-[node name="Label2" type="RichTextLabel" parent="TutorialPanel/Panel"]
-layout_mode = 0
-offset_left = 575.0
-offset_top = 76.0
-offset_right = 1115.0
-offset_bottom = 111.0
-theme_override_fonts/normal_font = ExtResource("41_5mkgm")
-theme_override_font_sizes/normal_font_size = 20
-bbcode_enabled = true
-text = "[color=#A0A1A7cc]//(Tipo do retorno) Nome_do_Metodo(argumentos)[/color]"
-autowrap_mode = 2
-
-[node name="Label" type="RichTextLabel" parent="TutorialPanel/Panel"]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 33.0
-offset_right = 571.0
-offset_bottom = 634.0
-theme_override_fonts/normal_font = ExtResource("41_5mkgm")
-theme_override_font_sizes/normal_font_size = 27
-bbcode_enabled = true
-text = "//Tutorial de Métodos
-
-Métodos são funções que são definidas dentro de uma classe, eles representam os comportamentos que os objetos dessa classe realizam. 
-Métodos permitem que os objetos interajam, realizem tarefas e manipulem os dados do objeto. Eles podem retornar variáveis de qualquer tipo a quem chamou esse método, ou não retornar nada.
-
-Miar pode ser considerado um método de um gato, ou seja, uma ação que os objetos gatos podem realizar.
-Caso você chame o Miar(1) de um gato, um possível retorno seria a string \"Miau\""
-autowrap_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="TutorialPanel/Panel"]
-layout_mode = 0
-offset_left = -14.0
-offset_top = -14.0
-offset_right = 26.0
-offset_bottom = 26.0
-
-[node name="Panel2" type="Panel" parent="TutorialPanel/Panel"]
-layout_mode = 0
-offset_left = 567.0
-offset_top = 109.0
-offset_right = 1101.0
-offset_bottom = 587.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_bfux5")
-
-[node name="Sprite2D" type="Sprite2D" parent="TutorialPanel/Panel/Panel2"]
-position = Vector2(130, 421)
-scale = Vector2(0.305, 0.305)
-texture = ExtResource("25_mdouk")
-
-[node name="Label4" type="RichTextLabel" parent="TutorialPanel/Panel/Panel2"]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 15.0
-offset_right = 554.0
-offset_bottom = 474.0
-theme_override_fonts/normal_font = ExtResource("41_5mkgm")
-theme_override_font_sizes/normal_font_size = 25
-bbcode_enabled = true
-text = "[color=#c74ded]String[/color] [color=#FFE66D]Miar[/color]([color=#c74ded]int[/color][color=#00e8c6] volume[/color]){
-[color=#A0A1A7cc]// variáveis internas[/color]
-	[color=#c74ded]String[/color] [color=#00e8c6]miado[/color];
-
-	[color=#A0A1A7cc] // lógica do método[/color]
-	[color=#00e8c6]miado[/color][color=#ee5d43] = [/color][color=#96E072]'Mi'[/color];
-	[color=#c74ded]for[/color][color=#7cb7ff]([/color][color=#c74ded]int[/color] [color=#00e8c6]i[/color] [color=#ee5d43]=[/color][color=#f39c12] 0[/color]; i [color=#ee5d43]<[/color] [color=#00e8c6]volume[/color]; i[color=#ee5d43]++[/color][color=#7cb7ff])[/color][color=#c74ded]{[/color]
-		[color=#00e8c6]miado[/color][color=#ee5d43] += [/color][color=#96E072]'a'[/color];
-	[color=#c74ded]}[/color]
-	[color=#00e8c6]miado[/color][color=#ee5d43] += [/color][color=#96E072]'u'[/color];
-
-	[color=#c74ded]return[/color] [color=#00e8c6]miado[/color];
-}"
-autowrap_mode = 2
-
-[node name="Label3" type="RichTextLabel" parent="TutorialPanel/Panel"]
-layout_mode = 0
-offset_left = 971.0
-offset_top = 542.0
-offset_right = 1099.0
-offset_bottom = 577.0
-theme_override_fonts/normal_font = ExtResource("41_5mkgm")
-theme_override_font_sizes/normal_font_size = 27
-bbcode_enabled = true
-text = "Z - Sair"
-autowrap_mode = 2
-
 [node name="Cutscene" type="Node2D" parent="."]
 position = Vector2(13285, -1796)
 script = ExtResource("22_irl0a")
@@ -2286,6 +2151,7 @@ offset_left = 487.0
 offset_top = 508.0
 offset_right = 628.0
 offset_bottom = 554.0
+focus_mode = 0
 theme_override_colors/font_focus_color = Color(0, 0, 0.305882, 1)
 theme_override_colors/font_color = Color(0, 0, 0.305882, 1)
 theme_override_constants/outline_size = 0
@@ -2305,6 +2171,15 @@ theme_override_font_sizes/font_size = 36
 text = "Saiu para Almoçar"
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="Close" type="Button" parent="TendaVidente/VidenteInterface"]
+offset_left = 1002.0
+offset_top = 8.0
+offset_right = 1144.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("41_5mkgm")
+theme_override_font_sizes/font_size = 32
+text = "Fechar"
 
 [node name="TendaNPC" parent="." instance=ExtResource("5_whr0p")]
 z_index = 2
@@ -2341,6 +2216,12 @@ script = ExtResource("9_mr6pp")
 z_index = 2
 position = Vector2(-5046, -20461)
 scale = Vector2(1.2, 1.2)
+script = ExtResource("43_o88vi")
+
+[node name="LutadorInteract" parent="LutadorNPC" instance=ExtResource("35_tlwih")]
+z_index = 1
+position = Vector2(73.3335, 42.5004)
+scale = Vector2(0.986167, 1.54239)
 script = ExtResource("9_lgh0v")
 
 [node name="ExcaliburNPC" parent="." instance=ExtResource("5_whr0p")]
@@ -2406,5 +2287,5 @@ stretch_mode = 4
 
 [connection signal="battle_lost" from="." to="TatameNPC" method="_on_city_battle_lost"]
 [connection signal="battle_won" from="." to="TatameNPC" method="_on_city_battle_won"]
-[connection signal="pressed" from="TutorialPanel/Button" to="TutorialPanel" method="_on_button_pressed"]
 [connection signal="pressed" from="TendaVidente/VidenteInterface/Button" to="TendaVidente" method="_on_button_pressed"]
+[connection signal="pressed" from="TendaVidente/VidenteInterface/Close" to="TendaVidente" method="_on_close_pressed"]

@@ -13,8 +13,7 @@ signal battle_lost
 @onready var party
 # 'char_list' é uma lista com todos os nós dos personagens
 @onready var char_list = get_node("../Party").get_children()
-# 'inventory' é a versão para batalha do inventario
-@onready var inventory = get_node("../Inventory/BattleItemMenu")
+
 # 'player' é somente usado para bloquear o movimento do jogador no mapa
 @onready var player = get_node("../Level").get_child(0).find_child("Player")
 
@@ -34,93 +33,70 @@ signal battle_lost
 
 @onready var textbox = $"../Textbox"
 
+@onready var tooltip = $TooltipContiner
+
+@onready var party_menu = $"BattleMenu/PartyContainer/Personagem[ ]/BattleCharContainer"
+@onready var inventory = $"../Inventory/BattleInventory"
+@onready var battle_inventory = $"../Inventory/BattleInventory/BattleInventoryTabs/Mochila"
+
 # Os sprites começam fora da tela e entram com uma transição no começo da batalha
 # esses offsets são o quanto eles se movem para chegar nos seus lugares certos
 const ENEMY_POS_OFFSET = Vector2(128, 0)
-const CHARACTER_POS_OFFSET = Vector2(300,0)
+const CHARACTER_POS_OFFSET = Vector2(-300,0)
 
-# possiveis estados da batalha, talvez possa ser reduzido.
-enum Selecting{
-	ITEM_ALLIE,
-	ITEM_ENEMY,
-	ITEM_ALL_ALLIES,
-	ITEM_ALL_ENEMIES,
-	ITEM_ALL,
-	NONE,
-	STARTING,
-	ACTION,
-	ENEMY,
-	ALLIE,
-	ALL_ALLIES,
-	ALL_ENEMIES,
-	MENU,
-	ANIMATION,
-	ENEMY_PHASE,
-	VICTORY,
-	DEFEAT,
-	OTHER
-}
-# 'current_selection' estado atual da batalha
-var current_selection = Selecting.STARTING
+# 'current_state' estado atual da batalha
+var current_state = States.Battle_States.STARTING
 # lista que guarda cordenadas da frente dos personagens, para o cursor poder 
 # apontar para eles
 var character_coords = []
 # mesma coisa mas é a parte de trás, para o uso do cursor de turno dessa vez
 var character_back_coords = []
-# personagem aliado que está sendo apontado pelo cursor
-var char_index = 0
-# 'char_turn' qual personagem está agindo agora
-var char_turn = -1
+
+var char_index
 # 'in_battle' setado como true quando a batalha começa e como false assim que o
 # ultimo inimigo morre, se in_battle == false, nenhuma logica da batalha acontece  
 var in_battle = false
 # lista de cordenadas dos inimigos para serem apontados pelo cursor
-var enemy_coords = []
 var enemy_names = []
-var enemy_index = 0
-
 # 'enemies' e 'enemy_list' mesma logica do party e char_list, só que para os inimigos.
 var enemies 
 var enemy_list
 
+# requested_skill_targets guarda quais personagens o jogador deve escolher para usar certa habilidade
+var requested_skill_targets = []
+# skill_targets são os atuais alvos da skill que está sendo usada
+var skill_targets = []
+
+var current_character
+var skill_button_id
+
+var held_item : ITEM
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#Como está sempre instanciada a batalha começa escondida
 	hide()
 	textbox.connect("text_finish", _on_text_finish)
 	party = get_tree().root.get_node("Game/Party")
-
+	menu.connect("animation_end", on_menu_animation_end)
+	battle_inventory.connect("item_use", on_inventory_item_click)
+	battle_inventory.connect("close", on_inventory_close)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	read_input()
-	debug.text = str(Selecting.keys()[current_selection]) + "\n"
-	# checa se todos os personagens agiram, para dar a vez para os inimigos
-	if current_selection == Selecting.ACTION and char_turn >= len(char_list):
-		set_selection(Selecting.ENEMY_PHASE)
-		char_turn = -1
-		char_turn = update_char_turn()
-		enemy_turn()
-		
+	debug.text = str(States.Battle_States.keys()[current_state]) + "\n"
+
 # Função que reinicia as variaveis já que batalha sai de cena nunca
 func reset_variables():
-	current_selection = Selecting.ANIMATION
+	current_state = States.Battle_States.ANIMATION
 	character_coords = []
 	character_back_coords = []
-	char_index = 0
-	char_turn =  -1
-	enemy_coords = []
 	enemy_names = []
-	enemy_index = 0
 	
-func select_enemy():
-	current_selection = Selecting.ENEMY
-
 # Função usada pra começar a batalha, como argumento é passado uma string com o
 # caminho para o grupo de inimigos que está na batalha
 func start_battle(enemy_group_path):
 	# Carrega o nó com os inimigos, instancia ele e adiciona como filho de Batalha
 	#var enemy_group = load(enemy_group_path)
-	var enemy_group = load("res://scenes/encounters/testdummy.tscn")
+	var enemy_group = load(enemy_group_path)
 	var instance = enemy_group.instantiate()
 	# Bloqueia movimento do jogador
 	player.set_state(States.Player_State.ON_BATTLE)
@@ -131,7 +107,14 @@ func start_battle(enemy_group_path):
 	# Pega variaveis que apontam para o grupo de inimigos e faz a lista com os
 	# inimigos
 	for char in party.get_children():
-		char.connect("select_targets", on_char_select_target)
+		char.connect("select_targets", on_char_skill_pressed)
+		char.connect("button_mouse_in", on_skill_button_mouse_in)
+		char.connect("button_mouse_out", on_skill_button_mouse_out)
+		char.connect("sprite_clicked", on_char_sprite_clicked)
+		char.connect("mouse_in", on_char_sprite_mouse_in)
+		char.connect("mouse_out", on_char_sprite_mouse_out)
+		char.connect("animation_end", _on_enemy_animation_end)
+		char.connect("death", _on_char_death)
 	enemies = $Enemies
 	enemy_list = $Enemies.get_children()
 	# liga os sinais de "animation_end" e "death" dos inimigos com as respectivas
@@ -139,6 +122,11 @@ func start_battle(enemy_group_path):
 	for enemy in enemy_list:
 		enemy.connect("animation_end", _on_enemy_animation_end)
 		enemy.connect("death", _on_enemy_death)
+		enemy_names.append(enemy.get_nome())
+		enemy.connect("sprite_clicked", on_enemy_sprite_clicked)
+		enemy.connect("mouse_in", on_enemy_sprite_mouse_in)
+		enemy.connect("mouse_out", on_enemy_sprite_mouse_out)
+		enemy.enemy_ready()
 	# aparece o cenario da batalha
 	show()
 	# cria um tween para fazer as transições de começo
@@ -150,150 +138,23 @@ func start_battle(enemy_group_path):
 	tween.set_parallel()
 	# Seta todas as informações dos personagens no menu e transiciona os sprites
 	# para dentro do cenario
+	menu.set_characters(party.get_children())
+
+	menu.add_enemies(enemy_list)
+	
 	for char in party.get_children():
-		tween.tween_property(char, "position", char.position - CHARACTER_POS_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
-		menu.set_character_name(char_index, char.get_nome())
-		menu.update_health_instant(char_index, char.get_health_percentage())
-		menu.update_mana_slow(char_index, char.get_mp())
-		menu.show_char_status(char_index)
-		char_index +=1
+		tween.tween_property(char, "position", char.position + CHARACTER_POS_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
+		
 	# O mesmo para os inimigos
 	for enemy in enemy_list:
 		tween.tween_property(enemy, "position", enemy.position + ENEMY_POS_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
-		enemy_names.append(enemy.get_nome())
+		
 	# delisga o paralelo do tween, então todas as transições ocorrem uma por vez
 	tween.set_parallel(false)
-	# Seta o nome dos inimigos no menu
-	menu.set_monster_names(enemy_names)
+
 	# No final da transição dos personagens o menu aparece
 	tween.tween_callback(menu.show)
-
-	# Volta o index ao inicial
-	char_index = -1
-	char_index = update_char_index_down()
-	char_turn = update_char_turn()
-	# Coloca o cursor de turno na posição do personagem que vai agir primeiro
-
-	
-	
-func read_input():
-	# Mostra informações de debug
-	if Input.is_action_just_pressed("a"):
-		#debug.show()
-		pass
-	if in_battle:
-		# 'Selecting.ACTION' o jogador está escolhendo uma opção entre
-		# Lutar, Item, Função, etc.
-		if current_selection == Selecting.ACTION:
-			if Input.is_action_just_pressed("up"):
-				menu.move_cursor_up()
-			elif Input.is_action_just_pressed("down"):
-				menu.move_cursor_down()
-			# Quando o jogador aperta 'Z', confere onde está o cursor e muda para
-			# o estado apropiado
-			elif Input.is_action_just_pressed("interact"):
-					match(menu.get_cursor_pos()):
-						# Lutar
-						0:
-							menu.hide_cursor()
-							current_selection = Selecting.ENEMY
-							cursor.set_flip_h(true)
-							cursor.show()
-							cursor.set_position(enemy_coords[0])
-						# Provisorio: aqui vão ser as magias, no jogo chamadas de funções
-						1:
-							menu.hide_cursor()
-							current_selection = Selecting.ALLIE
-							cursor.set_flip_h(false)
-							cursor.show()
-							cursor.set_position(character_coords[char_index])
-						# Item
-						2:
-							pass
-							#menu.hide_cursor()
-							#current_selection = Selecting.MENU
-							#inventory.aparecer()
-		
-		
-		# Se selecionou atacar deve escolher um inimigo
-		elif current_selection == Selecting.ENEMY:
-			if Input.is_action_just_pressed("up"):
-				if enemy_index == 0:
-					enemy_index = len(enemy_coords) - 1
-				else:
-					enemy_index -= 1
-				cursor.set_position(enemy_coords[enemy_index])
-			elif Input.is_action_just_pressed("down"):
-				if enemy_index == (len(enemy_coords) - 1):
-					enemy_index = 0
-				else:
-					enemy_index += 1
-				cursor.set_position(enemy_coords[enemy_index])
-			# Quando escolhe o inimigo
-			elif Input.is_action_just_pressed("interact"):
-				#Aqui deve entrar a função de ataque do personagem atual
-				enemy_list[enemy_index].lose_health(randi_range(8, 12))
-				#Muda para animação
-				current_selection = Selecting.ANIMATION
-				cursor.hide()
-				char_turn = update_char_turn()
-
-			# Se o jogador apertar 'X' ele volta para seleção de ação 
-			elif Input.is_action_just_pressed("exit"):
-				current_selection = Selecting.ACTION
-				cursor.hide()
-				menu.show_cursor()
-		
-		
-		#Você vem parar aqui se escolher a segunda opção na batalha
-		# A maior parte aqui é teste para ver se a logica está funcionando
-		elif current_selection == Selecting.ALLIE:
-			if Input.is_action_just_pressed("up"):
-				char_index = update_char_index_up()
-				cursor.set_position(character_coords[char_index])
-			elif Input.is_action_just_pressed("down"):
-				char_index = update_char_index_down()
-				cursor.set_position(character_coords[char_index])
-			elif Input.is_action_just_pressed("interact"):
-				menu.update_health_slow(char_index, char_list[char_index].lose_health(randi_range(8, 12)))
-				current_selection = Selecting.ANIMATION
-			elif Input.is_action_just_pressed("exit"):
-				current_selection = Selecting.ACTION
-				cursor.hide()
-				menu.show_cursor()
-		
-		# Aqui é quando o jogador está no inventario
-		elif current_selection == Selecting.MENU:
-			if Input.is_action_just_pressed("exit"):
-				current_selection = Selecting.ACTION
-				inventory.esconder()
-				menu.show_cursor()
-			# Quando um item é escolhido, ele retorna em qual tipo de personagem
-			# esse item pode ser usado e então ele vai para o Selecting apropiado
-			elif Input.is_action_just_pressed("interact"):
-				current_selection = inventory.get_item_selected()
-				inventory.esconder()
-				if current_selection == Selecting.NONE:
-					current_selection =Selecting.MENU
-					inventory.aparecer()
-					#Tocar som de não pode
-		
-		# Se o item só pode ser usado em aliados, um alido deve ser selecionado
-		elif current_selection == Selecting.ITEM_ALLIE:
-			if Input.is_action_just_pressed("up"):
-				char_index = update_char_index_up()
-				cursor.set_position(character_coords[char_index])
-			elif Input.is_action_just_pressed("down"):
-				char_index = update_char_index_down()
-				cursor.set_position(character_coords[char_index])
-			elif Input.is_action_just_pressed("interact"):
-				# Usar o item no aliado que está sendo selecionado
-				pass
-			elif Input.is_action_just_pressed("exit"):
-				current_selection = Selecting.MENU
-				inventory.aparecer()
-				cursor.hide()
-				
+	tween.tween_callback(player_turn)
 # Toda vez que um inimigo morre, ele emite um sinal, quando esse sinal é recebido
 # Essa função ocorre
 func _on_enemy_death():
@@ -303,107 +164,87 @@ func _on_enemy_death():
 			var id = enemy_list.find(enemy)
 			enemy_list.pop_at(id)
 			enemy_names.pop_at(id)
-			enemy_coords.pop_at(id)
-			menu.set_monster_names(enemy_names)
+			menu.pop_enemy_button(id)
+			#menu.set_monster_names(enemy_names)
 			# Se não tem mais inimigos a batalha acaba
 			if len(enemy_list) == 0:
 				# Emite sinal do final da batalha
-				current_selection = Selecting.VICTORY
+				current_state = States.Battle_States.VICTORY
 				textbox.queue_text(["Você venceu!"])
 				battle_won.emit()
+
 
 # quando uma animação do inimigo acaba ele emite um sinal, quando recebe esse sinal
 # Se ainda existem inimigos continua a batalha, caso contrario entra no estado de vitoria
 func _on_enemy_animation_end():
-	cursor.hide()
-	if len(enemy_list) > 0:
-		current_selection = Selecting.ACTION
-		enemy_index = 0
-		menu.show_cursor()
-		cursor.set_position(enemy_coords[0])
-	else:
-		current_selection = Selecting.VICTORY
-		menu.hide()
+	for enemy in enemy_list:
+		if enemy.get_state() == 1:
+			return
+	for char in party.get_children():
+		if char.get_state() == 0:
+			char.show_options()
+			current_state = States.Battle_States.PLAYER_TURN
+			return
+	enemy_turn()
 
 # Quando um personagem toma dano o menu transiciona a vida dele como uma animação
 # quando essa animação acaba ele executa essa função
 func _on_battle_menu_animation_end():
+	if current_state == States.Battle_States.DEFEAT:
+		lost()
+		return
 	# Checa se todos os personagens estão mortos, se algum estiver vivo
 	# sai da função
 	for char in char_list:
 		if char.get_hp() > 0:
 			cursor.hide()
-			current_selection = Selecting.ACTION
+			current_state = States.Battle_States.PLAYER_TURN
 			menu.show_cursor()
 			animation_end.emit()
 			return
 	# Se todos foram derrotados coloca a batalha no estado de derrota
-	current_selection = Selecting.DEFEAT
+	current_state = States.Battle_States.DEFEAT
 	menu.hide()
 	animation_end.emit()
 	textbox.queue_text(["Você foi derrotado."])
+	
 	battle_lost.emit()
 
-# 'update_char_index_up' e 'update_char_index_down' servem para mover o cursor
-# Ele pula os personagens que estão caidos, se só um personagem estiver vivo ele
-# vai retornar o mesmo numero que estava
-func update_char_index_up():
-	var id = char_index - 1
-	if id == -1:
-		id = len(char_list)-1
-	for i in range(4):
-		if char_list[id].is_alive():
-			break
-		else:
-			id -= 1
-			if id == -1:
-				id = len(char_list)-1
-	return id
-	
-func update_char_index_down():
-	var id = char_index + 1
-	if id == len(char_list):
-		id = 0
-	for i in range(4):
-		if char_list[id].is_alive():
-			break
-		else:
-			id += 1
-			if id == len(char_list):
-				id = 0
-	return id
 
-# 'update_char_turn' faz o mesmo só que para o turno, ele passa o turno para o 
-# proximo personagem que está vivo ainda
-func update_char_turn():
+func player_turn():
 	if !in_battle:
-		return -1
-	var id = char_turn + 1
-	if id == len(char_list):
-		return id
-	for i in range(4):
-		if char_list[id].is_alive():
+		return
+	for enemy in enemy_list:
+		enemy.reset_state()
+	#checa os personagens vivos
+	for char in char_list:
+		if char.get_state() != 3:
+			char.default_state()
+	current_state = States.Battle_States.PLAYER_TURN
+	for char in char_list:
+		if char.get_state() != 3:
+			char_index = char_list.find(char)
+			char.show_options()
+			menu.clear_method_text()
+			menu.add_to_method_text(char.get_name())
 			break
-		else:
-			id += 1
-			if id == len(char_list):
-				return id
-	return id
-	
+			
 # Cada inimigo deve ter uma função logic() o turno do inimigo é basicamente
 # todos os inimigos usando sua logica e com um pequeno intervalo para animações
 func enemy_turn():
+	
 	var tween = create_tween()
 	for enemy in enemy_list:
-		tween.tween_callback(enemy.logic.bind(char_list, menu))
-		tween.tween_interval(0.9)
-	#Talvez essa linha esteja no lugar errado, testar batalha com 2 ou mais inimigos
-	tween.tween_callback(set_selection.bind(Selecting.ACTION))
+		if enemy.get_state() != 2:
+			tween.tween_callback(enemy.logic.bind(char_list, menu))
+			tween.tween_interval(2)
+	
+	tween.tween_callback(player_turn)
 
 # Função para mudar o estado da batalha
 func set_selection(select):
-	if current_selection != Selecting.DEFEAT and current_selection != Selecting.VICTORY:
-		current_selection = select
+	if current_state != States.Battle_States.DEFEAT and current_state != States.Battle_States.VICTORY:
+		current_state = select
 
 
 func set_player(player_node):
@@ -413,20 +254,119 @@ func set_background(bg : CompressedTexture2D):
 	background.set_texture(bg)
 
 func _on_text_finish():
-	if current_selection == Selecting.DEFEAT or current_selection == Selecting.VICTORY:
+	if current_state == States.Battle_States.DEFEAT or current_state == States.Battle_States.VICTORY:
 		in_battle = false
 		for char in char_list:
 			char.reset_position()
 			char.set_animation("default")
 		enemies.queue_free()
-		player.set_on_battle(false)
-		player.set_movement(true)
+		player.set_state(States.Player_State.FREE)
 		reset_variables()
 		hide()
 		audio_player.stop()
 		game_audio.play()
 		textbox.text_finish.disconnect(_on_text_finish)
+		menu.hide()
 
-func on_char_select_target(targets):
+func _on_char_death():
+	for char in char_list:
+		if char.get_hp() > 0:
+			return
+	# Se todos foram derrotados coloca a batalha no estado de derrota
+	current_state = States.Battle_States.DEFEAT
+	menu.hide()
+	textbox.queue_text(["Você foi derrotado."])
+	
+	
+func on_char_skill_pressed(targets, id, char_node):
+	current_character = char_node
+	skill_button_id = id
+	if targets[0] == 4:
+		inventory.show()
+		current_state = States.Battle_States.BACKPACK
+		char_list[char_index].hide_options()
+		return
+	requested_skill_targets = targets
+	current_state = States.Battle_States.SELECTING_TARGET
+	tooltip.show()
+	tooltip.set_tooltip_label("Selecione " + str(len(targets))
+	+ " alvo" + ("s" if len(targets) > 1 else ""))
+
+func on_char_sprite_clicked(id):
+	if current_state == States.Battle_States.USING_ITEM:
+		if held_item.get_type() == ITEM.Item_type.HEALTH:
+			menu.change_char_health(id, char_list[id].gain_health(held_item.HEALTH_RESTORE))
+			party.get_node(str(current_character)).set_acted(true)
+			current_state = States.Battle_States.ANIMATION
+			skill_targets.clear()
+			menu.clear_method_text()
+			tooltip.hide()
+			battle_inventory.spend_item(held_item)
+
+func on_char_sprite_mouse_in(char_name):
+	if current_state == States.Battle_States.USING_ITEM:
+		menu.add_to_method_text(char_name)
+	
+func on_char_sprite_mouse_out():
+	if current_state == States.Battle_States.USING_ITEM:
+		menu.pop_method_text()
+	
+func on_skill_button_mouse_in(skill_name):
+	if current_state == States.Battle_States.PLAYER_TURN:
+		menu.add_to_method_text(skill_name)
+
+func on_skill_button_mouse_out():
+	if current_state == States.Battle_States.PLAYER_TURN:
+		menu.pop_method_text()
+
+func check_skill():
+	if len(skill_targets) == len(requested_skill_targets):
+		current_state = States.Battle_States.ANIMATION
+		party.get_node(str(current_character)).execute_skill(skill_button_id, skill_targets)
+		tooltip.hide()
+		char_list[char_index].hide_options()
+		skill_targets.clear()
+		menu.clear_method_text()
+
+func on_inventory_item_click(item : ITEM):
+	inventory.hide()
+	held_item = item
+	menu.add_to_method_text(item.ITEM_NAME)
+	current_state = States.Battle_States.USING_ITEM
+	tooltip.show()
+	tooltip.set_tooltip_label("Selecione 1 alvo")
+	
+func on_inventory_close():
+	current_state = States.Battle_States.PLAYER_TURN
+	char_list[char_index].show_options()
+	
+func on_enemy_sprite_clicked(enemy_id):
+	if current_state == States.Battle_States.SELECTING_TARGET:
+		if requested_skill_targets[len(skill_targets)] == States.Skill_Targets.ENEMY:
+			skill_targets.append(enemies.get_child(enemy_id))
+			check_skill()
+
+func on_enemy_sprite_mouse_in(enemy_name):
+	if current_state == States.Battle_States.SELECTING_TARGET:
+		menu.add_to_method_text(enemy_name)
+	
+func on_enemy_sprite_mouse_out():
+	if current_state == States.Battle_States.SELECTING_TARGET:
+		menu.pop_method_text()
+
+func on_menu_animation_end():
 	pass
-		
+
+func lost():
+	in_battle = false
+	for char in char_list:
+		char.reset_position()
+		char.set_animation("default")
+	enemies.queue_free()
+	player.set_state(States.Player_State.FREE)
+	reset_variables()
+	hide()
+	audio_player.stop()
+	game_audio.play()
+	textbox.text_finish.disconnect(_on_text_finish)
+	menu.hide()

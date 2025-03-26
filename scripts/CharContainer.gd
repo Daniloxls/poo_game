@@ -31,8 +31,8 @@ func set_char(character):
 	personagem_name = character.get_name()
 	var char_hp = character.get_hp()
 	var char_max_hp = character.get_max_hp()
-	var char_pp = character.get_mp()
-	var char_max_pp = character.get_max_mp()
+	var char_pp = character.get_pp()
+	var char_max_pp = character.get_max_pp()
 	var hp_ratio = float(char_hp)/char_max_hp
 	
 	char_pic.set_texture(character.get_pic())
