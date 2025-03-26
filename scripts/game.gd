@@ -17,8 +17,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("0"):
-		battle.start_battle("Ableble")
 	pass
 # Chamada para trocar o nivel, antes de usar passar instance para como argumento da
 # função é necessario instanciar o arquivo dessa forma:
@@ -35,7 +33,6 @@ func change_level(instance, entrance : int = 0):
 	inventory.call_deferred("set_player", instance.find_child("Player"))
 	battle.call_deferred("set_player", instance.find_child("Player"))
 	textbox.call_deferred("set_player", instance.find_child("Player"))
-
 func _on_battle_battle_lost():
 	battle_lost.emit()
 
