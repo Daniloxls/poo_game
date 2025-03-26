@@ -8,8 +8,8 @@ func _ready():
 	nome = "Kath"
 	hp = 24
 	max_hp = 24
-	mp = 32
-	max_mp = 32
+	pp = 32
+	max_pp = 32
 	level = 1
 	menu_sprite = load("res://assets/characters/legacy/Kath.png")
 	atk = 10

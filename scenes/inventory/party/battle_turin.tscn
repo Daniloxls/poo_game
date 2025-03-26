@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://mje13m0bdoj2"]
+[gd_scene load_steps=24 format=3 uid="uid://mje13m0bdoj2"]
 
 [ext_resource type="Script" uid="uid://da0211wy8288o" path="res://scripts/character.gd" id="1_w8k2v"]
 [ext_resource type="Texture2D" uid="uid://6xm3lmnjv3wm" path="res://assets/battle/character_sprites/turin_batalha.png" id="2_i30wg"]
 [ext_resource type="Texture2D" uid="uid://1r1igt6ogl50" path="res://assets/battle/character_sprites/turin_heal.png" id="3_mkcmu"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_8fhno"]
+[ext_resource type="Script" path="res://scripts/Battle/char_sprite.gd" id="4_q2dcf"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_51ltb"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_s5wn0"]
 [ext_resource type="Script" uid="uid://djedbntpi67ro" path="res://scripts/DamageText.gd" id="7_5hj8d"]
@@ -51,6 +52,8 @@ animations = [{
 "name": &"heal",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xg3i8"]
 
 [sub_resource type="Animation" id="Animation_kqvds"]
 resource_name = "death"
@@ -180,9 +183,14 @@ outline_color = Color(0, 0, 0, 1)
 script = ExtResource("1_w8k2v")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.823529, 0.298039, 1, 1)
 scale = Vector2(0.04, 0.04)
 sprite_frames = SubResource("SpriteFrames_htfvh")
+script = ExtResource("4_q2dcf")
+
+[node name="Area2D" type="Area2D" parent="Sprite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Area2D"]
+shape = SubResource("RectangleShape2D_xg3i8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -244,3 +252,5 @@ size_flags_horizontal = 8
 theme_override_fonts/font = ExtResource("9_qxph4")
 theme_override_font_sizes/font_size = 100
 text = " Fugir💨 "
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

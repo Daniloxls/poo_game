@@ -7,6 +7,6 @@
 position = Vector2(-112, 299)
 scale = Vector2(4, 4)
 
-[node name="Enemy" parent="." instance=ExtResource("1_l5ite")]
+[node name="Boneco_de_Teste" parent="." instance=ExtResource("1_l5ite")]
 position = Vector2(-34, -23)
 script = ExtResource("2_envul")

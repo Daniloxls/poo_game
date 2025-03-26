@@ -23,7 +23,7 @@ func interaction():
 		
 
 func sudo_scene():
-	player.set_movement(false)
+	player.set_state(States.Player_State.ON_SCENE)
 	var tween = create_tween()
 	tween.tween_property(player_sprite, "modulate", Color.GREEN, 1).set_trans(Tween.TRANS_SINE)
 	tween.tween_property(player_sprite, "scale", Vector2(3, 1), 1).set_trans(Tween.TRANS_BOUNCE)
@@ -32,7 +32,6 @@ func sudo_scene():
 	tween.tween_property(player_sprite, "rotation", 360, 2).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(player_sprite, "rotation", 0, 1).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property(player_sprite, "modulate", Color.WHITE, 1).set_trans(Tween.TRANS_SINE)
-	tween.tween_callback(player.set_movement.bind(true))
 	tween.tween_callback(player.set_sudo.bind(true))
 	tween.tween_callback(player.set_state.bind(States.Player_State.FREE))
 	#player.current_state = States.Player_State.FREE

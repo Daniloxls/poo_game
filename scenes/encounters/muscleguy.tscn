@@ -180,17 +180,14 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yfhn"]
-bg_color = Color(0, 0.670588, 0, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ryhr"]
+bg_color = Color(0.690469, 0, 0.0824977, 1)
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20702"]
-bg_color = Color(0.803922, 0, 0, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_47umu"]
+bg_color = Color(1.29953e-06, 0.562021, 0.122384, 1)
+corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
 
@@ -304,18 +301,24 @@ grow_vertical = 2
 scale = Vector2(0.0814959, 0.0932724)
 theme_override_constants/separation = -1
 
-[node name="Green" type="Panel" parent="Lutador/Healthbar/HBoxContainer"]
-z_index = 1
+[node name="ProgressBar" type="ProgressBar" parent="Lutador/Healthbar/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_6yfhn")
-metadata/_edit_use_anchors_ = true
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_4ryhr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_47umu")
+value = 100.0
+rounded = true
+show_percentage = false
 
-[node name="Red" type="Panel" parent="Lutador/Healthbar/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_20702")
-metadata/_edit_use_anchors_ = true
+[node name="EnemyHp" type="Label" parent="Lutador/Healthbar/HBoxContainer/ProgressBar"]
+layout_mode = 0
+offset_right = 1041.0
+offset_bottom = 78.0
+theme_override_fonts/font = ExtResource("3_c0xy3")
+theme_override_font_sizes/font_size = 62
+text = "12/12"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="animation_finished" from="Lutador/AnimationPlayer" to="Lutador" method="_on_animation_player_animation_finished"]

@@ -54,7 +54,7 @@ func set_character(personagem, equip_name = ""):
 	old_stats.append_text("\n\n")
 	old_stats.push_font_size(37)
 	add_text(old_stats, "hp", personagem.get_max_hp())
-	add_text(old_stats, "pp", personagem.get_max_mp())
+	add_text(old_stats, "pp", personagem.get_max_pp())
 	add_text(old_stats, "atk", personagem.get_atk())
 	add_text(old_stats, "def", personagem.get_def())
 	add_text(old_stats, "vel", personagem.get_vel())

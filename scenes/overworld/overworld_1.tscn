@@ -1,9 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://cy1jyrnh3f28w"]
+[gd_scene load_steps=28 format=3 uid="uid://cy1jyrnh3f28w"]
 
 [ext_resource type="Script" uid="uid://7pcc2bd8oqkn" path="res://scenes/overworld/scripts/overworld_south.gd" id="1_pv7dr"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://scenes/characters/player.tscn" id="2_lj1bj"]
-[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="3_5wm8l"]
-[ext_resource type="PackedScene" uid="uid://2j3byyhg36c6" path="res://scenes/codebox.tscn" id="4_1sawr"]
 [ext_resource type="PackedScene" uid="uid://bpj0pi0k3gu4h" path="res://scenes/tile_map.tscn" id="5_yx8pv"]
 [ext_resource type="Texture2D" uid="uid://kbrumyprq7sw" path="res://assets/tileset/grounds/placeholder/placeholder.png" id="6_0vwrc"]
 [ext_resource type="PackedScene" uid="uid://c7ljtnwyjtgv5" path="res://scenes/characters/kath.tscn" id="6_ijl1r"]
@@ -630,10 +628,6 @@ sources/7 = SubResource("TileSetAtlasSource_jdmku")
 y_sort_enabled = true
 script = ExtResource("1_pv7dr")
 
-[node name="Textbox" parent="." instance=ExtResource("3_5wm8l")]
-
-[node name="Codebox" parent="." instance=ExtResource("4_1sawr")]
-
 [node name="Player" parent="." instance=ExtResource("2_lj1bj")]
 z_index = 1
 position = Vector2(11156, -4642)
@@ -704,7 +698,3 @@ polygon = PackedVector2Array(6219, -22042, 12349, -22014, 12962, -1641, 14082, -
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(6219, -22042, 14047, -22075, 14002, -25178, 4480, -25064, 4452, -22099)
-
-[connection signal="text_finish" from="Textbox" to="." method="_on_textbox_text_finish"]
-[connection signal="text_finish" from="Textbox" to="BorderLeft" method="_on_textbox_text_finish"]
-[connection signal="text_finish" from="Textbox" to="BorderRight" method="_on_textbox_text_finish"]

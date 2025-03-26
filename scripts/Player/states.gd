@@ -7,3 +7,26 @@ enum Player_State{
 	ON_BATTLE,
 	ON_SCENE,
 }
+
+enum Skill_Targets {
+	NONE,
+	SELF,
+	ALLY,
+	ENEMY,
+	ITE,
+	ALL_ALLY,
+	ALL_ENEMY,
+	EVERYONE
+}
+
+enum Battle_States{
+	ANIMATION,
+	STARTING,
+	BACKPACK,
+	SELECTING_TARGET,
+	USING_ITEM,
+	PLAYER_TURN,
+	ENEMY_TURN,
+	VICTORY,
+	DEFEAT,
+}

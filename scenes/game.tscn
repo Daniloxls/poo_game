@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://scenes/new_codebox.tscn" id="4_4vmip"]
 [ext_resource type="PackedScene" uid="uid://clr1pqi3mxavn" path="res://scenes/inventory/newinventory.tscn" id="4_lfa64"]
 [ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://scenes/textbox.tscn" id="5_fvtp8"]
-[ext_resource type="PackedScene" uid="uid://bhl2fw3fmtrpc" path="res://scenes/city/festival_city/city.tscn" id="6_5ascw"]
+[ext_resource type="PackedScene" uid="uid://wtnrlc4bfiyj" path="res://scenes/tutorial/tutorial.tscn" id="6_8nqqs"]
 [ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/inventory/party/battle_turin.tscn" id="8_e1dqr"]
 [ext_resource type="Script" uid="uid://do8yvnnkvymxg" path="res://scenes/inventory/party/battle_turin.gd" id="9_8jwi8"]
 [ext_resource type="PackedScene" uid="uid://bspvewmvuf474" path="res://scenes/inventory/party/battle_kath.tscn" id="10_eiai2"]
@@ -19,14 +19,13 @@ script = ExtResource("1_irk2k")
 [node name="Codebox" parent="." instance=ExtResource("4_4vmip")]
 
 [node name="Inventory" parent="." instance=ExtResource("4_lfa64")]
-visible = false
 
 [node name="Textbox" parent="." instance=ExtResource("5_fvtp8")]
 
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(1, 0)
 
-[node name="City" parent="Level" instance=ExtResource("6_5ascw")]
+[node name="Tutorial" parent="Level" instance=ExtResource("6_8nqqs")]
 
 [node name="TelaTitulo" parent="." instance=ExtResource("4_1yu0a")]
 
@@ -44,7 +43,7 @@ position = Vector2(-40, 246)
 scale = Vector2(4, 4)
 script = ExtResource("9_8jwi8")
 
-[node name="Kath" parent="Party" instance=ExtResource("10_eiai2")]
+[node name="Kath" parent="." instance=ExtResource("10_eiai2")]
 position = Vector2(7, 185)
 
 [connection signal="battle_lost" from="Battle" to="." method="_on_battle_battle_lost"]

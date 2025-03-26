@@ -18,3 +18,4 @@ func set_button_functions(skill_list : Array[SKILL]):
 		buttons[i].set_script((skill_list[i].SKILL_SCRIPT))
 		buttons[i] = instance_from_id(nodeId);
 		buttons[i].call_deferred("connect_signals")
+		buttons[i].call_deferred("set_skill", skill_list[i])

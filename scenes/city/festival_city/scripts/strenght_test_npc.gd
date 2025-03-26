@@ -23,10 +23,7 @@ func _ready():
 	texto = [["Estou impressionado! Parabéns tome 10 tickets para você"],
 	["Não foi dessa vez, mas não fique triste você pode tentar de novo"]]
 	textbox.connect("text_finish", _on_textbox_text_finish)
-	textbox.connect("choise_closed", _on_textbox_choise_closed)
-	
-	pass
-
+	textbox.connect("choice_closed", _on_textbox_choise_closed)
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
 
