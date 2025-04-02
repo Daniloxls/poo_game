@@ -1,15 +1,14 @@
 [gd_scene load_steps=25 format=3 uid="uid://cunpab1ac2q5a"]
 
-[ext_resource type="Script" uid="uid://dpas06yjwt86v" path="res://scenes/encounters/muscleguy.gd" id="1_lc2v6"]
-[ext_resource type="Script" uid="uid://duslxsh1kx7a6" path="res://scripts/healthbar.gd" id="2_mnv27"]
+[ext_resource type="Script" path="res://scenes/encounters/muscle_guy.gd" id="1_lc2v6"]
+[ext_resource type="Script" path="res://entities/encounters/healthbar.gd" id="2_mnv27"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="3_c0xy3"]
 [ext_resource type="Texture2D" uid="uid://1w8676jtjd00" path="res://assets/battle/enemy_sprites/lutador_batalha.png" id="3_fwivw"]
-[ext_resource type="Script" uid="uid://cuu5npfi6wswn" path="res://scripts/Enemies/enemy_sprite.gd" id="3_lvokv"]
+[ext_resource type="Script" path="res://entities/encounters/enemy_sprite.gd" id="3_y78p3"]
 [ext_resource type="AudioStream" uid="uid://bxv8cyux61nvh" path="res://assets/sounds/hit.wav" id="4_iw5wo"]
 [ext_resource type="AudioStream" uid="uid://v5g5pt1bp1s6" path="res://assets/sounds/enemy_death.wav" id="5_kr241"]
 [ext_resource type="AudioStream" uid="uid://b5l6brydh16eh" path="res://assets/sounds/damage_taken_01.wav" id="6_15j8b"]
-[ext_resource type="Script" uid="uid://dsm6n2deiqfqm" path="res://scripts/Battle/damage_text.gd" id="7_4p1qv"]
-[ext_resource type="Script" uid="uid://cy3ytw11y8ceq" path="res://scripts/Enemies/enemy_hp_bar.gd" id="9_l7ies"]
+[ext_resource type="Script" path="res://entities/encounters/damage_text.gd" id="8_41o36"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8aqci"]
 
@@ -114,10 +113,10 @@ tracks/1/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uup1h"]
 _data = {
-&"damage_number": SubResource("Animation_kk0q7"),
-&"death": SubResource("Animation_kqvds"),
-&"default": SubResource("Animation_6ykin"),
-&"get_hit": SubResource("Animation_7lblk")
+"damage_number": SubResource("Animation_kk0q7"),
+"death": SubResource("Animation_kqvds"),
+"default": SubResource("Animation_6ykin"),
+"get_hit": SubResource("Animation_7lblk")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_qld48"]
@@ -170,6 +169,15 @@ corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 corner_detail = 10
 
+[sub_resource type="GDScript" id="GDScript_6ekau"]
+script/source = "extends TabContainer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	set_tab_disabled(0, true)
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llwdj"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 12
@@ -204,7 +212,7 @@ modulate = Color(0.823529, 0.298039, 1, 1)
 position = Vector2(0, 33)
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("3_fwivw")
-script = ExtResource("3_lvokv")
+script = ExtResource("3_y78p3")
 
 [node name="Area2D" type="Area2D" parent="Lutador/Sprite2D"]
 
@@ -240,7 +248,7 @@ horizontal_alignment = 1
 visible = false
 position = Vector2(-42, -15)
 scale = Vector2(0.04, 0.04)
-script = ExtResource("7_4p1qv")
+script = ExtResource("8_41o36")
 
 [node name="Label" type="Label" parent="Lutador/DamageText"]
 anchors_preset = 8
@@ -279,7 +287,7 @@ theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_mpsyi")
 theme_override_styles/panel = SubResource("StyleBoxFlat_kmw8e")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_mpsyi")
 current_tab = 0
-script = ExtResource("9_l7ies")
+script = SubResource("GDScript_6ekau")
 
 [node name="Enemy_Name" type="PanelContainer" parent="Lutador/Healthbar/TabBar"]
 layout_direction = 2

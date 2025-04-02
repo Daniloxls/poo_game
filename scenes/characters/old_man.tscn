@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://7qulmx3lsbgj"]
-
-[ext_resource type="PackedScene" uid="uid://bdpjpq4yd4vic" path="res://scenes/characters/npc.tscn" id="1_f6j7c"]
-
-[node name="NPC" instance=ExtResource("1_f6j7c")]
-
-[node name="AnimatedSprite2D" parent="." index="0"]
-animation = &"old_man"

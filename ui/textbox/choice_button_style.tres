@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://1nj7i3v7q4ik"]
+
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="1_iyigh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojigq"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[resource]
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_iyigh")
+Button/styles/focus = SubResource("StyleBoxFlat_ojigq")

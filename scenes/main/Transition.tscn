@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch1uc8olfvcbg"]
+
+[ext_resource type="Script" path="res://scenes/main/scripts/transition.gd" id="1_cffsw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
+size = Vector2(14.5, 15)
+
+[node name="Transition" type="Node2D"]
+scale = Vector2(31, 31)
+script = ExtResource("1_cffsw")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2147483648
+collision_mask = 2
+
+[node name="Collision" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_f7cku")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2147483648
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_f7cku")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

@@ -1,0 +1,347 @@
+[gd_scene load_steps=42 format=3 uid="uid://wtnrlc4bfiyj"]
+
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/tutorial.gd" id="1_nde62"]
+[ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://entities/player/Player.tscn" id="2_1qc1t"]
+[ext_resource type="Texture2D" uid="uid://c3261myw14ptj" path="res://assets/props/placeholder/free_switches.png" id="8_s8v17"]
+[ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/main/Interact.tscn" id="10_a56yr"]
+[ext_resource type="Texture2D" uid="uid://b27u0qs7c81lg" path="res://assets/props/seta_down_off.png" id="14_dcr84"]
+[ext_resource type="Texture2D" uid="uid://cyemc2xvcwbf7" path="res://assets/props/down_key_on.png" id="15_ngnki"]
+[ext_resource type="Texture2D" uid="uid://c52y054kc8e6d" path="res://assets/props/seta_left_off.png" id="16_tng3m"]
+[ext_resource type="Texture2D" uid="uid://bvkksbal1kuei" path="res://assets/props/left_key_on.png" id="17_j2vjr"]
+[ext_resource type="Texture2D" uid="uid://bs0u3nsbr5svv" path="res://assets/props/seta_right_off.png" id="18_bsvjr"]
+[ext_resource type="Texture2D" uid="uid://dxfg2d3qe1uqr" path="res://assets/props/right_key_on.png" id="19_5t4e6"]
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/lever.gd" id="19_7u7id"]
+[ext_resource type="Texture2D" uid="uid://d0ag33uw3v2po" path="res://assets/props/seta_up_off.png" id="20_u8615"]
+[ext_resource type="Texture2D" uid="uid://cysaqjkew76fv" path="res://assets/battle/enemy_sprites/boneco_treino.png" id="21_4hkqp"]
+[ext_resource type="Texture2D" uid="uid://cvrhsibhmop76" path="res://assets/props/up_key_on.png" id="21_22311"]
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/dummy.gd" id="21_oymvg"]
+[ext_resource type="Texture2D" uid="uid://cljgic3buk4cx" path="res://assets/scenario/tutorial_ground.png" id="22_7ylxl"]
+[ext_resource type="PackedScene" uid="uid://dg16vehloexlr" path="res://scenes/main/Event.tscn" id="23_m0a1s"]
+[ext_resource type="Texture2D" uid="uid://yw5heb8uxeyt" path="res://assets/props/Portal.png" id="23_uyqyk"]
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/sourcecode_portal.gd" id="24_6ir1x"]
+[ext_resource type="Texture2D" uid="uid://cu40hnevtrlbc" path="res://assets/props/AlavancaPullUp.png" id="24_dvgtu"]
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/glitch_effect.gd" id="24_xk1fj"]
+[ext_resource type="Texture2D" uid="uid://dlm0sevxn22pn" path="res://assets/props/AlavancaPullDown.png" id="25_60y6o"]
+[ext_resource type="Texture2D" uid="uid://dxd8tyqv4x7p1" path="res://assets/props/placeholder/ParedeRetratiuUp.png" id="26_8otyt"]
+[ext_resource type="Texture2D" uid="uid://f3kjcukhb62g" path="res://assets/effects/static.png" id="26_kbgdb"]
+[ext_resource type="Texture2D" uid="uid://c7744s6xc38ed" path="res://assets/props/espinhos.png" id="27_8tw21"]
+[ext_resource type="Texture2D" uid="uid://b6gkknxt8lmob" path="res://assets/props/placeholder/ParedeRetratiuDown.png" id="27_b25ah"]
+[ext_resource type="Texture2D" uid="uid://bwwa0id1gyqp6" path="res://assets/props/alavanca.png" id="29_5hx6h"]
+[ext_resource type="Texture2D" uid="uid://c54e6xjby4sj8" path="res://assets/props/correndo.png" id="30_mopcp"]
+[ext_resource type="Texture2D" uid="uid://ddrw2iihnn4hl" path="res://assets/props/z.png" id="31_vhul4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1xv4"]
+atlas = ExtResource("8_s8v17")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsy63"]
+atlas = ExtResource("8_s8v17")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0gtmf"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_dvgtu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_60y6o")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1xv4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsy63")
+}],
+"loop": true,
+"name": &"new_animation2",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m6hwy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_8otyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_b25ah")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twkmk"]
+size = Vector2(509.004, 2737)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrqcu"]
+atlas = ExtResource("21_4hkqp")
+region = Rect2(0, 0, 500, 700)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u4foa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rrqcu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ar8v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_uyqyk")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3af3"]
+atlas = ExtResource("27_8tw21")
+region = Rect2(0, 0, 500, 3860)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2kgxl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3af3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5u6ad"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_kbgdb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lmve4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_dcr84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ngnki")
+}],
+"loop": true,
+"name": &"down",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_tng3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_j2vjr")
+}],
+"loop": true,
+"name": &"left",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_bsvjr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_5t4e6")
+}],
+"loop": true,
+"name": &"right",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_u8615")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_22311")
+}],
+"loop": true,
+"name": &"up",
+"speed": 0.0
+}]
+
+[node name="Tutorial" type="Node2D"]
+y_sort_enabled = true
+position = Vector2(1, 0)
+script = ExtResource("1_nde62")
+
+[node name="Player" parent="." instance=ExtResource("2_1qc1t")]
+z_as_relative = false
+position = Vector2(-3045, 6061)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.15, 0.15)
+limit_left = -15790
+limit_top = 3085
+limit_right = 4162
+limit_bottom = 11103
+
+[node name="Alavanca" parent="." instance=ExtResource("10_a56yr")]
+position = Vector2(-7808, 5004)
+script = ExtResource("19_7u7id")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Alavanca"]
+position = Vector2(0, 45)
+scale = Vector2(0.66, 0.66)
+sprite_frames = SubResource("SpriteFrames_0gtmf")
+animation = &"new_animation"
+
+[node name="Porta" type="StaticBody2D" parent="Alavanca"]
+position = Vector2(1740, 1794)
+
+[node name="PortaSprite" type="AnimatedSprite2D" parent="Alavanca/Porta"]
+position = Vector2(-7, -580)
+sprite_frames = SubResource("SpriteFrames_m6hwy")
+frame_progress = 0.300088
+
+[node name="PortaShape" type="CollisionShape2D" parent="Alavanca/Porta"]
+position = Vector2(-4.49805, 61.4995)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_twkmk")
+
+[node name="Dummy" parent="." instance=ExtResource("10_a56yr")]
+position = Vector2(-2850, 6719)
+script = ExtResource("21_oymvg")
+
+[node name="DummySprite" type="AnimatedSprite2D" parent="Dummy"]
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(6, -114)
+sprite_frames = SubResource("SpriteFrames_u4foa")
+flip_h = true
+
+[node name="Porta" type="StaticBody2D" parent="Dummy"]
+z_index = -1
+position = Vector2(1260, 162)
+
+[node name="PortaSprite" type="AnimatedSprite2D" parent="Dummy/Porta"]
+position = Vector2(-7, -580)
+sprite_frames = SubResource("SpriteFrames_m6hwy")
+frame_progress = 0.300088
+
+[node name="PortaShape" type="CollisionShape2D" parent="Dummy/Porta"]
+position = Vector2(-4.49805, 61.4995)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_twkmk")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+offset_left = -15783.0
+offset_top = 3084.0
+offset_right = 4229.0
+offset_bottom = 11074.0
+texture = ExtResource("22_7ylxl")
+stretch_mode = 4
+
+[node name="MapBorder" type="StaticBody2D" parent="."]
+position = Vector2(-6471, 6757)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MapBorder"]
+polygon = PackedVector2Array(-9326, -3755, 10631, -3687, 9306, -1240, -7795, -1260, -7791, 1545, 9315, 1556, 9306, -1244, 10655, -3686, 10757, 4319, -7890, 4353, -9314, 4387)
+
+[node name="PortalShow" parent="." instance=ExtResource("23_m0a1s")]
+y_sort_enabled = true
+position = Vector2(-220, 6943)
+scale = Vector2(1, 6.45)
+script = ExtResource("24_xk1fj")
+
+[node name="Portal" parent="PortalShow" instance=ExtResource("10_a56yr")]
+position = Vector2(969, -271.473)
+scale = Vector2(1, 0.155039)
+script = ExtResource("24_6ir1x")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="PortalShow/Portal"]
+position = Vector2(12, -1721)
+sprite_frames = SubResource("SpriteFrames_6ar8v")
+
+[node name="Espinhos" type="StaticBody2D" parent="PortalShow"]
+position = Vector2(2307, -11.0078)
+scale = Vector2(1, 0.155039)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="PortalShow/Espinhos"]
+position = Vector2(-7, -580)
+sprite_frames = SubResource("SpriteFrames_2kgxl")
+
+[node name="PortaShape" type="CollisionShape2D" parent="PortalShow/Espinhos"]
+position = Vector2(-4.49805, 61.4995)
+rotation = -3.14159
+shape = SubResource("RectangleShape2D_twkmk")
+
+[node name="ScreenFlash" type="CanvasLayer" parent="PortalShow"]
+visible = false
+
+[node name="Sprite" type="AnimatedSprite2D" parent="PortalShow/ScreenFlash"]
+position = Vector2(578.5, 327.5)
+scale = Vector2(1.12988, 0.847656)
+sprite_frames = SubResource("SpriteFrames_5u6ad")
+
+[node name="DesenhosParede" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(-8455, 4240)
+
+[node name="LeftArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-5340.5, 660)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"left"
+
+[node name="RightArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-4442.5, 666)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"right"
+
+[node name="UpArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-4892.5, 160)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"up"
+
+[node name="DownArrow" type="AnimatedSprite2D" parent="DesenhosParede"]
+position = Vector2(-4895.5, 666)
+sprite_frames = SubResource("SpriteFrames_lmve4")
+animation = &"down"
+
+[node name="Activate" type="Sprite2D" parent="DesenhosParede"]
+position = Vector2(-271, 271)
+scale = Vector2(2.24, 2.24)
+texture = ExtResource("29_5hx6h")
+
+[node name="Run" type="Sprite2D" parent="DesenhosParede"]
+position = Vector2(-3678, 542)
+scale = Vector2(2.24, 2.24)
+texture = ExtResource("30_mopcp")
+
+[node name="Run2" type="Sprite2D" parent="DesenhosParede"]
+position = Vector2(5111, 280)
+scale = Vector2(2.24, 2.24)
+texture = ExtResource("31_vhul4")
+
+[connection signal="battle_tutorial_end" from="." to="Dummy" method="_on_tutorial_battle_tutorial_end"]

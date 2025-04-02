@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://b86f2356r1et4"]
+
+[ext_resource type="Script" path="res://scenes/main/scripts/interact.gd" id="1_3dfgq"]
+[ext_resource type="Shader" path="res://assets/shaders/Interact.gdshader" id="2_okt0n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
+size = Vector2(500, 500)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uqw1g"]
+shader = ExtResource("2_okt0n")
+shader_parameter/shake_power = 0.03
+shader_parameter/shake_rate = 0.2
+shader_parameter/shake_speed = 5.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.01
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6i0ow"]
+bg_color = Color(0.0588235, 0, 0.564706, 1)
+
+[node name="Interact" type="Node2D"]
+script = ExtResource("1_3dfgq")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_f7cku")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2147483648
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_f7cku")
+
+[node name="MenuButton" type="MenuButton" parent="."]
+material = SubResource("ShaderMaterial_uqw1g")
+offset_left = -254.0
+offset_top = -252.0
+offset_right = 252.0
+offset_bottom = 251.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_6i0ow")
+button_pressed = true
+button_mask = 2
+item_count = 1
+popup/item_0/text = "Depurar"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="about_to_popup" from="MenuButton" to="." method="_on_menu_button_about_to_popup"]

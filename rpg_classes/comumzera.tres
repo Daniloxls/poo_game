@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RPG_CLASS" load_steps=5 format=3 uid="uid://bp5w0uxnacplp"]
+
+[ext_resource type="Script" path="res://rpg_classes/skills/skill.gd" id="1_6kof6"]
+[ext_resource type="Resource" uid="uid://dutwj43v2ybft" path="res://rpg_classes/skills/attack.tres" id="2_lgo21"]
+[ext_resource type="Script" path="res://rpg_classes/rpg_class.gd" id="2_wsdu4"]
+[ext_resource type="Resource" uid="uid://bl8mjvs2mwfme" path="res://rpg_classes/skills/use_item.tres" id="3_dxmkq"]
+
+[resource]
+script = ExtResource("2_wsdu4")
+CLASS_NAME = "Nada"
+ATK_BONUS = 0
+DEF_BONUS = 0
+VEL_BONUS = 0
+SKILLS = Array[ExtResource("1_6kof6")]([ExtResource("2_lgo21"), ExtResource("3_dxmkq")])

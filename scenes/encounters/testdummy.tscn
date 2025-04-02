@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://450xj56kurdu"]
 
-[ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://scenes/enemy.tscn" id="1_l5ite"]
-[ext_resource type="Script" uid="uid://csel3afq15s5" path="res://scenes/encounters/dummy.gd" id="2_envul"]
+[ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://entities/encounters/GenericEnemy.tscn" id="1_l5ite"]
+[ext_resource type="Script" path="res://scenes/encounters/test_dummy.gd" id="2_envul"]
 
 [node name="Enemies" type="Node2D"]
 position = Vector2(-112, 299)

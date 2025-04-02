@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://7cavh2fkurrp"]
+
+[ext_resource type="PackedScene" uid="uid://mje13m0bdoj2" path="res://scenes/party/BattleTurin.tscn" id="1_fpxt1"]
+[ext_resource type="Script" path="res://scenes/party/scripts/battle_turin.gd" id="2_ltfyu"]
+
+[node name="Party" type="CanvasLayer"]
+offset = Vector2(1375, 120)
+transform = Transform2D(1, 0, 0, 1, 1375, 120)
+
+[node name="Turin" parent="." instance=ExtResource("1_fpxt1")]
+z_index = 3
+z_as_relative = false
+position = Vector2(-40, 246)
+scale = Vector2(4, 4)
+script = ExtResource("2_ltfyu")

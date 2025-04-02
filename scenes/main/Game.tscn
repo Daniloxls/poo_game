@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://rqh8da2muvx6"]
+
+[ext_resource type="Script" path="res://scenes/main/scripts/game.gd" id="1_2ajgt"]
+[ext_resource type="PackedScene" uid="uid://bhl2fw3fmtrpc" path="res://scenes/chapter_one/festival_city/City.tscn" id="2_yo6ye"]
+[ext_resource type="PackedScene" uid="uid://jsptyuvrdvya" path="res://ui/title_screen/TitleScreen.tscn" id="7_d8tos"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_2ajgt")
+
+[node name="Level" type="Node2D" parent="."]
+position = Vector2(1, 0)
+
+[node name="City" parent="Level" instance=ExtResource("2_yo6ye")]
+
+[node name="TelaTitulo" parent="." instance=ExtResource("7_d8tos")]
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -80.0

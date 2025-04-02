@@ -11,16 +11,20 @@ config_version=5
 [application]
 
 config/name="RPG POO"
-run/main_scene="res://scenes/game.tscn"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+run/main_scene="res://scenes/main/Game.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-EquipItem="*res://scenes/itens/classes/equip_item.gd"
-States="*res://scripts/Player/states.gd"
-Player="*res://player.gd"
-ItemClass="*res://scenes/itens/classes/item_class.gd"
+ItemClass="*res://scenes/items/classes/item_class.gd"
+Textbox="*res://ui/textbox/Textbox.tscn"
+States="*res://globals/states.gd"
+PlayerState="*res://entities/player/player_state.gd"
+Codebox="*res://ui/codebox/Codebox.tscn"
+Inventory="*res://ui/inventory/Inventory.tscn"
+Battle="*res://scenes/battle/Battle.tscn"
+Party="*res://globals/party.tscn"
 
 [display]
 

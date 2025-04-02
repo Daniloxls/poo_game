@@ -1,0 +1,105 @@
+[gd_scene load_steps=11 format=3 uid="uid://bo3kpf0ddsdes"]
+
+[ext_resource type="Texture2D" uid="uid://0u2pumkf78m3" path="res://assets/props/teclado_quebrado.png" id="1_lh1ru"]
+[ext_resource type="Script" path="res://scenes/chapter_one/deep_code/broken_keyboard.gd" id="1_ue3gp"]
+[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_1a63i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pibcj"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.0862745, 1, 0.0784314, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.0588235, 0.678431, 0.0509804, 0.764706)
+shadow_size = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tvkc"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.826068, 0.82695, 0.845166, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(1, 1, 1, 0.764706)
+shadow_size = 7
+
+[sub_resource type="InputEventKey" id="InputEventKey_m4bv2"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_k4uq2"]
+events = [SubResource("InputEventKey_m4bv2")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ujx6"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.827451, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(1, 0, 0, 0.764706)
+shadow_size = 7
+
+[sub_resource type="InputEventKey" id="InputEventKey_ukttg"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_dw5la"]
+events = [SubResource("InputEventKey_ukttg")]
+
+[node name="BrokenKeyboard" type="CanvasLayer"]
+script = ExtResource("1_ue3gp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(590, 435)
+texture = ExtResource("1_lh1ru")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 382.0
+offset_top = 105.0
+offset_right = 755.0
+offset_bottom = 187.0
+theme_override_fonts/font = ExtResource("2_1a63i")
+theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_pibcj")
+placeholder_text = "Senha"
+
+[node name="SubmitButton" type="Button" parent="."]
+offset_left = 784.0
+offset_top = 87.0
+offset_right = 904.0
+offset_bottom = 200.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_1a63i")
+theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_1tvkc")
+shortcut = SubResource("Shortcut_k4uq2")
+text = "Ok"
+
+[node name="CloseButton" type="Button" parent="."]
+offset_left = 938.0
+offset_top = 13.0
+offset_right = 1006.0
+offset_bottom = 79.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_1a63i")
+theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_8ujx6")
+shortcut = SubResource("Shortcut_dw5la")
+text = "X"
