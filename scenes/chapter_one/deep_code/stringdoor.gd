@@ -19,7 +19,7 @@ func _ready():
 	Codebox.connect("codebox_close", _on_codebox_code_closed)
 	broken_keyboard.connect("text_submit", on_keyboard_text_submit)
 	broken_keyboard.connect("close", on_keyboard_close)
-	
+	shader_rect.show()
 func interaction():
 	interacted = true
 	#if good_password:

@@ -11,7 +11,8 @@ func _ready():
 	ready_drop_menu()
 	Codebox.connect("codebox_open", _on_codebox_code_open)
 	Codebox.connect("codebox_close", _on_codebox_code_closed)
-
+	shader_rect.show()
+	
 func interaction():
 	if player.get_sudo() and len(texto) > 1:
 		texto.pop_back()

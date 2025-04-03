@@ -13,7 +13,7 @@ func _ready():
 	ready_drop_menu()
 	Codebox.connect("codebox_open", _on_codebox_code_open)
 	Codebox.connect("codebox_close", _on_codebox_code_closed)
-
+	shader_rect.show()
 
 func update_code():
 	pit.set_size(codigo["1int tamanho"])

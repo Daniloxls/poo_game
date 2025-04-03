@@ -8,7 +8,7 @@ extends Node2D
 
 # 'colision' é o corpo de colisão do objeto, por padrão, está ligado.
 @onready var colision = $StaticBody2D
-
+@onready var shader_rect = $ShaderRect
 # 'player' é uma referência ao nó do jogador,
 # permitindo acesso para movê-lo ou alterar suas propriedades.
 @onready var player = get_node("../Player")
@@ -42,6 +42,7 @@ var triggered : bool
 func _ready():
 	if (codigo != {}) or (metodos != {}):
 		has_popup = true
+		shader_rect.show()
 	ready_drop_menu()
 	if has_popup:
 		# Connect the about_to_popup signal to set the popup position

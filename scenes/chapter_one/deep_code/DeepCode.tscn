@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bl0foop1gp2xr"]
+[gd_scene load_steps=37 format=3 uid="uid://bl0foop1gp2xr"]
 
 [ext_resource type="Script" path="res://scenes/chapter_one/deep_code/deep_code.gd" id="1_yatrg"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://entities/player/Player.tscn" id="2_bdtc3"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cklgjq0tyvewk" path="res://assets/scenario/background/codigofont_background2.png" id="4_3i76b"]
 [ext_resource type="Texture2D" uid="uid://bav3thyva66lq" path="res://assets/props/Terminal.png" id="5_rmyi6"]
 [ext_resource type="Texture2D" uid="uid://cxtfmbl6mxf51" path="res://assets/scenario/codigofont_ground.png" id="6_3n4ds"]
-[ext_resource type="Material" uid="uid://vga6u23827v7" path="res://assets/shaders/Interact.tres" id="9_8ajrl"]
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/main/Interact.tscn" id="9_vmyxb"]
 [ext_resource type="Script" path="res://scenes/chapter_one/deep_code/door_bool.gd" id="10_lesad"]
 [ext_resource type="Script" path="res://scenes/chapter_one/deep_code/pit.gd" id="11_6ux6c"]
@@ -116,7 +115,7 @@ animations = [{
 script = ExtResource("1_yatrg")
 
 [node name="Player" parent="." instance=ExtResource("2_bdtc3")]
-z_index = 3
+z_index = 5
 position = Vector2(5966, 5800)
 script = ExtResource("3_a0oed")
 
@@ -160,23 +159,14 @@ texture = ExtResource("6_3n4ds")
 
 [node name="PortaBool" parent="." instance=ExtResource("9_vmyxb")]
 z_index = 4
-position = Vector2(-2306, 6507)
-scale = Vector2(0.65, 6.01)
+position = Vector2(-2317, 6430)
+scale = Vector2(1.01324, 3.30951)
 script = ExtResource("10_lesad")
 
-[node name="ColorRect" type="ColorRect" parent="PortaBool"]
-z_index = 4
-material = ExtResource("9_8ajrl")
-offset_left = -375.0
-offset_top = -149.0
-offset_right = 347.0
-offset_bottom = 129.0
-scale = Vector2(1.00609, 1.01127)
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PortaBool"]
-z_index = 2
-position = Vector2(-15.3846, -32.6123)
-scale = Vector2(2.5638, 0.261014)
+z_index = -1
+position = Vector2(0.987061, -43.2209)
+scale = Vector2(1.64469, 0.473996)
 sprite_frames = SubResource("SpriteFrames_djfo4")
 animation = &"aberto"
 
@@ -461,25 +451,18 @@ sprite_frames = SubResource("SpriteFrames_baql1")
 animation = &"end"
 
 [node name="PonteInt" parent="." instance=ExtResource("9_vmyxb")]
-z_index = 1
-position = Vector2(1350, 6513)
+z_index = 3
+position = Vector2(1562, 6538)
+scale = Vector2(0.92161, 2.85551)
 script = ExtResource("13_cf24q")
 
-[node name="ColorRect2" type="ColorRect" parent="PonteInt"]
-z_index = 4
-material = ExtResource("9_8ajrl")
-offset_left = -269.0
-offset_top = -257.0
-offset_right = 286.0
-offset_bottom = 270.0
-scale = Vector2(1.00609, 1.01127)
-
 [node name="PortaString" parent="." instance=ExtResource("9_vmyxb")]
-z_index = 1
+z_index = 2
 position = Vector2(5822, 4743)
 script = ExtResource("14_l37to")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PortaString"]
+z_index = -1
 position = Vector2(604, -291)
 scale = Vector2(0.93, 0.93)
 sprite_frames = SubResource("SpriteFrames_sg14l")

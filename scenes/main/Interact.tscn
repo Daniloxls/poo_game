@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b86f2356r1et4"]
+[gd_scene load_steps=7 format=3 uid="uid://b86f2356r1et4"]
 
 [ext_resource type="Script" path="res://scenes/main/scripts/interact.gd" id="1_3dfgq"]
+[ext_resource type="Material" uid="uid://vga6u23827v7" path="res://assets/shaders/Interact.tres" id="2_irvtk"]
 [ext_resource type="Shader" path="res://assets/shaders/Interact.gdshader" id="2_okt0n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
@@ -19,6 +20,16 @@ bg_color = Color(0.0588235, 0, 0.564706, 1)
 
 [node name="Interact" type="Node2D"]
 script = ExtResource("1_3dfgq")
+
+[node name="ShaderRect" type="ColorRect" parent="."]
+visible = false
+z_index = 4
+material = ExtResource("2_irvtk")
+offset_left = -314.0
+offset_top = -255.0
+offset_right = 297.0
+offset_bottom = 261.0
+scale = Vector2(1.00609, 1.01127)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
