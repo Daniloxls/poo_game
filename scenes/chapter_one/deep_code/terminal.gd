@@ -13,7 +13,7 @@ var error_count = 0
 
 func _ready() -> void:
 	terminal_interface.connect("window_closed", _on_terminal_windowed_closed)
-	
+	menu_button.hide()
 	
 func interaction():
 	if PlayerState.is_able_to_move():

@@ -24,32 +24,8 @@ func _ready():
 	"Não foi dessa vez, mas não fique triste você pode tentar de novo"]
 	Textbox.connect("text_finish", _on_textbox_text_finish)
 	Textbox.connect("choice_closed", _on_textbox_choise_closed)
-	
-func set_sprite(sprite):
-	_animated_sprite.play(sprite)
+	_animated_sprite.set_sprite_frames(SPRITE)
 
-func play_animation(animation):
-	animation_player.play(animation)
-	
-func set_texto(new_texto):
-	texto = new_texto
-	
-func get_portraits():
-	return portraits
-	
-func set_portraits(new_portraits):
-	portraits = new_portraits
-	
-func set_codigo(new_nome, new_codigo):
-	nome = new_nome
-	codigo = new_codigo
-
-func update_codigo(new_codigo):
-	codigo = new_codigo
-	
-func depure():
-	depuring = true
-	return codigo
 
 func interaction():
 	if !scene and !game_won:
@@ -131,8 +107,7 @@ func _on_textbox_choise_closed():
 			1:
 				Textbox.queue_text(["Tudo bem, quem sabe depois"])
 				
-func name():
-	return nome
+
 
 func evaluate(command, variable_names = [], variable_values = []) -> bool:
 	var expression = Expression.new()

@@ -75,12 +75,9 @@ func esconder():
 func process_input():
 	if Input.is_action_just_pressed("e"):
 			aparecer()
-	if Input.is_action_just_pressed("x"):
+	if Input.is_action_just_pressed("Escape"):
 			esconder()
 
-func set_player(player_node):
-	#player = player_node
-	pass
 
 func get_personagem(nome : String):
 	return Party.get_node(nome)

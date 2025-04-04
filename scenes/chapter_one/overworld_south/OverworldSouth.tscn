@@ -18,7 +18,7 @@ _data = {
 }
 point_count = 6
 
-[node name="OverworldSouth" type="Node2D"]
+[node name="Level" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_pv7dr")
 
@@ -36,7 +36,6 @@ rotates = false
 loop = false
 
 [node name="Kath" parent="Path2D/PathFollow2D" instance=ExtResource("6_ijl1r")]
-visible = false
 z_index = 1
 rotation = -1.86255
 scale = Vector2(1.2, 1.2)
@@ -44,7 +43,7 @@ script = ExtResource("8_5ijpg")
 
 [node name="Player" parent="." instance=ExtResource("2_lj1bj")]
 z_index = 1
-position = Vector2(11167, -12595)
+position = Vector2(6511, -23082)
 scale = Vector2(1.2, 1.2)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

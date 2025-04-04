@@ -1,7 +1,6 @@
 extends Node2D
 @onready var player = $Player
 @onready var brilho = $Brilho
-@onready var music =  $"../../AudioPlayer"
 
 var dialogo = ["Muito bem, você conseguiu chegar até mim.",
 				"O tolo que projetou essa prisão para mim, construiu ela de forma patética.",
@@ -27,8 +26,8 @@ func _ready():
 	tween.tween_callback(player.set_sprite.bind("idle_up"))
 	tween.tween_callback(Textbox.queue_char_text.bind(dialogo, portraits))
 	
-	music.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))
-	music.play()
+	MusicPlayer.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))
+	#MusicPlayer.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -38,12 +37,9 @@ func _process(delta):
 
 func _on_textbox_text_finish():
 	var tween = create_tween()
-	var root = get_node("../..")
-	var next_level = load("res://scenes/chapter_one/turin_house/TurinHouse.tscn")
-	var instance =  next_level.instantiate()
 	tween.tween_callback(brilho.show)
 	tween.tween_property(brilho, "scale", Vector2(1200,800), 3).set_trans(Tween.TRANS_SINE)
-	tween.tween_callback(root.change_level.bind(instance))
+	tween.tween_callback(LevelWarp.change_level.bind("res://scenes/chapter_one/turin_house/TurinHouse.tscn"))
 
 func enter_stage(entrance : int):
 	pass

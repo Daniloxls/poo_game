@@ -1,7 +1,6 @@
 extends Node2D
 @onready var player = $Player
 @onready var brilho = $Brilho
-@onready var music =  $"../../AudioPlayer"
 var entrances = [Vector2(-116, -94), Vector2(3157, 3635)]
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,12 +8,9 @@ func _ready():
 	PlayerState.set_on_scene(true)
 	tween.tween_property(brilho, "modulate",Color(255, 255, 255, 0), 3).set_trans(Tween.TRANS_SINE)
 	tween.tween_callback(Textbox.queue_char_text.bind(["Que sonho esquisito"], [""]))
-	music.set_stream(load("res://assets/bgm/little_cafe.mp3"))
-	tween.tween_callback(music.play)
+	MusicPlayer.set_stream(load("res://assets/bgm/little_cafe.mp3"))
+	#tween.tween_callback(music.play)
 	tween.tween_callback(PlayerState.set_on_scene.bind(false))
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func enter_stage(entrance : int):
 	player.set_position(entrances[entrance])

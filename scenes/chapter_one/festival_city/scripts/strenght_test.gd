@@ -2,6 +2,7 @@ extends "res://scenes/main/scripts/interact.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	shader_rect.show()
 	nome = "TesteDeForca"
 	codigo = {}
 	metodos = {

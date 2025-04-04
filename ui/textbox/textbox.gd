@@ -66,10 +66,6 @@ func hide_textbox():
 	textbox_container.hide()
 	choice_root.hide()
 	
-
-func set_player(player_node):
-	pass
-	#player = player_node
 	
 #Chamada quando se quer saber se pode aparecer um novo dialogo,
 # se a caixa não estiver ready retorna string vazia

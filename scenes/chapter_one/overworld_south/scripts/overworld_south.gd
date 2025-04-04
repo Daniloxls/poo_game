@@ -1,8 +1,6 @@
 extends Node2D
 @onready var player = $Player
-@onready var codebox = $"../../Codebox"
 @onready var kath: CharacterBody2D = $Path2D/PathFollow2D/Kath
-@onready var music =  $"../../AudioPlayer"
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
 
 var entrances = [Vector2(11167, -12595)]
@@ -10,8 +8,8 @@ var entrances = [Vector2(11167, -12595)]
 func _ready():
 	starting_cutscene()
 	Textbox.connect("text_finish", _on_textbox_text_finish)
-	music.set_stream(load("res://assets/bgm/Fame Town Marcelo Fernandez.mp3"))
-	music.play()
+	MusicPlayer.set_stream(load("res://assets/bgm/Fame Town Marcelo Fernandez.mp3"))
+	#MusicPlayer.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

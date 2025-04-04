@@ -102,7 +102,7 @@ func depure(selected_node):
 			
 			edit_text.set_editable(true)
 			edit_text.set_h_size_flags(Control.SIZE_EXPAND_FILL)
-			edit_text.set_custom_minimum_size(Vector2(10,0))
+			edit_text.set_custom_minimum_size(Vector2(24,0))
 			edit_text.theme = tema
 			
 			close_text.set_editable(false)

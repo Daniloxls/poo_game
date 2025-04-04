@@ -1,8 +1,6 @@
 extends Node2D
-@onready var root = $"../.."
 @onready var sword_scene = $Cutscene
 @onready var player = $Player
-@onready var music =  $"../../AudioPlayer"
 
 signal battle_won
 signal battle_lost
@@ -13,13 +11,9 @@ func _ready():
 	Battle.connect("battle_lost", _on_battle_lost)
 	Battle.connect("battle_won", _on_battle_won)
 	Battle.set_background(bg)
-	music.set_stream(load("res://assets/bgm/Enchanted-Festival-Loop.mp3"))
-	music.play()
+	MusicPlayer.set_stream(load("res://assets/bgm/Enchanted-Festival-Loop.mp3"))
+	#MusicPlayer.play()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func _on_battle_lost():
 	battle_lost.emit()

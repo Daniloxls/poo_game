@@ -27,6 +27,7 @@ enum State{
 var current_state = State.FIRST
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	shader_rect.show()
 	Textbox.connect("text_finish", _on_textbox_text_finish)
 	nome = "LeitorDePensamento"
 	codigo = {}

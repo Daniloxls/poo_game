@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=4 uid="uid://bhl2fw3fmtrpc"]
+[gd_scene load_steps=116 format=4 uid="uid://bhl2fw3fmtrpc"]
 
 [ext_resource type="Script" path="res://scenes/chapter_one/festival_city/scripts/city.gd" id="1_e6yj4"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://entities/player/Player.tscn" id="2_u1uaq"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://blyoary4sixvr" path="res://assets/effects/magia.png" id="28_jsigt"]
 [ext_resource type="Texture2D" uid="uid://c7jypxvtwe62e" path="res://assets/characters/kath_spritesheet.png" id="29_uk8b4"]
 [ext_resource type="Texture2D" uid="uid://pro3smnbx7wg" path="res://assets/characters/kath_jumping_left.png" id="30_2kro1"]
+[ext_resource type="Texture2D" uid="uid://casvtgfky4hy4" path="res://assets/characters/lutador.png" id="30_6h16i"]
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/main/Interact.tscn" id="31_ltj3v"]
 [ext_resource type="Texture2D" uid="uid://b0wclf10aqbt0" path="res://assets/characters/campones_2.png" id="32_61ljv"]
 [ext_resource type="Texture2D" uid="uid://cy83m4onprq8e" path="res://assets/characters/cmdzinho_afogado.png" id="32_75rax"]
@@ -509,6 +510,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqmo0"]
+atlas = ExtResource("22_mouhb")
+region = Rect2(0, 0, 500, 700)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_io1xf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqmo0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_p0x00"]
 atlas = ExtResource("4_gl3wb")
 region = Rect2(0, 0, 1500, 500)
@@ -524,49 +540,20 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="GDScript" id="GDScript_ylji2"]
-script/source = "extends \"res://scenes/main/scripts/interact.gd\"
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnnmi"]
+atlas = ExtResource("30_6h16i")
+region = Rect2(0, 0, 500, 700)
 
-var direction : Vector2 = Vector2()
-@onready var _animated_sprite = $AnimatedSprite2D
-@onready var animation_player = $AnimationPlayer
-
-enum State{
-	DOWN,
-	LEFT,
-	RIGHT,
-	UP
-}
-
-var current_state = State.DOWN
-
-func _ready():
-	set_sprite(\"fighter\")
-
-
-func set_sprite(sprite):
-	_animated_sprite.play(sprite)
-
-func play_animation(animation):
-	animation_player.play(animation)
-	
-func set_texto(new_texto):
-	texto = new_texto
-	
-func get_portraits():
-	return portraits
-	
-func set_portraits(new_portraits):
-	portraits = new_portraits
-	
-
-func interaction():
-	Textbox.queue_text(texto)
-
-	
-func name():
-	return nome
-"
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1lg3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnnmi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fsg5"]
 atlas = ExtResource("32_sp7vb")
@@ -643,22 +630,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_famqw"]
-atlas = ExtResource("21_cv2aw")
-region = Rect2(0, 0, 500, 700)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_xjif8"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_famqw")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[node name="City" type="Node2D"]
+[node name="Level" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_e6yj4")
 
@@ -896,6 +868,7 @@ z_index = 2
 position = Vector2(4949, -12555)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("37_wvbjh")
+SPRITE = SubResource("SpriteFrames_io1xf")
 
 [node name="TesteDeForca" parent="TesteDeForcaNPC" instance=ExtResource("31_ltj3v")]
 z_index = 1
@@ -919,7 +892,8 @@ script = ExtResource("39_itd5i")
 z_index = 2
 position = Vector2(-5046, -20461)
 scale = Vector2(1.2, 1.2)
-script = SubResource("GDScript_ylji2")
+SPRITE = SubResource("SpriteFrames_o1lg3")
+texto = Array[String](["Ei garotinho, você acha que pode me derrotar ?", "Fale com meu gerente, prometo pegar leve com você"])
 
 [node name="LutadorInteract" parent="LutadorNPC" instance=ExtResource("31_ltj3v")]
 z_index = 1
@@ -986,12 +960,6 @@ offset_bottom = 129.0
 texture = ExtResource("50_vv0r0")
 expand_mode = 4
 stretch_mode = 4
-
-[node name="NPC" parent="." instance=ExtResource("34_diajr")]
-position = Vector2(-3018, -13114)
-nome = "Npc"
-SPRITE = SubResource("SpriteFrames_xjif8")
-texto = Array[String](["Ola"])
 
 [connection signal="battle_lost" from="." to="TatameNPC" method="_on_city_battle_lost"]
 [connection signal="battle_won" from="." to="TatameNPC" method="_on_city_battle_won"]

@@ -111,12 +111,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CodeTutorial" type="Node2D"]
+[node name="Level" type="Node2D"]
 script = ExtResource("1_yatrg")
 
 [node name="Player" parent="." instance=ExtResource("2_bdtc3")]
 z_index = 5
-position = Vector2(5966, 5800)
+position = Vector2(6093, 5488)
 script = ExtResource("3_a0oed")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

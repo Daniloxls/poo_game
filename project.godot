@@ -25,6 +25,10 @@ Codebox="*res://ui/codebox/Codebox.tscn"
 Inventory="*res://ui/inventory/Inventory.tscn"
 Battle="*res://scenes/battle/Battle.tscn"
 Party="*res://globals/party.tscn"
+TitleScreen="*res://ui/title_screen/TitleScreen.tscn"
+LevelWarp="*res://globals/LevelWarp.tscn"
+MusicPlayer="*res://globals/MusicPlayer.tscn"
+AudioPlayer="*res://globals/AudioPlayer.tscn"
 
 [display]
 

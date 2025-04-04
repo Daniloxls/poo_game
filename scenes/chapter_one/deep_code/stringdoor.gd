@@ -62,7 +62,7 @@ func on_keyboard_text_submit(password):
 		porta.unlock()
 		broken_keyboard.hide()
 		PlayerState.set_on_interface(false)
-	else:
+	elif Textbox.get_state() == "Ready":
 		Textbox.queue_text(["Senha Incorreta"])
 		broken_keyboard_line_edit.release_focus()
 

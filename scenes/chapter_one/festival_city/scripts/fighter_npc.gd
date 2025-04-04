@@ -15,41 +15,10 @@ var current_state = State.DOWN
 
 func _ready():
 	nome = "Lutador"
-	texto = ["Ei garotinho, você acha que pode me derrotar ?",
-	 "Fale com meu gerente, prometo pegar leve com você"]
 	codigo = {}
 	metodos = {
 	"1" : ["void atacar(Personagem jogador){"],
 	"0" : ["\tthis.causar_dano(jogador.get_hp())", 18, 16],
 	"3" : ["\treturn\n}"]
 	}
-
-
-	
-func set_texto(new_texto):
-	texto = new_texto
-	
-func get_portraits():
-	return portraits
-	
-func set_portraits(new_portraits):
-	portraits = new_portraits
-	
-#func set_codigo(new_nome, new_codigo):
-	#nome = new_nome
-	#codigo = new_codigo
-
-func update_codigo(new_codigo):
-	codigo = new_codigo
-	
-#func depure():
-	#depuring = true
-	#return codigo
-
-
-func interaction():
-	Textbox.queue_text(texto)
-
-	
-func name():
-	return nome
+	shader_rect.show()

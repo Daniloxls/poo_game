@@ -10,7 +10,4 @@ func _process(delta):
 	pass
 
 func _on_area_2d_area_entered(area):
-	var root = get_node("../../..")
-	var next_level = load("res://scenes/chapter_one/overworld_south/OverworldSouth.tscn")
-	var instance = next_level.instantiate()
-	root.change_level(instance)
+	LevelWarp.change_level("res://scenes/chapter_one/overworld_south/OverworldSouth.tscn")
