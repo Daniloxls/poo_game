@@ -21,7 +21,9 @@ func interaction():
 	triggered = true
 	Textbox.queue_text(texto)
 	if !finished:
-		set_texto(["Está pronto para tentar ir agora ?"])
+		var novo_texto : Array[String]
+		novo_texto.append("Está pronto para tentar ir agora ?")
+		set_texto(novo_texto)
 	
 
 func _on_textbox_text_finish():
@@ -32,7 +34,8 @@ func _on_textbox_text_finish():
 		elif scene:
 			scene = false
 			finished = true
-			set_texto([])
+			var novo_texto : Array[String]
+			set_texto(novo_texto)
 			sword_scene.play()
 
 
