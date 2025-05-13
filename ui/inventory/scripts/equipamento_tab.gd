@@ -32,8 +32,8 @@ enum Slot{
 }
 var left_hand = false
 var personagem_shown
-var items : Array[EQUIP_ITEM] = [load("res://scenes/itens/repo/armadura_couro.tres"),
-								load("res://scenes/itens/repo/armadura_ferro.tres")]
+var items : Array[EQUIP_ITEM] = [load("res://scenes/items/repo/armadura_couro.tres"),
+								load("res://scenes/items/repo/armadura_ferro.tres")]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_item_buttons(items)
@@ -184,7 +184,7 @@ func add_item_buttons(equip_list : Array[EQUIP_ITEM]):
 			container.call_deferred("remove_child", n)
 			n.queue_free()
 	for equip in equip_list:
-		var item_button = load("res://scenes/inventory/ItemButton.tscn")
+		var item_button = load("res://ui/inventory/ItemButton.tscn")
 		var item_slot = item_button.instantiate()
 		item_slot.connect("on_hover", _on_equip_hover)
 		item_slot.connect("on_click", _on_equip_click)

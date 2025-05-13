@@ -107,10 +107,10 @@ corner_radius_bottom_left = 3
 
 [node name="Inventory" type="CanvasLayer"]
 layer = 2
+visible = false
 script = ExtResource("1_bnrs2")
 
 [node name="TabContainer" type="TabContainer" parent="."]
-visible = false
 offset_left = 9.0
 offset_top = 21.0
 offset_right = 1141.0

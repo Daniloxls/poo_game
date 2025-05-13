@@ -1,7 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://b2340toqvxnfn"]
+[gd_scene load_steps=20 format=3 uid="uid://b2340toqvxnfn"]
 
+[ext_resource type="Script" path="res://ui/inventory/scripts/character_info.gd" id="1_v57mo"]
 [ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="2_alebi"]
+[ext_resource type="Script" path="res://ui/inventory/scripts/char_info_tab.gd" id="3_o0pgf"]
 [ext_resource type="Texture2D" uid="uid://cdosujgmkwpny" path="res://assets/battle/character_sprites/kath_batalha.png" id="4_luxgg"]
+[ext_resource type="Script" path="res://ui/inventory/scripts/equipamento_tab.gd" id="5_1pbhf"]
 [ext_resource type="Texture2D" uid="uid://drc3a4m5ua1qj" path="res://assets/inventory/item_panel.png" id="6_28yie"]
 [ext_resource type="Texture2D" uid="uid://ce2m5nukf0t8n" path="res://assets/inventory/helmet.png" id="7_5xrww"]
 [ext_resource type="Texture2D" uid="uid://dx22oj5y2ejyy" path="res://assets/inventory/body.png" id="8_utt0s"]
@@ -62,6 +65,7 @@ visible = false
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 6
+script = ExtResource("1_v57mo")
 metadata/_tab_index = 6
 
 [node name="TabContainer" type="TabContainer" parent="."]
@@ -78,8 +82,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_c15km")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_negui")
 theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_7besx")
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_7besx")
-current_tab = 3
+current_tab = 1
 tab_focus_mode = 0
+script = ExtResource("3_o0pgf")
 
 [node name="Status" type="ScrollContainer" parent="TabContainer"]
 visible = false
@@ -156,7 +161,6 @@ fit_content = true
 autowrap_mode = 0
 
 [node name="a" type="Label" parent="TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -167,6 +171,7 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+script = ExtResource("5_1pbhf")
 metadata/_tab_index = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Equipamento"]
@@ -346,6 +351,7 @@ theme_override_constants/v_separation = 95
 columns = 11
 
 [node name="b" type="Label" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
