@@ -60,6 +60,7 @@ text = "[color=#cf6d1d]public class[/color] [color=#228096]Martelo[/color] {
 fit_content = true
 
 [node name="PanelContainer4" type="PanelContainer" parent="."]
+visible = false
 offset_left = 588.0
 offset_top = 65.0
 offset_right = 1074.0
@@ -83,7 +84,6 @@ text = "[color=#cf6d1d]public class[/color] [color=#228096]MarteloDeGuerra[/colo
 fit_content = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
-visible = false
 offset_left = 682.0
 offset_top = 64.0
 offset_right = 1066.0

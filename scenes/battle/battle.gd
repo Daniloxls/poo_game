@@ -94,8 +94,8 @@ func start_battle(enemy_group_path):
 	# Bloqueia movimento do jogador
 	PlayerState.set_on_interface(true)
 	
-	game_audio.stop()
-	audio_player.play()
+	#AudioPlayer.stop()
+	#audio_player.play()
 	add_child(instance)
 	# Pega variaveis que apontam para o grupo de inimigos e faz a lista com os
 	# inimigos
@@ -360,7 +360,7 @@ func lost():
 	PlayerState.set_on_interface(true)
 	reset_variables()
 	hide()
-	audio_player.stop()
-	game_audio.play()
+	#audio_player.stop()
+	#game_audio.play()
 	Textbox.text_finish.disconnect(_on_text_finish)
 	menu.hide()

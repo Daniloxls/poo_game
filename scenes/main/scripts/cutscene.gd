@@ -10,7 +10,6 @@ const PAGE_UP = Vector2(-63, -80)
 const PAGE_DOWN = Vector2(-63, 0)
 
 @onready var texture_rect = $TextureRect
-@onready var textbox = $Textbox
 @onready var black_screen = $BlackScreen
 
 var quadros = []
@@ -38,7 +37,7 @@ enum State{
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Textbox.connect("text_finish", _on_textbox_text_finish)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -69,10 +68,12 @@ func read_input():
 			_on_textbox_text_finish()
 			
 func play(dlg, direction = [], path = "", scene_size = 10):
+	show()
 	dialogue = dlg
 	size = scene_size
 	scene_directions = direction
 	var tween  = create_tween()
+	PlayerState.set_on_scene(true)
 	tween.tween_property(black_screen,"color", Color("#000000"), 3)
 	tween.tween_callback(texture_rect.show)
 	tween.tween_property(black_screen,"color", Color("#00000000"), 0.5)
@@ -80,7 +81,7 @@ func play(dlg, direction = [], path = "", scene_size = 10):
 	for i in size:
 		quadros.append(load(path + str(i) + ".png"))
 	if dialogue:
-		tween.tween_callback(textbox.queue_text.bind(dialogue[0]))
+		tween.tween_callback(Textbox.queue_text.bind(dialogue[0]))
 		current_state = State.ON_TEXT
 	else:
 		current_state = State.ON_IMAGE
@@ -154,6 +155,7 @@ func hide_scene():
 	tween.tween_property(black_screen,"color", Color("#00000000"), 1.5)
 	tween.tween_callback(end_scence)
 	scene_tween = tween
+	hide()
 	
 	
 func end_scence():
@@ -181,9 +183,12 @@ func slide_scene():
 	
 	
 func _on_textbox_text_finish():
+	if !self.visible:
+		return
 	scene_index += 1
 	if scene_index == size:
 		current_state = State.FINISH
+		PlayerState.set_on_scene(true)
 		hide_scene()
 	else:
 		texture_rect.set_texture(quadros[scene_index])
@@ -202,5 +207,5 @@ func _on_textbox_text_finish():
 		if dialogue[scene_index] == [""]:
 			current_state = State.ON_IMAGE
 		else:
-			textbox.queue_text(dialogue[scene_index])
+			Textbox.queue_text(dialogue[scene_index])
 			current_state = State.ON_TEXT

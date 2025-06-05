@@ -1,8 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1nhjrpvjy6pw"]
+[gd_scene load_steps=16 format=3 uid="uid://d1nhjrpvjy6pw"]
 
-[ext_resource type="PackedScene" uid="uid://co1ntmvskmiex" path="res://ui/textbox/Textbox.tscn" id="1_oi3xm"]
 [ext_resource type="Script" path="res://scenes/chapter_two/old_man_house/scripts/old_man_house.gd" id="1_trdu3"]
-[ext_resource type="PackedScene" uid="uid://tfta3ibux6fb" path="res://ui/codebox/Codebox.tscn" id="2_btes1"]
 [ext_resource type="PackedScene" uid="uid://cidaiixe327go" path="res://entities/player/Player.tscn" id="3_gq5no"]
 [ext_resource type="Texture2D" uid="uid://tv80yfu0u1is" path="res://assets/tileset/indoor/player_room.png" id="4_dc67v"]
 [ext_resource type="Texture2D" uid="uid://dgievkln27ypp" path="res://assets/tileset/temp.png" id="5_307lt"]
@@ -169,10 +167,6 @@ animations = [{
 [node name="OldManHouse" type="Node2D"]
 script = ExtResource("1_trdu3")
 
-[node name="Textbox" parent="." instance=ExtResource("1_oi3xm")]
-
-[node name="Codebox" parent="." instance=ExtResource("2_btes1")]
-
 [node name="Player" parent="." instance=ExtResource("3_gq5no")]
 z_index = 1
 position = Vector2(6379, -70)
@@ -208,12 +202,13 @@ script = ExtResource("8_btede")
 SPRITE = SubResource("SpriteFrames_epjtm")
 
 [node name="Cutscene" parent="." instance=ExtResource("7_yjood")]
+layer = 0
+visible = false
 
 [node name="Kath" parent="." instance=ExtResource("10_ptea2")]
 position = Vector2(6986, -72)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("11_kdgni")
 
-[connection signal="text_finish" from="Textbox" to="OldMan" method="_on_textbox_text_finish"]
 [connection signal="scene_end" from="Cutscene" to="." method="_on_cutscene_scene_end"]
 [connection signal="scene_start" from="Cutscene" to="." method="_on_cutscene_scene_start"]

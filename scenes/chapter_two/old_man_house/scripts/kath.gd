@@ -1,4 +1,4 @@
-extends "res://scripts/npc_script.gd"
+extends "res://entities/npc/npc_script.gd"
 
 
 

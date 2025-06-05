@@ -28,9 +28,13 @@ var metodos = {}
 var current_state = State.DOWN
 
 func _ready():
+	npc_ready()
 	if SPRITE:
 		_animated_sprite.set_sprite_frames(SPRITE)
 
+func npc_ready():
+	pass
+	
 func set_sprite(sprite):
 	_animated_sprite.play(sprite)
 

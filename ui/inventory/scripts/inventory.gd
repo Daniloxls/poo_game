@@ -69,8 +69,8 @@ func aparecer():
 
 
 func esconder():
+	hide()
 	#player.set_movement(true)
-	pass
 	
 func process_input():
 	if Input.is_action_just_pressed("e"):

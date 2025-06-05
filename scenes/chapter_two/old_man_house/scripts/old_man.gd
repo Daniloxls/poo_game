@@ -1,4 +1,4 @@
-extends "res://scripts/npc_script.gd"
+extends "res://entities/npc/npc_script.gd"
 
 @onready var cutscene = $"../Cutscene"
 var triggered = false
@@ -18,12 +18,12 @@ var scene_path = "res://assets/cutscene/antipoo_past/"
 
 var scene_size = 10
 
-
+func npc_ready() -> void:
+	Textbox.connect("text_finish", _on_textbox_text_finish)
 
 func interaction():
 	triggered = true
-	textbox.queue_text(["Olá, Turin. Eu me chamo MacAlistair.", "Você teve muita sorte por eu estar por perto quando o Anti-POO atacou você e a mocinha ali.", "Quem é Anti-POO? Ah, esses jovens de hoje em dia...", "Deixe-me contar uma história para vocês."])
-	pass
+	Textbox.queue_text(["Olá, Turin. Eu me chamo MacAlistair.", "Você teve muita sorte por eu estar por perto quando o Anti-POO atacou você e a mocinha ali.", "Quem é Anti-POO? Ah, esses jovens de hoje em dia...", "Deixe-me contar uma história para vocês."])
 
 
 
@@ -31,4 +31,3 @@ func interaction():
 func _on_textbox_text_finish():
 	if triggered:
 		cutscene.play(test_dialogue, test_direction, scene_path, scene_size)
-	pass # Replace with function body.
