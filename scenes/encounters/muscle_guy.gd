@@ -1,4 +1,4 @@
-extends "res://scripts/enemy.gd"
+extends "res://entities/encounters/enemy.gd"
 
 @onready var lutador = get_node("../../../Level/City/LutadorNPC/LutadorInteract")
 @onready var error = $ErrorLabel
