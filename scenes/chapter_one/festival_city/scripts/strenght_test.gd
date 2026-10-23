@@ -1,19 +1,29 @@
-extends "res://scenes/main/scripts/interact.gd"
+extends "res://scenes/main/scripts/java_interact.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	shader_rect.show()
 	nome = "TesteDeForca"
-	codigo = {}
-	metodos = {
-	"1" : ["boolean teste_de_forca(Personagem jogador){"],
-	"2" : ["\tboolean sucesso;"] ,
-	"3" : ["\tint forca = jogador.get_forca()"],
-	"0": ["\tif (forca > 10){", 5, 10] ,
-	"4" : ["\t\tsucesso = true\n\t}"],
-	"5" : ["\telse{"],
-	"6" : ["\t\tsucesso = false;\n\t}"],
-	"7" : ["\treturn sucesso;\n}"]
-	}
+	classe_java = "TesteDeForca"
+	dica_java = "Você só pode mudar a condição do if."
+	codigo_java = """public class TesteDeForca {
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+    public boolean testeDeForca(Personagem jogador) {
+        boolean sucesso;
+        int forca = jogador.getForca();
+        if ({|forca > 10|}) {
+            sucesso = true;
+        } else {
+            sucesso = false;
+        }
+        return sucesso;
+    }
+}
+"""
+	ready_drop_menu()
+
+
+# Roda o código do jogador. Código com erro conta como falha no teste.
+func testar(forca: int) -> bool:
+	var jogador := JavaRuntime.personagem({"nome": "Turin", "forca": forca})
+	return executar_java("testeDeForca", [jogador]) == true

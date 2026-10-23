@@ -39,8 +39,7 @@ func _on_textbox_text_finish():
 		Textbox.display_choice("Você quer tentar garoto ?", ["Sim", "Não"])
 	elif scene:
 		scene = false
-		var comando = teste.get_metodos()["0"][0].substr(5, teste.get_metodos()["0"][2])
-		var result = evaluate(comando, ["forca"], [4])
+		var result = teste.testar(4)
 		var tween = create_tween()
 		var current_pos = player.get_position()
 		tween.tween_callback(player.set_state.bind(States.Player_State.ON_SCENE))

@@ -30,6 +30,7 @@ LevelWarp="*res://globals/LevelWarp.tscn"
 MusicPlayer="*res://globals/MusicPlayer.tscn"
 AudioPlayer="*res://globals/AudioPlayer.tscn"
 EquipItem="*res://scenes/items/classes/equip_item.gd"
+JavaRuntime="*res://globals/java_runtime.gd"
 
 [display]
 
