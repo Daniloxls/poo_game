@@ -27,12 +27,19 @@ static func method_name(skill: SKILL) -> String:
 	return r
 
 
+# Os TARGET da habilidade que viram parâmetro, na ordem.
+static func param_kinds(skill: SKILL) -> Array:
+	var r := []
+	for t in skill.TARGET:
+		if t in [SKILL.Targets.ITE, SKILL.Targets.ALLY, SKILL.Targets.ENEMY, SKILL.Targets.EVERYONE]:
+			r.append(t)
+	return r
+
+
 static func params_of(skill: SKILL) -> PackedStringArray:
 	var r := PackedStringArray()
-	for t in skill.TARGET:
-		match t:
-			SKILL.Targets.ITE: r.append("item")
-			SKILL.Targets.ALLY, SKILL.Targets.ENEMY, SKILL.Targets.EVERYONE: r.append("alvo")
+	for t in param_kinds(skill):
+		r.append("item" if t == SKILL.Targets.ITE else "alvo")
 	return r
 
 

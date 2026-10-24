@@ -50,10 +50,7 @@ static func suggest(text: String, ctx: BattleContext) -> Array[ConsoleSuggestion
 	var skill := ctx.find_skill(actor, p.method_name)
 	if skill == null:
 		return out
-	var kinds: Array = []
-	for t in skill.TARGET:
-		if t in [SKILL.Targets.ITE, SKILL.Targets.ALLY, SKILL.Targets.ENEMY, SKILL.Targets.EVERYONE]:
-			kinds.append(t)
+	var kinds := BattleContext.param_kinds(skill)
 	var idx := text.count(",", text.find("("))
 	if idx >= kinds.size():
 		return out

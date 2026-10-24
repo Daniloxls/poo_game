@@ -43,11 +43,7 @@ static func resolve(p: ParsedCommand, ctx: BattleContext) -> ResolvedCommand:
 			"argumento" if params.size() == 1 else "argumentos", ", ".join(params), p.args.size()],
 			p.method_span)
 
-	# Tipo de cada parâmetro, na ordem (só os que viram parâmetro).
-	var kinds: Array = []
-	for t in skill.TARGET:
-		if t in [SKILL.Targets.ITE, SKILL.Targets.ALLY, SKILL.Targets.ENEMY, SKILL.Targets.EVERYONE]:
-			kinds.append(t)
+	var kinds := BattleContext.param_kinds(skill)
 
 	var res := ResolvedCommand.new()
 	res.actor = actor

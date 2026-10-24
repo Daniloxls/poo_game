@@ -44,4 +44,6 @@ func _initialize() -> void:
 	eq("2o arg resultado", CommandCompleter.suggest("Turin.usarItem(Poção_Pequena, Tu", ctx)[0].result_text, "Turin.usarItem(Poção_Pequena, Turin)")
 	eq("pausado", _labels("Kath."), [])
 	eq("pronto", _labels("Turin.atacar(Montanha)"), [])
+	ctx.combatants = [kath, turin, montanha]
+	eq("ativo primeiro", _labels(""), ["Turin", "Kath", "Montanha"])
 	finish()
