@@ -1,6 +1,6 @@
 extends "res://entities/encounters/enemy.gd"
 
-@onready var lutador = get_node("../../../Level/City/LutadorNPC/LutadorInteract")
+@onready var lutador = get_tree().current_scene.get_node("LutadorNPC/LutadorInteract")
 @onready var error = $ErrorLabel
 
 # Called when the node enters the scene tree for the first time.

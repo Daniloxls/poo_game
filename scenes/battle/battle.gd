@@ -12,8 +12,6 @@ signal battle_lost
 # 'char_list' é uma lista com todos os nós dos personagens
 @onready var char_list = Party.get_children()
 
-@onready var game_audio = $"../Game/AudioPlayer"
-
 # 'menu' é todo o painel de baixo
 @onready var menu = $BattleMenu
 
@@ -172,6 +170,9 @@ func _on_enemy_death():
 # quando uma animação do inimigo acaba ele emite um sinal, quando recebe esse sinal
 # Se ainda existem inimigos continua a batalha, caso contrario entra no estado de vitoria
 func _on_enemy_animation_end():
+	# a animação de morte também chega aqui; com a luta acabada não há mais turnos
+	if current_state == States.Battle_States.DEFEAT or current_state == States.Battle_States.VICTORY:
+		return
 	for enemy in enemy_list:
 		if enemy.get_state() == 1:
 			return
@@ -207,6 +208,9 @@ func _on_battle_menu_animation_end():
 
 func player_turn():
 	if !in_battle:
+		return
+	# o tween do enemy_turn chama isto 2s depois do ataque, mesmo se o ataque terminou a luta
+	if current_state == States.Battle_States.DEFEAT or current_state == States.Battle_States.VICTORY:
 		return
 	for enemy in enemy_list:
 		enemy.reset_state()
@@ -257,11 +261,11 @@ func _on_text_finish():
 		screen_lock.hide()
 		hide()
 		audio_player.stop()
-		game_audio.play()
-		Textbox.text_finish.disconnect(_on_text_finish)
 		menu.hide()
 
 func _on_char_death():
+	if current_state == States.Battle_States.DEFEAT:
+		return
 	for char in char_list:
 		if char.get_hp() > 0:
 			return
@@ -269,6 +273,8 @@ func _on_char_death():
 	current_state = States.Battle_States.DEFEAT
 	menu.hide()
 	Textbox.queue_text(["Você foi derrotado."])
+	screen_lock.show()
+	battle_lost.emit()
 	
 	
 func on_char_skill_pressed(targets, id, char_node):

@@ -59,6 +59,7 @@ func get_items():
 func full_heal():
 	for i in Party.get_children():
 		i.set_hp(i.get_max_hp())
+		i.default_state()   # sai de DEFEATED, senão não ganha turno na próxima luta
 		
 func get_party():
 	return Party

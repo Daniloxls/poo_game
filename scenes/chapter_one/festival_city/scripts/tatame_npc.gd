@@ -3,8 +3,8 @@ extends "res://scenes/main/scripts/interact.gd"
 var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer
-@onready var battle = $"../../../Battle"
-@onready var inventory = $"../../../Inventory"
+@onready var battle = Battle
+@onready var inventory = Inventory
 @onready var tickets = $"../Tickets"
 @onready var lutador = $"../LutadorNPC"
 
@@ -65,15 +65,14 @@ func name():
 	return nome
 
 
-func _on_textbox_choise_closed():
+func _on_textbox_choise_closed(escolha):
 	if triggered:
-		match(Textbox.get_choice()):
-			0:
+		match(escolha):
+			"Sim":
 				start_battle = true
 				Textbox.queue_text(["Então que comece a luta!"])
-				player.set_state(States.Player_State.ON_BATTLE)
 				
-			1:
+			"Não":
 				start_battle = false
 				Textbox.queue_text(["Certo, quem sabe depois então."])
 

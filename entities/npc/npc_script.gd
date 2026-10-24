@@ -42,7 +42,7 @@ func play_animation(animation):
 	animation_player.play(animation)
 	
 func set_texto(new_texto):
-	texto = new_texto
+	texto.assign(new_texto)   # texto é Array[String]; assign aceita Array comum
 	
 func get_portraits():
 	return portraits

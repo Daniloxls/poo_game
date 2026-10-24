@@ -67,7 +67,10 @@ func _init() -> void:
 	indent_use_spaces = true
 	indent_size = 4
 	scroll_past_end_of_file = false
-	wrap_mode = TextEdit.LINE_WRAPPING_NONE
+	# linhas longas quebram no limite do painel, mantendo a indentação
+	wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	indent_wrapped_lines = true
 	_gutter = get_gutter_count()
 	add_gutter()
 	set_gutter_type(_gutter, TextEdit.GUTTER_TYPE_CUSTOM)
@@ -450,25 +453,55 @@ func _draw() -> void:
 			var y := _y_linha(linha)
 			if y < 0:
 				continue
-			var h := get_line_height()
 			if bloco:
+				var h := _altura_linha(linha)
 				var x0 := _x_base() - 4.0
 				draw_rect(Rect2(x0, y, largura_util - x0, h), cor_regiao)
 				draw_rect(Rect2(x0, y, 3, h), cor_borda)
 			else:
 				var c0: int = a.y if linha == a.x else 0
 				var c1: int = b.y if linha == b.x else get_line(linha).length()
-				var x0 := _x_coluna(linha, c0) - 2.0
-				var x1 := maxf(_x_coluna(linha, c1) + 2.0, x0 + 8.0)
-				var ret := Rect2(x0, y + 1, x1 - x0, h - 2)
-				draw_rect(ret, cor_regiao)
-				draw_rect(ret, cor_borda, false, 1.0)
+				for ret in _caixas(linha, c0, c1, y):
+					draw_rect(ret, cor_regiao)
+					draw_rect(ret, cor_borda, false, 1.0)
 	if _flash > 0.0 and _flash_linha >= primeira and _flash_linha <= ultima:
 		var y := _y_linha(_flash_linha)
 		if y >= 0:
 			var c := cor_bloqueio
 			c.a *= _flash * 0.25
-			draw_rect(Rect2(_x_base() - 4.0, y, largura_util, get_line_height()), c)
+			draw_rect(Rect2(_x_base() - 4.0, y, largura_util, _altura_linha(_flash_linha)), c)
+
+
+# Altura da linha na tela, contando as quebras de linha.
+func _altura_linha(linha: int) -> float:
+	return get_line_height() * (get_line_wrap_count(linha) + 1)
+
+
+# Caixas que cobrem as colunas [c0, c1) da linha, uma por pedaço quebrado.
+# get_rect_at_line_column erra a caixa perto da quebra, então só pegamos dele
+# o começo de cada pedaço e medimos o texto com a fonte.
+func _caixas(linha: int, c0: int, c1: int, y: float) -> Array[Rect2]:
+	var h := get_line_height()
+	var fonte := get_theme_font("font")
+	var tam := get_theme_font_size("font_size")
+	var caixas: Array[Rect2] = []
+	var ini := 0
+	for pedaco in get_line_wrapped_text(linha):
+		var fim := ini + pedaco.length()
+		var a := maxi(c0, ini)
+		var b := mini(c1, fim)
+		var vazia := c0 == c1 and c0 >= ini and c0 <= fim
+		if a < b or vazia:
+			var origem := Vector2(_x_base(), y)
+			if ini > 0:   # na coluna da quebra o retângulo já é o do pedaço novo
+				origem = Vector2(get_rect_at_line_column(linha, ini).position)
+			var x0 := origem.x + fonte.get_string_size(pedaco.substr(0, a - ini), HORIZONTAL_ALIGNMENT_LEFT, -1, tam).x - 2.0
+			var x1 := maxf(origem.x + fonte.get_string_size(pedaco.substr(0, b - ini), HORIZONTAL_ALIGNMENT_LEFT, -1, tam).x + 2.0, x0 + 8.0)
+			caixas.append(Rect2(x0, origem.y + 1, x1 - x0, h - 2))
+			if vazia:
+				break
+		ini = fim
+	return caixas
 
 
 func _desenhar_gutter(linha: int, _g: int, area: Rect2) -> void:
@@ -496,15 +529,6 @@ func _desenhar_gutter(linha: int, _g: int, area: Rect2) -> void:
 
 func _x_base() -> float:
 	return get_total_gutter_width() + get_theme_stylebox("normal").get_margin(SIDE_LEFT) - scroll_horizontal
-
-
-func _x_coluna(linha: int, col: int) -> float:
-	col = mini(col, get_line(linha).length())
-	if col <= 0:
-		return _x_base()
-	# get_rect_at_line_column(l, c) devolve a caixa do caractere ANTES da coluna c
-	var r := get_rect_at_line_column(linha, col)
-	return r.position.x + r.size.x
 
 
 func _y_linha(linha: int) -> float:
