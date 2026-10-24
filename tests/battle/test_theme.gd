@@ -20,8 +20,10 @@ func _initialize() -> void:
 	eq("pilha", t.get_stylebox("panel", "StackContainer").bg_color, Color("#2b2f3a"))
 	for s in ["normal", "hover", "pressed", "focus", "disabled"]:
 		check("MethodButton " + s, t.has_stylebox(s, "MethodButton"))
+	eq("foco sem fundo", t.get_stylebox("focus", "MethodButton").bg_color.a, 0.0)
 	check("ClassTag", t.get_type_list().has("ClassTag"))
 	check("fonte padrão", t.default_font.resource_path.ends_with("ChakraPetch-Bold.ttf"))
 	check("MonoLabel fonte", t.get_font("font", "MonoLabel") is FontVariation)
+	eq("MonoLabel peso", t.get_font("font", "MonoLabel").variation_opentype.get("wght"), 700)
 	check("BattleFonts", BattleFonts.display() != null and BattleFonts.mono() != null)
 	finish()

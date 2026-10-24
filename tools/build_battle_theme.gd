@@ -33,7 +33,10 @@ func _init() -> void:
 	t.set_stylebox("normal", "MethodButton", _caixa(v))
 	t.set_stylebox("hover", "MethodButton", _caixa(v.lightened(0.2)))
 	t.set_stylebox("pressed", "MethodButton", _caixa(v.darkened(0.1), 4, Vector2(2, 2)))
-	t.set_stylebox("focus", "MethodButton", _caixa(v, 6))
+	# foco é desenhado POR CIMA do estado: só contorno, sem fundo nem sombra
+	var foco := _caixa(Color(0, 0, 0, 0), 6, Vector2.ZERO, Color("#ffd23f"))
+	foco.shadow_color = Color(0, 0, 0, 0)
+	t.set_stylebox("focus", "MethodButton", foco)
 	t.set_stylebox("disabled", "MethodButton", _caixa(Color("#b8b8b8"), 4, Vector2(3, 3), Color("#6b6b6b")))
 	t.set_color("font_color", "MethodButton", Color.WHITE)
 	t.set_color("font_outline_color", "MethodButton", Color("#1b1b1b"))

@@ -2,12 +2,30 @@ class_name HardShadowStyleBox
 extends StyleBox
 ## Painel cartoon: contorno grosso e sombra dura deslocada (sem blur).
 
-@export var bg_color := Color("#fff8e7")
-@export var border_color := Color("#1b1b1b")
-@export var border_width := 4
-@export var corner_radius := 10
-@export var shadow_offset := Vector2(5, 5)
-@export var shadow_color := Color("#1b1b1b")
+@export var bg_color := Color("#fff8e7"):
+	set(v):
+		bg_color = v
+		emit_changed()
+@export var border_color := Color("#1b1b1b"):
+	set(v):
+		border_color = v
+		emit_changed()
+@export var border_width := 4:
+	set(v):
+		border_width = v
+		emit_changed()
+@export var corner_radius := 10:
+	set(v):
+		corner_radius = v
+		emit_changed()
+@export var shadow_offset := Vector2(5, 5):
+	set(v):
+		shadow_offset = v
+		emit_changed()
+@export var shadow_color := Color("#1b1b1b"):
+	set(v):
+		shadow_color = v
+		emit_changed()
 
 func _init() -> void:
 	content_margin_left = 10; content_margin_right = 10
