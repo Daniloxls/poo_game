@@ -123,6 +123,10 @@ func _on_menu_button_about_to_popup():
 
 func _set_popup_position():
 	popup = menu_button.get_popup()
+	# o MenuButton escala o popup pelo zoom da câmera (0.11 na cidade),
+	# o que deixava o "Depurar" minúsculo; volta para o tamanho normal da interface
+	popup.content_scale_factor = 1.0
+	popup.reset_size()
 	popup.connect("index_pressed", depure)
 	popup.set_position(get_viewport().get_mouse_position())
 	

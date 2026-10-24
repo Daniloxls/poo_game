@@ -1,6 +1,6 @@
-extends "res://scripts/enemy.gd"
+extends "res://entities/encounters/enemy.gd"
 
-@onready var lutador = get_node("../../../Level/City/LutadorNPC/LutadorInteract")
+@onready var lutador = get_tree().current_scene.get_node("LutadorNPC/LutadorInteract")
 @onready var error = $ErrorLabel
 
 # Called when the node enters the scene tree for the first time.
@@ -20,15 +20,10 @@ func _process(delta):
 	pass
 
 func logic(character_list, menu):
-	var metodos =  lutador.get_metodos()
 	var tween = create_tween()
-	var executar = metodos["0"][0].substr(metodos["0"][1],metodos["0"][2])
-	var alvo = {}
-	alvo["jogador"] = character_list[0]
-	if executar.is_valid_int():
-		menu.change_char_health(0, character_list[0].take_damage(int(executar)))
-	elif executar.get_slice(".", 0) in alvo.keys():
-		var dano =  evaluate(executar.get_slice(".", 1), alvo[executar.get_slice(".", 0)])
+	# o ataque usa o código Java do Lutador (que o jogador pode ter editado)
+	var dano: int = lutador.calcular_dano(character_list[0])
+	if dano >= 0:
 		menu.change_char_health(0, character_list[0].take_damage(dano))
 	else:
 		error.show()
