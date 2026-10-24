@@ -6,6 +6,7 @@ extends "res://entities/encounters/enemy.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	nome = "Montanha"
+	classe = "Lutador"
 	max_hp = 32
 	animation.play("default")
 	hp = max_hp
@@ -18,6 +19,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func choose_action(party: Array, enemies: Array) -> EnemyAction:
+	var action := EnemyAction.new()
+	var alvo = party[0]
+	# o ataque usa o código Java do Lutador (que o jogador pode ter editado)
+	var dano: int = lutador.calcular_dano(alvo)
+	if dano < 0:
+		action.error_text = "atacar() falhou: o código do Lutador tem erro"
+	else:
+		action.outcomes.append(ActionOutcome.make(alvo, ActionOutcome.Kind.DAMAGE, dano, DamageType.Kind.SOCO))
+	return action
 
 func logic(character_list, menu):
 	var tween = create_tween()

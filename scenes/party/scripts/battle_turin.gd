@@ -20,7 +20,6 @@ func _ready():
 	var guigo = load("res://rpg_classes/comumzera.tres")
 	rpg_class = load("res://rpg_classes/comumzera.tres")
 	print("rpg_class: ", rpg_class)
-	battle_options.set_button_functions(rpg_class.SKILLS)
 	original_pos = self.get_global_position()
 	call_deferred("connect_action_buttons")
 	sprite.connect("sprite_clicked", on_sprite_clicked)

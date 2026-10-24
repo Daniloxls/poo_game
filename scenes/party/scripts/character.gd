@@ -187,6 +187,21 @@ func is_alive():
 	else:
 		return false
 
+# Contrato do combatente: só mudam o status, sem animação nem sinais.
+# Devolvem o quanto realmente foi aplicado.
+func apply_damage(amount: int) -> int:
+	var antes := hp
+	hp = maxi(hp - amount, 0)
+	return antes - hp
+
+func apply_heal(amount: int) -> int:
+	var antes := hp
+	hp = mini(hp + amount, get_max_hp())
+	return hp - antes
+
+func is_party_member() -> bool:
+	return true
+
 # Função de cura do personagem, toca animação de cura e retorna porcentagem da vida atual
 func gain_health(value):
 	var current_max_hp = max_hp

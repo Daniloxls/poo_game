@@ -26,6 +26,8 @@ var max_hp
 var def
 var atk
 var vel
+@export var classe := ""
+@export var portrait: Texture2D
 
 var current_state = State.DEFAULT
 # Called when the node enters the scene tree for the first time.
@@ -84,6 +86,33 @@ func gain_health(value):
 	var hp_percentage = float(hp)/max_hp
 	healthbar.change_hp_percent(hp_percentage, value)
 	
+
+# Contrato do combatente: só mudam o status, sem animação nem sinais.
+func apply_damage(amount: int) -> int:
+	var antes: int = hp
+	hp = maxi(hp - amount, 0)
+	return antes - hp
+
+func apply_heal(amount: int) -> int:
+	var antes: int = hp
+	hp = mini(hp + amount, max_hp)
+	return hp - antes
+
+func is_party_member() -> bool:
+	return false
+
+func is_alive() -> bool:
+	return hp > 0
+
+func get_skills() -> Array:
+	return []
+
+func get_class_name() -> String:
+	return classe
+
+# Decide a ação do turno; a base não faz nada.
+func choose_action(party: Array, enemies: Array) -> EnemyAction:
+	return EnemyAction.new()
 
 #logica do inimigo
 func logic(character_list, menu):

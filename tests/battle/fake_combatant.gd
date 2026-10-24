@@ -10,6 +10,8 @@ var hp := 10
 var max_hp := 10
 var classe := ""
 var skills := []
+var atk := 0
+var def := 0
 
 
 func _init(p_nome := "", p_vel := 0, p_party := false) -> void:
@@ -26,3 +28,5 @@ func get_hp() -> int: return hp
 func get_max_hp() -> int: return max_hp
 func get_class_name() -> String: return classe
 func get_skills() -> Array: return skills
+func get_atk() -> int: return atk
+func get_def() -> int: return def

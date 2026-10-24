@@ -9,4 +9,5 @@ SKLL_NAME = "Atacar"
 TARGET = Array[int]([3])
 DESCRIPTION = "Ataca o Inimigo alvo com sua arma"
 IS_OVERRIDE = false
+DAMAGE_TYPE = 0
 SKILL_SCRIPT = ExtResource("1_yulim")
