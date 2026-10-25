@@ -61,6 +61,12 @@ func _rodar() -> void:
 	r.animar("inexistente")
 	checar("animação inexistente: nada muda", r.position == repouso and r.scale == Vector2.ONE)
 
+	var antiga := img.texture
+	r.mostrar(kath, "neutra")
+	checar("troca: textura antiga durante a saída", img.texture == antiga and antiga != kath.retrato("neutra"))
+	await create_timer(0.6).timeout
+	checar("troca: nova textura depois", img.texture == kath.retrato("neutra") and r.position == repouso)
+
 	r.esconder()
 	await create_timer(0.4).timeout
 	checar("esconder: personagem nulo", r.personagem == null)
@@ -72,6 +78,11 @@ func _rodar() -> void:
 		await create_timer(0.1).timeout
 		parado = parado and r.position == repouso
 	checar("sem balanço ao falar", parado)
+
+	r.esconder()
+	r.mostrar(kath, "neutra")
+	await create_timer(0.6).timeout
+	checar("esconder + mostrar imediato", r.visible and r.personagem == kath and r.position == repouso and r.modulate.a == 1.0)
 
 	print("\n%d testes passaram, %d falharam" % [passou, falhou])
 	quit(1 if falhou else 0)

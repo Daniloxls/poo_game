@@ -20,7 +20,7 @@ script = ExtResource("1")
 
 [node name="Imagem" type="TextureRect" parent="."]
 unique_name_in_owner = true
-texture_filter = 5
+texture_filter = 2
 material = SubResource("1")
 layout_mode = 1
 anchors_preset = 15

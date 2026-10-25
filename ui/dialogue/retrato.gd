@@ -15,6 +15,7 @@ var em_animacao: bool:
 
 var _repouso := Vector2.ZERO
 var _afundado := false
+var _escondendo := false
 var _t_pos: Tween
 var _t_escala: Tween
 var _t_flash: Tween
@@ -31,14 +32,15 @@ func _ready() -> void:
 
 
 func mostrar(p: Personagem, exp: String) -> void:
-	if p == personagem and visible:
+	if p == personagem and visible and not _escondendo:
 		trocar_expressao(exp)
 		return
-	var tinha := personagem != null and visible
+	var tinha := personagem != null and visible and not _escondendo
 	_parar()
 	personagem = p
 	expressao = exp
-	_imagem.texture = p.retrato(exp) if p else null
+	if not tinha:
+		_imagem.texture = p.retrato(exp) if p else null
 	visible = p != null
 	if not visible:
 		return
@@ -60,10 +62,12 @@ func esconder() -> void:
 	if personagem == null:
 		return
 	_parar()
+	_escondendo = true
 	_t_pos = create_tween()
 	_t_pos.tween_property(self, "position:x", _repouso.x - DESLOCAMENTO, 0.2).set_ease(Tween.EASE_IN)
 	_t_pos.parallel().tween_property(self, "modulate:a", 0.0, 0.2)
 	_t_pos.tween_callback(func():
+		_escondendo = false
 		personagem = null
 		visible = false
 		position = _repouso)
@@ -140,6 +144,7 @@ func _parar() -> void:
 		if t:
 			t.kill()
 	_afundado = false
+	_escondendo = false
 	position = _repouso
 	rotation = 0.0
 	scale = Vector2.ONE
