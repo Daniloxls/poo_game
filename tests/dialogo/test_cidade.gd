@@ -3,6 +3,8 @@ extends SceneTree
 var passou := 0
 var falhou := 0
 var terminou := false
+var vistos: Array = []        # nomes que apareceram na última _jogar
+var retrato_do_cmd := false   # o Cmdzinho apareceu com retrato
 
 
 func checar(titulo: String, ok: bool, detalhe = "") -> void:
@@ -56,6 +58,8 @@ func _conversa_simples(rotulo: String, no: Node) -> void:
 # Roda uma corrotina de conversa escolhendo sempre a opção `indice`.
 func _jogar(rotulo: String, c: Callable, indice: int) -> void:
 	terminou = false
+	vistos = []
+	retrato_do_cmd = false
 	var envelope := func():
 		await c.call()
 		terminou = true
@@ -67,6 +71,11 @@ func _jogar(rotulo: String, c: Callable, indice: int) -> void:
 		var bs := _baloes()
 		if bs.is_empty():
 			continue
+		var nome_atual: String = bs[0].get_node("%NomeTag").text
+		if nome_atual != "" and not vistos.has(nome_atual):
+			vistos.append(nome_atual)
+		if nome_atual == "Cmdzinho" and bs[0].get_node("%Retrato").visible:
+			retrato_do_cmd = true
 		if bs[0].get_node("%Escolhas").visible:
 			bs[0].escolher(indice)
 		else:
@@ -82,6 +91,8 @@ class Contador:
 	func start_battle(caminho: String) -> void:
 		n += 1
 		ultimo = caminho
+	func reset() -> void:
+		pass
 	func hide() -> void:
 		pass
 	func show() -> void:
@@ -120,6 +131,44 @@ func _excalibur_e_tatame(cidade: Node) -> void:
 	checar("derrota: cura o grupo", heroi.get_hp() == heroi.get_max_hp())
 
 
+func _forca_e_tritomos(cidade: Node) -> void:
+	var tickets = cidade.find_child("Tickets")
+	var forca = cidade.get_node("TesteDeForcaNPC")
+	var hist = root.get_node("Historia")
+	hist.cmdzinho_resgatado = false
+	Engine.time_scale = 20.0   # acelera as caminhadas (tweens) do teste
+	await _jogar("força não", forca.interaction, 1)
+	checar("força não: não tenta", forca.erros == 0 and not forca.game_won)
+	await _jogar("força perde sem Cmdzinho", forca.interaction, 0)
+	checar("perdeu sem dica do Cmdzinho", forca.erros == 1 and not vistos.has("Cmdzinho"), vistos)
+	hist.cmdzinho_resgatado = true
+	await _jogar("força perde com Cmdzinho", forca.interaction, 0)
+	checar("perdeu e Cmdzinho dá dica com retrato", forca.erros == 2 and vistos.has("Cmdzinho") and retrato_do_cmd, vistos)
+	for i in 3:
+		await _jogar("força perde %d" % i, forca.interaction, 0)
+	checar("erros param em 3", forca.erros == 3, forca.erros)
+	hist.cmdzinho_resgatado = false
+
+	var antes: int = tickets.get_tickets()
+	forca.teste.codigo_editado = forca.teste.get_codigo_java_atual().replace("forca > 10", "forca > 3")
+	await _jogar("força ganha", forca.interaction, 0)
+	checar("ganhou: +10 tickets", forca.game_won and tickets.get_tickets() == antes + 10, tickets.get_tickets())
+	await _jogar("força já ganhou", forca.interaction, 0)
+	checar("já ganhou: sem novo teste", tickets.get_tickets() == antes + 10)
+
+	Engine.time_scale = 1.0
+	var tenda = cidade.get_node("TendaVidente")
+	tenda.tooltip = Contador.new()   # a cena da cidade não tem o TooltipButton
+	antes = tickets.get_tickets()
+	tenda.correct_answer = true
+	tenda.retorno = "'sol'"
+	tenda.pensamento_field.text = "lua"
+	await _jogar("tritomos errou", tenda._on_button_pressed, 0)
+	checar("tritomos: escolha verdade", hist.tritomos == "verdade", hist.tritomos)
+	checar("tritomos: +10 tickets", tickets.get_tickets() == antes + 10)
+	checar("tritomos: foi embora", tenda.left_label.visible)
+
+
 func _rodar() -> void:
 	var cidade = load("res://scenes/chapter_one/festival_city/City.tscn").instantiate()
 	root.add_child(cidade)
@@ -138,6 +187,7 @@ func _rodar() -> void:
 	cidade.add_child(trocador)
 	await _conversa_simples("trocador", trocador)
 	await _excalibur_e_tatame(cidade)
+	await _forca_e_tritomos(cidade)
 	_fim()
 
 
