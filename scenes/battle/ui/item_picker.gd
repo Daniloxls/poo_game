@@ -27,6 +27,8 @@ func _init() -> void:
 
 
 func choose(items: Array) -> ITEM:
+	if _active:
+		_finish(null)
 	if items.is_empty():
 		return null
 	for c in _list.get_children():

@@ -44,6 +44,7 @@ func open_for(_actor, skills: Array, anchor: Vector2) -> void:
 		var b := Button.new()
 		b.theme_type_variation = &"MethodButton"
 		b.text = BattleContext.method_name(s) + "()"
+		b.icon = DamageType.icon(s.DAMAGE_TYPE)
 		b.custom_minimum_size = Vector2(190, 44)
 		b.rotation_degrees = ROT[i % ROT.size()]
 		_tint(b, DamageType.color(s.DAMAGE_TYPE))

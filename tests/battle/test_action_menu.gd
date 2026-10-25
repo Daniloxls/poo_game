@@ -32,6 +32,7 @@ func _initialize() -> void:
 	eq("2 botões", btns.size(), 2)
 	eq("texto 1", btns[0].text, "atacar()")
 	eq("texto 2", btns[1].text, "usarItem()")
+	check("ícone", btns[0].icon != null and btns[1].icon != null)
 	check("foco no primeiro", btns[0].has_focus())
 	await create_timer(0.5).timeout
 	check("foco escala 1.1", absf(btns[0].scale.x - 1.1) < 0.02, btns[0].scale)
@@ -58,15 +59,22 @@ func _initialize() -> void:
 	await process_frame
 	await create_timer(0.1).timeout
 	eq("não candidato escurece", c.modulate.a, 0.5)
+	check("marcador no 1º", sel._markers[a].modulate.a == 1.0 and sel._markers[b].modulate.a < 1.0)
 	await press("ui_right")
+	check("marcador no 2º", sel._markers[b].modulate.a == 1.0 and sel._markers[a].modulate.a < 1.0)
+	check("escala do selecionado", absf(b.scale.x - 1.08) < 0.001 and a.scale.x == 1.0)
 	await press("ui_accept")
+	eq("restaura escala", b.scale, Vector2.ONE)
 	eq("ui_accept escolhe o segundo", res[0], [ents[1]])
 	eq("restaura c", c.modulate, Color.WHITE)
 	eq("restaura b", b.modulate, Color(1, 0.5, 0.5, 1))
 	run.call()
 	await process_frame
+	run.call()  # reentrada: a primeira termina com []
+	await process_frame
+	eq("reentrada", res[1], [])
 	await press("ui_cancel")
-	eq("cancel", res[1], [])
+	eq("cancel", res[2], [])
 	eq("restaura após cancel", c.modulate, Color.WHITE)
 
 	# mochila
