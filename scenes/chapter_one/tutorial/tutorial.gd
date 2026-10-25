@@ -7,7 +7,6 @@ signal battle_tutorial_end
 @onready var left_arrow = $DesenhosParede/LeftArrow
 @onready var right_arrow = $DesenhosParede/RightArrow
 @onready var down_arrow = $DesenhosParede/DownArrow
-@onready var root = $"../.."
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#player.set_state(States.Player_State.ON_SCENE)
