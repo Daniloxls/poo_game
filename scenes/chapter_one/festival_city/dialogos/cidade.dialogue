@@ -2,6 +2,9 @@
 
 # Cmdzinho largado na praça (sprite cmdzinho_afogado).
 ~ cmdzinho
+#Cmdzinho vai começar se afogando na fonte central da cidade, precisamos de um dialogo para esse momento
+#Ele não vai seguir automaticamente o jogador ao entrar na cidade
+#Ele só começa a seguir o Turin após ele ser resgatado da fonte
 Cmdzinho: [#vazio, #slump] Ufa...[wait=0.4] quanta gente...
 Cmdzinho: [#alegre, #hop] Mas a cidade fica [wave]animadíssima[/wave] no festival!
 Cmdzinho: [#duvida] Só é estranho: todo mundo sai de casa e tranca as portas.

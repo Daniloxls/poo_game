@@ -26,6 +26,7 @@ Tritomos: Minha bola de cristal [shake]nunca[/shake] falha!
 - Eu mexi no seu código.
 	set Historia.tritomos = "verdade"
 	Tritomos: Você...[wait=0.3] o quê?
+	#Tritomos não lê o codigo das pessoas, no maximo ele pode usar a bola de cristal para ler o retorno da função
 	Tritomos: Você mudou o que eu leio? Eu achava que só eu enxergava o código das pessoas...
 	Tritomos: Se você consegue fazer isso, outros também conseguem.[wait=0.3] Isso me preocupa.
 	Tritomos: Obrigado pela honestidade, garoto. Pegue seus tickets.
