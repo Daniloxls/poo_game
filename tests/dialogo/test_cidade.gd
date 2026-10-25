@@ -180,13 +180,18 @@ func _contar_fim(_r = null) -> void:
 func _cutscene_espada(cidade: Node) -> void:
 	var cena = cidade.get_node("Cutscene")
 	root.get_node("DialogueManager").dialogue_ended.connect(_contar_fim)
+	var y0: float = cena.magic.position.y
+	var y_na_cena_6 := -1.0
 	cena.play()
 	var t := Time.get_ticks_msec()
 	while Time.get_ticks_msec() - t < 40000 and not cena.continua.visible:
 		await process_frame
 		var bs := _baloes()
 		if not bs.is_empty():
+			if conversas == 5 and y_na_cena_6 < 0.0:
+				y_na_cena_6 = cena.magic.position.y - y0 + 1.0   # 1 + deslocamento da magia
 			bs[0].avancar()
+	checar("espada: cena_6 começa antes da magia terminar", y_na_cena_6 > 0.0 and y_na_cena_6 < 2000.0, y_na_cena_6)
 	checar("espada: label continua visível", cena.continua.visible)
 	checar("espada: sete conversas", conversas == 7, conversas)
 	root.get_node("DialogueManager").dialogue_ended.disconnect(_contar_fim)

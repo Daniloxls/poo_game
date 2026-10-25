@@ -78,8 +78,16 @@ func play():
 	tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-900, 0), 0.65).set_ease(Tween.EASE_OUT)
 	tween_b.tween_callback(kath.play.bind("jump"))
 	tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-1800, 0), 1.25).set_ease(Tween.EASE_OUT)
+	# "Turin, cuidado!" começa junto com a magia/clarão (como na cadeia antiga);
+	# o passo seguinte só roda quando os dois terminarem.
+	var falou := [false]  # array: lambda captura bool por valor
+	var fala := func():
+		await _cena(6)
+		falou[0] = true
+	fala.call()
 	await tween_a.finished
-	await _cena(6)
+	while not falou[0]:
+		await get_tree().process_frame
 
 	await get_tree().create_timer(2.0).timeout
 	black_screen.color = Color("#000000")
