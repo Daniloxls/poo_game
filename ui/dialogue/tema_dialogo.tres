@@ -1,0 +1,74 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="Script" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="1_caixa"]
+[ext_resource type="FontFile" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="2_chakra"]
+[ext_resource type="FontFile" path="res://assets/fonts/JetBrainsMono.ttf" id="3_mono"]
+
+[sub_resource type="StyleBox" id="StyleBox_caixa"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_caixa")
+
+[sub_resource type="StyleBox" id="StyleBox_escolha"]
+content_margin_left = 20.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 6.0
+script = ExtResource("1_caixa")
+corner_radius = 8
+
+[sub_resource type="StyleBox" id="StyleBox_escolha_foco"]
+content_margin_left = 20.0
+content_margin_top = 6.0
+content_margin_right = 20.0
+content_margin_bottom = 6.0
+script = ExtResource("1_caixa")
+bg_color = Color(1, 0.8235294, 0.24705882, 1)
+corner_radius = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etiqueta"]
+content_margin_left = 18.0
+content_margin_top = 2.0
+content_margin_right = 18.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0.18, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="FontVariation" id="FontVariation_mono"]
+base_font = ExtResource("3_mono")
+variation_opentype = {
+"wght": 700
+}
+
+[resource]
+default_font = ExtResource("2_chakra")
+default_font_size = 22
+Button/colors/font_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+Button/colors/font_disabled_color = Color(0.105882354, 0.105882354, 0.105882354, 0.45)
+Button/colors/font_focus_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+Button/colors/font_hover_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+Button/colors/font_hover_pressed_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+Button/colors/font_pressed_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+Button/font_sizes/font_size = 20
+Button/styles/disabled = SubResource("StyleBox_escolha")
+Button/styles/focus = SubResource("StyleBox_escolha_foco")
+Button/styles/hover = SubResource("StyleBox_escolha")
+Button/styles/normal = SubResource("StyleBox_escolha")
+Button/styles/pressed = SubResource("StyleBox_escolha")
+Label/colors/font_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+NomeTag/base_type = &"Label"
+NomeTag/colors/font_color = Color(1, 1, 1, 1)
+NomeTag/colors/font_outline_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+NomeTag/constants/outline_size = 7
+NomeTag/font_sizes/font_size = 24
+Panel/styles/panel = SubResource("StyleBox_caixa")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_etiqueta")
+RichTextLabel/colors/default_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+RichTextLabel/fonts/mono_font = SubResource("FontVariation_mono")
+VBoxContainer/constants/separation = 12
