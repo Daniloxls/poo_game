@@ -5,7 +5,7 @@ extends PanelContainer
 var frame: TurnFrame
 var label: Label
 var status: Label
-var _strike: ColorRect
+var destroyed := false
 var _fade: Tween
 var _status_timer: SceneTreeTimer
 
@@ -19,16 +19,6 @@ func _ready() -> void:
 	status = _mono(12)
 	status.visible = false
 	box.add_child(status)
-	_strike = ColorRect.new()
-	_strike.color = Color("#1b1b1b")
-	_strike.visible = false
-	_strike.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_strike)
-	_strike.set_anchors_preset(Control.PRESET_HCENTER_WIDE)
-	_strike.anchor_top = 0.35
-	_strike.anchor_bottom = 0.35
-	_strike.offset_top = -1.5
-	_strike.offset_bottom = 1.5
 
 
 func _mono(font_size: int) -> Label:
@@ -52,6 +42,8 @@ func refresh(is_top: bool) -> void:
 		rotation_degrees = 0.0
 	label.text = ("▶ " if is_top else "") + frame.label()
 	pivot_offset = size / 2.0
+	if frame.state == TurnFrame.State.KO:
+		_status_timer = null
 	if _status_timer == null:  # não pisa no "▶ retoma" temporário
 		_set_status(_state_text())
 	if _fade:
@@ -84,5 +76,13 @@ func flash_status(t: String, secs: float) -> void:
 
 
 func mark_destroyed() -> void:
-	_strike.visible = true
+	destroyed = true
+	queue_redraw()
 	_set_status("destruído")
+
+
+## Risco de "destruído" no meio do texto (desenhado, não é filho: o container o esticaria).
+func _draw() -> void:
+	if destroyed and label:
+		var y := label.position.y + label.size.y / 2.0
+		draw_line(Vector2(label.position.x, y), Vector2(label.position.x + label.size.x, y), Color("#1b1b1b"), 3.0)

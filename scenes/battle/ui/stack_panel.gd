@@ -134,15 +134,27 @@ func _interrupt_tag(v: Control) -> void:
 	tag.rotation_degrees = -6.0
 	tag.global_position = v.global_position + Vector2(-10, -14)
 	var tw := create_tween()
-	tw.tween_interval(0.3)
+	tw.tween_interval(0.15)
 	tw.tween_property(tag, "modulate:a", 0.0, 0.2)
 	tw.tween_callback(tag.queue_free)
+
+
+## Tira a view do container (que reposicionaria o tween), mantendo a posição na tela.
+func _detach(v: Control) -> void:
+	var gp := v.global_position
+	var sz := v.size
+	frames_box.remove_child(v)
+	add_child(v)
+	v.top_level = true
+	v.size = sz
+	v.global_position = gp
 
 
 func _anim_pop(frame: TurnFrame, resumed: TurnFrame) -> void:
 	var v: StackFrameView = _views.get(frame)
 	_views.erase(frame)
 	if v:
+		_detach(v)
 		var tw := create_tween().set_parallel()
 		tw.tween_property(v, "position:y", v.position.y - 14, 0.15)  # levanta
 		tw.tween_property(v, "modulate:a", 0.0, 0.25)
@@ -161,6 +173,7 @@ func _anim_remove(frame: TurnFrame) -> void:
 	if v == null:
 		return
 	v.mark_destroyed()
+	_detach(v)
 	var tw := create_tween()
 	tw.tween_interval(0.1)
 	tw.tween_property(v, "position:x", v.position.x + 300, 0.25)
