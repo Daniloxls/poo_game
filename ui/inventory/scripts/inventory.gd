@@ -8,7 +8,6 @@ extends CanvasLayer
 @onready var item_menu = $TabContainer/Mochila
 
 @onready var party_container = $TabContainer/Personagens/HBoxContainer/PartyContainer
-@onready var party_buttons = $TabContainer/Personagens/PartyButtons
 #@onready var player = get_node("../Level").get_child(0).find_child("Player")
 
 @onready var tab_container = $TabContainer
@@ -28,8 +27,8 @@ enum Inventory_State{
 }
 
 
-var equipment : Array[EQUIP_ITEM] = [load("res://scenes/itens/repo/armadura_ferro.tres"),
-									load("res://scenes/itens/repo/armadura_couro.tres")]
+var equipment : Array[EQUIP_ITEM] = [load("res://scenes/items/repo/armadura_ferro.tres"),
+									load("res://scenes/items/repo/armadura_couro.tres")]
 
 
 var char_container = preload("res://ui/inventory/CharContainer.tscn")

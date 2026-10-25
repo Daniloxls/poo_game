@@ -11,7 +11,7 @@ extends Node2D
 @onready var shader_rect = $ShaderRect
 # 'player' é uma referência ao nó do jogador,
 # permitindo acesso para movê-lo ou alterar suas propriedades.
-@onready var player = get_node("../Player")
+@onready var player = get_tree().get_first_node_in_group("Player")
 @onready var menu_button = $MenuButton
 
 var has_popup := false

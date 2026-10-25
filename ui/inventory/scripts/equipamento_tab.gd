@@ -81,21 +81,21 @@ func add_text(label, status, value, increase = 0):
 func _on_equip_click(equip_button: Control):
 	var equip = equip_button.get_item()
 	match equip.get_slot():
-		EquipItem.Slot.ACESSORY:
+		EQUIP_ITEM.Slot.ACESSORY:
 			if personagem_shown.get_equip("acessory_slot") != null :
 				add_item_button(personagem_shown.get_equip("acessory_slot"))
 				items.append(personagem_shown.get_equip("acessory_slot"))
 			personagem_shown.set_equip("acessory_slot", equip)
 			acessory_container.remove_child(equip_button)
 			acessory_slot.set_button_icon(equip.get_icon())
-		EquipItem.Slot.HEAD:
+		EQUIP_ITEM.Slot.HEAD:
 			if personagem_shown.get_equip("head_slot") != null :
 				add_item_button(personagem_shown.get_equip("head_slot"))
 				items.append(personagem_shown.get_equip("head_slot"))
 			personagem_shown.set_equip("head_slot", equip)
 			head_container.remove_child(equip_button)
 			head_slot.set_button_icon(equip.get_icon())
-		EquipItem.Slot.BODY:
+		EQUIP_ITEM.Slot.BODY:
 			if personagem_shown.get_equip("body_slot") != null :
 				add_item_button(personagem_shown.get_equip("body_slot"))
 				items.append(personagem_shown.get_equip("body_slot"))
@@ -103,7 +103,7 @@ func _on_equip_click(equip_button: Control):
 			body_container.remove_child(equip_button)
 			body_slot.set_button_icon(equip.get_icon())
 			
-		EquipItem.Slot.HAND:
+		EQUIP_ITEM.Slot.HAND:
 			if left_hand:
 				if personagem_shown.get_equip("lhand_slot") != null :
 					add_item_button(personagem_shown.get_equip("lhand_slot"))
@@ -117,7 +117,7 @@ func _on_equip_click(equip_button: Control):
 				personagem_shown.set_equip("rhand_slot", equip)
 				r_hand_slot.set_button_icon(equip.get_icon())
 			hand_container.remove_child(equip_button)
-		EquipItem.Slot.TWO_HAND:
+		EQUIP_ITEM.Slot.TWO_HAND:
 			if personagem_shown.get_equip("rhand_slot") != null :
 				items.append(personagem_shown.get_equip("rhand_slot"))
 				personagem_shown.set_equip("rhand_slot", null)
@@ -127,7 +127,7 @@ func _on_equip_click(equip_button: Control):
 			personagem_shown.set_equip("lhand_slot", equip)
 			hand_container.remove_child(equip_button)
 			l_hand_slot.set_button_icon(equip.get_icon())
-		EquipItem.Slot.FEET:
+		EQUIP_ITEM.Slot.FEET:
 			if personagem_shown.get_equip("feet_slot") != null :
 				add_item_button(personagem_shown.get_equip("feet_slot"))
 				items.append(personagem_shown.get_equip("feet_slot"))
@@ -164,17 +164,17 @@ func add_item_button(equip: EQUIP_ITEM):
 	item_slot.connect("on_hover", _on_equip_hover)
 	item_slot.connect("on_click", _on_equip_click)
 	match equip.get_slot():
-		EquipItem.Slot.ACESSORY:
+		EQUIP_ITEM.Slot.ACESSORY:
 			acessory_container.call_deferred("add_child", item_slot)
-		EquipItem.Slot.HEAD:
+		EQUIP_ITEM.Slot.HEAD:
 			head_container.call_deferred("add_child", item_slot)
-		EquipItem.Slot.BODY:
+		EQUIP_ITEM.Slot.BODY:
 			body_container.call_deferred("add_child", item_slot)
-		EquipItem.Slot.HAND:
+		EQUIP_ITEM.Slot.HAND:
 			hand_container.call_deferred("add_child", item_slot)
-		EquipItem.Slot.TWO_HAND:
+		EQUIP_ITEM.Slot.TWO_HAND:
 			hand_container.call_deferred("add_child", item_slot)
-		EquipItem.Slot.FEET:
+		EQUIP_ITEM.Slot.FEET:
 			feet_container.call_deferred("add_child", item_slot)
 	item_slot.call_deferred("set_item", equip)
 	
@@ -189,17 +189,17 @@ func add_item_buttons(equip_list : Array[EQUIP_ITEM]):
 		item_slot.connect("on_hover", _on_equip_hover)
 		item_slot.connect("on_click", _on_equip_click)
 		match equip.get_slot():
-			EquipItem.Slot.ACESSORY:
+			EQUIP_ITEM.Slot.ACESSORY:
 				acessory_container.call_deferred("add_child", item_slot)
-			EquipItem.Slot.HEAD:
+			EQUIP_ITEM.Slot.HEAD:
 				head_container.call_deferred("add_child", item_slot)
-			EquipItem.Slot.BODY:
+			EQUIP_ITEM.Slot.BODY:
 				body_container.call_deferred("add_child", item_slot)
-			EquipItem.Slot.HAND:
+			EQUIP_ITEM.Slot.HAND:
 				hand_container.call_deferred("add_child", item_slot)
-			EquipItem.Slot.TWO_HAND:
+			EQUIP_ITEM.Slot.TWO_HAND:
 				hand_container.call_deferred("add_child", item_slot)
-			EquipItem.Slot.FEET:
+			EQUIP_ITEM.Slot.FEET:
 				feet_container.call_deferred("add_child", item_slot)
 		item_slot.call_deferred("set_item", equip)
 

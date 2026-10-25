@@ -21,7 +21,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ItemClass="*res://scenes/items/classes/item_class.gd"
 Textbox="*res://ui/textbox/Textbox.tscn"
 States="*res://globals/states.gd"
 PlayerState="*res://entities/player/player_state.gd"
@@ -33,7 +32,6 @@ TitleScreen="*res://ui/title_screen/TitleScreen.tscn"
 LevelWarp="*res://globals/LevelWarp.tscn"
 MusicPlayer="*res://globals/MusicPlayer.tscn"
 AudioPlayer="*res://globals/AudioPlayer.tscn"
-EquipItem="*res://scenes/items/classes/equip_item.gd"
 JavaRuntime="*res://globals/java_runtime.gd"
 
 [display]

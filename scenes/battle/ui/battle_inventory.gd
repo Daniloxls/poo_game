@@ -16,9 +16,9 @@ signal closed
 
 var item_pos = []
 # Lista de itens com alguns itens de teste
-var items : Array[ITEM] = [load("res://scenes/itens/repo/potion.tres"),
-							load("res://scenes/itens/repo/armadura_ferro.tres"),
-							load("res://scenes/itens/repo/armadura_couro.tres")]
+var items : Array[ITEM] = [load("res://scenes/items/repo/potion.tres"),
+							load("res://scenes/items/repo/armadura_ferro.tres"),
+							load("res://scenes/items/repo/armadura_couro.tres")]
 # 'item_index' marca o item selecionado
 var item_index = 0
 # Como a posição dos itens varia conforme o tamanho da tela, ele precisa pegar

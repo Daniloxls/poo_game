@@ -32,7 +32,7 @@ const CURSOR_POSITION = Vector2(946,340)
 
 # 'tween' é um classe muito usada para fazer transições
 # recomendo olhar bem as funções desse objeto
-@onready var tween = create_tween()
+var tween : Tween
 
 # Possiveis estados da caixa de texto
 enum State{
