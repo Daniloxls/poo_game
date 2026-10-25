@@ -1,372 +1,307 @@
 extends CanvasLayer
-#Sinais da batalha
+## Orquestrador da batalha: rodadas e turnos guiados pela pilha de chamadas.
+## Um fluxo só (corrotina): empilha a rodada, o topo age, desempilha, repete.
 
-#Sinal de que uma animação terminou e que pode seguir a logica da batalha
-signal animation_end
-#Sinal que a batalha terminou é usado para que outros nós saibam e façam sua logica pós-batalha
-#Como sumir uma barreira depois que o inimigo é derrotado
 signal battle_won
-
 signal battle_lost
+signal turn_started(entity)
+signal _acted  # o membro do grupo terminou a ação do turno
 
-# 'char_list' é uma lista com todos os nós dos personagens
-@onready var char_list = Party.get_children()
+const BACKPACK := "TabContainer/Mochila"
+const MARKER_OFFSET := Vector2(-10, -110)
 
-# 'menu' é todo o painel de baixo
-@onready var menu = $BattleMenu
+var stack := CallStack.new()
+var combo := ComboMeter.new()
 
-# 'debug' são informações de debug que podem ser vistas apertando 'A'
-@onready var debug = $Debug
- 
-@onready var background = $Background
+@onready var fx: BattleFx = $BattleFx
+@onready var pacing: BattlePacing = fx.pacing  # o único ritmo da batalha
+@onready var field: BattleField = $Field
+@onready var target_selector: TargetSelector = $TargetSelector
+@onready var ui: CanvasLayer = $UI
+@onready var enemy_status: EnemyStatus = $UI/Root/EnemyStatus
+@onready var party_status: PartyStatus = $UI/Root/PartyStatus
+@onready var stack_panel: StackPanel = $UI/Root/StackPanel
+@onready var marker: Label = $UI/Root/TurnMarker
+@onready var action_menu: ActionMenu = $UI/Root/ActionMenu
+@onready var item_picker: ItemPicker = $UI/Root/ItemPicker
+@onready var console: BattleConsole = $UI/Root/BattleConsole
+@onready var victory_panel: VictoryPanel = $UI/Root/VictoryPanel
+@onready var defeat_panel: DefeatPanel = $UI/Root/DefeatPanel
 
-@onready var audio_player = $AudioStreamPlayer
-@onready var tooltip = $TooltipContiner
+var _running := false
+var _group: Node2D          # o nó "Enemies" desta batalha
+var _party: Array = []
+var _enemies: Array = []    # todos, vivos ou destruídos (o console diz "é null")
+var _down: Array = []       # destruídos/nocauteados já tratados
+var _acting = null          # membro do grupo esperando comando; null fora do turno dele
+var _max_combo := 0
+var _marker_tween: Tween
 
-@onready var party_menu = $"BattleMenu/PartyContainer/Personagem[ ]/BattleCharContainer"
-@onready var inventory = $"../Inventory/BattleInventory"
-@onready var battle_inventory = $"../Inventory/BattleInventory/BattleInventoryTabs/Mochila"
 
-@onready var screen_lock: CanvasLayer = $ScreenLock
+func _ready() -> void:
+	fx.shake_target = field
+	fx.hp_changed.connect(_refresh_status)
+	stack_panel.bind(stack, func(e): return e.global_position)
+	$UI/Root/ComboView.bind(combo)
+	combo.changed.connect(func(level): _max_combo = maxi(_max_combo, level))
+	action_menu.skill_chosen.connect(_on_skill_chosen)
+	console.command_ready.connect(run_command.bind(true))
+	$UI/Root/ConsoleButton.pressed.connect(func(): if console.can_process(): console.open())
+	_show(false)
 
 
-# Os sprites começam fora da tela e entram com uma transição no começo da batalha
-# esses offsets são o quanto eles se movem para chegar nos seus lugares certos
-const ENEMY_POS_OFFSET = Vector2(128, 0)
-const CHARACTER_POS_OFFSET = Vector2(-300,0)
+func set_background(bg: Texture2D) -> void:
+	$Background.texture = bg
 
-# 'current_state' estado atual da batalha
-var current_state = States.Battle_States.STARTING
-# lista que guarda cordenadas da frente dos personagens, para o cursor poder 
-# apontar para eles
-var character_coords = []
-# mesma coisa mas é a parte de trás, para o uso do cursor de turno dessa vez
-var character_back_coords = []
 
-var char_index = 0
-# 'in_battle' setado como true quando a batalha começa e como false assim que o
-# ultimo inimigo morre, se in_battle == false, nenhuma logica da batalha acontece  
-var in_battle = false
-# lista de cordenadas dos inimigos para serem apontados pelo cursor
-var enemy_names = []
-# 'enemies' e 'enemy_list' mesma logica do party e char_list, só que para os inimigos.
-var enemies 
-var enemy_list
-
-# requested_skill_targets guarda quais personagens o jogador deve escolher para usar certa habilidade
-var requested_skill_targets = []
-# skill_targets são os atuais alvos da skill que está sendo usada
-var skill_targets = []
-
-var current_character
-var skill_button_id
-
-var held_item : ITEM
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#Como está sempre instanciada a batalha começa escondida
-	hide()
-	Textbox.connect("text_finish", _on_text_finish)
-	menu.connect("animation_end", on_menu_animation_end)
-	battle_inventory.connect("item_use", on_inventory_item_click)
-	battle_inventory.connect("close", on_inventory_close)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	debug.text = str(States.Battle_States.keys()[current_state]) + "\n"
-
-# Função que reinicia as variaveis já que batalha sai de cena nunca
-func reset_variables():
-	current_state = States.Battle_States.ANIMATION
-	character_coords = []
-	character_back_coords = []
-	enemy_names = []
-	
-# Função usada pra começar a batalha, como argumento é passado uma string com o
-# caminho para o grupo de inimigos que está na batalha
-func start_battle(enemy_group_path):
-	# Carrega o nó com os inimigos, instancia ele e adiciona como filho de Batalha
-	#var enemy_group = load(enemy_group_path)
-	var enemy_group = load(enemy_group_path)
-	var instance = enemy_group.instantiate()
-	# Bloqueia movimento do jogador
+func start_battle(enemy_group_path: String) -> void:
+	if _running:
+		return
+	_running = true
+	_show(true)
 	PlayerState.set_on_interface(true)
-	
-	#AudioPlayer.stop()
-	#audio_player.play()
-	add_child(instance)
-	# Pega variaveis que apontam para o grupo de inimigos e faz a lista com os
-	# inimigos
-	for char in Party.get_children():
-		char.connect("select_targets", on_char_skill_pressed)
-		char.connect("button_mouse_in", on_skill_button_mouse_in)
-		char.connect("button_mouse_out", on_skill_button_mouse_out)
-		char.connect("sprite_clicked", on_char_sprite_clicked)
-		char.connect("mouse_in", on_char_sprite_mouse_in)
-		char.connect("mouse_out", on_char_sprite_mouse_out)
-		char.connect("animation_end", _on_enemy_animation_end)
-		char.connect("death", _on_char_death)
-		
-	enemies = $Enemies
-	enemy_list = $Enemies.get_children()
-	# liga os sinais de "animation_end" e "death" dos inimigos com as respectivas
-	# funções da batalha
-	for enemy in enemy_list:
-		enemy.connect("animation_end", _on_enemy_animation_end)
-		enemy.connect("death", _on_enemy_death)
-		enemy_names.append(enemy.get_nome())
-		enemy.connect("sprite_clicked", on_enemy_sprite_clicked)
-		enemy.connect("mouse_in", on_enemy_sprite_mouse_in)
-		enemy.connect("mouse_out", on_enemy_sprite_mouse_out)
-		enemy.enemy_ready()
-	# aparece o cenario da batalha
-	show()
-	# cria um tween para fazer as transições de começo
-	var tween = create_tween()
-	in_battle = true
-	# esconde o menu
-	menu.hide()
-	# coloca todas as transições a seguir para ocorrer em paralelo
-	tween.set_parallel()
-	# Seta todas as informações dos personagens no menu e transiciona os sprites
-	# para dentro do cenario
-	menu.set_characters(Party.get_children())
-
-	menu.add_enemies(enemy_list)
-	
-	for char in Party.get_children():
-		tween.tween_property(char, "position", char.position + CHARACTER_POS_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
-		
-	# O mesmo para os inimigos
-	for enemy in enemy_list:
-		tween.tween_property(enemy, "position", enemy.position + ENEMY_POS_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
-		
-	# delisga o paralelo do tween, então todas as transições ocorrem uma por vez
-	tween.set_parallel(false)
-
-	# No final da transição dos personagens o menu aparece
-	tween.tween_callback(menu.show)
-	tween.tween_callback(player_turn)
-# Toda vez que um inimigo morre, ele emite um sinal, quando esse sinal é recebido
-# Essa função ocorre
-func _on_enemy_death():
-	#Percorre a lista de inimigos e remove todos que tem vida 0 ou menor
-	for enemy in enemy_list:
-		if enemy.get_hp() <= 0:
-			var id = enemy_list.find(enemy)
-			enemy_list.pop_at(id)
-			enemy_names.pop_at(id)
-			menu.pop_enemy_button(id)
-			#menu.set_monster_names(enemy_names)
-			# Se não tem mais inimigos a batalha acaba
-			if len(enemy_list) == 0:
-				# Emite sinal do final da batalha
-				current_state = States.Battle_States.VICTORY
-				Textbox.queue_text(["Você venceu!"])
-				screen_lock.show()
-				battle_won.emit()
+	_down.clear()
+	_max_combo = 0
+	_group = load(enemy_group_path).instantiate()
+	_enemies = _combatants(_group)
+	_party = _combatants(Party)
+	field.place(_group, _enemies, _party)
+	for e in _enemies:
+		enemy_status.add_enemy(e)
+	party_status.set_party(_party)
+	await field.slide_in(_party, _enemies, [enemy_status, party_status], pacing.instant)
+	_loop()
 
 
-# quando uma animação do inimigo acaba ele emite um sinal, quando recebe esse sinal
-# Se ainda existem inimigos continua a batalha, caso contrario entra no estado de vitoria
-func _on_enemy_animation_end():
-	# a animação de morte também chega aqui; com a luta acabada não há mais turnos
-	if current_state == States.Battle_States.DEFEAT or current_state == States.Battle_States.VICTORY:
+## O que o console enxerga agora: quem está em campo, quem age e os itens.
+func context() -> BattleContext:
+	var c := BattleContext.new()
+	c.combatants = _party + _enemies
+	var top := stack.peek()
+	c.active = top.entity if top and top.state != TurnFrame.State.KO else null
+	c.items = Inventory.get_node(BACKPACK).get_items().filter(func(i): return i.QUANTITY > 0)
+	return c
+
+
+## Executa a ação do membro da vez (botão ou console). Fora do turno dele, não faz nada.
+func run_command(cmd: ResolvedCommand, from_console: bool) -> void:
+	if _acting == null or cmd == null or not cmd.ok or cmd.actor != _acting:
 		return
-	for enemy in enemy_list:
-		if enemy.get_state() == 1:
-			return
-	for char in Party.get_children():
-		if char.get_state() == 0:
-			char.show_options()
-			current_state = States.Battle_States.PLAYER_TURN
-			return
-	enemy_turn()
-
-# Quando um personagem toma dano o menu transiciona a vida dele como uma animação
-# quando essa animação acaba ele executa essa função
-func _on_battle_menu_animation_end():
-	if current_state == States.Battle_States.DEFEAT:
-		lost()
-		return
-	# Checa se todos os personagens estão mortos, se algum estiver vivo
-	# sai da função
-	for char in char_list:
-		if char.get_hp() > 0:
-			current_state = States.Battle_States.PLAYER_TURN
-			menu.show_cursor()
-			animation_end.emit()
-			return
-	# Se todos foram derrotados coloca a batalha no estado de derrota
-	current_state = States.Battle_States.DEFEAT
-	menu.hide()
-	animation_end.emit()
-	Textbox.queue_text(["Você foi derrotado."])
-	screen_lock.show()
-	battle_lost.emit()
+	_acting = null
+	action_menu.close()
+	var mult: float = combo.on_console_action() if from_console else combo.on_button_action()
+	var outcomes: Array = cmd.skill.SKILL_SCRIPT.new().resolve(cmd.actor, cmd.targets, mult)
+	for t in cmd.targets:
+		if t is ITEM:
+			Inventory.get_node(BACKPACK).spend_item(t)
+	await _play(cmd.actor, BattleContext.method_name(cmd.skill) + "()", outcomes)
+	await _after_action()
+	_acted.emit()
 
 
-func player_turn():
-	if !in_battle:
+# --- fluxo ---------------------------------------------------------------
+
+func _loop() -> void:
+	while true:
+		if stack.is_empty():
+			for c in CallStack.push_order(_party + _enemies):
+				stack.push(c)
+				await _stack_idle()
+		var frame := stack.peek()
+		await _take_turn(frame)
+		if _living(_enemies).is_empty() or _living(_party).is_empty():
+			break  # acabou na hora, mesmo com frames sobrando
+		if stack.peek() == frame:
+			stack.pop()
+			await _stack_idle()
+	await _end(_living(_enemies).is_empty())
+
+
+func _take_turn(frame: TurnFrame) -> void:
+	var who = frame.entity
+	pacing.latched = false  # um toque solto entre sequências não pula este turno
+	turn_started.emit(who)
+	if frame.state == TurnFrame.State.KO:
+		return  # nocauteado: desempilha sem agir
+	_point_at(who)
+	console.set_context(context())
+	if who.is_party_member():
+		_acting = who
+		_open_menu()
+		await _acted
+	else:
+		await pacing.wait(0.2)  # o jogador vê de quem é a vez
+		var action: EnemyAction = who.choose_action(_party, _living(_enemies))
+		if action.error_text != "":
+			await fx.play_error(who, action.error_text)
+		else:
+			await _play(who, action.method_name + "()", action.outcomes)
+		await _after_action()
+	_point_at(null)
+
+
+func _open_menu() -> void:
+	var typing := console.is_typing()
+	console.set_context(context())
+	action_menu.open_for(_acting, _acting.get_skills(), _acting.global_position)
+	if typing:
+		console.open.call_deferred()  # quem estava digitando continua no console
+
+
+func _on_skill_chosen(skill: SKILL) -> void:
+	var actor = _acting
+	if actor == null:
 		return
-	# o tween do enemy_turn chama isto 2s depois do ataque, mesmo se o ataque terminou a luta
-	if current_state == States.Battle_States.DEFEAT or current_state == States.Battle_States.VICTORY:
-		return
-	for enemy in enemy_list:
-		enemy.reset_state()
-	#checa os personagens vivos
-	for char in char_list:
-		if char.get_state() != 3:
-			char.default_state()
-	current_state = States.Battle_States.PLAYER_TURN
-	for char in char_list:
-		if char.get_state() != 3:
-			char_index = char_list.find(char)
-			char.show_options()
-			menu.clear_method_text()
-			menu.add_to_method_text(char.get_name())
+	action_menu.close()
+	# o seletor e a mochila usam Esc: o console sai de cena enquanto isso
+	var console_open := console.visible
+	console.close()
+	console.process_mode = Node.PROCESS_MODE_DISABLED
+	var targets := []
+	var cancelled := false
+	for kind in BattleContext.param_kinds(skill):
+		var pick = await _pick(kind)
+		if pick == null:
+			cancelled = true
 			break
-			
-# Cada inimigo deve ter uma função logic() o turno do inimigo é basicamente
-# todos os inimigos usando sua logica e com um pequeno intervalo para animações
-func enemy_turn():
-	
-	var tween = create_tween()
-	for enemy in enemy_list:
-		if enemy.get_state() != 2:
-			tween.tween_callback(enemy.logic.bind(char_list, menu))
-			tween.tween_interval(2)
-	
-	tween.tween_callback(player_turn)
-
-# Função para mudar o estado da batalha
-func set_selection(select):
-	if current_state != States.Battle_States.DEFEAT and current_state != States.Battle_States.VICTORY:
-		current_state = select
-
-
-	
-func set_background(bg : CompressedTexture2D):
-	background.set_texture(bg)
-
-func _on_text_finish():
-	if current_state == States.Battle_States.DEFEAT or current_state == States.Battle_States.VICTORY:
-		in_battle = false
-		for char in char_list:
-			char.reset_position()
-			char.set_animation("default")
-		enemies.queue_free()
-		PlayerState.set_on_interface(false)
-		reset_variables()
-		screen_lock.hide()
-		hide()
-		audio_player.stop()
-		menu.hide()
-
-func _on_char_death():
-	if current_state == States.Battle_States.DEFEAT:
+		targets.append(pick)
+	console.process_mode = Node.PROCESS_MODE_INHERIT
+	if console_open:
+		console.open()
+	if _acting != actor:
 		return
-	for char in char_list:
-		if char.get_hp() > 0:
-			return
-	# Se todos foram derrotados coloca a batalha no estado de derrota
-	current_state = States.Battle_States.DEFEAT
-	menu.hide()
-	Textbox.queue_text(["Você foi derrotado."])
-	screen_lock.show()
-	battle_lost.emit()
-	
-	
-func on_char_skill_pressed(targets, id, char_node):
-	current_character = char_node
-	skill_button_id = id
-	if targets[0] == 4:
-		inventory.show()
-		current_state = States.Battle_States.BACKPACK
-		char_list[char_index].hide_options()
+	if cancelled:
+		_open_menu()
 		return
-	requested_skill_targets = targets
-	current_state = States.Battle_States.SELECTING_TARGET
-	tooltip.show()
-	tooltip.set_tooltip_label("Selecione " + str(len(targets))
-	+ " alvo" + ("s" if len(targets) > 1 else ""))
+	var cmd := ResolvedCommand.new()
+	cmd.ok = true
+	cmd.actor = actor
+	cmd.skill = skill
+	cmd.targets = targets
+	await run_command(cmd, false)
 
-func on_char_sprite_clicked(id):
-	if current_state == States.Battle_States.USING_ITEM:
-		if held_item.get_type() == ITEM.Item_type.HEALTH:
-			menu.change_char_health(id, char_list[id].gain_health(held_item.HEALTH_RESTORE))
-			Party.get_node(str(current_character)).set_acted(true)
-			current_state = States.Battle_States.ANIMATION
-			skill_targets.clear()
-			menu.clear_method_text()
-			tooltip.hide()
-			battle_inventory.spend_item(held_item)
 
-func on_char_sprite_mouse_in(char_name):
-	if current_state == States.Battle_States.USING_ITEM:
-		menu.add_to_method_text(char_name)
-	
-func on_char_sprite_mouse_out():
-	if current_state == States.Battle_States.USING_ITEM:
-		menu.pop_method_text()
-	
-func on_skill_button_mouse_in(skill_name):
-	if current_state == States.Battle_States.PLAYER_TURN:
-		menu.add_to_method_text(skill_name)
+func _pick(kind: int):
+	if kind == SKILL.Targets.ITE:
+		var items := context().items
+		if items.is_empty():
+			fx.play_error(_acting, "A mochila está vazia")  # o clique não some sem resposta
+			return null
+		return await item_picker.choose(items)
+	var cands := []
+	if kind != SKILL.Targets.ENEMY:
+		cands += _living(_party)
+	if kind != SKILL.Targets.ALLY:
+		cands += _living(_enemies)
+	var r: Array = await target_selector.choose(cands, _sprite_of)
+	return r[0] if not r.is_empty() else null
 
-func on_skill_button_mouse_out():
-	if current_state == States.Battle_States.PLAYER_TURN:
-		menu.pop_method_text()
 
-func check_skill():
-	if len(skill_targets) == len(requested_skill_targets):
-		current_state = States.Battle_States.ANIMATION
-		Party.get_node(str(current_character)).execute_skill(skill_button_id, skill_targets)
-		tooltip.hide()
-		char_list[char_index].hide_options()
-		skill_targets.clear()
-		menu.clear_method_text()
+## Aplica os resultados no status e toca a sequência do golpe.
+func _play(actor, method_label: String, outcomes: Array) -> void:
+	for o: ActionOutcome in outcomes:
+		if o.kind == ActionOutcome.Kind.DAMAGE:
+			o.target.apply_damage(o.amount)
+		elif o.kind == ActionOutcome.Kind.HEAL:
+			o.target.apply_heal(o.amount)
+	await fx.play_action(actor, method_label, outcomes, _sprite_of, func(c): return c.get_max_hp())
 
-func on_inventory_item_click(item : ITEM):
-	inventory.hide()
-	held_item = item
-	menu.add_to_method_text(item.ITEM_NAME)
-	current_state = States.Battle_States.USING_ITEM
-	tooltip.show()
-	tooltip.set_tooltip_label("Selecione 1 alvo")
-	
-func on_inventory_close():
-	current_state = States.Battle_States.PLAYER_TURN
-	char_list[char_index].show_options()
-	menu.pop_method_text()
-	
-func on_enemy_sprite_clicked(enemy_id):
-	if current_state == States.Battle_States.SELECTING_TARGET:
-		if requested_skill_targets[len(skill_targets)] == States.Skill_Targets.ENEMY:
-			skill_targets.append(enemies.get_child(enemy_id))
-			check_skill()
 
-func on_enemy_sprite_mouse_in(enemy_name):
-	if current_state == States.Battle_States.SELECTING_TARGET:
-		menu.add_to_method_text(enemy_name)
-	
-func on_enemy_sprite_mouse_out():
-	if current_state == States.Battle_States.SELECTING_TARGET:
-		menu.pop_method_text()
+## Inimigo sem HP sai da pilha e do campo; membro do grupo sem HP fica com o frame em KO.
+func _after_action() -> void:
+	for c in _party + _enemies:
+		if c.is_alive() or c in _down:
+			continue
+		_down.append(c)
+		if c.is_party_member():
+			stack.mark_knocked_out(c)
+			await fx.play_party_knocked_out(c)
+		else:
+			stack.remove(c)
+			enemy_status.remove_enemy(c)
+			await fx.play_enemy_destroyed(c, c.get_nome(), _living(_enemies).is_empty())
 
-func on_menu_animation_end():
-	pass
 
-func lost():
-	in_battle = false
-	for char in char_list:
-		char.reset_position()
-		char.set_animation("default")
-	enemies.queue_free()
-	PlayerState.set_on_interface(true)
-	reset_variables()
-	hide()
-	#audio_player.stop()
-	#game_audio.play()
-	Textbox.text_finish.disconnect(_on_text_finish)
-	menu.hide()
+func _end(won: bool) -> void:
+	_acting = null
+	action_menu.close()
+	console.close()
+	_point_at(null)
+	await _stack_idle()
+	victory_panel.instant = pacing.instant
+	defeat_panel.instant = pacing.instant
+	if won:
+		var lines: Array[String] = []
+		for e in _enemies:
+			lines.append("%s derrotado" % e.get_nome())
+		lines.append("Maior combo: x%d" % _max_combo)
+		await victory_panel.show_result(lines)
+	else:
+		await defeat_panel.show_result("Dica: comandos digitados no console enchem o combo.")
+	pacing.restore()
+	combo.reset()
+	stack.clear()
+	stack_panel.clear()
+	for e in _enemies:
+		enemy_status.remove_enemy(e)
+	for row in enemy_status.get_children():
+		row.queue_free()
+	_group.queue_free()
+	_enemies.clear()
+	field.release()
+	party_status.set_party([])
+	_party.clear()
+	PlayerState.set_on_interface(false)
+	_show(false)
+	_running = false
+	# por último: quem ouve (revanche, diálogo) encontra a batalha já limpa
+	(battle_won if won else battle_lost).emit()
+
+
+# --- auxiliares ----------------------------------------------------------
+
+func _show(on: bool) -> void:
+	visible = on
+	ui.visible = on
+	# escondida, nada da batalha lê teclas (o F2 do console, por exemplo)
+	process_mode = Node.PROCESS_MODE_INHERIT if on else Node.PROCESS_MODE_DISABLED
+
+
+## ▼ amarelo balançando sobre quem age; o chip do grupo acende.
+func _point_at(who) -> void:
+	if _marker_tween:
+		_marker_tween.kill()
+	marker.visible = who != null
+	party_status.set_active(who)
+	if who == null:
+		return
+	var p: Vector2 = who.global_position + MARKER_OFFSET
+	marker.position = p
+	_marker_tween = create_tween().set_loops()
+	_marker_tween.tween_property(marker, "position:y", p.y - 8.0, 0.3)
+	_marker_tween.tween_property(marker, "position:y", p.y, 0.3)
+
+
+func _stack_idle() -> void:
+	if stack_panel.is_busy():
+		await stack_panel.animation_finished
+
+
+func _refresh_status(target) -> void:
+	if target.is_party_member():
+		party_status.refresh(target)
+	else:
+		enemy_status.refresh(target)
+
+
+# Só combatentes: o FX também solta números de dano nessas camadas.
+func _combatants(parent: Node) -> Array:
+	return parent.get_children().filter(func(n): return n.has_method("is_party_member"))
+
+
+func _sprite_of(c) -> Node2D:
+	return c
+
+
+func _living(l: Array) -> Array:
+	return l.filter(func(c): return c.is_alive())

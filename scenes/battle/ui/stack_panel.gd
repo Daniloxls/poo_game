@@ -69,6 +69,19 @@ func view_for(frame: TurnFrame) -> StackFrameView:
 	return _views.get(frame)
 
 
+## Ainda animando a fila (o orquestrador espera antes de seguir).
+func is_busy() -> bool:
+	return _running
+
+
+## Fim da batalha: some com todas as views. Chamar com a fila parada.
+func clear() -> void:
+	for f in _views:
+		_views[f].queue_free()
+	_views.clear()
+	count_label.text = "0"
+
+
 func _enqueue(anim: Callable) -> void:
 	_queue.append(anim)
 	if _running:
