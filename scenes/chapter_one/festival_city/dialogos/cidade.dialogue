@@ -1,0 +1,40 @@
+# Falas soltas da praça do festival (NPCs sem lógica própria).
+
+# Cmdzinho largado na praça (sprite cmdzinho_afogado).
+~ cmdzinho
+Cmdzinho: [#vazio, #slump] Ufa...[wait=0.4] quanta gente...
+Cmdzinho: [#alegre, #hop] Mas a cidade fica [wave]animadíssima[/wave] no festival!
+Cmdzinho: [#duvida] Só é estranho: todo mundo sai de casa e tranca as portas.
+=> END
+
+~ kath
+Kath: [#hop] Finalmente você chegou!
+Kath: Aquele bigodudo disse que a gente consegue ganhar [pop]tickets[/pop] nas atrações.
+Kath: Dizem que, com 30, dá pra tentar tirar a espada da pedra. Bora juntar!
+=> END
+
+# Na porta da tenda do Tritomos.
+~ tenda
+Pregoeiro: [wave]Entre, entre![/wave] Venha desafiar o [pop]fabuloso Tritomos[/pop]!
+Pregoeiro: Ele lê a sua mente como quem lê um livro aberto. Será que você consegue esconder um pensamento dele?
+=> END
+
+~ npc1
+Bento: A cidade fica bem animada durante o festival, né?
+Bento: Todo mundo sai de casa e tranca as portas. Ninguém quer perder nada!
+=> END
+
+~ npc2
+Lúcia: Você já sonhou com uma sala branca, cheia de desenhos na parede?
+Lúcia: No meu sonho, eu sempre acordo logo depois de bater num boneco feio...[wait=0.3] Estranho, né?
+=> END
+
+~ npc3
+Dandara: Eu adoro as atrações do festival!
+Dandara: Pena que eu nunca consigo ganhar nenhuma...[wait=0.3] Quem sabe esse ano?
+=> END
+
+~ trocador
+Trocador: Troque aqui seus tickets por [pop]prêmios[/pop]!
+Trocador: Quanto mais tickets, melhor o prêmio. Volte quando tiver juntado bastante!
+=> END

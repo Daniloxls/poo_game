@@ -1,0 +1,44 @@
+# Cutscene da espada (sword_cutscene.gd): uma cue por conversa, na ordem da cena.
+# Anti-POO fala como "???" a cena toda: Turin ainda não sabe quem ele é.
+
+# Turin chega à pedra; um vulto fura a fila.
+~ cena_1
+Guardião da Espada: Certo, Turin! Depois do Nicolas, é a sua vez!
+???: Com licença...[wait=0.4] permitam-me passar na frente.
+=> END
+
+# Nicolas é chutado longe; o vulto desce até a espada.
+~ cena_2
+???: O rei anda mesmo desleixado...
+???: Deixar uma arma tão importante nas mãos de gente tão insignificante.
+=> END
+
+# Ele segura a espada.
+~ cena_3
+???: Agora...[wait=0.4] o primeiro passo da minha [shake]vingança[/shake]!
+=> END
+
+# Clarão: a pedra se parte e a espada é dele.
+~ cena_4
+???: Essa espada me traz lembranças nada agradáveis.
+???: Vamos garantir que ela não caia nas mãos de mais ninguém.
+=> END
+
+# Ele se vira para Turin.
+~ cena_5
+???: Hm...
+???: Quanto a você...
+???: Devo estar perdendo o jeito.
+???: [#shake] Vou garantir que você não se recupere [shake]dessa[/shake]!
+=> END
+
+# A magia vem na direção de Turin; Kath corre e pula na frente.
+~ cena_6
+Kath: [#shake] [shake]Turin, cuidado![/shake]
+=> END
+
+# Tela preta.
+~ cena_7
+Kath: Turin![wait=0.4] Turin!
+Kath: [#shake] Acorda! A gente precisa sair daqui!
+=> END

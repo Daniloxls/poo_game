@@ -1,0 +1,57 @@
+# Tatame: o Organizador e o Grande Montanha.
+# Contexto (tatame_npc.gd): quer_lutar: bool.
+# Escolha de Turin depois da vitória: Historia.montanha = "respeito" (amigo) ou "mentor".
+
+~ desafio
+Organizador: Ei, você aí, garoto! Tem coragem de encarar o [pop]GRANDE MONTANHA[/pop]?
+Organizador: Três rounds no tatame. Se você ganhar, os tickets são seus!
+- Pode vir!
+	set quer_lutar = true
+	Organizador: [wave]Senhoras e senhores...[/wave][wait=0.4] que comece a luta!
+- Hoje não.
+	set quer_lutar = false
+	Organizador: Sem problema. O Montanha não vai a lugar nenhum.
+=> END
+
+~ vitoria
+Organizador: Eu...[wait=0.3] eu não acredito!
+Organizador: [shake]Montanha![/shake] Você deixou esse garotinho te vencer?!
+Grande Montanha: [whisper]Ele é mais forte do que parece...[/whisper]
+Organizador: Bom, regra é regra. Aqui estão seus tickets. Aproveite o festival!
+Grande Montanha: Ei, garoto.[wait=0.3] Fazia tempo que ninguém me derrubava assim.
+- Foi uma luta incrível!
+	set Historia.montanha = "respeito"
+	Grande Montanha: Hahaha! Foi mesmo!
+	Grande Montanha: Você tem coragem, garoto. Gostei de você.
+	Grande Montanha: Se um dia precisar de um amigo grandão, já sabe onde me encontrar.
+- Me ensina a lutar assim?
+	set Historia.montanha = "mentor"
+	Grande Montanha: Te ensinar?[wait=0.3] Hahaha! Foi você que me derrubou!
+	Grande Montanha: Mas força sem técnica não vai longe.
+	Grande Montanha: Passa aqui depois que eu te mostro uns golpes de verdade. Combinado?
+=> END
+
+~ derrota
+Organizador: Opa, opa! Tudo bem aí, rapaz?
+Organizador: Não fique triste. Deixa que eu cuido desses machucados.
+Organizador: Pronto, novinho em folha! E lembre-se: o Montanha aceita revanche a qualquer hora.
+=> END
+
+~ descansando
+Organizador: Desculpe, garoto. O Montanha vai descansar um pouco agora.
+Organizador: Depois daquela luta, ele bem que merece.
+=> END
+
+~ montanha
+if Historia.montanha == "respeito"
+	Grande Montanha: E aí, campeão! Ainda sinto aquele último golpe. Hahaha!
+	Grande Montanha: Perder pra um garotinho que nem você...[wait=0.3] acho que vou ter que malhar mais.
+	Grande Montanha: Aproveita o festival, amigo!
+elif Historia.montanha == "mentor"
+	Grande Montanha: Ah, meu aluno favorito!
+	Grande Montanha: Primeira lição: [pop]postura[/pop]. Pés firmes, ombros soltos...[wait=0.3] e nunca subestime ninguém.
+	Grande Montanha: Essa eu aprendi do jeito difícil. Hahaha!
+else
+	Grande Montanha: Ei, garotinho! Você acha que pode me derrotar?
+	Grande Montanha: Fala com o meu gerente ali. Prometo pegar leve com você!
+=> END

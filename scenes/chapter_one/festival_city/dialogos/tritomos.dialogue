@@ -1,0 +1,38 @@
+# Tenda do vidente Tritomos. Ele lê pensamentos de verdade, pelo código (jogador.get_pensamento()).
+# Contexto (medium_tent.gd): palavra: String (o que Tritomos "leu").
+# Escolha de Turin depois de vencer: Historia.tritomos = "verdade" ou "acreditou".
+
+~ boas_vindas
+Tritomos: [wave]Seja bem-vindo ao meu jogo, jovem...[/wave]
+Tritomos: As regras são bem simples.
+Tritomos: Pense em uma palavra e escreva aí embaixo. Se eu adivinhar a palavra que você pensou, eu ganho.
+Tritomos: Se eu errar, você ganha. E, de bônus, ainda leva [pop]10 tickets[/pop].
+Tritomos: Mas não se anime muito.[wait=0.3] Minha bola de cristal nunca falha.
+=> END
+
+~ acertou
+Tritomos: Vejamos...[wait=0.5]
+Tritomos: Eu vejo que a palavra que você pensou foi...[wait=0.4] [pop]{{palavra}}[/pop]!
+Tritomos: Mais uma vez, o grande Tritomos adivinha!
+Tritomos: Tente a sorte da próxima vez, garoto.
+=> END
+
+~ errou
+Tritomos: Vejamos...[wait=0.5]
+Tritomos: Eu vejo que a palavra que você pensou foi...[wait=0.4] [pop]{{palavra}}[/pop]!
+Tritomos: ...
+Tritomos: Não era essa?[wait=0.4] Impossível!
+Tritomos: Minha bola de cristal [shake]nunca[/shake] falha!
+- Eu mexi no seu código.
+	set Historia.tritomos = "verdade"
+	Tritomos: Você...[wait=0.3] o quê?
+	Tritomos: Você mudou o que eu leio? Eu achava que só eu enxergava o código das pessoas...
+	Tritomos: Se você consegue fazer isso, outros também conseguem.[wait=0.3] Isso me preocupa.
+	Tritomos: Obrigado pela honestidade, garoto. Pegue seus tickets.
+	Tritomos: E se um dia precisar de alguém que entende de ler código...[wait=0.3] você sabe onde me encontrar.
+- Deve ter sido sorte de principiante.
+	set Historia.tritomos = "acreditou"
+	Tritomos: Sorte...[wait=0.4] é. Só pode ter sido sorte.
+	Tritomos: Deve ter uma mancha na minha bola de cristal...
+	Tritomos: Pegue seus tickets. [whisper]Acho que eu preciso de um tempo...[/whisper]
+=> END

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://c4wihao8xpydn"
+path="res://.godot/imported/teste_forca.dialogue-5428aede26a2bc9659ca976e4e8b38b2.tres"
+
+[deps]
+
+source_file="res://scenes/chapter_one/festival_city/dialogos/teste_forca.dialogue"
+dest_files=["res://.godot/imported/teste_forca.dialogue-5428aede26a2bc9659ca976e4e8b38b2.tres"]
+
+[params]
+
+defaults=true
