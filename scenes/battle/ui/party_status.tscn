@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/battle/ui/party_status.gd" id="1"]
+
+[node name="PartyStatus" type="PanelContainer"]
+script = ExtResource("1")

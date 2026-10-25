@@ -12,6 +12,8 @@ var classe := ""
 var skills := []
 var atk := 0
 var def := 0
+var pp := 5
+var max_pp := 5
 
 
 func _init(p_nome := "", p_vel := 0, p_party := false) -> void:
@@ -30,3 +32,5 @@ func get_class_name() -> String: return classe
 func get_skills() -> Array: return skills
 func get_atk() -> int: return atk
 func get_def() -> int: return def
+func get_pp() -> int: return pp
+func get_max_pp() -> int: return max_pp
