@@ -1,35 +1,36 @@
 # Cutscene da espada (sword_cutscene.gd): uma cue por conversa, na ordem da cena.
-# Anti-POO fala como "???" a cena toda: Turin ainda não sabe quem ele é.
+# O vilão fala como "Vulto" (etiqueta "???") a cena toda: Turin ainda não sabe quem ele é.
+# Retrato: silhueta enquanto escondido (cena_1); o rosto dele quando já está em cena.
 
 # Turin chega à pedra; um vulto fura a fila.
 ~ cena_1
 Guardião da Espada: Certo, Turin! Depois do Runis, é a sua vez!
-???: Com licença...[wait=0.4] permitam-me passar na frente.
+Vulto: [#silhueta] Com licença...[wait=0.4] permitam-me passar na frente.
 => END
 
-# Nicolas é chutado longe; o vulto desce até a espada.
+# Runis é chutado longe; o vulto desce até a espada.
 ~ cena_2
-???: O rei anda mesmo desleixado...
-???: Deixar uma arma tão importante nas mãos de gente tão insignificante.
+Vulto: [#neutro] O rei anda mesmo desleixado...
+Vulto: [#neutro] Deixar uma arma tão importante nas mãos de gente tão insignificante.
 => END
 
 # Ele segura a espada.
 ~ cena_3
-???: Agora...[wait=0.4] o primeiro passo da minha [shake]vingança[/shake]!
+Vulto: [#serio] Agora...[wait=0.4] o primeiro passo da minha [shake]vingança[/shake]!
 => END
 
 # Clarão: a pedra se parte e a espada é dele.
 ~ cena_4
-???: Essa espada me traz lembranças nada agradáveis.
-???: Vamos garantir que ela não caia nas mãos de mais ninguém.
+Vulto: [#neutro] Essa espada me traz lembranças nada agradáveis.
+Vulto: [#serio] Vamos garantir que ela não caia nas mãos de mais ninguém.
 => END
 
 # Ele se vira para Turin.
 ~ cena_5
-???: Hm...
-???: Quanto a você...
-???: Devo estar perdendo o jeito.
-???: [#shake] Vou garantir que você não se recupere [shake]dessa[/shake]!
+Vulto: [#neutro] Hm...
+Vulto: [#neutro] Quanto a você...
+Vulto: [#neutro] Devo estar perdendo o jeito.
+Vulto: [#serio, #shake] Vou garantir que você não se recupere [shake]dessa[/shake]!
 => END
 
 # A magia vem na direção de Turin; Kath corre e pula na frente.

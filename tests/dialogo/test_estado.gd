@@ -23,9 +23,12 @@ func _initialize() -> void:
 
 	checar("tritomos começa vazio", historia.tritomos == "")
 	checar("montanha começa vazio", historia.montanha == "")
+	checar("cmdzinho_resgatado começa falso", historia.cmdzinho_resgatado == false)
 	historia.tritomos = "verdade"
 	historia.montanha = "mentor"
+	historia.cmdzinho_resgatado = true
 	historia.resetar()
+	checar("resetar limpa cmdzinho_resgatado", historia.cmdzinho_resgatado == false)
 	checar("resetar limpa tritomos", historia.tritomos == "")
 	checar("resetar limpa montanha", historia.montanha == "")
 

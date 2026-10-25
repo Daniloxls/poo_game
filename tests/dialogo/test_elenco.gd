@@ -35,7 +35,14 @@ func _initialize() -> void:
 	checar("Montanha retrato nulo", gm.retrato("x") == null)
 
 	checar("Anti-POO serio", elenco.buscar("Anti-POO").retrato("serio") != null)
-	checar("??? silhueta", elenco.buscar("???").tem_retrato())
+	var vulto = elenco.buscar("Vulto")
+	checar("Vulto mostra ???", vulto.nome_exibido() == "???", vulto.nome_exibido())
+	checar("Vulto padrão = silhueta", vulto.retrato() != null and vulto.retrato().resource_path.ends_with("silhueta.png"))
+	checar("Vulto serio = rosto do Anti-POO", vulto.retrato("serio") != null and vulto.retrato("serio").resource_path.ends_with("anti_poo_serio.png"))
+	var terminal = elenco.buscar("Terminal")
+	checar("Terminal mostra ???", terminal.nome_exibido() == "???", terminal.nome_exibido())
+	checar("Terminal usa retratos do Cmdzinho", terminal.retrato("surpreso") == surpreso and terminal.cor == cmd.cor)
+	checar("sem rótulo, nome_exibido = nome", kath.nome_exibido() == "Kath")
 
 	var f = elenco.buscar("Fulano")
 	checar("Fulano não nulo", f != null)

@@ -79,6 +79,14 @@ func _rodar() -> void:
 	checar("texto à direita do busto", b.get_node("%Texto").get_global_rect().position.x >= r.get_rect().end.x - 20, b.get_node("%Texto").get_global_rect())
 	await _fechar(b)
 
+	# Rótulo de exibição: Vulto aparece como "???"
+	b = await _abrir("~ a
+Vulto: Hm...
+=> END")
+	checar("Vulto: etiqueta mostra ???", b.get_node("%NomeTag").text == "???", b.get_node("%NomeTag").text)
+	checar("Vulto: etiqueta visível", b.get_node("%NomeTag").get_parent().visible)
+	await _fechar(b)
+
 	# Sem retrato
 	b = await _abrir("~ a\nGrande Montanha: Hah!\n=> END")
 	checar("Montanha: faixa visível", b.get_node("%Faixa").visible)

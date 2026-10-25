@@ -7,9 +7,9 @@ const CUES := {
 	"teste_forca": ["convite", "ganhou", "perdeu", "dica", "ja_ganhou"],
 	"tritomos": ["boas_vindas", "acertou", "errou"],
 	"espada": ["cena_1", "cena_2", "cena_3", "cena_4", "cena_5", "cena_6", "cena_7"],
-	"cidade": ["cmdzinho", "kath", "tenda", "npc1", "npc2", "npc3", "trocador"],
+	"cidade": ["cmdzinho_afogando", "cmdzinho_resgate", "cmdzinho", "kath", "tenda", "npc1", "npc2", "npc3", "trocador"],
 }
-const PROIBIDOS := [" ?", "advinh", "trás lembr", "Enquanto a você", "premios"]
+const PROIBIDOS := [" ?", "advinh", "trás lembr", "Enquanto a você", "premios", "Anti-POO", "Nicolas", "Três rounds"]
 
 var passou := 0
 var falhou := 0
@@ -34,7 +34,8 @@ func _stub(tickets: int = 0) -> Node:
 	var s := GDScript.new()
 	s.source_code = """extends Node
 var tickets := 0
-var vai_seguir := false
+var vai_seguir := true  # começa true: os casos "não segue" precisam zerar
+var ja_conversou := false
 var espada_tirada := false
 var quer_lutar := false
 var quer_tentar := false
@@ -91,8 +92,26 @@ func _rodar() -> void:
 		_fim()
 		return
 
+	for oculto in ["Vulto", "Terminal"]:
+		var p = elenco.buscar(oculto)
+		checar("%s resolve no Elenco" % oculto, p.cor != elenco.COR_PADRAO and p.tem_retrato())
+		checar("%s mostra ???" % oculto, p.nome_exibido() == "???", p.nome_exibido())
+
 	var excalibur: DialogueResource = dm.create_resource_from_text(FileAccess.get_file_as_string(PASTA + "excalibur.dialogue"))
 	var stub := _stub(0)
+	var primeira := await _andar(excalibur, "conversa", stub, [1])
+	checar("excalibur 1ª visita: apresentação completa", primeira.size() >= 5, primeira.size())
+	checar("excalibur 1ª visita: pergunta fala dos 30 tickets", primeira[3].text.contains("30 tickets") and not primeira[3].text.contains("pronto"), primeira[3].text)
+	checar("excalibur 1ª visita marca ja_conversou", stub.ja_conversou == true)
+	var segunda := await _andar(excalibur, "conversa", stub, [1])
+	checar("excalibur 2ª visita: saudação curta", segunda.size() == 2 and segunda[0].text.contains("pronto"), segunda.map(func(l): return l.text))
+	stub.free()
+	stub = _stub(30)
+	stub.espada_tirada = true
+	await _andar(excalibur, "conversa", stub)
+	checar("excalibur depois da espada não segue", stub.vai_seguir == false)
+	stub.free()
+	stub = _stub(0)
 	await _andar(excalibur, "conversa", stub, [0])
 	checar("excalibur com 0 tickets e 'sim' não segue", stub.vai_seguir == false)
 	stub.free()
@@ -115,6 +134,18 @@ func _rodar() -> void:
 	checar("tatame/vitoria primeira escolha -> respeito", historia.montanha == "respeito", historia.montanha)
 	await _andar(tatame, "desafio", stub, [0])
 	checar("tatame/desafio 'sim' -> quer_lutar", stub.quer_lutar == true)
+	stub.free()
+
+	var cidade: DialogueResource = dm.create_resource_from_text(FileAccess.get_file_as_string(PASTA + "cidade.dialogue"))
+	historia.resetar()
+	stub = _stub()
+	var afogando := await _andar(cidade, "cmdzinho_afogando", stub)
+	checar("cmdzinho_afogando fala como Terminal", afogando.all(func(l): return l.character == "Terminal"))
+	checar("afogando não resgata", historia.cmdzinho_resgatado == false)
+	var resgate := await _andar(cidade, "cmdzinho_resgate", stub, [0])
+	checar("resgate: escolha única 'Turin.'", resgate.any(func(l): return l.responses.size() == 1 and l.responses[0].text == "Turin."))
+	checar("resgate -> Historia.cmdzinho_resgatado", historia.cmdzinho_resgatado == true)
+	historia.resetar()
 	stub.free()
 
 	var tritomos: DialogueResource = dm.create_resource_from_text(FileAccess.get_file_as_string(PASTA + "tritomos.dialogue"))

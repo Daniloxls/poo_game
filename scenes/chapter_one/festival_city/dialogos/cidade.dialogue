@@ -1,12 +1,35 @@
-# Falas soltas da praça do festival (NPCs sem lógica própria).
+# Falas da praça do festival.
 
-# Cmdzinho largado na praça (sprite cmdzinho_afogado).
+# Cmdzinho se afogando na fonte central (sprite cmdzinho_afogado). Antes de se apresentar,
+# fala como "Terminal" (etiqueta "???"). Só segue o Turin depois do resgate.
+~ cmdzinho_afogando
+Terminal: [#vazio, #shake] Glub... socorro! Alguém! Eu tô [shake]afundando[/shake]!
+Terminal: [#duvida] Meu código... [glitch]reagirAgua()[/glitch] só sabe afundar! Deve ter um método melhor aí dentro!
+=> END
+
+# Depois que Turin troca a chamada para this.nadar().
+~ cmdzinho_resgate
+Terminal: [#alegre, #hop] Ufa! Eu tava quase virando peso de papel!
+Cmdzinho: Valeu, garoto! Eu sou o Cmdzinho.
+Cmdzinho: E você, como se chama?
+- Turin.
+	Cmdzinho: [#feliz] Turin! Prazer!
+	Cmdzinho: [#surpreso] Espera...[wait=0.3] você consegue me ver?! Ninguém aqui consegue!
+	Cmdzinho: [#duvida] Ah, já sei. Você tá com o [code]modo sudo[/code] ligado! Só quem tem sudo consegue me ver.
+	Cmdzinho: [#neutro] Antigamente, os programadores usavam esse poder pra reprogramar o mundo e deixar tudo melhor.
+	Cmdzinho: [#vazio, #slump] Até que um deles se virou contra todos.
+	Cmdzinho: Eu fiquei preso com ele lá no fundo do [glitch]Deep Code[/glitch]...
+	Cmdzinho: [#neutro] Até que alguém ligou o sudo naquele terminal de lá, e eu consegui fugir.
+	Cmdzinho: [#surpreso] Peraí...[wait=0.3] foi você, não foi?!
+	Cmdzinho: [#surpreso, #shake] Só que ele me achou, me jogou nessa fonte e [shake]mudou o meu código[/shake] pra eu afundar!
+	Cmdzinho: [#alegre, #hop] Mas aí você apareceu!
+	Cmdzinho: [#feliz] Essa cidade parece divertida. Vou com você!
+	set Historia.cmdzinho_resgatado = true
+=> END
+
+# Já seguindo o Turin.
 ~ cmdzinho
-#Cmdzinho vai começar se afogando na fonte central da cidade, precisamos de um dialogo para esse momento
-#Ele não vai seguir automaticamente o jogador ao entrar na cidade
-#Ele só começa a seguir o Turin após ele ser resgatado da fonte
-Cmdzinho: [#vazio, #slump] Ufa...[wait=0.4] quanta gente...
-Cmdzinho: [#alegre, #hop] Mas a cidade fica [wave]animadíssima[/wave] no festival!
+Cmdzinho: [#alegre, #hop] A cidade fica [wave]animadíssima[/wave] no festival!
 Cmdzinho: [#duvida] Só é estranho: todo mundo sai de casa e tranca as portas.
 => END
 

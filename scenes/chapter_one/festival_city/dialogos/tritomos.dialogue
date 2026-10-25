@@ -1,4 +1,5 @@
-# Tenda do vidente Tritomos. Ele lê pensamentos de verdade, pelo código (jogador.get_pensamento()).
+# Tenda do vidente Tritomos. A bola de cristal mostra o retorno da função leitorDePensamento
+# (que devolve jogador.get_pensamento()); ele não lê o código de ninguém.
 # Contexto (medium_tent.gd): palavra: String (o que Tritomos "leu").
 # Escolha de Turin depois de vencer: Historia.tritomos = "verdade" ou "acreditou".
 
@@ -26,11 +27,10 @@ Tritomos: Minha bola de cristal [shake]nunca[/shake] falha!
 - Eu mexi no seu código.
 	set Historia.tritomos = "verdade"
 	Tritomos: Você...[wait=0.3] o quê?
-	#Tritomos não lê o codigo das pessoas, no maximo ele pode usar a bola de cristal para ler o retorno da função
-	Tritomos: Você mudou o que eu leio? Eu achava que só eu enxergava o código das pessoas...
+	Tritomos: Você mudou o que a minha bola de cristal mostra? Eu achava que ela sempre via o retorno verdadeiro...
 	Tritomos: Se você consegue fazer isso, outros também conseguem.[wait=0.3] Isso me preocupa.
 	Tritomos: Obrigado pela honestidade, garoto. Pegue seus tickets.
-	Tritomos: E se um dia precisar de alguém que entende de ler código...[wait=0.3] você sabe onde me encontrar.
+	Tritomos: Se algum dia a bola de cristal me mostrar algo estranho...[wait=0.3] você vai ser o primeiro a saber.
 - Deve ter sido sorte de principiante.
 	set Historia.tritomos = "acreditou"
 	Tritomos: Sorte...[wait=0.4] é. Só pode ter sido sorte.

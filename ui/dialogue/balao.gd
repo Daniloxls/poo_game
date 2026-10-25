@@ -103,8 +103,8 @@ func _mostrar(l: DialogueLine) -> void:
 	linha = l
 	var p: Personagem = Elenco.buscar(l.character)
 	_personagem = p
-	_nome.text = p.nome
-	_etiqueta.visible = not p.nome.is_empty()
+	_nome.text = p.nome_exibido()
+	_etiqueta.visible = not p.nome_exibido().is_empty()
 	_etiqueta.self_modulate = p.cor
 	_etiqueta.position.x = ETIQUETA_COM_RETRATO if p.tem_retrato() else ETIQUETA_SEM_RETRATO
 	_faixa.visible = not p.tem_retrato()

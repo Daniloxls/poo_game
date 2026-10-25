@@ -4,7 +4,7 @@
 
 ~ desafio
 Organizador: Ei, você aí, garoto! Tem coragem de encarar o [pop]GRANDE MONTANHA[/pop]?
-Organizador: Três rounds no tatame. Se você ganhar, os tickets são seus!
+Organizador: Derrube o Montanha no tatame e os tickets são seus!
 - Pode vir!
 	set quer_lutar = true
 	Organizador: [wave]Senhoras e senhores...[/wave][wait=0.4] que comece a luta!
