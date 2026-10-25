@@ -76,6 +76,7 @@ func dummy_fight() -> void:
 	check("turno de Turin", await turin_turn())
 	eq("pilha de cima para baixo", top_down(), ["Turin.turno()", "Boneco_de_Teste.turno()"])
 	eq("contexto: Turin ativo", battle.context().active, turin)
+	battle.console.text = "Turin.ata"  # texto pela metade que não pode vazar para a próxima
 	await fight_until_won("Boneco_de_Teste")
 	eq("battle_won uma vez", won, 1)
 	eq("sem derrota", lost, 0)
@@ -86,11 +87,31 @@ func dummy_fight() -> void:
 func second_battle() -> void:
 	turin.hp = turin.get_max_hp()
 	battle.start_battle("res://scenes/encounters/testdummy.tscn")
+	# console aberto antes do primeiro turno: contexto novo, sem texto velho
+	battle.console.open()
+	eq("2ª: console sem texto velho", battle.console.text, "")
+	check("2ª: sugestões da batalha nova", "Boneco_de_Teste" in battle.console.suggestion_labels(),
+		battle.console.suggestion_labels())
+	battle.console.close()
 	check("2ª: turno de Turin", await turin_turn())
 	eq("2ª: pilha empilhada de novo", top_down(), ["Turin.turno()", "Boneco_de_Teste.turno()"])
 	eq("2ª: sinais da pilha ligados uma vez", battle.stack.pushed.get_connections().size(), 1)
 	var dummy = battle.context().find_combatant("Boneco_de_Teste")
+	# comando digitado durante a própria ação: recusado, texto fica, nada se perde
+	var ready := [0]
+	var count := func(_c): ready[0] += 1
+	battle.console.command_ready.connect(count)
+	var typed := "Turin.atacar(Boneco_de_Teste)"
+	var probe := func(_t):
+		battle.console.text = typed
+		battle.console.submit()
+	battle.fx.hp_changed.connect(probe, CONNECT_ONE_SHOT)
 	await battle.run_command(cmd("Turin.atacar(Boneco_de_Teste)"), true)
+	battle.console.command_ready.disconnect(count)
+	eq("durante a ação: comando não sai", ready[0], 0)
+	check("durante a ação: erro visível", battle.console.error_label().visible)
+	eq("durante a ação: texto fica", battle.console.text, typed)
+	battle.console.text = ""
 	check("2ª: comando causou dano", dummy.get_hp() < dummy.get_max_hp(), dummy.get_hp())
 	eq("2ª: combo subiu", battle.combo.level, 1)
 	await fight_until_won("Boneco_de_Teste")

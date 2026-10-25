@@ -64,3 +64,10 @@ func remove_enemy(enemy) -> void:
 	var tw := row.create_tween()  # só modulate: o container manda na posição
 	tw.tween_property(row, "modulate:a", 0.0, 0.3)
 	tw.tween_callback(row.queue_free)
+
+
+## Fim da batalha: some com todas as linhas na hora.
+func clear() -> void:
+	for c in get_children():
+		c.queue_free()
+	_rows.clear()

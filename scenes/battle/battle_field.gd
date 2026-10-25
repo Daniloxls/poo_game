@@ -6,6 +6,7 @@ extends Node2D
 
 const ENEMY_SLIDE := Vector2(512, 0)   # inimigos entram pela esquerda
 const PARTY_SLIDE := Vector2(-300, 0)  # o grupo entra pela direita
+const SCREEN_MID_X := 576.0            # metade da largura da tela (1152)
 
 var _party_offset := Vector2.ZERO
 var _party_rest: Array = []  # [nó, posição, escala, rotação, modulate]
@@ -62,7 +63,7 @@ func slide_in(party: Array, enemies: Array, panels: Array, instant: bool) -> voi
 		tw.tween_property(c, "position", homes[c], 0.35)
 	for p: Control in panels:
 		var home := p.position
-		p.position.x += -80.0 if home.x < 576.0 else 80.0  # vem do lado onde fica
+		p.position.x += -80.0 if home.x < SCREEN_MID_X else 80.0  # vem do lado onde fica
 		p.modulate.a = 0.0
 		tw.tween_property(p, "position", home, 0.3)
 		tw.tween_property(p, "modulate:a", 1.0, 0.2)
@@ -76,6 +77,8 @@ func release() -> void:
 		r[0].scale = r[2]
 		r[0].rotation = r[3]
 		r[0].modulate = r[4]
+		if r[0].has_meta("ko_orig"):  # pose guardada pelo nocaute do FX
+			r[0].remove_meta("ko_orig")
 	_party_rest.clear()
 	Party.offset = _party_offset
 	for n in Party.get_children():  # números de dano soltos pelo FX

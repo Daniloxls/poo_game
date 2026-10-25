@@ -69,16 +69,19 @@ func start_battle(enemy_group_path: String) -> void:
 	for e in _enemies:
 		enemy_status.add_enemy(e)
 	party_status.set_party(_party)
+	console.set_context(context())
 	await field.slide_in(_party, _enemies, [enemy_status, party_status], pacing.instant)
 	_loop()
 
 
 ## O que o console enxerga agora: quem está em campo, quem age e os itens.
+## Membro do grupo só é "ativo" enquanto o turno dele aceita comando.
 func context() -> BattleContext:
 	var c := BattleContext.new()
 	c.combatants = _party + _enemies
 	var top := stack.peek()
-	c.active = top.entity if top and top.state != TurnFrame.State.KO else null
+	if top and top.state != TurnFrame.State.KO and (not top.entity.is_party_member() or top.entity == _acting):
+		c.active = top.entity
 	c.items = Inventory.get_node(BACKPACK).get_items().filter(func(i): return i.QUANTITY > 0)
 	return c
 
@@ -89,6 +92,7 @@ func run_command(cmd: ResolvedCommand, from_console: bool) -> void:
 		return
 	_acting = null
 	action_menu.close()
+	console.set_context(context())  # digitado durante a ação: erro de turno, texto fica
 	var mult: float = combo.on_console_action() if from_console else combo.on_button_action()
 	var outcomes: Array = cmd.skill.SKILL_SCRIPT.new().resolve(cmd.actor, cmd.targets, mult)
 	for t in cmd.targets:
@@ -124,12 +128,12 @@ func _take_turn(frame: TurnFrame) -> void:
 	if frame.state == TurnFrame.State.KO:
 		return  # nocauteado: desempilha sem agir
 	_point_at(who)
-	console.set_context(context())
 	if who.is_party_member():
 		_acting = who
 		_open_menu()
 		await _acted
 	else:
+		console.set_context(context())
 		await pacing.wait(0.2)  # o jogador vê de quem é a vez
 		var action: EnemyAction = who.choose_action(_party, _living(_enemies))
 		if action.error_text != "":
@@ -226,6 +230,8 @@ func _end(won: bool) -> void:
 	_acting = null
 	action_menu.close()
 	console.close()
+	console.set_context(null)  # os combatentes desta batalha vão ser liberados
+	console.text = ""
 	_point_at(null)
 	await _stack_idle()
 	victory_panel.instant = pacing.instant
@@ -242,10 +248,7 @@ func _end(won: bool) -> void:
 	combo.reset()
 	stack.clear()
 	stack_panel.clear()
-	for e in _enemies:
-		enemy_status.remove_enemy(e)
-	for row in enemy_status.get_children():
-		row.queue_free()
+	enemy_status.clear()
 	_group.queue_free()
 	_enemies.clear()
 	field.release()
