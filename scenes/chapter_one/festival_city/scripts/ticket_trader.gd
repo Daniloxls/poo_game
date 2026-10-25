@@ -4,8 +4,6 @@ var direction : Vector2 = Vector2()
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var animation_player = $AnimationPlayer
 @onready var player = get_node("../Player")
-@onready var textbox = get_node("../Textbox")
-@onready var codebox = get_node("../Codebox")
 
 enum State{
 	DOWN,
@@ -52,8 +50,7 @@ func depure():
 
 
 func interaction():
-	textbox.queue_text(["Troque aqui seus tickets por premios!"])
-	pass
+	await Dialogo.iniciar(load("res://scenes/chapter_one/festival_city/dialogos/cidade.dialogue"), "trocador", [self])
 
 func name():
 	return nome
