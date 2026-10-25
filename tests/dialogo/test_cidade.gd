@@ -91,8 +91,6 @@ class Contador:
 	func start_battle(caminho: String) -> void:
 		n += 1
 		ultimo = caminho
-	func reset() -> void:
-		pass
 	func hide() -> void:
 		pass
 	func show() -> void:
@@ -140,10 +138,10 @@ func _forca_e_tritomos(cidade: Node) -> void:
 	await _jogar("força não", forca.interaction, 1)
 	checar("força não: não tenta", forca.erros == 0 and not forca.game_won)
 	await _jogar("força perde sem Cmdzinho", forca.interaction, 0)
-	checar("perdeu sem dica do Cmdzinho", forca.erros == 1 and not vistos.has("Cmdzinho"), vistos)
+	checar("perdeu sem dica do Cmdzinho", forca.erros == 0 and not vistos.has("Cmdzinho"), vistos)
 	hist.cmdzinho_resgatado = true
 	await _jogar("força perde com Cmdzinho", forca.interaction, 0)
-	checar("perdeu e Cmdzinho dá dica com retrato", forca.erros == 2 and vistos.has("Cmdzinho") and retrato_do_cmd, vistos)
+	checar("perdeu e Cmdzinho dá dica com retrato", forca.erros == 1 and vistos.has("Cmdzinho") and retrato_do_cmd, vistos)
 	for i in 3:
 		await _jogar("força perde %d" % i, forca.interaction, 0)
 	checar("erros param em 3", forca.erros == 3, forca.erros)
@@ -155,17 +153,22 @@ func _forca_e_tritomos(cidade: Node) -> void:
 	checar("ganhou: +10 tickets", forca.game_won and tickets.get_tickets() == antes + 10, tickets.get_tickets())
 	await _jogar("força já ganhou", forca.interaction, 0)
 	checar("já ganhou: sem novo teste", tickets.get_tickets() == antes + 10)
+	checar("já ganhou: Apresentador fala", vistos.has("Apresentador"), vistos)
 
 	Engine.time_scale = 1.0
 	var tenda = cidade.get_node("TendaVidente")
-	tenda.tooltip = Contador.new()   # a cena da cidade não tem o TooltipButton
 	antes = tickets.get_tickets()
 	tenda.correct_answer = true
 	tenda.retorno = "'sol'"
 	tenda.pensamento_field.text = "lua"
-	await _jogar("tritomos errou", tenda._on_button_pressed, 0)
+	var duas_vezes := func():
+		tenda._on_button_pressed()   # sem await: o 2º clique chega durante a conversa
+		await tenda._on_button_pressed()
+		while tenda.conversando:
+			await process_frame
+	await _jogar("tritomos errou (2 cliques)", duas_vezes, 0)
 	checar("tritomos: escolha verdade", hist.tritomos == "verdade", hist.tritomos)
-	checar("tritomos: +10 tickets", tickets.get_tickets() == antes + 10)
+	checar("tritomos: +10 tickets uma vez só", tickets.get_tickets() == antes + 10, tickets.get_tickets() - antes)
 	checar("tritomos: foi embora", tenda.left_label.visible)
 
 

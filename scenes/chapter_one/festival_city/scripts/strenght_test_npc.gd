@@ -64,9 +64,9 @@ func interaction():
 		game_won = true
 		await Dialogo.iniciar(DIALOGO, "ganhou", [self])
 	else:
-		erros = mini(erros + 1, 3)
 		await Dialogo.iniciar(DIALOGO, "perdeu", [self])
 		if Historia.cmdzinho_resgatado:
+			erros = mini(erros + 1, 3)
 			await Dialogo.iniciar(DIALOGO, "dica", [self])
 
 	tween = create_tween()

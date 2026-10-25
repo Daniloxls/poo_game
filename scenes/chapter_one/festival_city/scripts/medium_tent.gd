@@ -8,11 +8,12 @@ extends "res://scenes/main/scripts/interact.gd"
 @onready var error_label = $VidenteInterface/BackPanel/ErrorLabel
 @onready var tickets = $"../Tickets"
 @onready var left_label = $VidenteInterface/LeftLabel
-@onready var tooltip = $VidenteInterface/BackPanel/ErrorLabel/TooltipButton
+@onready var tooltip = get_node_or_null("VidenteInterface/BackPanel/ErrorLabel/TooltipButton")   # opcional
 
 const DIALOGO = preload("res://scenes/chapter_one/festival_city/dialogos/tritomos.dialogue")
 
 var palavra := ""   # lida por tritomos.dialogue
+var conversando := false   # tem conversa do Tritomos em andamento
 var first_interaction = true
 var correct_answer = false
 var retorno
@@ -44,11 +45,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("x") and !pensamento_field.has_focus():
-		if current_state != State.CLOSED and current_state != State.FIRST:
+		if current_state != State.CLOSED and current_state != State.FIRST and not conversando:
 			close_window()
 
 func interaction():
-	player.set_state(States.Player_State.ON_INTERFACE)
+	PlayerState.set_on_interface(true)
 	triggered = true
 	open_window()
 	if current_state == State.FINISHED:
@@ -56,7 +57,7 @@ func interaction():
 	if first_interaction and current_state != State.ERROR:
 		await Dialogo.iniciar(DIALOGO, "boas_vindas", [self])
 		first_interaction = false
-		player.set_state(States.Player_State.FREE)
+		PlayerState.set_on_interface(false)
 		current_state = State.OPEN
 	else:
 		current_state = State.OPEN
@@ -71,18 +72,21 @@ func open_window():
 		correct_answer = true
 	elif retorno.is_valid_float():
 		show_error("Tipos incompatíveis: não se pode converter de int para String")
-		tooltip.set_text("O vidente precisa retornar uma string e não um inteiro.")
+		if tooltip:
+			tooltip.set_text("O vidente precisa retornar uma string e não um inteiro.")
 	elif retorno != "resposta":
 		show_error("Referência a variável " + retorno + "  não pôde ser resolvida")
-		tooltip.set_text("Para declarar uma String, precisamos adicionar aspas no inicio e final.")
+		if tooltip:
+			tooltip.set_text("Para declarar uma String, precisamos adicionar aspas no inicio e final.")
 	
 func close_window():
 	medium.show()
 	triggered = false
 	error_label.hide()
 	interface.hide()
-	tooltip.reset()
-	player.set_state(States.Player_State.FREE)
+	if tooltip:
+		tooltip.reset()
+	PlayerState.set_on_interface(false)
 	if current_state != State.FINISHED:
 		think_button.show()
 		pensamento_field.show()
@@ -97,12 +101,16 @@ func show_error(error : String) -> void:
 	current_state = State.ERROR
 	
 func _on_button_pressed():
+	if conversando:
+		return
+	conversando = true
 	var pensamento = pensamento_field.get_text()
 	retorno = retorno.lstrip("'").rstrip("'")
 	pensamento_field.clear()
 	if !correct_answer or retorno == pensamento:
 		palavra = pensamento
 		await Dialogo.iniciar(DIALOGO, "acertou", [self])
+		conversando = false
 		if current_state == State.OPEN:
 			close_window()
 	else:
@@ -116,8 +124,11 @@ func _on_button_pressed():
 		current_state = State.FINISHED
 		pensamento_field.hide()
 		think_button.hide()
+		conversando = false
 		close_window()
 
 
 func _on_close_pressed():
+	if conversando:
+		return
 	close_window()
