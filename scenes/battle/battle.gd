@@ -36,16 +36,20 @@ var _down: Array = []       # destruídos/nocauteados já tratados
 var _acting = null          # membro do grupo esperando comando; null fora do turno dele
 var _max_combo := 0
 var _marker_tween: Tween
+var _inventory_mode := -1   # process_mode do Inventory antes da batalha
 
 
 func _ready() -> void:
 	fx.shake_target = field
+	fx.overlay = $FxLayer
+	stack_panel.pacing = pacing
 	fx.hp_changed.connect(_refresh_status)
 	stack_panel.bind(stack, func(e): return e.global_position)
 	$UI/Root/ComboView.bind(combo)
 	combo.changed.connect(func(level): _max_combo = maxi(_max_combo, level))
 	action_menu.skill_chosen.connect(_on_skill_chosen)
 	console.command_ready.connect(run_command.bind(true))
+	console.exited.connect(_focus_menu)
 	$UI/Root/ConsoleButton.pressed.connect(func(): if console.can_process(): console.open())
 	_show(false)
 
@@ -59,6 +63,7 @@ func start_battle(enemy_group_path: String) -> void:
 		return
 	_running = true
 	_show(true)
+	console.process_mode = Node.PROCESS_MODE_INHERIT  # desligado desde o fim da anterior
 	PlayerState.set_on_interface(true)
 	_down.clear()
 	_max_combo = 0
@@ -80,8 +85,10 @@ func context() -> BattleContext:
 	var c := BattleContext.new()
 	c.combatants = _party + _enemies
 	var top := stack.peek()
-	if top and top.state != TurnFrame.State.KO and (not top.entity.is_party_member() or top.entity == _acting):
-		c.active = top.entity
+	if top and top.state != TurnFrame.State.KO:
+		c.running = top.entity
+		if not top.entity.is_party_member() or top.entity == _acting:
+			c.active = top.entity
 	c.items = Inventory.get_node(BACKPACK).get_items().filter(func(i): return i.QUANTITY > 0)
 	return c
 
@@ -89,6 +96,10 @@ func context() -> BattleContext:
 ## Executa a ação do membro da vez (botão ou console). Fora do turno dele, não faz nada.
 func run_command(cmd: ResolvedCommand, from_console: bool) -> void:
 	if _acting == null or cmd == null or not cmd.ok or cmd.actor != _acting:
+		return
+	if cmd.skill.SKILL_SCRIPT == null:  # habilidade sem script: avisa e o turno não se perde
+		fx.play_error(cmd.actor, BattleContext.method_name(cmd.skill) + "() ainda não tem implementação")
+		_open_menu()
 		return
 	_acting = null
 	action_menu.close()
@@ -170,8 +181,7 @@ func _on_skill_chosen(skill: SKILL) -> void:
 			break
 		targets.append(pick)
 	console.process_mode = Node.PROCESS_MODE_INHERIT
-	if console_open:
-		console.open()
+	console.visible = console_open  # volta à vista sem roubar o foco de quem usou o menu
 	if _acting != actor:
 		return
 	if cancelled:
@@ -230,6 +240,7 @@ func _end(won: bool) -> void:
 	_acting = null
 	action_menu.close()
 	console.close()
+	console.process_mode = Node.PROCESS_MODE_DISABLED  # F2 no painel de fim não abre o console
 	console.set_context(null)  # os combatentes desta batalha vão ser liberados
 	console.text = ""
 	_point_at(null)
@@ -244,11 +255,17 @@ func _end(won: bool) -> void:
 		await victory_panel.show_result(lines)
 	else:
 		await defeat_panel.show_result("Dica: comandos digitados no console enchem o combo.")
+	# a tecla que fechou o painel não pode chegar ao mapa como "interact": o
+	# "just pressed" vale por quadro de física, então espera dois deles passarem
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	pacing.restore()
 	combo.reset()
 	stack.clear()
 	stack_panel.clear()
 	enemy_status.clear()
+	for n in $FxLayer.get_children():  # números e balões que ainda não sumiram
+		n.queue_free()
 	_group.queue_free()
 	_enemies.clear()
 	field.release()
@@ -266,8 +283,22 @@ func _end(won: bool) -> void:
 func _show(on: bool) -> void:
 	visible = on
 	ui.visible = on
+	$FxLayer.visible = on
 	# escondida, nada da batalha lê teclas (o F2 do console, por exemplo)
 	process_mode = Node.PROCESS_MODE_INHERIT if on else Node.PROCESS_MODE_DISABLED
+	# o inventário consulta a tecla "e" todo quadro: na batalha ela é do console
+	# (chamadas como spend_item continuam funcionando)
+	if on:
+		_inventory_mode = Inventory.process_mode
+		Inventory.process_mode = Node.PROCESS_MODE_DISABLED
+	elif _inventory_mode != -1:
+		Inventory.process_mode = _inventory_mode
+
+
+## O console soltou o foco: o teclado/controle volta ao menu do membro da vez.
+func _focus_menu() -> void:
+	if _acting != null and not action_menu.buttons().is_empty():
+		action_menu.buttons()[0].grab_focus()
 
 
 ## ▼ amarelo balançando sobre quem age; o chip do grupo acende.
@@ -297,7 +328,7 @@ func _refresh_status(target) -> void:
 		enemy_status.refresh(target)
 
 
-# Só combatentes: o FX também solta números de dano nessas camadas.
+# Só combatentes (o grupo pode ter outros nós).
 func _combatants(parent: Node) -> Array:
 	return parent.get_children().filter(func(n): return n.has_method("is_party_member"))
 

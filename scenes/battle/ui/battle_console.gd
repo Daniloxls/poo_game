@@ -4,6 +4,7 @@ extends PanelContainer
 ## erros sublinhados e mensagens de ensino. Um erro nunca custa o turno.
 
 signal command_ready(cmd: ResolvedCommand)
+signal exited  # o jogador saiu do console (Esc, ou B com a linha vazia no controle)
 
 const OK_COLOR := Color("#3fae5a")
 const ERR_COLOR := Color("#e8463a")
@@ -123,7 +124,11 @@ func _unhandled_input(ev: InputEvent) -> void:
 		submit()
 		get_viewport().set_input_as_handled()
 	elif _pad and visible and ev.is_action_pressed("ui_cancel"):
-		_delete_last_token()
+		if _line.text == "":
+			close()
+			exited.emit()
+		else:
+			_delete_last_token()
 		get_viewport().set_input_as_handled()
 
 
@@ -149,6 +154,7 @@ func _on_line_input(ev: InputEvent) -> void:
 		_move(1)
 	elif ev.is_action_pressed("ui_cancel"):
 		_line.release_focus()
+		exited.emit()
 	elif ev is InputEventAction and ev.is_action_pressed("ui_accept"):
 		_accept(_hi)
 	elif _is_editing(key):

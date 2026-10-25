@@ -36,6 +36,9 @@ script = ExtResource("3_fx")
 [node name="TargetSelector" type="Node" parent="."]
 script = ExtResource("4_sel")
 
+[node name="FxLayer" type="CanvasLayer" parent="."]
+layer = 2
+
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
 

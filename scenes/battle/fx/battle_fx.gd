@@ -11,6 +11,8 @@ var pacing := BattlePacing.new()
 var library: DamageFxLibrary = preload("res://scenes/battle/fx/damage_fx.tres")
 ## Nó balançado no tremor e ampliado no zoom (sem Camera2D). Padrão: o pai.
 var shake_target: CanvasItem
+## Camada de cima (acima do grupo) para números, efeitos e balões. Padrão: a camada de quem age.
+var overlay: Node
 var _rest_node: CanvasItem
 var _rest_pos := Vector2.ZERO
 var _rest_scale := Vector2.ONE
@@ -116,6 +118,11 @@ func _spawn_effect(at: Vector2, parent: Node, o: ActionOutcome) -> void:
 		p.finished.connect(p.queue_free)
 
 
+## Onde soltar números, efeitos e balões: a camada de cima, ou a do próprio sprite.
+func _layer(sprite: Node) -> Node:
+	return overlay if overlay else sprite.get_parent()
+
+
 func _pop_label(parent: Node, at: Vector2, text: String) -> Label:
 	var l := Label.new()
 	l.theme = THEME
@@ -133,7 +140,7 @@ func play_action(actor_sprite: Node2D, method_label: String, outcomes: Array, sp
 	pacing.latched = false
 	var home := actor_sprite.position
 	var home_scale := actor_sprite.scale
-	var layer := actor_sprite.get_parent()
+	var layer := _layer(actor_sprite)
 	var first := true
 	for o: ActionOutcome in outcomes:
 		var ts: Node2D = sprite_of.call(o.target)
@@ -189,7 +196,7 @@ func play_enemy_destroyed(enemy_sprite: Node2D, enemy_name: String, last: bool) 
 	pacing.latched = false
 	var orig := enemy_sprite.modulate
 	if not _instant():
-		var layer := enemy_sprite.get_parent()
+		var layer := _layer(enemy_sprite)
 		var at := enemy_sprite.global_position
 		var field := _field()
 		_snap_field()
@@ -240,8 +247,9 @@ func play_error(actor_sprite: Node2D, text: String) -> void:
 	l.theme_type_variation = &"MonoLabel"
 	l.text = text
 	bubble.add_child(l)
-	actor_sprite.get_parent().add_child(bubble)
+	_layer(actor_sprite).add_child(bubble)
 	bubble.global_position = actor_sprite.global_position + Vector2(-bubble.get_minimum_size().x / 2.0, -100)
 	await pacing.wait(1.2)
-	bubble.queue_free()
+	if is_instance_valid(bubble):  # o fim da batalha já pode ter limpado a camada
+		bubble.queue_free()
 	pacing.latched = false

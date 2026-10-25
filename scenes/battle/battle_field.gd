@@ -65,7 +65,7 @@ func slide_in(party: Array, enemies: Array, panels: Array, instant: bool) -> voi
 	await tw.finished
 
 
-## Grupo de volta à camada dele, como estava; sobras do FX saem do Party.
+## Grupo de volta à camada dele, como estava.
 func release() -> void:
 	for r in _party_rest:
 		r[0].position = r[1]
@@ -76,7 +76,3 @@ func release() -> void:
 			r[0].remove_meta("ko_orig")
 	_party_rest.clear()
 	Party.offset = _party_offset
-	for n in Party.get_children():  # números de dano soltos pelo FX
-		if not n.has_method("is_party_member"):
-			Party.remove_child(n)
-			n.queue_free()

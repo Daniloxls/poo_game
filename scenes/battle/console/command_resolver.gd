@@ -22,7 +22,10 @@ static func resolve(p: ParsedCommand, ctx: BattleContext) -> ResolvedCommand:
 	if not actor.is_party_member():
 		return _fail("%s é um inimigo: você só controla o seu grupo" % actor.get_nome(), p.object_span)
 	if actor != ctx.active:
-		var vez: String = ctx.active.get_nome() if ctx.active != null else "ninguém"
+		if ctx.active == null and actor == ctx.running:  # a ação dele está rodando
+			return _fail("%s.turno() ainda está executando: espere o retorno" % actor.get_nome(), p.object_span)
+		var dono = ctx.active if ctx.active != null else ctx.running
+		var vez: String = dono.get_nome() if dono != null else "ninguém"
 		return _fail("%s.turno() está pausado: é o turno de %s" % [actor.get_nome(), vez], p.object_span)
 
 	var skill := ctx.find_skill(actor, p.method_name)

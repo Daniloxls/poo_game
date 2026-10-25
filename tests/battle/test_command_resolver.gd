@@ -51,6 +51,14 @@ func _initialize() -> void:
 
 	_err("Zeca.atacar(Montanha)", "Não existe ninguém chamado 'Zeca' nesta batalha", Vector2i(0, 4))
 	_err("Kath.atacar(Montanha)", "Kath.turno() está pausado: é o turno de Turin", Vector2i(0, 4))
+	# a ação de Turin está rodando: ninguém aceita comando, mas o turno é dele
+	ctx.active = null
+	ctx.running = turin
+	_err("Turin.atacar(Montanha)", "Turin.turno() ainda está executando: espere o retorno", Vector2i(0, 5))
+	_err("Kath.atacar(Montanha)", "Kath.turno() está pausado: é o turno de Turin", Vector2i(0, 4))
+	ctx.running = null
+	_err("Kath.atacar(Montanha)", "Kath.turno() está pausado: é o turno de ninguém", Vector2i(0, 4))
+	ctx.active = turin
 	_err("Montanha.atacar(Turin)", "Montanha é um inimigo: você só controla o seu grupo", Vector2i(0, 8))
 	_err("Turin.curar(Kath)", "A classe Nada não tem o método 'curar'", Vector2i(6, 11), "Métodos de Turin: atacar, usarItem")
 	_err("Turin.atacar(Montanha", "Comando incompleto: falta ')'", Vector2i(21, 22))

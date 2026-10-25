@@ -3,7 +3,8 @@ extends RefCounted
 ## Estado da batalha visto pelo console: quem está em campo, quem age, itens.
 
 var combatants: Array = []
-var active = null          # entidade no topo da pilha
+var active = null          # entidade no topo da pilha que aceita comando agora
+var running = null         # entidade no topo da pilha, mesmo com a ação dela rodando
 var items: Array = []      # ITEM com QUANTITY > 0
 
 const _ACENTOS := {"á": "a", "à": "a", "â": "a", "ã": "a", "ä": "a", "é": "e", "ê": "e",

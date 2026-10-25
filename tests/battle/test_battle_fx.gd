@@ -66,7 +66,11 @@ func _initialize() -> void:
 	var oc := ActionOutcome.make(target, ActionOutcome.Kind.DAMAGE, 5, DamageType.Kind.FOGO, true)
 	var hp := []
 	fx.hp_changed.connect(func(t): hp.append(t))
+	var overlay := CanvasLayer.new()
+	root.add_child(overlay)
+	fx.overlay = overlay
 	await fx.play_action(actor, "atacar()", [oc], func(_t): return enemy, func(_t): return 10)
+	check("número de dano na camada de cima", overlay.get_children().any(func(n): return n is DamageNumber))
 	eq("play_action time_scale", Engine.time_scale, 1.0)
 	eq("hp_changed", hp, [target])
 	eq("ator volta", actor.position, Vector2.ZERO)

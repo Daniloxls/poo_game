@@ -8,6 +8,7 @@ const THEME := preload("res://scenes/battle/ui/battle_theme.tres")
 
 var instant := false
 var _open_ms := 0
+var _armed := false  # a confirmação começou com o painel já aberto
 
 
 func _ready() -> void:
@@ -39,6 +40,7 @@ func _present(title: String, lines: Array, tint: Color) -> void:
 	box.position = target + Vector2(0, 80)
 	box.modulate.a = 0.0
 	_open_ms = Time.get_ticks_msec()
+	_armed = false
 	var tw := create_tween().set_parallel().set_ignore_time_scale(true)
 	tw.tween_property(box, "position", target, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(box, "modulate:a", 1.0, 0.2)
@@ -46,17 +48,22 @@ func _present(title: String, lines: Array, tint: Color) -> void:
 	hide()
 
 
-func _close() -> void:
-	if visible and Time.get_ticks_msec() - _open_ms > 300:
+## Fecha ao SOLTAR (tecla ou clique) uma confirmação apertada com o painel aberto:
+## o aperto não chega ao mapa como "interact" logo depois que a batalha libera o jogador.
+func _confirm(down: bool) -> void:
+	if down:
+		_armed = Time.get_ticks_msec() - _open_ms > 300
+	elif _armed:
+		_armed = false
 		closed.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if visible and event.is_action_pressed("ui_accept") and not event.is_echo():
+	if visible and event.is_action("ui_accept") and not event.is_echo():
 		get_viewport().set_input_as_handled()
-		_close()
+		_confirm(event.is_pressed())
 
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		_close()
+	if event is InputEventMouseButton:
+		_confirm(event.pressed)

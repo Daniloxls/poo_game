@@ -40,4 +40,18 @@ func _initialize() -> void:
 	s.mark_knocked_out(turin)
 	await panel.animation_finished
 	eq("KO", panel.view_for(s.peek()).status.text, "⏸ HP 0")
+	# ritmo da batalha: com um toque travado, o push termina em um ou dois quadros
+	var pacing := BattlePacing.new()
+	root.add_child(pacing)
+	panel.pacing = pacing
+	pacing.latched = true
+	var done := [false]
+	panel.animation_finished.connect(func(): done[0] = true, CONNECT_ONE_SHOT)
+	s.push(Fake.new("Rato", 1, false))
+	var quadros := 0
+	while not done[0] and quadros < 60:
+		await process_frame
+		quadros += 1
+	check("pulo: push em até 2 quadros", done[0] and quadros <= 2, quadros)
+	eq("pulo: view no lugar", panel.frames_box.get_child_count(), 2)
 	finish()

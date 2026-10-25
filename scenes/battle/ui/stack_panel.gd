@@ -9,6 +9,7 @@ const ViewScene = preload("res://scenes/battle/ui/stack_frame_view.tscn")
 
 var frames_box: VBoxContainer
 var count_label: Label
+var pacing: BattlePacing  # ritmo da batalha; sem ele, os tweens rodam no tempo normal
 
 var _stack: CallStack
 var _world_pos_of: Callable
@@ -93,6 +94,18 @@ func _enqueue(anim: Callable) -> void:
 	animation_finished.emit()
 
 
+## Toca o tween no ritmo da batalha: segurar confirmar acelera; um toque
+## (ou o modo instantâneo) leva direto ao estado final.
+func _run(tw: Tween, seconds: float) -> void:
+	if pacing == null:
+		await tw.finished
+		return
+	tw.set_speed_scale(pacing.speed)
+	await pacing.wait(seconds)
+	if tw.is_valid():
+		tw.custom_step(100.0)
+
+
 ## Reaplica estado/tema em todas as views e atualiza a contagem.
 func _refresh_all() -> void:
 	var topo := _stack.peek()
@@ -126,7 +139,7 @@ func _anim_push(frame: TurnFrame, interrupted: TurnFrame) -> void:
 	var tw := create_tween().set_parallel().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.tween_property(ghost, "global_position", v.global_position, 0.28)
 	tw.tween_property(ghost, "scale", Vector2.ONE, 0.28)
-	await tw.finished
+	await _run(tw, 0.28)
 	ghost.queue_free()
 	v.modulate.a = 1.0
 	_refresh_all()  # o de baixo escurece e mostra "⏸ pausado"
@@ -150,6 +163,7 @@ func _interrupt_tag(v: Control) -> void:
 	tw.tween_interval(0.15)
 	tw.tween_property(tag, "modulate:a", 0.0, 0.2)
 	tw.tween_callback(tag.queue_free)
+	_run(tw, 0.35)  # sem await: a etiqueta some sozinha
 
 
 ## Tira a view do container (que reposicionaria o tween), mantendo a posição na tela.
@@ -172,7 +186,7 @@ func _anim_pop(frame: TurnFrame, resumed: TurnFrame) -> void:
 		tw.tween_property(v, "position:y", v.position.y - 14, 0.15)  # levanta
 		tw.tween_property(v, "modulate:a", 0.0, 0.25)
 		tw.tween_property(v, "position:x", v.position.x + 60, 0.25).set_delay(0.1)
-		await tw.finished
+		await _run(tw, 0.35)
 		v.get_parent().remove_child(v)
 		v.queue_free()
 	_refresh_all()
@@ -190,7 +204,7 @@ func _anim_remove(frame: TurnFrame) -> void:
 	var tw := create_tween()
 	tw.tween_interval(0.1)
 	tw.tween_property(v, "position:x", v.position.x + 300, 0.25)
-	await tw.finished
+	await _run(tw, 0.35)
 	v.get_parent().remove_child(v)
 	v.queue_free()
 	_refresh_all()
@@ -203,4 +217,4 @@ func _anim_ko(frame: TurnFrame) -> void:
 		var tw := create_tween()
 		tw.tween_property(v, "scale", Vector2(1.08, 1.08), 0.08)
 		tw.tween_property(v, "scale", Vector2.ONE, 0.12)
-		await tw.finished
+		await _run(tw, 0.2)
