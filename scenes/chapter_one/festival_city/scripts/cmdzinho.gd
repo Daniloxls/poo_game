@@ -1,8 +1,16 @@
 extends "res://entities/npc/npc_script.gd"
-#scrip de um npc, deriva do script de um objeto interagivel
-# todos os scrips de npc devem extender esse
+# Cmdzinho se afogando na fonte. Só segue o Turin depois que ele corrige o código.
+
+const CIDADE = preload("res://scenes/chapter_one/festival_city/dialogos/cidade.dialogue")
+
+@onready var codigo_java: Node = $CodigoCmdzinho
 
 
 func interaction():
-	#faz aparecer o cmdzinho
-	Textbox.queue_text(["A cidade fica bem animada para o festival.", "Todo mundo sai de casa e tranca suas portas."])
+	if not codigo_java.esta_salvo():
+		await Dialogo.iniciar(CIDADE, "cmdzinho_afogando", [self])
+		return
+	await Dialogo.iniciar(CIDADE, "cmdzinho_resgate", [self])
+	hide()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	get_node("../Cmdzinho_Follower").aparecer(position)
