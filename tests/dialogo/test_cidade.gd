@@ -4,6 +4,7 @@ var passou := 0
 var falhou := 0
 var terminou := false
 var vistos: Array = []        # nomes que apareceram na última _jogar
+var conversas := 0
 var retrato_do_cmd := false   # o Cmdzinho apareceu com retrato
 
 
@@ -172,6 +173,25 @@ func _forca_e_tritomos(cidade: Node) -> void:
 	checar("tritomos: foi embora", tenda.left_label.visible)
 
 
+func _contar_fim(_r = null) -> void:
+	conversas += 1
+
+
+func _cutscene_espada(cidade: Node) -> void:
+	var cena = cidade.get_node("Cutscene")
+	root.get_node("DialogueManager").dialogue_ended.connect(_contar_fim)
+	cena.play()
+	var t := Time.get_ticks_msec()
+	while Time.get_ticks_msec() - t < 40000 and not cena.continua.visible:
+		await process_frame
+		var bs := _baloes()
+		if not bs.is_empty():
+			bs[0].avancar()
+	checar("espada: label continua visível", cena.continua.visible)
+	checar("espada: sete conversas", conversas == 7, conversas)
+	root.get_node("DialogueManager").dialogue_ended.disconnect(_contar_fim)
+
+
 func _rodar() -> void:
 	var cidade = load("res://scenes/chapter_one/festival_city/City.tscn").instantiate()
 	root.add_child(cidade)
@@ -191,6 +211,7 @@ func _rodar() -> void:
 	await _conversa_simples("trocador", trocador)
 	await _excalibur_e_tatame(cidade)
 	await _forca_e_tritomos(cidade)
+	await _cutscene_espada(cidade)
 	_fim()
 
 
