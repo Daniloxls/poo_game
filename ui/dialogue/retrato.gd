@@ -27,7 +27,9 @@ var _t_flash: Tween
 func _ready() -> void:
 	visible = false
 	_flash.color.a = 0.0
-	resized.connect(func(): pivot_offset = Vector2(size.x / 2.0, size.y))
+	resized.connect(func():
+		pivot_offset = Vector2(size.x / 2.0, size.y)
+		_usar(_imagem.texture))
 	pivot_offset = Vector2(size.x / 2.0, size.y)
 
 
@@ -40,7 +42,7 @@ func mostrar(p: Personagem, exp: String) -> void:
 	personagem = p
 	expressao = exp
 	if not tinha:
-		_imagem.texture = p.retrato(exp) if p else null
+		_usar(p.retrato(exp) if p else null)
 	visible = p != null
 	if not visible:
 		return
@@ -48,7 +50,7 @@ func mostrar(p: Personagem, exp: String) -> void:
 		_t_pos = create_tween()
 		_t_pos.tween_property(self, "position:x", _repouso.x - DESLOCAMENTO, 0.1)
 		_t_pos.parallel().tween_property(self, "modulate:a", 0.0, 0.1)
-		_t_pos.tween_callback(func(): _imagem.texture = p.retrato(exp))
+		_t_pos.tween_callback(func(): _usar(p.retrato(exp)))
 		_t_pos.tween_callback(func(): position.x = _repouso.x - DESLOCAMENTO)
 	else:
 		position.x = _repouso.x - DESLOCAMENTO
@@ -80,7 +82,7 @@ func trocar_expressao(exp: String) -> void:
 	var nova := personagem.retrato(exp)
 	if nova == _imagem.texture:
 		return
-	_imagem.texture = nova
+	_usar(nova)
 	if _t_escala:
 		_t_escala.kill()
 	_t_escala = create_tween()
@@ -151,3 +153,17 @@ func _parar() -> void:
 	modulate.a = 1.0
 	_flash.visible = false
 	_imagem.material.set_shader_parameter("saturacao", 1.0)
+	# Uma troca de personagem interrompida (ex.: animar() logo após mostrar())
+	# não pode deixar a arte do anterior na tela.
+	if personagem:
+		_usar(personagem.retrato(expressao))
+
+
+## Troca a arte e apoia a imagem no pé do busto: a altura da área desenhada
+## segue a proporção da textura, então toda arte fica na mesma linha de base.
+func _usar(t: Texture2D) -> void:
+	_imagem.texture = t
+	var h := size.y
+	if t:
+		h = minf(size.y, size.x * t.get_height() / t.get_width())
+	_imagem.offset_top = size.y - h

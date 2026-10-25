@@ -94,6 +94,26 @@ func _rodar() -> void:
 	b = await _abrir("~ a\nCmdzinho: [#surpreso] Uau\n=> END")
 	var img: TextureRect = b.get_node("%Retrato").get_node("%Imagem")
 	checar("Cmdzinho: tag de expressão", img.texture != null and img.texture.resource_path.get_file().begins_with("cmd_surpreso"), img.texture)
+	await create_timer(0.4).timeout
+	r = b.get_node("%Retrato")
+	var t_tam: Vector2 = img.texture.get_size()
+	var i_ret := img.get_global_rect()
+	checar("Cmdzinho: arte quadrada encosta no pé do busto",
+		absf(i_ret.end.y - r.get_global_rect().end.y) <= 2.0 and absf(i_ret.size.x / i_ret.size.y - t_tam.x / t_tam.y) < 0.02,
+		[i_ret, r.get_global_rect()])
+	await _fechar(b)
+
+	# Troca de personagem numa fala com animação: a textura nova não pode se perder
+	b = await _abrir("~ a\nKath: Oi.\nCmdzinho: [#hop] Uau\n=> END")
+	await _esperar_digitar(b)
+	await create_timer(0.4).timeout
+	b.avancar()
+	await create_timer(0.8).timeout
+	r = b.get_node("%Retrato")
+	img = r.get_node("%Imagem")
+	checar("troca + hop: personagem novo", r.personagem != null and r.personagem.nome == "Cmdzinho")
+	checar("troca + hop: textura nova", img.texture != null and img.texture.resource_path.get_file().begins_with("cmd_neutro"), img.texture)
+	checar("troca + hop: visível e em repouso", r.visible and r.modulate.a == 1.0 and r.rotation == 0.0 and r.scale == Vector2.ONE and r.position.x < 60, [r.visible, r.modulate.a, r.position])
 	await _fechar(b)
 	b = await _abrir("~ a\nCmdzinho: [#bravo] hm\n=> END")
 	img = b.get_node("%Retrato").get_node("%Imagem")
