@@ -6,7 +6,7 @@ class_name HEALTH_ITEM
 
 
 func get_type():
-	return ItemClass.Item_type.HEALTH
+	return ITEM.Item_type.HEALTH
 
 func get_health_restore():
 	return HEALTH_RESTORE

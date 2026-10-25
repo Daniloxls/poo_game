@@ -28,8 +28,8 @@ enum Inventory_State{
 }
 
 
-var equipment : Array[EQUIP_ITEM] = [load("res://scenes/itens/repo/armadura_ferro.tres"),
-									load("res://scenes/itens/repo/armadura_couro.tres")]
+var equipment : Array[EQUIP_ITEM] = [load("res://scenes/items/repo/armadura_ferro.tres"),
+									load("res://scenes/items/repo/armadura_couro.tres")]
 
 
 var char_container = preload("res://ui/inventory/CharContainer.tscn")
