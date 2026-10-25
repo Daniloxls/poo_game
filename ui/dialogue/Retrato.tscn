@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/retrato.gd" id="1"]
+[ext_resource type="Shader" path="res://ui/dialogue/contorno.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="1"]
+shader = ExtResource("2")
+shader_parameter/cor_contorno = Color(0.106, 0.106, 0.106, 1)
+shader_parameter/espessura = 4.0
+shader_parameter/saturacao = 1.0
+
+[node name="Retrato" type="Control"]
+custom_minimum_size = Vector2(240, 300)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 240.0
+offset_bottom = 300.0
+mouse_filter = 2
+script = ExtResource("1")
+
+[node name="Imagem" type="TextureRect" parent="."]
+unique_name_in_owner = true
+texture_filter = 5
+material = SubResource("1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Flash" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
