@@ -104,13 +104,16 @@ func _on_textbox_text_finish():
 				
 
 
+# A batalha não mostra mais caixa de texto ao terminar: o NPC reage na hora.
 func _on_city_battle_won():
 	triggered = true
 	victory_state = Victory.PLAYER
+	_on_textbox_text_finish()
 
 
 
 func _on_city_battle_lost():
 	triggered = true
 	victory_state = Victory.NPC
+	_on_textbox_text_finish()
 	

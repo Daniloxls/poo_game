@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" uid="uid://cr71ho5tuj7bn" path="res://entities/encounters/GenericEnemy.tscn" id="1_enemy"]
+[ext_resource type="Script" path="res://scenes/encounters/test_dummy.gd" id="2_dummy"]
+
+[node name="Enemies" type="Node2D"]
+position = Vector2(-112, 299)
+scale = Vector2(4, 4)
+
+[node name="Boneco_de_Teste" parent="." instance=ExtResource("1_enemy")]
+position = Vector2(-34, -40)
+script = ExtResource("2_dummy")
+
+[node name="Boneco_B" parent="." instance=ExtResource("1_enemy")]
+position = Vector2(-20, 0)
+script = ExtResource("2_dummy")

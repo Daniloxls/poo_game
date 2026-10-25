@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/battle/ui/defeat_panel.gd" id="1"]
+
+[node name="DefeatPanel" type="Control"]
+script = ExtResource("1")

@@ -23,7 +23,6 @@ signal mouse_out
 # 'damage_text' dano que o personagem tomou aparece nessa label
 @onready var damage_text = $DamageText
 @onready var char_pic = $CharPic
-@onready var battle_options = $BattleOptions
 
 enum State{
 	DEFAULT,
@@ -187,6 +186,21 @@ func is_alive():
 	else:
 		return false
 
+# Contrato do combatente: só mudam o status, sem animação nem sinais.
+# Devolvem o quanto realmente foi aplicado.
+func apply_damage(amount: int) -> int:
+	var antes := hp
+	hp = maxi(hp - amount, 0)
+	return antes - hp
+
+func apply_heal(amount: int) -> int:
+	var antes := hp
+	hp = mini(hp + amount, get_max_hp())
+	return hp - antes
+
+func is_party_member() -> bool:
+	return true
+
 # Função de cura do personagem, toca animação de cura e retorna porcentagem da vida atual
 func gain_health(value):
 	var current_max_hp = max_hp
@@ -200,41 +214,6 @@ func gain_health(value):
 		hp = current_max_hp
 	animation.play("heal")
 	return value
-	
-# Função de receber dano
-func take_damage(value):
-	var current_max_hp = get_max_hp()
-	hp -= value
-	#Checa se o personagem morreu
-	if hp < 0:
-		hp = 0
-	if hp == 0:
-		# toca animação de morte e emite o sinal
-		animation.play("death")
-		set_state(State.DEFEATED)
-		death.emit()
-	else:
-		# se o personagem ainda estiver vivo só toca a animação de receber dano
-		animation.play("get_hit")
-	#Numero do dano aparece na tela conforme o dano é tomado
-	damage_text.number_animation(value)
-	# retorna porcentagem do hp
-	return -value
-
-func connect_action_buttons():
-	for button in battle_options.get_children():
-		button.connect("select_target", _on_button_select_targets)
-		button.connect("mouse_in", _on_button_mouse_in)
-		button.connect("mouse_out", _on_button_mouse_out)
-
-func _on_button_select_targets(targets, id, char_node):
-	select_targets.emit(targets, id, char_node)
-	
-func _on_button_mouse_in(skill_name):
-	button_mouse_in.emit(skill_name)
-
-func _on_button_mouse_out():
-	button_mouse_out.emit()
 	
 
 func set_hp(new_hp):
@@ -259,16 +238,6 @@ func get_strict_def():
 	return def
 func get_strict_vel():
 	return vel
-
-func execute_skill(id, targets):
-	battle_options.get_child(id).execute_skill(targets, self)
-	set_state(State.ACTED)
-
-func show_options():
-	battle_options.show()
-
-func hide_options():
-	battle_options.hide()
 
 func default_state():
 	current_state = State.DEFAULT

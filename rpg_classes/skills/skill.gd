@@ -17,6 +17,7 @@ enum Targets {
 @export var DESCRIPTION : String
 @export var IS_OVERRIDE : bool
 @export var SKILL_SCRIPT : GDScript
+@export var DAMAGE_TYPE : DamageType.Kind = DamageType.Kind.CORTE
 
 func get_skill_name():
 	return SKLL_NAME

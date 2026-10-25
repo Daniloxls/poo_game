@@ -1,0 +1,144 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="Script" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="1_38vnm"]
+[ext_resource type="FontFile" path="res://assets/fonts/JetBrainsMono.ttf" id="2_c1wyq"]
+[ext_resource type="FontFile" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="3_sm2jo"]
+
+[sub_resource type="StyleBox" id="StyleBox_ynxvb"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+
+[sub_resource type="StyleBox" id="StyleBox_3cb7o"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(0.72156864, 0.72156864, 0.72156864, 1)
+border_color = Color(0.41960785, 0.41960785, 0.41960785, 1)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBox" id="StyleBox_io6tw"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(0, 0, 0, 0)
+border_color = Color(1, 0.8235294, 0.24705882, 1)
+border_width = 6
+shadow_offset = Vector2(0, 0)
+shadow_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBox" id="StyleBox_llfmi"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(0.92784315, 0.41960788, 0.3819608, 1)
+
+[sub_resource type="StyleBox" id="StyleBox_u5eni"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(0.9098039, 0.27450982, 0.22745098, 1)
+
+[sub_resource type="StyleBox" id="StyleBox_mnjnr"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(0.8188235, 0.24705882, 0.20470588, 1)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="FontVariation" id="FontVariation_0ectm"]
+base_font = ExtResource("2_c1wyq")
+variation_opentype = {
+"wght": 700
+}
+
+[sub_resource type="StyleBox" id="StyleBox_wpunf"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(0.16862746, 0.18431373, 0.22745098, 1)
+
+[sub_resource type="StyleBox" id="StyleBox_1h64q"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+
+[sub_resource type="StyleBox" id="StyleBox_5ok8h"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(1, 0.8392157, 0.8235294, 1)
+
+[sub_resource type="StyleBox" id="StyleBox_ueor5"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_38vnm")
+bg_color = Color(1, 0.8235294, 0.24705882, 1)
+
+[resource]
+default_font = ExtResource("3_sm2jo")
+default_font_size = 18
+BattlePanel/base_type = &"PanelContainer"
+BattlePanel/styles/panel = SubResource("StyleBox_ynxvb")
+ClassTag/base_type = &"Label"
+ClassTag/colors/font_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+ClassTag/font_sizes/font_size = 14
+MethodButton/base_type = &"Button"
+MethodButton/colors/font_color = Color(1, 1, 1, 1)
+MethodButton/colors/font_outline_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+MethodButton/constants/outline_size = 4
+MethodButton/styles/disabled = SubResource("StyleBox_3cb7o")
+MethodButton/styles/focus = SubResource("StyleBox_io6tw")
+MethodButton/styles/hover = SubResource("StyleBox_llfmi")
+MethodButton/styles/normal = SubResource("StyleBox_u5eni")
+MethodButton/styles/pressed = SubResource("StyleBox_mnjnr")
+MonoLabel/base_type = &"Label"
+MonoLabel/fonts/font = SubResource("FontVariation_0ectm")
+StackContainer/base_type = &"PanelContainer"
+StackContainer/styles/panel = SubResource("StyleBox_wpunf")
+StackFrame/base_type = &"PanelContainer"
+StackFrame/styles/panel = SubResource("StyleBox_1h64q")
+StackFrameEnemy/base_type = &"PanelContainer"
+StackFrameEnemy/styles/panel = SubResource("StyleBox_5ok8h")
+StackFrameTop/base_type = &"PanelContainer"
+StackFrameTop/styles/panel = SubResource("StyleBox_ueor5")

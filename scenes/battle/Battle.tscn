@@ -1,29 +1,20 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4bax87kqk6po"]
+[gd_scene load_steps=16 format=3 uid="uid://c4bax87kqk6po"]
 
 [ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_c4w7k"]
 [ext_resource type="Texture2D" uid="uid://bm7nuohbgmga7" path="res://assets/battle/background/tutorial_clear.png" id="2_o5jw5"]
-[ext_resource type="PackedScene" uid="uid://dkrrrbfnsa5lw" path="res://scenes/battle/ui/BattleBox.tscn" id="3_ymsal"]
-[ext_resource type="Texture2D" uid="uid://bd8rsb68jqo4g" path="res://assets/props/ataque.png" id="7_2ixq6"]
-[ext_resource type="Texture2D" uid="uid://c4jqr7anfvuyt" path="res://assets/props/item.png" id="8_45lao"]
-[ext_resource type="AudioStream" uid="uid://bjku2d4potcs1" path="res://assets/bgm/Random Battle.mp3" id="9_chp6q"]
-[ext_resource type="FontFile" uid="uid://bkgdhvj2ggyfo" path="res://assets/fonts/CONSOLA.TTF" id="10_htfsn"]
-[ext_resource type="Script" path="res://scenes/battle/ui/tooltip.gd" id="10_o4h70"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_gng7a"]
-font_size = 33
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5vlb"]
-content_margin_left = 10.0
-content_margin_top = 6.0
-content_margin_right = 10.0
-content_margin_bottom = 6.0
-bg_color = Color(0.00784314, 0.0627451, 0.0980392, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
+[ext_resource type="Script" path="res://scenes/battle/fx/battle_fx.gd" id="3_fx"]
+[ext_resource type="Script" path="res://scenes/battle/ui/target_selector.gd" id="4_sel"]
+[ext_resource type="Theme" path="res://scenes/battle/ui/battle_theme.tres" id="5_theme"]
+[ext_resource type="Script" path="res://scenes/battle/ui/enemy_status.gd" id="6_enemy"]
+[ext_resource type="Script" path="res://scenes/battle/ui/party_status.gd" id="7_party"]
+[ext_resource type="Script" path="res://scenes/battle/ui/stack_panel.gd" id="8_stack"]
+[ext_resource type="Script" path="res://scenes/battle/ui/action_menu.gd" id="9_menu"]
+[ext_resource type="Script" path="res://scenes/battle/ui/item_picker.gd" id="10_items"]
+[ext_resource type="Script" path="res://scenes/battle/ui/battle_console.gd" id="11_console"]
+[ext_resource type="Script" path="res://scenes/battle/ui/combo_view.gd" id="12_combo"]
+[ext_resource type="Script" path="res://scenes/battle/ui/victory_panel.gd" id="13_win"]
+[ext_resource type="Script" path="res://scenes/battle/ui/defeat_panel.gd" id="14_lose"]
+[ext_resource type="Script" path="res://scenes/battle/battle_field.gd" id="15_field"]
 
 [node name="Battle" type="CanvasLayer"]
 script = ExtResource("1_c4w7k")
@@ -36,55 +27,147 @@ texture = ExtResource("2_o5jw5")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="BattleMenu" parent="." instance=ExtResource("3_ymsal")]
+[node name="Field" type="Node2D" parent="."]
+script = ExtResource("15_field")
+
+[node name="BattleFx" type="Node" parent="."]
+script = ExtResource("3_fx")
+
+[node name="TargetSelector" type="Node" parent="."]
+script = ExtResource("4_sel")
+
+[node name="FxLayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="Debug" type="Label" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Root" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_theme")
+
+[node name="EnemyStatus" type="VBoxContainer" parent="UI/Root"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 66.0
+script = ExtResource("6_enemy")
+
+[node name="PartyStatus" type="PanelContainer" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -316.0
+offset_top = -130.0
+offset_right = -16.0
+offset_bottom = -70.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("7_party")
+
+[node name="StackPanel" type="Control" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_stack")
+
+[node name="TurnMarker" type="Label" parent="UI/Root"]
 visible = false
-offset_right = 40.0
-offset_bottom = 23.0
-text = "asdasdasdads"
-label_settings = SubResource("LabelSettings_gng7a")
+layout_mode = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.823529, 0.247059, 1)
+theme_override_colors/font_outline_color = Color(0.105882, 0.105882, 0.105882, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "▼"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(442, 238)
-scale = Vector2(0.445, 0.445)
-texture = ExtResource("7_2ixq6")
+[node name="ComboView" type="PanelContainer" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -130.0
+offset_right = 156.0
+offset_bottom = -70.0
+grow_vertical = 0
+script = ExtResource("12_combo")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(781, 219)
-scale = Vector2(0.445, 0.445)
-texture = ExtResource("8_45lao")
+[node name="ConsoleButton" type="Button" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -60.0
+offset_right = 196.0
+offset_bottom = -16.0
+grow_vertical = 0
+focus_mode = 0
+theme_type_variation = &"MethodButton"
+text = "> console  [F2]"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_chp6q")
-volume_db = -80.0
+[node name="ActionMenu" type="Control" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_menu")
 
-[node name="TooltipContiner" type="PanelContainer" parent="."]
-visible = false
-offset_left = 385.0
-offset_top = 12.0
-offset_right = 756.0
-offset_bottom = 69.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_q5vlb")
-script = ExtResource("10_o4h70")
+[node name="ItemPicker" type="Control" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_items")
 
-[node name="TooltipText" type="RichTextLabel" parent="TooltipContiner"]
-custom_minimum_size = Vector2(0, 22)
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_fonts/normal_font = ExtResource("10_htfsn")
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
+[node name="BattleConsole" type="PanelContainer" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("11_console")
 
-[node name="ScreenLock" type="CanvasLayer" parent="."]
-layer = 99
-visible = false
+[node name="VictoryPanel" type="Control" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_win")
 
-[node name="Panel" type="Panel" parent="ScreenLock"]
-modulate = Color(1, 1, 1, 0)
-z_index = 99
-offset_right = 1159.0
-offset_bottom = 657.0
+[node name="DefeatPanel" type="Control" parent="UI/Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_lose")
