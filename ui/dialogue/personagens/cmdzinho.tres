@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Personagem" format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/personagem.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/portraits/cmd_alegre.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/portraits/cmd_duvida.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/portraits/cmd_feliz.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/portraits/cmd_neutro.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/portraits/cmd_surpreso.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/portraits/cmd_vazio.png" id="7"]
+
+[resource]
+script = ExtResource("1")
+nome = "Cmdzinho"
+cor = Color(0.3098039216, 0.4274509804, 0.4509803922, 1)
+retratos = Dictionary[String, Texture2D]({"alegre": ExtResource("2"), "duvida": ExtResource("3"), "feliz": ExtResource("4"), "neutro": ExtResource("5"), "surpreso": ExtResource("6"), "vazio": ExtResource("7")})
+expressao_padrao = "neutro"

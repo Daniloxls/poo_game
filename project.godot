@@ -36,6 +36,7 @@ JavaRuntime="*res://globals/java_runtime.gd"
 DialogueManager="*uid://c3rodes2l3gxb"
 Historia="*res://globals/historia.gd"
 Opcoes="*res://globals/opcoes.gd"
+Elenco="*res://globals/elenco.gd"
 
 [display]
 
