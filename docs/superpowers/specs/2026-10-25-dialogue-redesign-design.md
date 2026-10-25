@@ -178,6 +178,28 @@ Known portraits in `assets/portraits/`:
 Colors used in the mockups: Kath `#2ec4d6`, Grande Montanha `#e8463a`. Other colors are the builder's
 call, taken from each character's art.
 
+A character can have a **display label** different from the name used in the dialogue file, so two
+different hidden speakers can both show "???" (added after the owner's text review):
+
+- `Vulto`: Anti-POO before he is identified. Shows "???", with `silhueta.png` while he is hidden and
+  his own face (`anti_poo_neutro`, `anti_poo_serio`) once he is on screen.
+- `Terminal`: Cmdzinho before he introduces himself. Shows "???", with Cmdzinho's own portraits.
+
+## Story facts (from the owner, after the text review)
+
+- Turin has **sudo mode** on (he got it at the terminal in the Deep Code). For now, only someone with
+  sudo can see Cmdzinho, which is why nobody in the city helped him.
+- In this world, programmers used their powers to reprogram the world and make it better, until one
+  of them (Anti-POO) turned against everyone.
+- Cmdzinho was imprisoned in the Deep Code together with Anti-POO. He got free when sudo was turned on
+  at the Deep Code terminal. Anti-POO then tried to get rid of him by throwing him into the city's
+  fountain and changing his code so he sinks.
+- **Nobody says the name "Anti-POO" in the city.** Cmdzinho refers to him only indirectly.
+- **Cmdzinho does not know Turin** before the rescue, and **Kath knows nothing about code**.
+- The NPC kicked aside in the sword cutscene is **Runis** (was "Nicolas").
+- Tritomos does not read people's code. His crystal ball, at most, shows him the **return value** of
+  the function (his `leitorDePensamento`). Turin beats him by changing what that function returns.
+
 ## Story state (decided)
 
 One shared store for the whole game (called `Historia` in the examples) that dialogue files read with
@@ -218,12 +240,12 @@ conversation to end before continuing.
 
 ### New choice 1: Tritomos (decided)
 
-Tritomos really can read thoughts through code. Turin beats him by editing his code so his `return`
-gives back a word Turin chose instead of what he truly read. After losing, Tritomos is shaken (his
+Tritomos's crystal ball shows him the return value of his mind-reading function. Turin beats him by
+editing that function so its `return` gives back a word Turin chose instead of what he truly thought. After losing, Tritomos is shaken (his
 crystal ball never fails). The player chooses:
 
-- **Tell the truth:** Turin admits he changed the code. Tritomos is unsettled that someone can do that,
-  and becomes an ally who knows about code reading. This can pay off later, since Anti-POO also
+- **Tell the truth:** Turin admits he changed the code. Tritomos is unsettled that someone can change
+  what his crystal ball shows, and becomes an ally. This can pay off later, since Anti-POO also
   tampers with code.
 - **Let him believe his power failed:** Tritomos loses confidence.
 
@@ -270,8 +292,50 @@ later. There is no mean option.
   (`Batalha.iniciar` is a placeholder for whatever starts the battle.)
 - Use the emotion tags where they serve the moment, not on every line.
 - Give every speaker a name (today names are never shown). Exception: in the sword cutscene,
-  Anti-POO speaks as "???" (with `silhueta.png` while hidden), because Turin doesn't know who he is
-  yet and his name would spoil the reveal (Claude's call).
+  Anti-POO speaks as "???" (the `Vulto` character), with `silhueta.png` while hidden and his face once
+  he is on screen (owner's call), because Turin doesn't know who he is.
+- Owner's text-review decisions: the Guardião da Espada gives a **short greeting on repeat visits**
+  instead of his full intro; the tatame does not mention "three rounds".
+
+### Cmdzinho's rescue (decided, added after the owner's text review)
+
+Cmdzinho starts the city **drowning in the central fountain** (the existing `Cmdzinho` node with the
+`cmdzinho_afogado` sprite). He does not follow Turin when Turin enters the city; the follower
+(`Cmdzinho_Follower`) stays out of the scene until the rescue.
+
+**The puzzle** (same Java editing system as the strength test, `java_interact.gd`). Anti-POO changed
+Cmdzinho's code so he sinks. Cmdzinho's class, with only the marked part editable:
+
+```java
+public class Cmdzinho {
+
+    private native void afundar();
+    private native void nadar();
+
+    public void reagirAgua() {
+        {|this.afundar();|}
+    }
+}
+```
+
+The player changes the call to `this.nadar();` and runs it. Concept taught: calling another method of
+the object. Invalid code shows the editor's error, as in the strength test. No new art: there is no
+"fountain off" art, and the fountain is not part of the puzzle.
+
+**Flow:**
+
+- Talking to him before the fix: he speaks as `Terminal` ("???", with his portraits), asks for help and
+  hints that his own code (`reagirAgua()`) only knows how to sink.
+- After the fix, talking to him: relief, he introduces himself as Cmdzinho (from here on his name
+  shows), asks Turin's name (a single choice, "Turin."), then the exposition from "Story facts":
+  he's surprised Turin can see him, explains sudo, the programmers, that one of them turned against
+  everyone (unnamed), that he was imprisoned in the Deep Code and escaped when sudo was turned on at
+  that terminal, and that "he" threw him into the fountain and changed his code. Then he joins Turin.
+- After that, the drowning sprite disappears and the follower appears where he was and starts
+  following. Talking to him later gives his old idle lines (the festival is lively; everyone locks
+  their doors).
+- The rescue is recorded in the story state. Cmdzinho's hints at the strength test only happen after
+  the rescue.
 
 ## Left to the builder
 

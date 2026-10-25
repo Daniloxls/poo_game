@@ -226,13 +226,14 @@
 
 **Interfaces:**
 - Consumes: the tags from Task 3 and 5, `Historia` (Task 1), the context convention (Task 6).
-- Produces — cues, and the context members each file uses (the NPC scripts in Tasks 9–12 must provide exactly these):
-  - `excalibur.dialogue`: `~ conversa` (reads `tickets_atuais() -> int`; sets `var vai_seguir: bool`; after the sword: reads `var espada_tirada: bool`).
+- Produces — cues, and the context members each file uses (the NPC scripts in Tasks 9–13 must provide exactly these):
+  - `excalibur.dialogue`: `~ conversa` (reads `tickets_atuais() -> int`; sets `var vai_seguir: bool`; after the sword: reads `var espada_tirada: bool` and sets `vai_seguir = false`; reads and sets `var ja_conversou: bool` so repeat visits get a short greeting).
   - `tatame.dialogue`: `~ desafio` (sets `var quer_lutar: bool`), `~ vitoria` (ends with Turin's choice: `"Foi uma luta incrível!"` → `set Historia.montanha = "respeito"`, `"Me ensina a lutar assim?"` → `set Historia.montanha = "mentor"`, then the Montanha replies), `~ derrota`, `~ descansando`, `~ montanha` (the Grande Montanha's own lines: before the fight / after, branching on `Historia.montanha`).
   - `teste_forca.dialogue`: `~ convite` (sets `var quer_tentar: bool`), `~ ganhou`, `~ perdeu`, `~ dica` (Cmdzinho with portrait expressions; branches on `var erros: int` 1–3 for the three hints), `~ ja_ganhou`.
   - `tritomos.dialogue`: `~ boas_vindas`, `~ acertou` and `~ errou` (use `{{palavra}}` from `var palavra: String`), and `~ errou` ends with Turin's choice: tell the truth → `set Historia.tritomos = "verdade"`, let him believe → `set Historia.tritomos = "acreditou"`, each with its own Tritomos reply.
-  - `espada.dialogue`: `~ cena_1` … `~ cena_7`, one per old `dialogue[i]` block in `sword_cutscene.gd`, same order; Anti-POO speaks as `???` until the cutscene's script reveals him; Kath speaks with her portrait.
-  - `cidade.dialogue`: `~ cmdzinho`, `~ kath`, `~ tenda`, `~ npc1`, `~ npc2`, `~ npc3`, `~ trocador`.
+  - `espada.dialogue`: `~ cena_1` … `~ cena_7`, one per old `dialogue[i]` block in `sword_cutscene.gd`, same order; Anti-POO speaks as the `Vulto` character (label "???"), silhouette while hidden and his face once on screen; Kath speaks with her portrait.
+  - `cidade.dialogue`: `~ cmdzinho_afogando` and `~ cmdzinho_resgate` (spec "Cmdzinho's rescue"; `Terminal` speaker before he introduces himself; the rescue cue ends with `set Historia.cmdzinho_resgatado = true`), `~ cmdzinho` (his idle lines once following), `~ kath`, `~ tenda`, `~ npc1`, `~ npc2`, `~ npc3`, `~ trocador`.
+  - Owner text review (fix round after Step 6) also adds: `Personagem.rotulo` display label (`@export var rotulo: String = ""`, `func nome_exibido() -> String` → `rotulo` if set, else `nome`; the balloon's name tag uses `nome_exibido()`), `Historia.cmdzinho_resgatado: bool = false` (reset by `resetar()`), and the characters `Vulto` (label "???", portraits `silhueta` default, `neutro` = anti_poo_neutro, `serio` = anti_poo_serio; replaces `misterioso.tres`'s "???") and `Terminal` (label "???", Cmdzinho's portraits and color).
   - Every speaker named; spelling fixed (spec list); voice per the spec's approved sample; emotion tags only where they serve the moment; same story beats.
 
 - [ ] **Step 1: Write the failing test** `test_textos_cidade.gd`: for each of the six files, `DMCompiler.compile_string(FileAccess.get_file_as_string(path), path).errors.is_empty()`, and the file has every cue listed above (`result.cues.has(...)`). Then run a few branches with `DialogueManager.get_next_dialogue_line(recurso, cue, [stub])` (a stub `Node` with the members above), following `next_id` and, for responses, the chosen response's `next_id`:
@@ -246,23 +247,43 @@
 - [ ] **Step 5: Commit** `Diálogo: falas reescritas da cidade`.
 - [ ] **Step 6: Stop for the owner to read the six files.** Apply their changes and re-run the test before Task 9.
 
-### Task 9: Simple city NPCs, ticket trader and starting tickets
+### Task 9: Cmdzinho's rescue puzzle
 
 **Files:**
-- Modify: `scenes/chapter_one/festival_city/City.tscn` (`TendaNPC`, `LutadorNPC`, `NPC1`, `Kath`, `NPC2`, `NPC3`, `Cmdzinho`: set `dialogo`/`cue_dialogo`, clear `texto`), `scripts/cmdzinho.gd` (delete its `interaction()` override), `scripts/ticket_trader.gd`, `scripts/tickets.gd`
+- Modify: `scenes/chapter_one/festival_city/scripts/cmdzinho.gd` (the drowning `Cmdzinho` node), `scenes/chapter_one/festival_city/City.tscn` (`Cmdzinho`, `Cmdzinho_Follower`), `entities/npc/cmdzinho_follower.gd`
+- Test: `tests/dialogo/test_resgate.gd`
+
+**Interfaces:**
+- Consumes: `java_interact.gd` (the strength test's pattern: `classe_java`, `dica_java`, `codigo_java` with `{|...|}` editable parts, `executar_java(metodo, args)`, `native` methods call the GDScript method of the same name), `cidade.dialogue` cues `cmdzinho_afogando` / `cmdzinho_resgate` / `cmdzinho` (Task 8), `Historia.cmdzinho_resgatado`, `Dialogo.iniciar` (Task 6).
+- Produces:
+  - `cmdzinho.gd` extends `res://scenes/main/scripts/java_interact.gd` (like `strenght_test.gd`) with `classe_java = "Cmdzinho"`, `dica_java = "Você só pode mudar a chamada dentro de reagirAgua()."` and exactly the class from the spec ("Cmdzinho's rescue"). Native `func afundar() -> void` and `func nadar() -> void` record the last call. `func esta_salvo() -> bool` runs `reagirAgua` and returns true only if the code compiled and `nadar()` was called.
+  - `interaction()`: not saved → `await Dialogo.iniciar(cidade, "cmdzinho_afogando", [self])`; saved → `await Dialogo.iniciar(cidade, "cmdzinho_resgate", [self])`, then the drowning node hides (no collision, no interaction) and the follower appears at its position and starts following.
+  - `cmdzinho_follower.gd`: does not follow or show until `Historia.cmdzinho_resgatado`; then follows as today; its interaction uses `cidade.dialogue` `~ cmdzinho` (via `npc_script.gd`'s `dialogo`/`cue_dialogo` exports set in `City.tscn`).
+  - Keeps the drowning node's existing sprite (`cmdzinho_afogado`); no new art.
+
+- [ ] **Step 1: Write the failing test** `test_resgate.gd` (instantiate `City.tscn` as in `test_integracao_java.gd`): at start `Cmdzinho_Follower` is hidden and doesn't move toward the player; `esta_salvo() == false` with the original code; `interaction()` opens a balloon whose name tag reads "???"; after editing the code to `this.nadar();` (set `codigo_editado` as `test_integracao_java.gd` does for the strength test), `esta_salvo() == true`; code with an error (`this.voar();`) → `esta_salvo() == false` and `ultimo_erro != ""`; after the rescue conversation (advance to the end, choosing the single response), `Historia.cmdzinho_resgatado == true`, the drowning node is hidden, the follower is visible and its interaction opens `~ cmdzinho`.
+- [ ] **Step 2: Run it.** Expected: FAIL.
+- [ ] **Step 3: Implement.**
+- [ ] **Step 4: Run** the test (PASS) and the full suite.
+- [ ] **Step 5: Commit** `Diálogo: resgate do Cmdzinho na fonte`.
+
+### Task 10: Simple city NPCs, ticket trader and starting tickets
+
+**Files:**
+- Modify: `scenes/chapter_one/festival_city/City.tscn` (`TendaNPC`, `LutadorNPC`, `NPC1`, `Kath`, `NPC2`, `NPC3`: set `dialogo`/`cue_dialogo`, clear `texto`; Cmdzinho is handled by Task 9), `scripts/ticket_trader.gd`, `scripts/tickets.gd`
 - Test: `tests/dialogo/test_cidade.gd`
 
 **Interfaces:**
 - Consumes: `npc_script.gd` exports (Task 6), `cidade.dialogue` and `tatame.dialogue` cues (Task 8).
 - Produces: `tickets.gd` starts at `var tickets: int = 0`; `ticket_trader.gd` drops `textbox`/`codebox` lookups and calls `Dialogo.iniciar(<cidade.dialogue>, "trocador", [self])`; `LutadorNPC` uses `tatame.dialogue` `~ montanha`.
 
-- [ ] **Step 1: Write the failing test** `test_cidade.gd` (instantiate `City.tscn` as in `test_integracao_java.gd`): the city's `Tickets` node (`cidade.find_child("Tickets")`) has `get_tickets() == 0`; for each of `NPC1`, `NPC2`, `NPC3`, `Kath`, `TendaNPC`, `Cmdzinho`, `LutadorNPC` and the ticket trader, `interaction()` opens a balloon (`Dialogo.ativo`), whose first `%NomeTag.text` is not empty; then advance it to the end (`avancar()` until freed) before the next.
+- [ ] **Step 1: Write the failing test** `test_cidade.gd` (instantiate `City.tscn` as in `test_integracao_java.gd`): the city's `Tickets` node (`cidade.find_child("Tickets")`) has `get_tickets() == 0`; for each of `NPC1`, `NPC2`, `NPC3`, `Kath`, `TendaNPC`, `LutadorNPC` and the ticket trader, `interaction()` opens a balloon (`Dialogo.ativo`), whose first `%NomeTag.text` is not empty; then advance it to the end (`avancar()` until freed) before the next.
 - [ ] **Step 2: Run it.** Expected: FAIL.
 - [ ] **Step 3: Implement.**
 - [ ] **Step 4: Run** the test (PASS) and the full suite.
 - [ ] **Step 5: Commit** `Diálogo: NPCs simples da cidade no novo sistema`.
 
-### Task 10: Excalibur NPC and the tatame (Grande Montanha choice)
+### Task 11: Excalibur NPC and the tatame (Grande Montanha choice)
 
 **Files:**
 - Modify: `scenes/chapter_one/festival_city/scripts/excalibur_npc.gd`, `scripts/tatame_npc.gd`
@@ -270,7 +291,7 @@
 
 **Interfaces:**
 - Consumes: `excalibur.dialogue`, `tatame.dialogue` members (Task 8), `Dialogo.iniciar` (Task 6).
-- Produces: both scripts lose every `Textbox.connect`, `triggered`/`scene`/`start_battle` flag and `_on_textbox_*` handler. `excalibur_npc.gd`: `func tickets_atuais() -> int`, `var vai_seguir`, `var espada_tirada`; `interaction()` awaits `conversa`, and if `vai_seguir` hides the ticket counter and plays the sword cutscene (`sword_scene.play()`), then sets `espada_tirada = true`. `tatame_npc.gd`: `var quer_lutar`; `interaction()` awaits `desafio` (or `descansando` after a win) and starts `res://scenes/encounters/muscleguy.tscn` if `quer_lutar`; `_on_city_battle_won` gives 10 tickets and awaits `vitoria`; `_on_city_battle_lost` full-heals and awaits `derrota`.
+- Produces: both scripts lose every `Textbox.connect`, `triggered`/`scene`/`start_battle` flag and `_on_textbox_*` handler. `excalibur_npc.gd`: `func tickets_atuais() -> int`, `var vai_seguir`, `var espada_tirada`, `var ja_conversou`; `interaction()` sets `vai_seguir = false`, awaits `conversa`, and if `vai_seguir` hides the ticket counter and plays the sword cutscene (`sword_scene.play()`), then sets `espada_tirada = true`. `tatame_npc.gd`: `var quer_lutar`; `interaction()` awaits `desafio` (or `descansando` after a win) and starts `res://scenes/encounters/muscleguy.tscn` if `quer_lutar`; `_on_city_battle_won` gives 10 tickets and awaits `vitoria`; `_on_city_battle_lost` full-heals and awaits `derrota`.
 
 - [ ] **Step 1: Extend the test:** Excalibur with 0 tickets and "yes" → cutscene not started; with 30 → `sword_scene.play` called (stub `sword_scene` with a counter); tatame "yes" → `Battle.start_battle` called with the muscleguy path (stub `battle`); `_on_city_battle_won()` then choosing "Me ensina a lutar assim?" → `Historia.montanha == "mentor"` and tickets +10; `_on_city_battle_lost()` → party fully healed.
 - [ ] **Step 2: Run it.** Expected: FAIL.
@@ -278,7 +299,7 @@
 - [ ] **Step 4: Run** the test (PASS) and the full suite.
 - [ ] **Step 5: Commit** `Diálogo: Excalibur e tatame no novo sistema`.
 
-### Task 11: Strength test (with Cmdzinho's hints) and Tritomos
+### Task 12: Strength test (with Cmdzinho's hints) and Tritomos
 
 **Files:**
 - Modify: `scenes/chapter_one/festival_city/scripts/strenght_test_npc.gd`, `scripts/medium_tent.gd`
@@ -286,15 +307,15 @@
 
 **Interfaces:**
 - Consumes: `teste_forca.dialogue`, `tritomos.dialogue` members (Task 8).
-- Produces: `strenght_test_npc.gd` keeps its walk/hammer tween sequence and `teste.testar(4)` but replaces `triggered`/`scene`/`animation_end` and the Textbox handlers with awaits: `convite` → (if `quer_tentar`) the sequence → `ganhou` (+10 tickets) or `perdeu` then `dica` with `erros` 1, 2, 3 (capped at 3; replaces the broken `cmdzinho.textbox` call) → walk back; `ja_ganhou` after a win. `medium_tent.gd` keeps the code puzzle and interface; intro text → `boas_vindas`; result → `acertou`/`errou` with `palavra` set; after `errou` (Turin's choice inside it), +10 tickets and Tritomos leaves (`vidente_left.png`, `LeftLabel`) as today in both branches.
+- Produces: `strenght_test_npc.gd` keeps its walk/hammer tween sequence and `teste.testar(4)` but replaces `triggered`/`scene`/`animation_end` and the Textbox handlers with awaits: `convite` → (if `quer_tentar`) the sequence → `ganhou` (+10 tickets) or `perdeu` then, only if `Historia.cmdzinho_resgatado`, `dica` with `erros` 1, 2, 3 (capped at 3; replaces the broken `cmdzinho.textbox` call) → walk back; `ja_ganhou` after a win. `medium_tent.gd` keeps the code puzzle and interface; intro text → `boas_vindas`; result → `acertou`/`errou` with `palavra` set; after `errou` (Turin's choice inside it), +10 tickets and Tritomos leaves (`vidente_left.png`, `LeftLabel`) as today in both branches.
 
-- [ ] **Step 1: Extend the test:** strength test "yes" with the original code → `perdeu` then a Cmdzinho line with a portrait; three more failures cap `erros` at 3; with the passing code (`testar` returns true, as in `test_integracao_java.gd`) → +10 tickets and `ja_ganhou` on the next interaction. Tritomos: beaten with `correct_answer` → after choosing the truth, `Historia.tritomos == "verdade"`, tickets +10, `LeftLabel` visible.
+- [ ] **Step 1: Extend the test:** strength test "yes" with the original code and Cmdzinho not rescued → `perdeu` and no Cmdzinho line; with `Historia.cmdzinho_resgatado = true` → `perdeu` then a Cmdzinho line with a portrait; three more failures cap `erros` at 3; with the passing code (`testar` returns true, as in `test_integracao_java.gd`) → +10 tickets and `ja_ganhou` on the next interaction. Tritomos: beaten with `correct_answer` → after choosing the truth, `Historia.tritomos == "verdade"`, tickets +10, `LeftLabel` visible.
 - [ ] **Step 2: Run it.** Expected: FAIL.
 - [ ] **Step 3: Implement.**
 - [ ] **Step 4: Run** the test (PASS) and the full suite.
 - [ ] **Step 5: Commit** `Diálogo: teste de força e Tritomos no novo sistema`.
 
-### Task 12: Sword cutscene
+### Task 13: Sword cutscene
 
 **Files:**
 - Modify: `scenes/chapter_one/festival_city/scripts/sword_cutscene.gd`
@@ -310,7 +331,7 @@
 - [ ] **Step 4: Run** the test (PASS) and the full suite.
 - [ ] **Step 5: Commit** `Diálogo: cutscene da espada no novo sistema`.
 
-### Task 13: Final check in the running game
+### Task 14: Final check in the running game
 
 **Files:** none new (fixes only).
 
