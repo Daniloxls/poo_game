@@ -30,7 +30,11 @@ func _initialize() -> void:
 
 	s.remove(boneco)                       # inimigo destruído com o frame pausado
 	eq("remove tira do meio", s.frames().map(func(f): return f.entity.get_nome()), ["Montanha", "Turin"])
+	var kos := []
+	s.knocked_out.connect(func(f): kos.append(f.entity))
 	s.mark_knocked_out(turin)
+	s.mark_knocked_out(turin)
+	eq("knocked_out emitido uma vez", kos, [turin])
 	eq("KO marcado", s.peek().state, TurnFrame.State.KO)
 	s.pop(); s.pop()
 	check("vazia", s.is_empty())

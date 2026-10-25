@@ -5,6 +5,7 @@ extends RefCounted
 signal pushed(frame: TurnFrame, interrupted: TurnFrame)
 signal popped(frame: TurnFrame, resumed: TurnFrame)
 signal frame_removed(frame: TurnFrame)
+signal knocked_out(frame: TurnFrame)
 
 var _frames: Array = []
 
@@ -75,7 +76,9 @@ func remove(entity) -> void:
 func mark_knocked_out(entity) -> void:
 	for f in _frames:
 		if f.entity == entity:
-			f.state = TurnFrame.State.KO
+			if f.state != TurnFrame.State.KO:
+				f.state = TurnFrame.State.KO
+				knocked_out.emit(f)
 
 
 func clear() -> void:
