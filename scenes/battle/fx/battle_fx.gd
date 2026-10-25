@@ -7,10 +7,14 @@ signal hp_changed(target)
 
 const THEME := preload("res://scenes/battle/ui/battle_theme.tres")
 
-var pacing: BattlePacing
+var pacing := BattlePacing.new()
 var library: DamageFxLibrary = preload("res://scenes/battle/fx/damage_fx.tres")
 ## Nó balançado no tremor e ampliado no zoom (sem Camera2D). Padrão: o pai.
 var shake_target: CanvasItem
+var _rest_node: CanvasItem
+var _rest_pos := Vector2.ZERO
+var _rest_scale := Vector2.ONE
+var _field_tween: Tween
 
 
 ## Anel + 6 riscos na cor do tipo (efeito provisório).
@@ -30,8 +34,7 @@ class Ring extends Node2D:
 
 
 func _ready() -> void:
-	if pacing == null:
-		pacing = BattlePacing.new()
+	if pacing.get_parent() == null:
 		add_child(pacing)
 
 
@@ -53,19 +56,36 @@ func _to(obj: Object, prop: String, value, dur: float) -> void:
 	tw.kill()
 
 
-func _shake_node() -> CanvasItem:
-	return shake_target if shake_target else get_parent() as CanvasItem
+## Campo (shake_target ou pai); guarda a transformação de repouso na primeira vez.
+func _field() -> CanvasItem:
+	var n: CanvasItem = shake_target if shake_target else get_parent() as CanvasItem
+	if n != _rest_node:
+		_rest_node = n
+		if n:
+			_rest_pos = n.position
+			_rest_scale = n.scale
+	return n
+
+
+func _snap_field() -> void:
+	if _field_tween:
+		_field_tween.kill()
+		_field_tween = null
+	var n := _field()
+	if n:
+		n.position = _rest_pos
+		n.scale = _rest_scale
 
 
 func _shake(px: float) -> void:
-	var n := _shake_node()
+	var n := _field()
 	if n == null or px <= 0.0 or _instant():
 		return
-	var base: Vector2 = n.position
+	_snap_field()
 	for i in 4:
-		n.position = base + Vector2.from_angle(randf() * TAU) * px * (1.0 - i / 4.0)
+		n.position = _rest_pos + Vector2.from_angle(randf() * TAU) * px * (1.0 - i / 4.0)
 		await pacing.wait(0.025)
-	n.position = base
+	_snap_field()
 
 
 func _spawn_effect(at: Vector2, parent: Node, o: ActionOutcome) -> void:
@@ -110,6 +130,7 @@ func _pop_label(parent: Node, at: Vector2, text: String) -> Label:
 
 
 func play_action(actor_sprite: Node2D, method_label: String, outcomes: Array, sprite_of: Callable, max_hp_of: Callable) -> void:
+	pacing.latched = false
 	var home := actor_sprite.position
 	var home_scale := actor_sprite.scale
 	var layer := actor_sprite.get_parent()
@@ -161,43 +182,54 @@ func play_action(actor_sprite: Node2D, method_label: String, outcomes: Array, sp
 		hp_changed.emit(o.target)
 	await _to(actor_sprite, "position", home, 0.1)
 	actor_sprite.scale = home_scale
+	pacing.latched = false
 
 
 func play_enemy_destroyed(enemy_sprite: Node2D, enemy_name: String, last: bool) -> void:
+	pacing.latched = false
+	var orig := enemy_sprite.modulate
 	if not _instant():
 		var layer := enemy_sprite.get_parent()
 		var at := enemy_sprite.global_position
-		var field := _shake_node()
-		var pos0 := Vector2.ZERO
-		var scale0 := Vector2.ONE
+		var field := _field()
+		_snap_field()
 		if field:
-			pos0 = field.position
-			scale0 = field.scale
 			var s := 1.05  # zoom na direção do inimigo
-			field.scale = scale0 * s
-			field.position = pos0 + (1.0 - s) * (at - pos0)
+			field.scale = _rest_scale * s
+			field.position = _rest_pos + (1.0 - s) * (at - _rest_pos)
 		pacing.slow_motion(HitImpact.LAST_KILL_SLOWMO_SECONDS if last else HitImpact.KILL_SLOWMO_SECONDS, HitImpact.KILL_SLOWMO_SCALE)
 		enemy_sprite.modulate = Color(3, 3, 3, 1)
+		await pacing.wait(0.08)  # o flash precisa aparecer
 		GlyphBurst.spawn(layer, at)
 		var l := _pop_label(layer, at + Vector2(0, -30), "%s = null" % enemy_name)
-		enemy_sprite.hide()
 		if field:
-			var tw := create_tween().set_parallel().set_ignore_time_scale(true)
-			tw.tween_property(field, "scale", scale0, 0.3)
-			tw.tween_property(field, "position", pos0, 0.3)
+			_field_tween = create_tween().set_parallel().set_ignore_time_scale(true)
+			_field_tween.tween_property(field, "scale", _rest_scale, 0.3)
+			_field_tween.tween_property(field, "position", _rest_pos, 0.3)
+		var fade := create_tween().set_ignore_time_scale(true)
+		fade.tween_property(enemy_sprite, "modulate:a", 0.0, 0.3)
 		await pacing.wait(1.0)
+		fade.kill()
 		l.queue_free()
+		_snap_field()
 	enemy_sprite.hide()
-	enemy_sprite.modulate = Color.WHITE
+	enemy_sprite.modulate = orig
+	pacing.latched = false
 
 
 func play_party_knocked_out(sprite: Node2D) -> void:
-	await _to(sprite, "rotation_degrees", 8.0, 0.25)
-	sprite.scale.y *= 0.8
-	sprite.modulate = Color(0.5, 0.5, 0.5, 1)
+	pacing.latched = false
+	if not sprite.has_meta("ko_orig"):
+		sprite.set_meta("ko_orig", [sprite.scale, sprite.modulate, sprite.rotation_degrees])
+	var o: Array = sprite.get_meta("ko_orig")
+	await _to(sprite, "rotation_degrees", o[2] + 8.0, 0.25)
+	sprite.scale = o[0] * Vector2(1, 0.8)
+	sprite.modulate = Color(0.5, 0.5, 0.5, o[1].a)
+	pacing.latched = false
 
 
 func play_error(actor_sprite: Node2D, text: String) -> void:
+	pacing.latched = false
 	if _instant():
 		return
 	var bubble := PanelContainer.new()
@@ -212,3 +244,4 @@ func play_error(actor_sprite: Node2D, text: String) -> void:
 	bubble.global_position = actor_sprite.global_position + Vector2(-bubble.get_minimum_size().x / 2.0, -100)
 	await pacing.wait(1.2)
 	bubble.queue_free()
+	pacing.latched = false

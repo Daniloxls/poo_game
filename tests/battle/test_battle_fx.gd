@@ -55,7 +55,7 @@ func _initialize() -> void:
 	await process_frame
 	eq("solta 1x", pacing.speed, 1.0)
 
-	# play_action instantÃ¢neo
+	# play_action instantâneo
 	pacing.instant = true
 	var actor := Node2D.new()
 	var enemy := Node2D.new()
@@ -89,12 +89,87 @@ func _initialize() -> void:
 	eq("visual time_scale", Engine.time_scale, 1.0)
 	pacing.instant = true
 
+	# sem deriva: 3 ações seguidas (uma pulada), skip da sequência e duas destruições
+	pacing.instant = false
+	var field := Node2D.new()
+	field.position = Vector2(5, 7)
+	root.add_child(field)
+	var a2 := Node2D.new()
+	var e2 := Node2D.new()
+	e2.position = Vector2(150, 0)
+	field.add_child(a2)
+	field.add_child(e2)
+	fx.shake_target = field
+	var snap := func(n: Node2D): return [n.position, n.scale, n.rotation, n.modulate]
+	var s0 := [snap.call(a2), snap.call(e2), snap.call(field)]
+	var big := ActionOutcome.make(target, ActionOutcome.Kind.DAMAGE, 9, DamageType.Kind.SOCO, true)
+	for i in 3:
+		var run2 := func(): await fx.play_action(a2, "atacar()", [big], func(_t): return e2, func(_t): return 10)
+		if i == 1:
+			run2.call()
+			await create_timer(0.1, true, false, true).timeout
+			await press("ui_accept")
+			await process_frame
+			await process_frame
+		else:
+			await run2.call()
+		eq("sem deriva ação %d" % i, [snap.call(a2), snap.call(e2), snap.call(field)], s0)
+	# o skip vale para o resto da sequência (2 alvos)
+	var fin := [false]
+	var run3 := func():
+		await fx.play_action(a2, "atacar()", [big, big], func(_t): return e2, func(_t): return 10)
+		fin[0] = true
+	run3.call()
+	await create_timer(0.05, true, false, true).timeout
+	await press("ui_accept")
+	await process_frame
+	await process_frame
+	check("skip pula o resto da sequência", fin[0])
+	eq("time_scale após skip", Engine.time_scale, 1.0)
+	for i in 2:
+		e2.show()
+		var rund := func(): await fx.play_enemy_destroyed(e2, "M", false)
+		if i == 0:
+			rund.call()
+			await create_timer(0.1, true, false, true).timeout
+			await press("ui_accept")
+			await process_frame
+			await process_frame
+		else:
+			await rund.call()
+		eq("campo em repouso %d" % i, [field.position, field.scale], [s0[2][0], s0[2][1]])
+		eq("modulate do inimigo restaurado %d" % i, e2.modulate, s0[1][3])
+	# pacing liberado em slow motion volta a 1.0; sobreposição só restaura no fim
+	var p2 := BattlePacing.new()
+	root.add_child(p2)
+	p2.slow_motion(5.0, 0.3)
+	await process_frame
+	p2.free()
+	eq("free restaura", Engine.time_scale, 1.0)
+	var p3 := BattlePacing.new()
+	root.add_child(p3)
+	p3.slow_motion(0.2, 0.3)
+	p3.slow_motion(0.6, 0.3)
+	await create_timer(0.4, true, false, true).timeout
+	check("sobreposto ainda lento", absf(Engine.time_scale - 0.3) < 0.01, Engine.time_scale)
+	await create_timer(0.5, true, false, true).timeout
+	eq("sobreposto termina", Engine.time_scale, 1.0)
+	p3.free()
+	# KO repetido não acumula
+	var k := Node2D.new()
+	root.add_child(k)
+	await fx.play_party_knocked_out(k)
+	var ks: Vector2 = k.scale
+	await fx.play_party_knocked_out(k)
+	eq("KO idempotente", k.scale, ks)
+	pacing.instant = true
+
 	# biblioteca vazia
 	var lib := DamageFxLibrary.new()
 	check("effect_for vazio", lib.effect_for(DamageType.Kind.FOGO) == null)
 	check("sound_for vazio", lib.sound_for(DamageType.Kind.FOGO) == null)
 
-	# painÃ©is de fim
+	# painéis de fim
 	for scn in ["victory_panel", "defeat_panel"]:
 		var p = load("res://scenes/battle/ui/%s.tscn" % scn).instantiate()
 		root.add_child(p)
