@@ -28,6 +28,8 @@ var _pronto := false  # fala terminada, esperando o jogador
 
 func _ready() -> void:
 	_escolhas.response_selected.connect(_responder)
+	# O container re-ordena (e zera rotação/escala) depois de cada mudança: remarca no fim do quadro.
+	_escolhas.sort_children.connect(_marcar_escolha.call_deferred)
 	_caixa.gui_input.connect(_clique_na_caixa)
 	get_viewport().gui_focus_changed.connect(_marcar_escolha)
 	var bob := create_tween().set_loops()

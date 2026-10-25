@@ -16,7 +16,8 @@ const ESPADA = preload("res://scenes/chapter_one/festival_city/dialogos/espada.d
 
 
 func _cena(n: int) -> void:
-	await Dialogo.iniciar(ESPADA, "cena_%d" % n)
+	if not await Dialogo.iniciar(ESPADA, "cena_%d" % n):
+		push_warning("sword_cutscene: cena_%d recusada (já há diálogo ativo)" % n)
 
 
 # Não bloqueia quem chama (excalibur_npc não dá await).

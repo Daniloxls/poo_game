@@ -150,6 +150,9 @@ Vulto: Hm...
 	checar("duas escolhas", itens.size() == 2, itens.size())
 	if itens.size() == 2:
 		checar("primeira focada e marcada", itens[0].has_focus() and itens[0].text.begins_with("▶ ") and not itens[1].text.begins_with("▶"), [itens[0].text, itens[1].text])
+		await process_frame
+		await process_frame
+		checar("focada inclina e cresce", absf(itens[0].rotation_degrees + 1.5) < 0.1 and absf(itens[0].scale.x - 1.06) < 0.01, [itens[0].rotation_degrees, itens[0].scale])
 	b.avancar()
 	await process_frame
 	checar("avancar com escolhas não faz nada", b.get_node("%Escolhas").visible and ctx.escolha == "")

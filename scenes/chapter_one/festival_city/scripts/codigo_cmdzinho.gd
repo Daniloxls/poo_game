@@ -20,6 +20,12 @@ func _ready():
 }
 """
 	ready_drop_menu()
+	set_colision(false)   # a área grande daria uma parede invisível em volta da fonte
+
+
+# A área grande cobre a do Cmdzinho: o Space cai aqui e segue para o NPC.
+func interaction() -> void:
+	await get_parent().interaction()
 
 
 func afundar() -> void:

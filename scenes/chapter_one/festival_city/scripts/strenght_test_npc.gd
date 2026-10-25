@@ -26,9 +26,9 @@ func interaction():
 	if not quer_tentar:
 		return
 	var result = teste.testar(4)
+	PlayerState.set_on_scene(true)
 	var tween = create_tween()
 	var current_pos = player.get_position()
-	tween.tween_callback(PlayerState.set_on_scene.bind(true))
 	if current_pos.y < -12650:
 		tween.tween_callback(player.set_sprite.bind("walk_left"))
 		tween.tween_property(player, "position", Vector2(4500, current_pos.y), abs(current_pos.x - 4500)/500)

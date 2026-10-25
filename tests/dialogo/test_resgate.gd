@@ -78,6 +78,16 @@ func _rodar() -> void:
 	await _terminar_conversa()
 	checar("afogando não resgata", not historia.cmdzinho_resgatado and cmd.visible)
 
+	# Space cai na área grande do CodigoCmdzinho: ela repassa ao NPC.
+	terminou = false
+	_conversar(codigo)
+	for i in 120:
+		await process_frame
+		if not _baloes().is_empty() and _baloes()[0].get_node("%Texto").dialogue_line != null:
+			break
+	checar("CodigoCmdzinho.interaction abre a conversa do Cmdzinho", not _baloes().is_empty() and _baloes()[0].get_node("%NomeTag").text == "???")
+	await _terminar_conversa()
+
 	codigo.codigo_editado = codigo.get_codigo_java_atual().replace("this.afundar();", "this.nadar();")
 	terminou = false
 	_conversar(cmd)
@@ -88,6 +98,27 @@ func _rodar() -> void:
 	checar("seguidor visível", seguidor.visible)
 	checar("seguidor apareceu onde o afogado estava", seguidor.position.distance_to(cmd.position) < 300 and seguidor.position != p0, seguidor.position)
 	checar("seguidor abre ~ cmdzinho", seguidor.dialogo != null and seguidor.cue_dialogo == "cmdzinho")
+
+	# Tritomos: a janela segue aberta (e o Turin travado) depois da 1ª conversa.
+	var tenda = cidade.get_node("TendaVidente")
+	var ps = root.get_node("PlayerState")
+	terminou = false
+	_conversar(tenda)
+	await _terminar_conversa()
+	checar("tritomos: janela aberta mantém o jogador travado", tenda.interface.visible and ps.is_on_interface())
+	tenda.close_window()
+	checar("tritomos: close_window destrava", not ps.is_on_interface())
+
+	# Voltar à cidade depois do resgate: afogado escondido, seguidor visível.
+	cidade.queue_free()
+	await process_frame
+	historia.cmdzinho_resgatado = true
+	var cidade2 = load("res://scenes/chapter_one/festival_city/City.tscn").instantiate()
+	root.add_child(cidade2)
+	await process_frame
+	checar("reentrada: afogado escondido e desligado", not cidade2.get_node("Cmdzinho").visible and cidade2.get_node("Cmdzinho").process_mode == Node.PROCESS_MODE_DISABLED)
+	checar("reentrada: seguidor visível", cidade2.get_node("Cmdzinho_Follower").visible)
+	historia.cmdzinho_resgatado = false
 	_fim()
 
 

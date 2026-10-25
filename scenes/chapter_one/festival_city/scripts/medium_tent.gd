@@ -57,7 +57,6 @@ func interaction():
 	if first_interaction and current_state != State.ERROR:
 		await Dialogo.iniciar(DIALOGO, "boas_vindas", [self])
 		first_interaction = false
-		PlayerState.set_on_interface(false)
 		current_state = State.OPEN
 	else:
 		current_state = State.OPEN

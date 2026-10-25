@@ -83,6 +83,27 @@ func _rodar() -> void:
 	checar("on_dialogue liberado", not ps.is_on_dialogue())
 	dm.dialogue_ended.disconnect(ao_terminar)
 
+	# Balão liberado à força (troca de cena etc.): iniciar volta e solta o jogador.
+	terminou = false
+	var rec2 = dm.create_resource_from_text("~ a
+Kath: Um.
+Kath: Dois.
+=> END")
+	_iniciar_e_marcar(rec2)
+	for i in 60:
+		await process_frame
+		if not _baloes().is_empty():
+			break
+	checar("forçado: abriu", _baloes().size() == 1 and dialogo.ativo)
+	_baloes()[0].queue_free()
+	for i in 30:
+		await process_frame
+		if terminou:
+			break
+	checar("forçado: iniciar retornou", terminou)
+	checar("forçado: flags soltas", not dialogo.ativo and not ps.is_on_dialogue())
+	checar("iniciar recusado devolve false", await _recusa())
+
 	# NPC
 	var npc_gd = load("res://entities/npc/npc_script.gd")
 	var npc = npc_gd.new()
@@ -112,6 +133,15 @@ func _rodar() -> void:
 	ps.set_on_dialogue(false)
 	npc.free()
 	_fim()
+
+
+func _recusa() -> bool:
+	dialogo.ativo = true
+	var r: bool = await dialogo.iniciar(dm.create_resource_from_text("~ a
+Kath: Um.
+=> END"))
+	dialogo.ativo = false
+	return r == false
 
 
 func _iniciar_e_marcar(rec) -> void:
