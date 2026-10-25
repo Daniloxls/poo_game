@@ -18,6 +18,7 @@ func _initialize() -> void:
 	await process_frame
 	bar.setup(32, 32, Color("#e8463a"))
 	bar.set_value(16)
+	bar.set_value(16)  # refresh redundante não cancela o dreno
 	eq("fantasma segura", bar.ghost_value, 32.0)
 	await create_timer(0.7).timeout
 	eq("fantasma drenou", bar.ghost_value, 16.0)

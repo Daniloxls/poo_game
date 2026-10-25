@@ -27,6 +27,8 @@ func setup(p_max: int, p_value: int, p_fill: Color) -> void:
 
 
 func set_value(new_value: int) -> void:
+	if new_value == value:
+		return
 	var old := value
 	value = new_value
 	if _tween:

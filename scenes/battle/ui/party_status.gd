@@ -8,7 +8,7 @@ var _rows := {}  # membro -> {sb, hp, pp}
 var _box: VBoxContainer
 
 
-func _ready() -> void:
+func _init() -> void:
 	theme = THEME
 	theme_type_variation = &"BattlePanel"
 	_box = VBoxContainer.new()
