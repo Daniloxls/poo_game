@@ -37,6 +37,7 @@ DialogueManager="*uid://c3rodes2l3gxb"
 Historia="*res://globals/historia.gd"
 Opcoes="*res://globals/opcoes.gd"
 Elenco="*res://globals/elenco.gd"
+Dialogo="*res://globals/dialogo.gd"
 
 [display]
 

@@ -108,7 +108,7 @@ func read_input():
 	if PlayerState.is_able_to_move():
 		# Se o jogador aperta 'Z' chama a função de interact do objeto que o player está olhando
 		if Input.is_action_just_pressed("interact"):
-				if interact_box.get_overlapping_areas() and Textbox.get_state() == "Ready":
+				if interact_box.get_overlapping_areas() and Textbox.get_state() == "Ready" and not Dialogo.ativo:
 					interact_box.get_overlapping_areas()[0].get_parent().interaction()
 	if Input.is_action_just_pressed("exit"):
 		# Fechar inventario, codebox, qualquer inteface que esteja aberta
