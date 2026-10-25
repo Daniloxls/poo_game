@@ -3,7 +3,6 @@ extends CanvasLayer
 signal codebox_open
 signal codebox_close
 
-@onready var var_container = $Panel/FlowContainer2
 @onready var method_container = $Panel/FlowContainer
 var tema
 var intregex = RegEx.new()

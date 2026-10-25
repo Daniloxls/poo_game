@@ -8,7 +8,6 @@ extends CanvasLayer
 @onready var item_menu = $TabContainer/Mochila
 
 @onready var party_container = $TabContainer/Personagens/HBoxContainer/PartyContainer
-@onready var party_buttons = $TabContainer/Personagens/PartyButtons
 #@onready var player = get_node("../Level").get_child(0).find_child("Player")
 
 @onready var tab_container = $TabContainer
