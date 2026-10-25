@@ -12,7 +12,6 @@ signal finished_turn
 
 @onready var animation = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
-@onready var healthbar = $Healthbar
 
 enum State{
 	DEFAULT,
@@ -36,7 +35,6 @@ func enemy_ready():
 	sprite_2d.connect("mouse_entered", on_sprite_mouse_in)
 	sprite_2d.connect("mouse_exited", on_sprite_mouse_out)
 	animation.connect("animation_finished", _on_animation_player_animation_finished)
-	healthbar.set_values()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -64,29 +62,6 @@ func get_vel():
 func get_state():
 	return current_state
 	
-func take_damage(damage):
-	hp -= damage
-	if hp < 0:
-		hp = 0
-	var hp_percentage = float(hp)/max_hp
-	healthbar.show()
-	healthbar.change_hp_percent(hp_percentage, -damage)
-	if hp == 0:
-		animation.play("death")
-	else:
-		animation.play("get_hit")
-	current_state = State.ANIMATION
-	
-func gain_health(value):
-	hp += value
-	if hp > max_hp:
-		hp = max_hp
-	
-	healthbar.show()
-	var hp_percentage = float(hp)/max_hp
-	healthbar.change_hp_percent(hp_percentage, value)
-	
-
 # Contrato do combatente: só mudam o status, sem animação nem sinais.
 func apply_damage(amount: int) -> int:
 	var antes: int = hp
@@ -113,11 +88,6 @@ func get_class_name() -> String:
 # Decide a ação do turno; a base não faz nada.
 func choose_action(party: Array, enemies: Array) -> EnemyAction:
 	return EnemyAction.new()
-
-#logica do inimigo
-func logic(character_list, menu):
-	pass
-
 
 func on_animation():
 	return animation.is_playing()

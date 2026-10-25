@@ -17,9 +17,6 @@ func place(group: Node2D, enemies: Array, party: Array) -> void:
 	var t := group.transform
 	group.transform = Transform2D.IDENTITY
 	for e in enemies:
-		for old in ["Healthbar", "DamageText"]:  # UI antiga por inimigo
-			if e.has_node(old):
-				e.get_node(old).queue_free()
 		_flatten(e, t, e.sprite_2d)
 	# o Party é outra camada: sem offset, as posições globais batem com as do campo
 	_party_offset = Party.offset
@@ -30,8 +27,6 @@ func place(group: Node2D, enemies: Array, party: Array) -> void:
 			if n is Node2D or n is Control:
 				_party_rest.append([n, n.position, n.scale, n.rotation, n.modulate])
 		_flatten(m, Transform2D(0.0, _party_offset), m.sprite)
-		if m.has_node("BattleOptions"):  # menu antigo do personagem
-			m.get_node("BattleOptions").hide()
 
 
 ## Escala do nó (e do pai) vai para os filhos; a origem vai para o centro do sprite.

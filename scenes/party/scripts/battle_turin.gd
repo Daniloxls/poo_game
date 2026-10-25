@@ -21,7 +21,6 @@ func _ready():
 	rpg_class = load("res://rpg_classes/comumzera.tres")
 	print("rpg_class: ", rpg_class)
 	original_pos = self.get_global_position()
-	call_deferred("connect_action_buttons")
 	sprite.connect("sprite_clicked", on_sprite_clicked)
 	sprite.connect("mouse_entered", on_sprite_mouse_in)
 	sprite.connect("mouse_exited", on_sprite_mouse_out)
