@@ -39,6 +39,10 @@ func _initialize() -> void:
 	var ctx := BattleContext.new()
 	ctx.combatants = [turin, kath, montanha]
 	ctx.active = turin
+	var pocao := HEALTH_ITEM.new()
+	pocao.ITEM_NAME = "Pocao"
+	pocao.QUANTITY = 2
+	ctx.items = [pocao]
 
 	var console: BattleConsole = load("res://scenes/battle/ui/battle_console.tscn").instantiate()
 	var probe := Probe.new()
@@ -92,6 +96,33 @@ func _initialize() -> void:
 	await act("ui_down")
 	await key(KEY_F2)
 	eq("probe não recebeu nada", probe.got, 0)
+	# ctrl+Q e botão de joystick também não vazam
+	for p in [true, false]:
+		var ev := InputEventKey.new()
+		ev.keycode = KEY_Q
+		ev.ctrl_pressed = true
+		ev.pressed = p
+		Input.parse_input_event(ev)
+		await process_frame
+		var jb := InputEventJoypadButton.new()
+		jb.button_index = JOY_BUTTON_A
+		jb.pressed = p
+		Input.parse_input_event(jb)
+		await process_frame
+	eq("ctrl+q e joypad não vazam", probe.got, 0)
+
+	# navegação: não gruda em linha desabilitada; índice não fica velho
+	console.text = ""
+	await act("ui_down")
+	await key(KEY_TAB)
+	eq("só Turin habilitado", console.text, "Turin.")
+	console.text = "Turin.usarItem(Pocao, "
+	await act("ui_down")
+	await act("ui_down")
+	await key(KEY_T, 116)  # texto vira "...(Pocao, t": só Turin
+	await key(KEY_TAB)
+	eq("sem índice velho", console.text, "Turin.usarItem(Pocao, Turin)")
+	console.text = ""
 
 	# Escape solta o foco e mantém o texto
 	console.text = "Tur"
@@ -116,4 +147,19 @@ func _initialize() -> void:
 	eq("botão não disparou", pressed.size(), 0)
 	eq("texto mantido após clique", console.text, "Tur")
 	check("sem foco após clique fora", not console.is_typing())
+
+	# gamepad: monta o comando pela lista e executa
+	ready_cmds.clear()
+	console.close()
+	console.open(true)
+	for want in ["Turin", "atacar", "Montanha", "▶ executar"]:
+		await process_frame
+		var btns := console._list.get_children().filter(func(b): return not b.is_queued_for_deletion())
+		var hit = btns.filter(func(b): return b.text.contains(want))
+		check("gamepad tem " + want, not hit.is_empty(), btns.map(func(b): return b.text))
+		if hit.is_empty():
+			break
+		hit[0].pressed.emit()
+	await process_frame
+	eq("gamepad executa", ready_cmds.size(), 1)
 	finish()

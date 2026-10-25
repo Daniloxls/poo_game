@@ -8,6 +8,8 @@ signal command_ready(cmd: ResolvedCommand)
 const OK_COLOR := Color("#3fae5a")
 const ERR_COLOR := Color("#e8463a")
 const MAX_SUGGESTIONS := 6
+const RUN_LABEL := "▶ executar"
+const EDIT_CTRL := [KEY_C, KEY_X, KEY_V, KEY_Z, KEY_Y, KEY_A, KEY_LEFT, KEY_RIGHT, KEY_BACKSPACE, KEY_DELETE, KEY_HOME, KEY_END]
 
 
 var text: String:
@@ -25,6 +27,7 @@ var _list: VBoxContainer
 var _err: Label
 var _hint: Label
 var _status: Label
+var _msg_panel: PanelContainer
 var _sugs: Array[ConsoleSuggestion] = []
 var _hi := 0
 var _err_span := Vector2i(-1, -1)
@@ -57,8 +60,15 @@ func _init() -> void:
 	_err = _msg_label(ERR_COLOR)
 	_hint = _msg_label(Color("#1b1b1b"))
 	_status = _msg_label(OK_COLOR)
-	for l in [_err, _hint, _status]:
-		box.add_child(l)
+	_msg_panel = PanelContainer.new()
+	_msg_panel.theme_type_variation = &"BattlePanel"
+	_msg_panel.visible = false
+	var mbox := VBoxContainer.new()
+	_msg_panel.add_child(mbox)
+	mbox.add_child(_err)
+	mbox.add_child(_hint)
+	box.add_child(_msg_panel)
+	box.add_child(_status)
 
 
 func _msg_label(c: Color) -> Label:
@@ -109,6 +119,9 @@ func _unhandled_input(ev: InputEvent) -> void:
 	if ev.is_action_pressed("battle_console") and not is_typing():
 		open(ev is InputEventJoypadButton)
 		get_viewport().set_input_as_handled()
+	elif _pad and visible and ev is InputEventJoypadButton and ev.pressed and ev.button_index == JOY_BUTTON_START:
+		submit()
+		get_viewport().set_input_as_handled()
 	elif _pad and visible and ev.is_action_pressed("ui_cancel"):
 		_delete_last_token()
 		get_viewport().set_input_as_handled()
@@ -117,7 +130,7 @@ func _unhandled_input(ev: InputEvent) -> void:
 # Clique fora do console tira o foco sem deixar o clique chegar ao botão embaixo.
 func _input(ev: InputEvent) -> void:
 	var mb := ev as InputEventMouseButton
-	if mb and mb.pressed and _line.has_focus() and not get_global_rect().has_point(mb.position):
+	if mb and mb.pressed and mb.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT] and _line.has_focus() 			and not Rect2(Vector2.ZERO, size).has_point(get_global_transform_with_canvas().affine_inverse() * mb.position):
 		_line.release_focus()
 		get_viewport().set_input_as_handled()
 
@@ -138,12 +151,20 @@ func _on_line_input(ev: InputEvent) -> void:
 		_line.release_focus()
 	elif ev is InputEventAction and ev.is_action_pressed("ui_accept"):
 		_accept(_hi)
-	elif key and key.pressed and (key.unicode != 0 or key.ctrl_pressed or key.meta_pressed
-			or key.keycode in [KEY_BACKSPACE, KEY_DELETE, KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END]):
+	elif _is_editing(key):
 		return  # edição normal: o CodeEdit trata e consome
-	elif not (ev is InputEventKey or ev is InputEventAction):
+	elif not (ev is InputEventKey or ev is InputEventAction or ev is InputEventJoypadButton or ev is InputEventJoypadMotion):
 		return
 	_line.accept_event()
+
+
+# Teclas de edição que o CodeEdit realmente usa; qualquer outra é consumida.
+func _is_editing(key: InputEventKey) -> bool:
+	if key == null or not key.pressed or not _line.editable:
+		return false
+	if key.ctrl_pressed or key.meta_pressed:
+		return key.keycode in EDIT_CTRL
+	return key.unicode != 0 or key.keycode in [KEY_BACKSPACE, KEY_DELETE, KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END]
 
 
 func _on_text_changed() -> void:
@@ -159,6 +180,7 @@ func _clear_error() -> void:
 	_err_span = Vector2i(-1, -1)
 	_err.visible = false
 	_hint.visible = false
+	_msg_panel.visible = false
 	_line.queue_redraw()
 
 
@@ -169,6 +191,7 @@ func submit() -> void:
 	if not r.ok:
 		_err.text = r.error.message
 		_err.visible = true
+		_msg_panel.visible = true
 		_hint.text = r.error.hint
 		_hint.visible = r.error.hint != ""
 		_err_span = r.error.span
@@ -181,16 +204,22 @@ func submit() -> void:
 	command_ready.emit(r)
 
 
-func _refresh() -> void:
+func _refresh(keep_hi := false) -> void:
 	for c in _list.get_children():
 		_list.remove_child(c)
 		c.queue_free()
 	_sugs = []
 	if _ctx != null:
 		_sugs = CommandCompleter.suggest(_line.text, _ctx)
-	_hi = clampi(_hi, 0, maxi(_sugs.size() - 1, 0))
-	if not _sugs.is_empty() and not _sugs[_hi].enabled:
-		_hi = 0
+		if _pad and CommandParser.parse(_line.text).stage == ParsedCommand.Stage.DONE:
+			_sugs.push_front(ConsoleSuggestion.make(RUN_LABEL, "enviar o comando", true, _line.text))
+	if not keep_hi:
+		_hi = 0  # primeira linha habilitada
+		for i in mini(_sugs.size(), MAX_SUGGESTIONS):
+			if _sugs[i].enabled:
+				_hi = i
+				break
+	_hi = clampi(_hi, 0, maxi(mini(_sugs.size(), MAX_SUGGESTIONS) - 1, 0))
 	for i in mini(_sugs.size(), MAX_SUGGESTIONS):
 		var s := _sugs[i]
 		var b := Button.new()
@@ -209,14 +238,20 @@ func _refresh() -> void:
 func _move(dir: int) -> void:
 	if _sugs.is_empty():
 		return
-	_hi = posmod(_hi + dir, mini(_sugs.size(), MAX_SUGGESTIONS))
-	_refresh()
+	var n := mini(_sugs.size(), MAX_SUGGESTIONS)
+	for k in n:  # pula linhas desabilitadas
+		_hi = posmod(_hi + dir, n)
+		if _sugs[_hi].enabled:
+			break
+	_refresh(true)
 
 
 func _accept(i: int) -> void:
 	if i >= _sugs.size() or not _sugs[i].enabled:
 		return
-	_hi = 0
+	if _pad and _sugs[i].label == RUN_LABEL:
+		submit()
+		return
 	text = _sugs[i].result_text
 	if not _pad:
 		_line.grab_focus()
