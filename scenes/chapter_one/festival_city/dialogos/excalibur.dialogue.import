@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://d3kl7ye4dy3t0"
+path="res://.godot/imported/excalibur.dialogue-7c3f08329d84afd34adb91cf16f81c04.tres"
+
+[deps]
+
+source_file="res://scenes/chapter_one/festival_city/dialogos/excalibur.dialogue"
+dest_files=["res://.godot/imported/excalibur.dialogue-7c3f08329d84afd34adb91cf16f81c04.tres"]
+
+[params]
+
+defaults=true

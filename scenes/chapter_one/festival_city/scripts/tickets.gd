@@ -1,6 +1,6 @@
 extends CanvasLayer
 @onready var  label = $Label
-var tickets : int = 30
+var tickets : int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

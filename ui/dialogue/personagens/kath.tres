@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Personagem" format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/personagem.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/portraits/kath_neutra.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+nome = "Kath"
+cor = Color(0.1803921569, 0.7686274510, 0.8392156863, 1)
+retratos = Dictionary[String, Texture2D]({"neutra": ExtResource("2")})
+expressao_padrao = "neutra"

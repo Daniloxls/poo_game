@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://bo6vvyrdlyirq"
+path="res://.godot/imported/tritomos.dialogue-60ec1ca16291469ab100d6c500ca9cff.tres"
+
+[deps]
+
+source_file="res://scenes/chapter_one/festival_city/dialogos/tritomos.dialogue"
+dest_files=["res://.godot/imported/tritomos.dialogue-60ec1ca16291469ab100d6c500ca9cff.tres"]
+
+[params]
+
+defaults=true

@@ -6,7 +6,8 @@ var direction : Vector2 = Vector2()
 @onready var battle = Battle
 @onready var inventory = Inventory
 @onready var tickets = $"../Tickets"
-@onready var lutador = $"../LutadorNPC"
+
+const DIALOGO = preload("res://scenes/chapter_one/festival_city/dialogos/tatame.dialogue")
 
 enum State{
 	DOWN,
@@ -14,18 +15,15 @@ enum State{
 	RIGHT,
 	UP
 }
-enum Victory{
-	PLAYER,
-	NPC,
-	NEITHER
-}
 var current_state = State.DOWN
-var victory_state = Victory.NEITHER
-var start_battle = false
+var ganhou := false
+var quer_lutar := false   # escrito por tatame.dialogue
 
+
+# O nó do tatame é um NPC.tscn, sem o MenuButton/ShaderRect que o _ready de interact.gd espera.
+# Não chamar super(): sem esta sobrescrita o jogo para com erro de script ao abrir a cidade.
 func _ready():
-	Textbox.connect("text_finish", _on_textbox_text_finish)
-	Textbox.connect("choice_closed", _on_textbox_choise_closed)
+	pass
 
 
 func set_sprite(sprite):
@@ -33,87 +31,39 @@ func set_sprite(sprite):
 
 func play_animation(animation):
 	animation_player.play(animation)
-	
-func set_texto(new_texto):
-	texto = new_texto
-	
+
 func get_portraits():
 	return portraits
-	
+
 func set_portraits(new_portraits):
 	portraits = new_portraits
-	
-#func set_codigo(new_nome, new_codigo):
-	#nome = new_nome
-	#codigo = new_codigo
 
 func update_codigo(new_codigo):
 	codigo = new_codigo
-	
-#func depure():
-	#depuring = true
-	#return codigo
 
 func interaction():
-	if victory_state == Victory.PLAYER:
-		Textbox.queue_text(["Desculpe garoto, o montanha vai descansar um pouco agora."])
+	if ganhou:
+		await Dialogo.iniciar(DIALOGO, "descansando", [self])
 		return
-	Textbox.display_choice("Olá garoto, você quer tentar enfrentar nosso lutador o Grande Montanha para tentar ganhar alguns tickets ?", ["Sim", "Não"])
-	triggered = true
+	quer_lutar = false
+	await Dialogo.iniciar(DIALOGO, "desafio", [self])
+	if quer_lutar:
+		tickets.hide()
+		battle.start_battle("res://scenes/encounters/muscleguy.tscn")
 
 func name():
 	return nome
 
 
-func _on_textbox_choise_closed(escolha):
-	if triggered:
-		match(escolha):
-			"Sim":
-				start_battle = true
-				Textbox.queue_text(["Então que comece a luta!"])
-				
-			"Não":
-				start_battle = false
-				Textbox.queue_text(["Certo, quem sabe depois então."])
-
-
-func _on_textbox_text_finish():
-	if triggered:
-		triggered = false
-		match(victory_state):
-			Victory.NEITHER:
-				if start_battle:
-					battle.start_battle("res://scenes/encounters/muscleguy.tscn")
-					tickets.hide()
-				
-			Victory.PLAYER:
-				tickets.show()
-				Textbox.queue_text(["Eu estou impressionado!",
-					"Montanha! Você deixou esse garotinho vencer ?",
-					"De qualquer forma tome seus tickets.",
-					"Aproveite o festival."])
-				tickets.recieve_tickets(10)
-				lutador.set_texto(["Como perdi pra um garotinho que nem você ?",
-				 "Acho que vou ter de malhar mais."])
-			Victory.NPC:
-				tickets.show()
-				Textbox.queue_text(["Não fique triste rapaz, deixe-me curar seus machucados",
-					 "E não se esqueça que você pode tentar de novo qualquer hora"])
-				victory_state = Victory.NEITHER
-				inventory.full_heal()
-				
-
-
 # A batalha não mostra mais caixa de texto ao terminar: o NPC reage na hora.
 func _on_city_battle_won():
-	triggered = true
-	victory_state = Victory.PLAYER
-	_on_textbox_text_finish()
-
+	ganhou = true
+	tickets.show()
+	tickets.recieve_tickets(10)
+	await Dialogo.iniciar(DIALOGO, "vitoria", [self])
 
 
 func _on_city_battle_lost():
-	triggered = true
-	victory_state = Victory.NPC
-	_on_textbox_text_finish()
-	
+	tickets.show()
+	inventory.full_heal()
+	await Dialogo.iniciar(DIALOGO, "derrota", [self])

@@ -1,0 +1,27 @@
+# Guardião da espada, no evento principal do festival.
+# Contexto (excalibur_npc.gd): tickets_atuais() -> int, vai_seguir: bool, espada_tirada: bool,
+# ja_conversou: bool (a apresentação completa só na primeira visita).
+
+~ conversa
+if espada_tirada
+	set vai_seguir = false
+	Guardião da Espada: [shake]A espada sumiu![/shake] O que eu vou dizer pro rei?!
+	=> END
+if not ja_conversou
+	Guardião da Espada: Ah, olá, Turin!
+	Guardião da Espada: Por aqui fica o evento principal do festival.
+	Guardião da Espada: O rei deixou a gente exibir a [pop]espada protetora[/pop], então montamos uma atração com ela.
+Guardião da Espada: [if ja_conversou]Ah, Turin! Está pronto para tentar agora?[else]Por 30 tickets, você pode tentar tirá-la da pedra. Quer tentar?[/if]
+- Quero tentar!
+	if tickets_atuais() >= 30
+		set vai_seguir = true
+		Guardião da Espada: Trinta tickets, certinho! Então me siga.
+	else
+		set vai_seguir = false
+		Guardião da Espada: Hmm...[wait=0.3] parece que você ainda não tem os 30 tickets.
+		Guardião da Espada: As atrações espalhadas pela praça dão prêmios em tickets. Dá uma volta e depois passa aqui de novo!
+- Agora não.
+	set vai_seguir = false
+	Guardião da Espada: Sem pressa. Ela está presa nessa pedra há séculos.
+set ja_conversou = true
+=> END

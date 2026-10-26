@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://07q3hxenlnmf"
+path="res://.godot/imported/espada.dialogue-964b99c609368419f66d8cf5b654ddb5.tres"
+
+[deps]
+
+source_file="res://scenes/chapter_one/festival_city/dialogos/espada.dialogue"
+dest_files=["res://.godot/imported/espada.dialogue-964b99c609368419f66d8cf5b654ddb5.tres"]
+
+[params]
+
+defaults=true

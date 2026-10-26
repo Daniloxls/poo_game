@@ -1,0 +1,45 @@
+# Cutscene da espada (sword_cutscene.gd): uma cue por conversa, na ordem da cena.
+# O vilão fala como "Vulto" (etiqueta "???") a cena toda: Turin ainda não sabe quem ele é.
+# Retrato: silhueta enquanto escondido (cena_1); o rosto dele quando já está em cena.
+
+# Turin chega à pedra; um vulto fura a fila.
+~ cena_1
+Guardião da Espada: Certo, Turin! Depois do Runis, é a sua vez!
+Vulto: [#silhueta] Com licença...[wait=0.4] permitam-me passar na frente.
+=> END
+
+# Runis é chutado longe; o vulto desce até a espada.
+~ cena_2
+Vulto: [#neutro] O rei anda mesmo desleixado...
+Vulto: [#neutro] Deixar uma arma tão importante nas mãos de gente tão insignificante.
+=> END
+
+# Ele segura a espada.
+~ cena_3
+Vulto: [#serio] Agora...[wait=0.4] o primeiro passo da minha [shake]vingança[/shake]!
+=> END
+
+# Clarão: a pedra se parte e a espada é dele.
+~ cena_4
+Vulto: [#neutro] Essa espada me traz lembranças nada agradáveis.
+Vulto: [#serio] Vamos garantir que ela não caia nas mãos de mais ninguém.
+=> END
+
+# Ele se vira para Turin.
+~ cena_5
+Vulto: [#neutro] Hm...
+Vulto: [#neutro] Quanto a você...
+Vulto: [#neutro] Devo estar perdendo o jeito.
+Vulto: [#serio, #shake] Vou garantir que você não se recupere [shake]dessa[/shake]!
+=> END
+
+# A magia vem na direção de Turin; Kath corre e pula na frente.
+~ cena_6
+Kath: [#shake] [shake]Turin, cuidado![/shake]
+=> END
+
+# Tela preta.
+~ cena_7
+Kath: Turin![wait=0.4] Turin!
+Kath: [#shake] Acorda! A gente precisa sair daqui!
+=> END

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Personagem" format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/personagem.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+nome = "Apresentador"
+cor = Color(0.8196078431, 0.2862745098, 0.3568627451, 1)
+expressao_padrao = ""

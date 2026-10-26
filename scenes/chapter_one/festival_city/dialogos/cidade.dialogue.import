@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://dw0if2e0aqs63"
+path="res://.godot/imported/cidade.dialogue-465aa94362efeeb530f756a5a62631c9.tres"
+
+[deps]
+
+source_file="res://scenes/chapter_one/festival_city/dialogos/cidade.dialogue"
+dest_files=["res://.godot/imported/cidade.dialogue-465aa94362efeeb530f756a5a62631c9.tres"]
+
+[params]
+
+defaults=true

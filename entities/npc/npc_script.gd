@@ -14,6 +14,8 @@ var direction : Vector2 = Vector2()
 @export var nome : String
 @export var SPRITE : SpriteFrames
 @export var texto : Array[String]
+@export var dialogo : DialogueResource
+@export var cue_dialogo : String = ""
 
 enum State{
 	DOWN,
@@ -63,7 +65,10 @@ func depure():
 
 
 func interaction():
-	Textbox.queue_text(texto)
+	if dialogo:
+		await Dialogo.iniciar(dialogo, cue_dialogo, [self])
+	else:
+		Textbox.queue_text(texto)
 
 func name():
 	return nome

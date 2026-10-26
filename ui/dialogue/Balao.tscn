@@ -1,0 +1,141 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/balao.gd" id="1_balao"]
+[ext_resource type="Theme" path="res://ui/dialogue/tema_dialogo.tres" id="2_tema"]
+[ext_resource type="Script" path="res://ui/dialogue/rotulo_dialogo.gd" id="3_rotulo"]
+[ext_resource type="PackedScene" path="res://ui/dialogue/Retrato.tscn" id="4_retrato"]
+[ext_resource type="Script" path="res://addons/dialogue_manager/nodes/responses_menu/dialogue_responses_menu.gd" id="5_menu"]
+
+[node name="Balao" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_balao")
+
+[node name="Tela" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_tema")
+
+[node name="Caixa" type="Panel" parent="Tela"]
+unique_name_in_owner = true
+clip_children = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -206.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Faixa" type="ColorRect" parent="Tela/Caixa"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_right = 26.0
+offset_bottom = -4.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Texto" type="RichTextLabel" parent="Tela/Caixa"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 26.0
+offset_right = -44.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+bbcode_enabled = true
+scroll_following = true
+autowrap_mode = 3
+visible_characters_behavior = 1
+script = ExtResource("3_rotulo")
+
+[node name="Indicador" type="Label" parent="Tela/Caixa"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -44.0
+offset_right = -14.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "▼"
+horizontal_alignment = 1
+
+[node name="Retrato" parent="Tela" instance=ExtResource("4_retrato")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = -460.0
+offset_right = 333.0
+offset_bottom = -30.0
+grow_vertical = 0
+
+[node name="Etiqueta" type="PanelContainer" parent="Tela"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 288.0
+offset_top = -226.0
+offset_right = 380.0
+offset_bottom = -186.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="NomeTag" type="Label" parent="Tela/Etiqueta"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"NomeTag"
+text = "Nome"
+vertical_alignment = 1
+
+[node name="Escolhas" type="VBoxContainer" parent="Tela" node_paths=PackedStringArray("response_template")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_top = -241.0
+offset_right = -58.0
+offset_bottom = -240.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+script = ExtResource("5_menu")
+response_template = NodePath("Modelo")
+
+[node name="Modelo" type="Button" parent="Tela/Escolhas"]
+layout_mode = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "Escolha"

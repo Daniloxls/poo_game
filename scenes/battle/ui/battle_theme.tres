@@ -1,8 +1,8 @@
-[gd_resource type="Theme" format=3]
+[gd_resource type="Theme" format=3 uid="uid://chirledjwwand"]
 
-[ext_resource type="Script" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="1_38vnm"]
-[ext_resource type="FontFile" path="res://assets/fonts/JetBrainsMono.ttf" id="2_c1wyq"]
-[ext_resource type="FontFile" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="3_sm2jo"]
+[ext_resource type="Script" uid="uid://bkjuntof6gywq" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="1_38vnm"]
+[ext_resource type="FontFile" uid="uid://cuoffplbyts5n" path="res://assets/fonts/JetBrainsMono.ttf" id="2_c1wyq"]
+[ext_resource type="FontFile" uid="uid://dx62gbs0xe5rt" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="3_sm2jo"]
 
 [sub_resource type="StyleBox" id="StyleBox_ynxvb"]
 resource_local_to_scene = false

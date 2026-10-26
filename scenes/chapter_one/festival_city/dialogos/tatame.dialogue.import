@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://7nmc5vnqfcvw"
+path="res://.godot/imported/tatame.dialogue-d0a716815e39c03c3cca685318748573.tres"
+
+[deps]
+
+source_file="res://scenes/chapter_one/festival_city/dialogos/tatame.dialogue"
+dest_files=["res://.godot/imported/tatame.dialogue-d0a716815e39c03c3cca685318748573.tres"]
+
+[params]
+
+defaults=true

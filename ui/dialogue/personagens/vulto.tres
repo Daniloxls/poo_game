@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Personagem" format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/personagem.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/portraits/silhueta.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/portraits/anti_poo_neutro.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/portraits/anti_poo_serio.png" id="4"]
+
+[resource]
+script = ExtResource("1")
+nome = "Vulto"
+rotulo = "???"
+cor = Color(0.3529411765, 0.2901960784, 0.4705882353, 1)
+retratos = Dictionary[String, Texture2D]({"silhueta": ExtResource("2"), "neutro": ExtResource("3"), "serio": ExtResource("4")})
+expressao_padrao = "silhueta"

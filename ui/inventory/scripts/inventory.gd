@@ -73,6 +73,8 @@ func esconder():
 	#player.set_movement(true)
 	
 func process_input():
+	if PlayerState.is_on_dialogue():
+		return
 	if Input.is_action_just_pressed("e"):
 			aparecer()
 	if Input.is_action_just_pressed("Escape"):

@@ -34,6 +34,9 @@
 [ext_resource type="Script" uid="uid://cruk32u22s3hi" path="res://scenes/chapter_one/festival_city/scripts/tatame_npc.gd" id="39_itd5i"]
 [ext_resource type="Script" uid="uid://cygb308ny0j7f" path="res://scenes/chapter_one/festival_city/scripts/fighter_npc.gd" id="41_xe8ug"]
 [ext_resource type="Script" uid="uid://bcyjbd4gr0vov" path="res://scenes/chapter_one/festival_city/scripts/excalibur_npc.gd" id="42_6veai"]
+[ext_resource type="Script" path="res://scenes/chapter_one/festival_city/scripts/codigo_cmdzinho.gd" id="cmd_codigo"]
+[ext_resource type="Resource" path="res://scenes/chapter_one/festival_city/dialogos/cidade.dialogue" id="cmd_cidade"]
+[ext_resource type="Resource" path="res://scenes/chapter_one/festival_city/dialogos/tatame.dialogue" id="tat_tatame"]
 [ext_resource type="Script" uid="uid://7nfi1xdde7sb" path="res://scenes/chapter_one/festival_city/scripts/cmdzinho.gd" id="43_vr8h8"]
 [ext_resource type="Script" uid="uid://72em1sbbae8g" path="res://scenes/chapter_one/festival_city/scripts/tickets.gd" id="48_x1l38"]
 [ext_resource type="FontFile" uid="uid://vw38fsht6n3" path="res://assets/fonts/Juicy Fills.ttf" id="49_cxheh"]
@@ -850,7 +853,8 @@ y_sort_enabled = false
 position = Vector2(-5784, -12492)
 scale = Vector2(1.2, 1.2)
 SPRITE = SubResource("SpriteFrames_a8aap")
-texto = Array[String](["Entre e teste suas habilidades de predição com o fabuloso Tritomos!"])
+dialogo = ExtResource("cmd_cidade")
+cue_dialogo = "tenda"
 
 [node name="Cmdzinho" parent="." unique_id=461170962 instance=ExtResource("34_diajr")]
 z_index = 2
@@ -859,9 +863,18 @@ scale = Vector2(1.2, 1.2)
 script = ExtResource("43_vr8h8")
 SPRITE = SubResource("SpriteFrames_aog5f")
 
+[node name="CodigoCmdzinho" parent="Cmdzinho" instance=ExtResource("31_ltj3v")]
+z_index = 1
+position = Vector2(80, -56)
+scale = Vector2(1.3, 1.3)
+script = ExtResource("cmd_codigo")
+
+
 [node name="Cmdzinho_Follower" parent="." unique_id=138643360 instance=ExtResource("36_s1i3v")]
 z_index = 1
 position = Vector2(471, -15393)
+dialogo = ExtResource("cmd_cidade")
+cue_dialogo = "cmdzinho"
 
 [node name="TesteDeForcaNPC" parent="." unique_id=646547066 instance=ExtResource("34_diajr")]
 z_index = 2
@@ -893,7 +906,8 @@ z_index = 2
 position = Vector2(-5046, -20461)
 scale = Vector2(1.2, 1.2)
 SPRITE = SubResource("SpriteFrames_o1lg3")
-texto = Array[String](["Ei garotinho, você acha que pode me derrotar ?", "Fale com meu gerente, prometo pegar leve com você"])
+dialogo = ExtResource("tat_tatame")
+cue_dialogo = "montanha"
 
 [node name="LutadorInteract" parent="LutadorNPC" unique_id=579283126 instance=ExtResource("31_ltj3v")]
 z_index = 1
@@ -913,28 +927,32 @@ z_index = 2
 position = Vector2(5908, -17722)
 scale = Vector2(1.2, 1.2)
 SPRITE = SubResource("SpriteFrames_31fe7")
-texto = Array[String](["A cidade fica bem animada para o festival.\", \"Todo mundo sai de casa e tranca suas portas."])
+dialogo = ExtResource("cmd_cidade")
+cue_dialogo = "npc1"
 
 [node name="Kath" parent="." unique_id=1963620947 instance=ExtResource("34_diajr")]
 z_index = 2
 position = Vector2(-1303, -14408)
 scale = Vector2(1.2, 1.2)
 SPRITE = SubResource("SpriteFrames_n6hyk")
-texto = Array[String](["Finalmente! Aquele bigodudo disse que a gente consegue ganhar tickets nas atrações."])
+dialogo = ExtResource("cmd_cidade")
+cue_dialogo = "kath"
 
 [node name="NPC2" parent="." unique_id=913656197 instance=ExtResource("34_diajr")]
 z_index = 2
 position = Vector2(1060, -13696)
 scale = Vector2(1.2, 1.2)
 SPRITE = SubResource("SpriteFrames_bumue")
-texto = Array[String](["Você já sonhou com uma sala branca com desenhos na parede ?", "Pra mim o sonho sempre acaba depois que eu bato em um boneco feio."])
+dialogo = ExtResource("cmd_cidade")
+cue_dialogo = "npc2"
 
 [node name="NPC3" parent="." unique_id=291260485 instance=ExtResource("34_diajr")]
 z_index = 2
 position = Vector2(2307, -20674)
 scale = Vector2(1.2, 1.2)
 SPRITE = SubResource("SpriteFrames_7ubp2")
-texto = Array[String](["Eu gosto muito das atividades do festival.", "Mas nunca consigo ganhar nenhuma."])
+dialogo = ExtResource("cmd_cidade")
+cue_dialogo = "npc3"
 
 [node name="Tickets" type="CanvasLayer" parent="." unique_id=167132544]
 visible = false

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Personagem" format=3]
+
+[ext_resource type="Script" path="res://ui/dialogue/personagem.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+nome = "Guardião da Espada"
+cor = Color(0.2392156863, 0.3529411765, 0.5019607843, 1)
+expressao_padrao = ""

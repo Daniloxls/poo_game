@@ -1,0 +1,38 @@
+# Teste de força: o Apresentador e as dicas do Cmdzinho.
+# Contexto (strenght_test_npc.gd): quer_tentar: bool, erros: int (1 a 3, escolhe a dica).
+
+~ convite
+Apresentador: Venham, venham! [pop]Teste sua força[/pop] e ganhe tickets!
+Apresentador: E aí, garoto? Vai encarar o martelo?
+- Vou tentar!
+	set quer_tentar = true
+	Apresentador: Esse é o espírito! Pegue o martelo e dê o seu melhor!
+- Quem sabe depois.
+	set quer_tentar = false
+	Apresentador: Tudo bem. O martelo vai continuar aqui esperando por você!
+=> END
+
+~ ganhou
+Apresentador: Olha só...[wait=0.3] [pop]que força![/pop]
+Apresentador: Estou impressionado, garoto! Parabéns, aqui estão seus 10 tickets.
+=> END
+
+~ perdeu
+Apresentador: Ih...[wait=0.3] não foi dessa vez.
+Apresentador: Mas não desanime! Você pode tentar de novo quando quiser.
+=> END
+
+~ dica
+if erros == 1
+	Cmdzinho: [#duvida] Hmm... Turin, acho que dá pra [pop]acessar o código[/pop] do teste de força.
+elif erros == 2
+	Cmdzinho: [#neutro] Sabe...[wait=0.3] às vezes não é a sua força que precisa ser grande.
+else
+	Cmdzinho: [#alegre, #hop] Já sei! E se você [pop]diminuir o peso[/pop] desse teste?
+	Cmdzinho: [#feliz] [whisper]Ninguém precisa ficar sabendo...[/whisper]
+=> END
+
+~ ja_ganhou
+Apresentador: Opa! Só uma vitória por pessoa, campeão.
+Apresentador: Deixa alguns tickets pros outros!
+=> END

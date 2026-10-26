@@ -6,6 +6,17 @@ extends "res://entities/npc/npc_script.gd"
 
 var speed:float = 500.0
 
+func npc_ready() -> void:
+	if not Historia.cmdzinho_resgatado:
+		hide()
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+# Chamado pelo Cmdzinho afogado depois do resgate.
+func aparecer(pos: Vector2) -> void:
+	position = pos
+	show()
+	process_mode = Node.PROCESS_MODE_INHERIT
+
 func _physics_process(_delta: float) -> void:
 	animation()
 	calculate_velocity()

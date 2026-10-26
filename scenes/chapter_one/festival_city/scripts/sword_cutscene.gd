@@ -11,44 +11,91 @@ extends Node2D
 @onready var kath = $Kath
 @onready var continua = $BlackScreen/Label
 
-var dialogue = [["Certo Turin depois do Nicolas é a sua vez!", "Permitam-me pular na frente."],
-["O rei realmente ficou desleixado, deixando uma arma tão importante nas mãos de pessoas insignificantes."],
-["Vamos ao primeiro passo da minha vingança!"],
-["Essa espada me trás lembranças nada agradáveis.", "Vamos garantir que ela não caia nas mãos de mais ninguém."],
-["Hm...", "Enquanto a você...", "Devo estar perdendo meu jeito.", "Vou garantir que você não se recupere dessa!"],
-["Turin, cuidado!"],
-["Turin! Turin!", "Acorda, a gente precisa sair daqui!"]]
-var portraits = [["","res://assets/portraits/silhueta.png"],
-["res://assets/portraits/anti_poo_neutro.png"],
-["res://assets/portraits/anti_poo_serio.png"],
-["res://assets/portraits/anti_poo_neutro.png", "res://assets/portraits/anti_poo_serio.png"],
-["res://assets/portraits/anti_poo_neutro.png","res://assets/portraits/anti_poo_neutro.png","res://assets/portraits/anti_poo_neutro.png", "res://assets/portraits/anti_poo_serio.png"],
-[""],
-["", ""]]
-var event_seq = 0
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
+
+const ESPADA = preload("res://scenes/chapter_one/festival_city/dialogos/espada.dialogue")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _cena(n: int) -> void:
+	if not await Dialogo.iniciar(ESPADA, "cena_%d" % n):
+		push_warning("sword_cutscene: cena_%d recusada (já há diálogo ativo)" % n)
 
-func set_seq(num):
-	event_seq = num
-	
+
+# Não bloqueia quem chama (excalibur_npc não dá await).
 func play():
-	var tween = create_tween()
 	PlayerState.set_on_scene(true)
-	event_seq = -1
 	camera_fade_out()
-	tween.tween_interval(2.5)
-	tween.tween_callback(player.set_position.bind(Vector2(-7,-38213)))
-	tween.tween_callback(camera_fade_in)
-	tween.tween_callback(Textbox.queue_char_text.bind(dialogue[0], portraits[0]))
+	await get_tree().create_timer(2.5).timeout
+	player.set_position(Vector2(-7, -38213))
+	camera_fade_in()
 	MusicPlayer.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))
-	tween.tween_callback(set_seq.bind(1))
+	await _cena(1)
+
+	var npc_spin = create_tween()
+	npc_spin.pause()
+	npc_spin.set_loops()
+	npc_spin.tween_property(npc, "rotation", 360, 1)
+	npc_spin.tween_property(npc, "rotation", 0, 0)
+	fire.show()
+	fire.play("default")
+	var tween = create_tween()
+	tween.tween_interval(0.5)
+	tween.tween_property(fire, "position", fire.get_position() + Vector2(-750, 0), 0.2)
+	tween.tween_callback(fire.hide)
+	tween.tween_callback(npc_spin.play)
+	tween.tween_property(npc, "position", npc.get_position() + Vector2(-5800, 0), 1)
+	tween.tween_callback(MusicPlayer.play)
+	tween.tween_callback(anti_poo.play.bind("walk_down"))
+	tween.tween_property(anti_poo, "position", anti_poo.get_position() + Vector2(0, 1530), 3)
+	tween.tween_callback(anti_poo.play.bind("default"))
+	await tween.finished
+	await _cena(2)
+
+	anti_poo.z_index = 3
+	anti_poo.play("grabbing_sword")
+	await _cena(3)
+
+	await get_tree().create_timer(1.0).timeout
+	anti_poo.z_index = 0
+	camera_flash()
+	anti_poo.play("holding_sword")
+	stone.play("broken")
+	espada.hide()
+	await _cena(4)
+
+	camera_flash()
+	anti_poo.play("default")
+	await get_tree().create_timer(1.0).timeout
+	await _cena(5)
+
+	var tween_a = create_tween()
+	var tween_b = create_tween()
+	magic.show()
+	magic.play("default")
+	kath.play("run_left")
+	tween_a.set_parallel(true)
+	tween_a.tween_property(magic, "scale", Vector2(4, 4), 1.5)
+	tween_a.tween_property(magic, "position", magic.get_position() + Vector2(0, 2000), 3).set_ease(Tween.EASE_OUT)
+	tween_a.tween_property(black_screen, "color", Color("#ffffff"), 1.8)
+	tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-900, 0), 0.65).set_ease(Tween.EASE_OUT)
+	tween_b.tween_callback(kath.play.bind("jump"))
+	tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-1800, 0), 1.25).set_ease(Tween.EASE_OUT)
+	# "Turin, cuidado!" começa junto com a magia/clarão (como na cadeia antiga);
+	# o passo seguinte só roda quando os dois terminarem.
+	var falou := [false]  # array: lambda captura bool por valor
+	var fala := func():
+		await _cena(6)
+		falou[0] = true
+	fala.call()
+	await tween_a.finished
+	while not falou[0]:
+		await get_tree().process_frame
+
+	await get_tree().create_timer(2.0).timeout
+	black_screen.color = Color("#000000")
+	await _cena(7)
+	continua.show()
+
+
 func camera_fade_out():
 	var tween = create_tween()
 	tween.tween_property(black_screen,"color" , Color("#000000"), 2)
@@ -62,78 +109,3 @@ func camera_flash():
 	tween.tween_property(black_screen, "color", Color("#ffffff00"), 0)
 	tween.tween_property(black_screen, "color", Color("#ffffff"), 0.2)
 	tween.tween_property(black_screen, "color", Color("#ffffff00"), 0.1)
-	
-func _on_textbox_text_finish():
-	if event_seq == 1:
-		event_seq = -1
-		var tween = create_tween()
-		var npc_spin = create_tween()
-		npc_spin.pause()
-		npc_spin.set_loops()
-		npc_spin.tween_property(npc, "rotation", 360, 1)
-		npc_spin.tween_property(npc, "rotation", 0, 0)
-		fire.show()
-		fire.play("default")
-		tween.tween_interval(0.5)
-		tween.tween_property(fire, "position", fire.get_position() + Vector2(-750, 0), 0.2)
-		tween.tween_callback(fire.hide)
-		tween.tween_callback(npc_spin.play)
-		tween.tween_property(npc, "position", npc.get_position() + Vector2(-5800, 0), 1)
-		tween.tween_callback(MusicPlayer.play)
-		tween.tween_callback(anti_poo.play.bind("walk_down"))
-		tween.tween_property(anti_poo, "position", anti_poo.get_position() + Vector2(0,1530),3)
-		tween.tween_callback(anti_poo.play.bind("default"))
-		tween.tween_callback(Textbox.queue_char_text.bind(dialogue[1], portraits[1]))
-		tween.tween_callback(set_seq.bind(2))
-	elif event_seq == 2:
-		var tween = create_tween()
-		event_seq = -1
-		tween.tween_property(anti_poo, "z_index", 3, 0)
-		tween.tween_callback(anti_poo.play.bind("grabbing_sword"))
-		tween.tween_callback(Textbox.queue_char_text.bind(dialogue[2], portraits[2]))
-		tween.tween_callback(set_seq.bind(3))
-	elif event_seq == 3:
-		var tween = create_tween()
-		event_seq = -1
-		tween.tween_interval(1)
-		tween.tween_property(anti_poo, "z_index", 0, 0)
-		tween.tween_callback(camera_flash)
-		tween.tween_callback(anti_poo.play.bind("holding_sword"))
-		tween.tween_callback(stone.play.bind("broken"))
-		tween.tween_callback(espada.hide)
-		tween.tween_callback(Textbox.queue_char_text.bind(dialogue[3], portraits[3]))
-		tween.tween_callback(set_seq.bind(4))
-	elif event_seq == 4:
-		event_seq = -1
-		var tween = create_tween()
-		tween.tween_callback(camera_flash)
-		tween.tween_callback(anti_poo.play.bind("default"))
-		tween.tween_interval(1)
-		tween.tween_callback(Textbox.queue_char_text.bind(dialogue[4], portraits[4]))
-		tween.tween_callback(set_seq.bind(5))
-	elif event_seq == 5:
-		event_seq = -1
-		var tween_a = create_tween()
-		var tween_b = create_tween()
-		tween_a.tween_callback(magic.show)
-		tween_a.tween_callback(magic.play.bind("default"))
-		tween_a.tween_property(magic, "scale", Vector2(4, 4), 1.5)
-		tween_b.tween_callback(kath.play.bind("run_left"))
-		tween_a.set_parallel(true)
-		tween_a.tween_property(magic, "position", magic.get_position() + Vector2(0,2000), 3).set_ease(Tween.EASE_OUT)
-		tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-900, 0), 0.65).set_ease(Tween.EASE_OUT)
-		tween_b.tween_callback(kath.play.bind("jump"))
-		tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-1800, 0), 1.25).set_ease(Tween.EASE_OUT)
-		tween_a.tween_property(black_screen, "color", Color("#ffffff"), 1.8)
-		tween_a.tween_callback(Textbox.queue_char_text.bind(dialogue[5], portraits[5]))
-		tween_a.tween_callback(tween_a.set_parallel.bind(false))
-		tween_a.tween_callback(set_seq.bind(6))
-	elif event_seq == 6:
-		event_seq = -1
-		var tween = create_tween()
-		tween.tween_interval(2)
-		tween.tween_property(black_screen, "color", Color("#000000"), 0)
-		tween.tween_callback(Textbox.queue_char_text.bind(dialogue[6], portraits[6]))
-		tween.tween_callback(set_seq.bind(7))
-	elif event_seq == 7:
-		continua.show()
