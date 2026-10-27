@@ -27,6 +27,7 @@ func revelar(id: String) -> void:
 	var c: PanelContainer = get_node_or_null(id)
 	if c == null:
 		return
+	c.name = id + "_velho"  # libera o nome para o chip novo
 	var novo := UiInv.chip(Progresso.NOMES[id])
 	novo.name = id
 	add_child(novo)

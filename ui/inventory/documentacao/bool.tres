@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PaginaDoc" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/documentacao/pagina_doc.gd" id="1_pag"]
+
+[resource]
+script = ExtResource("1_pag")
+REQUER = "basico"
+ORDEM = 1
+TITULO = "bool"
+TEXTO = "Um [b]bool[/b] guarda só duas respostas: [b]true[/b] (verdadeiro) ou [b]false[/b] (falso). É perfeito para perguntas de sim ou não, como \"a porta está aberta?\" ou \"o Turin ainda está de pé?\". Quando o jogo precisa decidir alguma coisa, quase sempre há um bool por trás."
+EXEMPLO = "boolean portaAberta = false;\nportaAberta = true;\nboolean turinDePe = true;"

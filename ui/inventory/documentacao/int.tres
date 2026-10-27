@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PaginaDoc" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/documentacao/pagina_doc.gd" id="1_pag"]
+
+[resource]
+script = ExtResource("1_pag")
+REQUER = "basico"
+ORDEM = 2
+TITULO = "int"
+TEXTO = "Um [b]int[/b] guarda um número inteiro, sem vírgula: 0, 7, -3, 120. Use para contar coisas, como ingressos, vida ou quantas poções há na mochila. Dá para somar, subtrair e comparar ints, e o resultado continua sendo um número inteiro."
+EXEMPLO = "int ingressos = 30;\nint hp = 42;\nhp = hp - 10;"
