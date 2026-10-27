@@ -1,129 +1,161 @@
 extends CanvasLayer
+## Menu do jogo (E, Start ou o ícone do canto). Guarda a mochila e a pilha de telas;
+## cada tela é uma cena em ui/inventory/telas com abrir_tela(personagem).
 
-@onready var audio_click:AudioStreamPlayer = get_node("Audio_Click")
-# invetory é o script da tela principal do inventario
-# 'party' é o nó que guarda todos os personagens como filhos
+signal mudou  # algo do grupo ou da mochila mudou: as telas se atualizam
 
-# 'party_container' é o painel que guarda as informaçoes dos personagens
-@onready var item_menu = $TabContainer/Mochila
-
-@onready var party_container = $TabContainer/Personagens/HBoxContainer/PartyContainer
-#@onready var player = get_node("../Level").get_child(0).find_child("Player")
-
-@onready var tab_container = $TabContainer
-
-@onready var equipamento = $TabContainer/PersonagemInfo/TabContainer/Equipamento
-
-@onready var char_info = $TabContainer/PersonagemInfo
-
-@onready var held_item_panel = $TabContainer/Personagens/HeldItemPanel
-
-@onready var battle_inventory = $BattleInventory
-
-
-enum Inventory_State{
-	NORMAL,
-	HEALING
+const MOEDA := "bits"
+const TELAS := {
+	"resumo": "res://ui/inventory/telas/Resumo.tscn",
+	"status": "res://ui/inventory/telas/Status.tscn",
+	"classe": "res://ui/inventory/telas/Classe.tscn",
+	"itens": "res://ui/inventory/telas/Itens.tscn",
+	"equipamento": "res://ui/inventory/telas/Equipamento.tscn",
+	"documentacao": "res://ui/inventory/telas/Documentacao.tscn",
 }
+const ITENS_TESTE := ["res://scenes/items/repo/potion.tres", "res://scenes/items/repo/small_potion.tres",
+		"res://scenes/items/repo/armadura_ferro.tres", "res://scenes/items/repo/armadura_couro.tres"]
+
+@onready var menu: Control = $Menu
+@onready var telas: Control = $Menu/Telas
+@onready var audio_click: AudioStreamPlayer = $Audio_Click
+
+var mochila := Mochila.new()
+var dinheiro: int = 0
+var tempo_jogo: float = 0.0
+
+var _aberto := false
+var _pilha: Array = []  # [nome, personagem]
+var _cache := {}
+var _tween: Tween
 
 
-var equipment : Array[EQUIP_ITEM] = [load("res://scenes/items/repo/armadura_ferro.tres"),
-									load("res://scenes/items/repo/armadura_couro.tres")]
+func _ready() -> void:
+	mochila.mudou.connect(mudou.emit)
+	_cache["opcoes"] = $Menu/Telas/Opcoes
+	menu.hide()
 
 
-var char_container = preload("res://ui/inventory/CharContainer.tscn")
-var mochila := Mochila.new()  # temporário até o menu novo
-var held_item
-var current_state : Inventory_State = Inventory_State.NORMAL
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	tab_container.set_tab_disabled(1, true)
-	tab_container.set_tab_disabled(3, true)
-	tab_container.set_tab_disabled(5, true)
-	tab_container.set_tab_hidden(6, true)
-	tab_container.set_tab_hidden(7, true)
-	item_menu.connect("item_use", _on_item_use)
-	for char in Party.get_children():
-		var instance = char_container.instantiate()
-		instance.call_deferred("set_char", char)
-		instance.connect("pressed", _on_character_click)
-		party_container.add_child(instance)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	process_input()
+func _process(delta: float) -> void:
+	tempo_jogo += delta
+	if PlayerState.is_on_dialogue():
+		return
+	var foco := get_viewport().gui_get_focus_owner()
+	if foco is LineEdit or foco is TextEdit:   # "e" digitado num campo de texto
+		return
+	if Input.is_action_just_pressed("e") or Input.is_action_just_pressed("menu"):
+		if _aberto:
+			fechar()
+		else:
+			abrir()
 
-func get_items():
-	return item_menu.get_items()
+
+func _unhandled_input(e: InputEvent) -> void:
+	if _aberto and (e.is_action_pressed("Escape") or e.is_action_pressed("ui_cancel")):
+		get_viewport().set_input_as_handled()
+		voltar()
+	elif OS.is_debug_build() and e is InputEventKey and e.pressed and not e.echo and e.keycode == KEY_F10:
+		liberar_tudo()
+
+
+func esta_aberto() -> bool:
+	return _aberto
+
+
+func pode_abrir() -> bool:
+	return Progresso.tem("inventario") and not PlayerState.is_on_dialogue() \
+			and not PlayerState.is_on_scene() and process_mode != PROCESS_MODE_DISABLED
+
+
+func abrir() -> void:
+	if _aberto or not pode_abrir():
+		return
+	_aberto = true
+	PlayerState.set_on_interface(true)
+	menu.show()
+	_animar(true)
+	ir("resumo")
+
+
+func fechar() -> void:
+	if not _aberto:
+		return
+	_aberto = false
+	_pilha.clear()
+	PlayerState.set_on_interface(false)
+	_animar(false)
+
+
+func ir(tela: String, personagem = null) -> void:
+	_pilha.append([tela, personagem])
+	_mostrar_topo()
+
+
+func voltar() -> void:
+	_pilha.pop_back()
+	if _pilha.is_empty():
+		fechar()
+	else:
+		_mostrar_topo()
+
+
+func tela_atual() -> Control:
+	return _tela(_pilha[-1][0]) if not _pilha.is_empty() else null
+
+
+func clique() -> void:
+	audio_click.play()
+
+
+func get_items() -> Array[ITEM]:
+	return mochila.itens
+
 
 func full_heal():
 	for i in Party.get_children():
 		i.set_hp(i.get_max_hp())
 		i.default_state()   # sai de DEFEATED, senão não ganha turno na próxima luta
-		
-func get_party():
-	return Party
-
-# Quando o menu aparece, atualiza as informações e bloqueia o movimento do jogador
-func aparecer():
-	show()
 
 
-func esconder():
-	hide()
-	#player.set_movement(true)
-	
-func process_input():
-	if PlayerState.is_on_dialogue():
-		return
-	var foco := get_viewport().gui_get_focus_owner()
-	if Input.is_action_just_pressed("e") and not (foco is LineEdit or foco is TextEdit):   # "e" digitado num campo de texto
-			aparecer()
-	if Input.is_action_just_pressed("Escape"):
-			esconder()
+## F10 em modo de depuração: tudo desbloqueado e uma mochila de teste.
+func liberar_tudo() -> void:
+	Progresso.desbloquear_tudo()
+	var qtd := {ITENS_TESTE[0]: 6, ITENS_TESTE[1]: 3}
+	for caminho in ITENS_TESTE:
+		mochila.adicionar(load(caminho), qtd.get(caminho, 1))
+	dinheiro += 1250
 
 
-func get_personagem(nome : String):
-	return Party.get_node(nome)
-	
-	
-func _on_tab_container_tab_changed(tab):
-	if tab == 2:
-		equipamento.add_item_buttons(equipment)
-		
-		
-func use_item(item : ITEM, character):
-	match (item.get_type()):
-		item.Item_type.HEALTH:
-			party_container.get_node(character.get_char_name()).heal_char(item.get_health_restore(), get_personagem(character.get_char_name()))
-			get_personagem(character.get_name()).gain_health(item.get_health_restore())
-			
-func _on_character_click(char_container):
-	match (current_state):
-		Inventory_State.NORMAL:
-			audio_click.play()
-			tab_container.set_tab_hidden(6, false)
-			tab_container.set_current_tab(6)
-			char_info.set_personagem(get_personagem(char_container.get_char_name()))
-		Inventory_State.HEALING:
-			char_container.heal_char(held_item.get_health_restore(), get_personagem(char_container.get_char_name()))
-			get_personagem(char_container.get_char_name()).gain_health(held_item.get_health_restore())
-			item_menu.spend_item(held_item)
-			held_item = null
-			current_state = Inventory_State.NORMAL
-			held_item_panel.hide()
+func _mostrar_topo() -> void:
+	var topo: Array = _pilha[-1]
+	for t in telas.get_children():
+		t.hide()
+	var tela := _tela(topo[0])
+	tela.show()
+	if tela.has_method("abrir_tela"):
+		tela.abrir_tela(topo[1])
 
-func _on_item_use(item : ITEM):
-	match(item.get_type()):
-		ITEM.Item_type.HEALTH:
-			current_state = Inventory_State.HEALING
-			held_item = item
-			tab_container.set_current_tab(0)
-			held_item_panel.show()
-			held_item_panel.set_item_name(item.get_item_name())
-			
-func show_battle_inventory():
-	battle_inventory.show()
 
-func hide_battle_inventory():
-	battle_inventory.hide()
+func _tela(nome: String) -> Control:
+	if not _cache.has(nome):
+		var no: Control
+		if TELAS.has(nome) and ResourceLoader.exists(TELAS[nome]):
+			no = load(TELAS[nome]).instantiate()
+		else:
+			no = Control.new()  # tela ainda não feita
+		no.name = nome.capitalize()
+		no.set_anchors_preset(Control.PRESET_FULL_RECT)
+		telas.add_child(no)
+		_cache[nome] = no
+	return _cache[nome]
+
+
+func _animar(abrindo: bool) -> void:
+	if _tween:
+		_tween.kill()
+	menu.pivot_offset = menu.size / 2
+	_tween = create_tween().set_parallel().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_tween.tween_property(menu, "modulate:a", 1.0 if abrindo else 0.0, 0.15).from(0.0 if abrindo else 1.0)
+	_tween.tween_property(menu, "scale", Vector2.ONE if abrindo else Vector2(0.96, 0.96), 0.15).from(Vector2(0.96, 0.96) if abrindo else Vector2.ONE)
+	if not abrindo:
+		_tween.chain().tween_callback(menu.hide)

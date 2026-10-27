@@ -1,4 +1,4 @@
-extends MarginContainer
+extends PanelContainer
 ## Opções de diálogo: velocidade do texto e avanço automático.
 
 @onready var velocidade: OptionButton = %Velocidade

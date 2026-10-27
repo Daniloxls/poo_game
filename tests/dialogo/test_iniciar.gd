@@ -59,7 +59,7 @@ func _rodar() -> void:
 	await process_frame
 	await process_frame
 	Input.action_release("e")
-	checar("inventário não abre em diálogo", not inv.visible)
+	checar("inventário não abre em diálogo", not inv.esta_aberto())
 
 	var b: Node = _baloes()[0]
 	for i in 4:
