@@ -29,6 +29,8 @@ func _initialize() -> void:
 	checar("começa pela frente", s.frente.visible and not s.verso.visible)
 	var botoes := s.find_children("*", "Button", true, false).filter(func(b): return b.text == "{ }")
 	checar("um botão { } só", botoes.size() == 1, botoes.size())
+	await process_frame
+	checar("{ } fica dentro da carta", Rect2(Vector2.ZERO, s.carta.size).encloses(Rect2(s.botao_virar.position, s.botao_virar.size)), [s.botao_virar.position, s.carta.size])
 	checar("frente mostra o nome", s.frente.find_children("*", "Label", true, false).any(func(l): return l.text == "Turin"))
 
 	s.virar()

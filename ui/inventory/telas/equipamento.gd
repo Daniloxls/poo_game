@@ -148,7 +148,9 @@ func _montar() -> void:
 	_linhas_atr.clear()
 	for atr in ATRIBUTOS:
 		var l := UiInv.caixa(false, 0)
-		l.add_child(UiInv.rotulo(ATRIBUTOS[atr][0], 17))
+		var nome_atr := UiInv.rotulo(ATRIBUTOS[atr][0], 17)
+		nome_atr.custom_minimum_size.x = 150
+		l.add_child(nome_atr)
 		var v := RichTextLabel.new()
 		v.bbcode_enabled = true
 		v.fit_content = true

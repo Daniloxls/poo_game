@@ -21,7 +21,8 @@ func _initialize() -> void:
 		_fim()
 		return
 	for par in [["panel", "InvPainel"], ["panel", "InvPainelAba"], ["panel", "InvChip"], ["panel", "InvChipBloqueado"],
-			["panel", "InvCodigo"], ["panel", "InvBadge"], ["hover", "InvComando"], ["focus", "InvComando"], ["normal", "InvComando"]]:
+			["panel", "InvCodigo"], ["panel", "InvBadge"], ["hover", "InvComando"], ["focus", "InvComando"], ["normal", "InvComando"],
+			["normal", "InvCelula"], ["focus", "InvCelula"]]:
 		checar("%s tem %s" % [par[1], par[0]], t.has_stylebox(par[0], par[1]))
 	checar("InvCodigoTexto usa fonte mono", t.has_font("normal_font", "InvCodigoTexto"))
 	var painel = t.get_stylebox("panel", "TabContainer")

@@ -97,7 +97,7 @@ func _grade(titulo: String) -> GridContainer:
 func _botao(texto: String, acao: Callable) -> Button:
 	var b := Button.new()
 	b.text = texto
-	b.theme_type_variation = &"InvComando"
+	b.theme_type_variation = &"InvCelula"
 	b.pressed.connect(acao)
 	return b
 
@@ -118,6 +118,7 @@ func _atualizar() -> void:
 func _celula(it: ITEM) -> Button:
 	var b := Button.new()
 	b.name = it.ITEM_NAME
+	b.theme_type_variation = &"InvCelula"
 	b.text = "%s\nx%d" % [it.ITEM_NAME, it.QUANTITY]
 	b.icon = it.get_icon()
 	b.expand_icon = true
@@ -168,7 +169,7 @@ func _on_usar() -> void:
 		caixa.name = str(p.get_instance_id())
 		var b := Button.new()
 		b.text = "%s  %d/%d" % [p.get_nome(), p.get_hp(), p.get_max_hp()]
-		b.theme_type_variation = &"InvComando"
+		b.theme_type_variation = &"InvCelula"
 		b.pressed.connect(func(): if _sel: usar_em(_sel, p))
 		var bar := UiInv.barra(UiInv.VERDE)
 		bar.name = "Barra"

@@ -12,6 +12,11 @@ func _ready() -> void:
 	avanco.toggled.connect(func(on: bool) -> void: opcoes().avanco_automatico = on)
 
 
+func abrir_tela(_p) -> void:
+	_sincronizar()
+	velocidade.grab_focus()
+
+
 func _sincronizar() -> void:
 	velocidade.select(opcoes().velocidade_texto)
 	avanco.set_pressed_no_signal(opcoes().avanco_automatico)

@@ -28,8 +28,8 @@ func _ready() -> void:
 	verso.hide()
 	botao_virar = Button.new()
 	botao_virar.text = "{ }"
+	botao_virar.theme_type_variation = &"InvCelula"
 	botao_virar.add_theme_font_override("font", BattleFonts.mono())
-	botao_virar.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	botao_virar.position = Vector2(TAMANHO.x - 64, 12)
 	botao_virar.pressed.connect(virar)
 	carta.add_child(botao_virar)

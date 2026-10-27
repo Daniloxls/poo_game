@@ -31,6 +31,10 @@ func _initialize() -> void:
 	var badge: Control = icone.get_node("Badge")
 	checar("começa fechado", not inv.esta_aberto() and not inv.get_node("Menu").visible)
 	checar("Opções continua no inventário", inv.get_node_or_null("%Velocidade") != null)
+	ps.set_on_interface(true)  # tela de título, Tritomos...
+	await process_frame
+	checar("ícone some com outra interface aberta", not icone.visible)
+	ps.set_on_interface(false)
 	await process_frame
 	checar("ícone aparece com o inventário liberado", icone.visible)
 

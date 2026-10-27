@@ -151,6 +151,54 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_celula"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.105882, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_celula_on"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 0.823529, 0.247059, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882, 0.105882, 0.105882, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_celula_off"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.913725, 0.882353, 0.811765, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.419608, 0.392157, 0.341176, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="FontVariation" id="FontVariation_mono"]
 base_font = ExtResource("3_mono")
 variation_opentype = {2003265652: 700}
@@ -165,6 +213,16 @@ Button/colors/font_hover_color = Color(0.105882, 0.105882, 0.105882, 1)
 Button/colors/font_pressed_color = Color(0.105882, 0.105882, 0.105882, 1)
 InvBadge/base_type = &"Panel"
 InvBadge/styles/panel = SubResource("StyleBoxFlat_badge")
+InvCelula/base_type = &"Button"
+InvCelula/colors/icon_focus_color = Color(0.105882, 0.105882, 0.105882, 1)
+InvCelula/colors/icon_hover_color = Color(0.105882, 0.105882, 0.105882, 1)
+InvCelula/colors/icon_normal_color = Color(0.105882, 0.105882, 0.105882, 1)
+InvCelula/colors/icon_pressed_color = Color(0.105882, 0.105882, 0.105882, 1)
+InvCelula/styles/disabled = SubResource("StyleBoxFlat_celula_off")
+InvCelula/styles/focus = SubResource("StyleBoxFlat_celula_on")
+InvCelula/styles/hover = SubResource("StyleBoxFlat_celula_on")
+InvCelula/styles/normal = SubResource("StyleBoxFlat_celula")
+InvCelula/styles/pressed = SubResource("StyleBoxFlat_celula_on")
 InvChip/base_type = &"PanelContainer"
 InvChip/styles/panel = SubResource("StyleBoxFlat_chip")
 InvChipBloqueado/base_type = &"PanelContainer"
