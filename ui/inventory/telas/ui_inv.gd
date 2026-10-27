@@ -45,6 +45,25 @@ static func barra(cor: Color) -> ProgressBar:
 	return b
 
 
+## "HP      42/50" com a barra embaixo.
+static func medidor(texto: String, valor: int, maximo: int, cor: Color) -> VBoxContainer:
+	var v := caixa(true, 2)
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.alignment = BoxContainer.ALIGNMENT_CENTER
+	var topo := caixa(false, 0)
+	topo.add_child(rotulo(texto, 14))
+	var n := rotulo("%d/%d" % [valor, maximo], 14)
+	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	n.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	topo.add_child(n)
+	v.add_child(topo)
+	var b := barra(cor)
+	b.max_value = maxi(maximo, 1)
+	b.value = valor
+	v.add_child(b)
+	return v
+
+
 ## Etiqueta amarela (classe, conceito); bloqueado = cinza.
 static func chip(texto: String, ligado := true) -> PanelContainer:
 	var p := painel(&"InvChip" if ligado else &"InvChipBloqueado")

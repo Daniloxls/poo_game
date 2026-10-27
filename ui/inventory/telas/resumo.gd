@@ -124,30 +124,12 @@ func _linha(p) -> Button:
 	nome.add_child(tag)
 	nome.add_child(UiInv.rotulo("Nv %d" % p.get_level(), 14))
 	h.add_child(nome)
-	h.add_child(_medidor("HP", p.get_hp(), p.get_max_hp(), UiInv.VERDE))
-	h.add_child(_medidor("PP", p.get_pp(), p.get_max_pp(), UiInv.AZUL))
+	h.add_child(UiInv.medidor("HP", p.get_hp(), p.get_max_hp(), UiInv.VERDE))
+	h.add_child(UiInv.medidor("PP", p.get_pp(), p.get_max_pp(), UiInv.AZUL))
 	for c in h.get_children():
 		c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(h)
 	return b
-
-
-func _medidor(rotulo: String, valor: int, maximo: int, cor: Color) -> VBoxContainer:
-	var v := UiInv.caixa(true, 2)
-	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	v.alignment = BoxContainer.ALIGNMENT_CENTER
-	var topo := UiInv.caixa(false, 0)
-	topo.add_child(UiInv.rotulo(rotulo, 14))
-	var n := UiInv.rotulo("%d/%d" % [valor, maximo], 14)
-	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	n.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	topo.add_child(n)
-	v.add_child(topo)
-	var bar := UiInv.barra(cor)
-	bar.max_value = maxi(maximo, 1)
-	bar.value = valor
-	v.add_child(bar)
-	return v
 
 
 func _on_comando(b: Button) -> void:
