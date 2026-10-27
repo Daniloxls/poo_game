@@ -16,4 +16,4 @@ QUANTITY = 2
 ITEM_ICON = ExtResource("1_wat7q")
 ITEM_TEXT = "Armadura massa de ferro"
 SELECTION = 5
-PRICE = 0
+PRICE = 120

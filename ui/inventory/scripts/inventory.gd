@@ -32,6 +32,7 @@ var equipment : Array[EQUIP_ITEM] = [load("res://scenes/items/repo/armadura_ferr
 
 
 var char_container = preload("res://ui/inventory/CharContainer.tscn")
+var mochila := Mochila.new()  # temporário até o menu novo
 var held_item
 var current_state : Inventory_State = Inventory_State.NORMAL
 # Called when the node enters the scene tree for the first time.

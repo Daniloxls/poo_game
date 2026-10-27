@@ -22,6 +22,8 @@ enum Item_type{
 @export_multiline var ITEM_TEXT : String
 @export var SELECTION : Selecting
 @export var PRICE : int
+## Item-chave: fica na aba própria e não pode ser descartado.
+@export var CHAVE : bool
 
 func spend_item(quantity):
 	QUANTITY -= quantity
@@ -44,6 +46,11 @@ func get_selection():
 func get_type():
 	return Item_type.NORMAL
 	
-func use():
-	pass
+## Se o item tem efeito ao ser usado no menu.
+func pode_usar() -> bool:
+	return false
+
+## pocao.usar(turin): cada tipo de item faz o seu. Devolve quanto aplicou.
+func usar(_alvo) -> int:
+	return 0
 	
