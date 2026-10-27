@@ -13,6 +13,9 @@ func _ready() -> void:
 	for f in DirAccess.get_files_at("res://tests/dialogo"):
 		if f.begins_with("test_") and f.ends_with(".gd"):
 			testes.append("res://tests/dialogo/" + f)
+	for f in DirAccess.get_files_at("res://tests/inventario"):
+		if f.begins_with("test_") and f.ends_with(".gd"):
+			testes.append("res://tests/inventario/" + f)
 	testes.append("res://tests/run_tests_java.gd")
 	testes.append("res://tests/test_integracao_java.gd")
 
