@@ -4,7 +4,7 @@ extends CanvasLayer
 ## O Dialogue Manager instancia esta cena e chama start().
 
 const ANIMACOES := ["hop", "shake", "slump"]
-const TEXTO_COM_RETRATO := 300.0
+const TEXTO_COM_RETRATO := 340.0   # busto vai até x=317 da caixa (+ contorno)
 const TEXTO_SEM_RETRATO := 52.0
 const ETIQUETA_COM_RETRATO := 288.0
 const ETIQUETA_SEM_RETRATO := 60.0
@@ -168,10 +168,9 @@ func _responder(resposta: DialogueResponse) -> void:
 func _terminar() -> void:
 	linha = null
 	set_process_unhandled_input(false)
-	_caixa.hide()
-	_etiqueta.hide()
+	# Caixa, nome e busto somem juntos.
 	_retrato.esconder()
-	await get_tree().create_timer(0.25).timeout
+	await create_tween().tween_property($Tela, "modulate:a", 0.0, 0.2).finished
 	queue_free()
 
 

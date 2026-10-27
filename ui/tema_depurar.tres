@@ -1,0 +1,37 @@
+[gd_resource type="Theme" format=3 uid="uid://q1tv38coct6r"]
+
+[ext_resource type="FontFile" uid="uid://dx62gbs0xe5rt" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="1_chakra"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_foco"]
+bg_color = Color(1, 0.8235294, 0.24705882, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 0.972549, 0.905882, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[resource]
+PopupMenu/colors/font_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+PopupMenu/colors/font_hover_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+PopupMenu/constants/item_end_padding = 0
+PopupMenu/constants/item_start_padding = 14
+PopupMenu/constants/v_separation = 10
+PopupMenu/font_sizes/font_size = 22
+PopupMenu/fonts/font = ExtResource("1_chakra")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_foco")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_painel")

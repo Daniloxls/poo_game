@@ -1,18 +1,40 @@
 extends Node2D
 
+# Cutscene do roubo da espada. A cena toda está no AnimationPlayer "Animacao"
+# (animação "roubo", em roubo_espada.tres): posições, sprites, câmera e clarões.
+# Este script só tem o que a linha do tempo chama pelas trilhas de método.
+
 @onready var player = get_node("../Player")
-@onready var anti_poo = $AntiPOO
-@onready var espada = $Espada
-@onready var black_screen = $BlackScreen/ColorRect
-@onready var fire = $Fire
-@onready var stone = $Stone
-@onready var npc = $NpcChutado
+@onready var camera: Camera2D = get_node("../Player/Camera2D")
+@onready var animacao: AnimationPlayer = $Animacao
 @onready var magic = $Magic
-@onready var kath = $Kath
 @onready var continua = $BlackScreen/Label
 
-
 const ESPADA = preload("res://scenes/chapter_one/festival_city/dialogos/espada.dialogue")
+const MUSICA = "res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"
+
+var _falando := false   # conversa iniciada por _falar_junto ainda em andamento
+var _tremor: Tween
+
+
+# Não bloqueia quem chama (excalibur_npc não dá await).
+func play():
+	PlayerState.set_on_scene(true)
+	animacao.play("roubo")
+
+
+func _preparar() -> void:
+	player.set_position(Vector2(-7, -38213))
+	player.set_sprite("idle_up")
+	MusicPlayer.set_stream(load(MUSICA))
+
+
+func _musica() -> void:
+	MusicPlayer.play()
+
+
+func _fim() -> void:
+	continua.show()
 
 
 func _cena(n: int) -> void:
@@ -20,92 +42,47 @@ func _cena(n: int) -> void:
 		push_warning("sword_cutscene: cena_%d recusada (já há diálogo ativo)" % n)
 
 
-# Não bloqueia quem chama (excalibur_npc não dá await).
-func play():
-	PlayerState.set_on_scene(true)
-	camera_fade_out()
-	await get_tree().create_timer(2.5).timeout
-	player.set_position(Vector2(-7, -38213))
-	camera_fade_in()
-	MusicPlayer.set_stream(load("res://assets/bgm/qubodup-yd-DarkShrineLoop-OpenGameArt.mp3"))
-	await _cena(1)
+# A linha do tempo para enquanto a conversa n acontece.
+func _falar(n: int) -> void:
+	animacao.pause()
+	await _cena(n)
+	animacao.play()
 
-	var npc_spin = create_tween()
-	npc_spin.pause()
-	npc_spin.set_loops()
-	npc_spin.tween_property(npc, "rotation", 360, 1)
-	npc_spin.tween_property(npc, "rotation", 0, 0)
-	fire.show()
-	fire.play("default")
-	var tween = create_tween()
-	tween.tween_interval(0.5)
-	tween.tween_property(fire, "position", fire.get_position() + Vector2(-750, 0), 0.2)
-	tween.tween_callback(fire.hide)
-	tween.tween_callback(npc_spin.play)
-	tween.tween_property(npc, "position", npc.get_position() + Vector2(-5800, 0), 1)
-	tween.tween_callback(MusicPlayer.play)
-	tween.tween_callback(anti_poo.play.bind("walk_down"))
-	tween.tween_property(anti_poo, "position", anti_poo.get_position() + Vector2(0, 1530), 3)
-	tween.tween_callback(anti_poo.play.bind("default"))
-	await tween.finished
-	await _cena(2)
 
-	anti_poo.z_index = 3
-	anti_poo.play("grabbing_sword")
-	await _cena(3)
+# A conversa n acontece junto com a animação ("Turin, cuidado!" com a magia).
+func _falar_junto(n: int) -> void:
+	_falando = true
+	await _cena(n)
+	_falando = false
 
-	await get_tree().create_timer(1.0).timeout
-	anti_poo.z_index = 0
-	camera_flash()
-	anti_poo.play("holding_sword")
-	stone.play("broken")
-	espada.hide()
-	await _cena(4)
 
-	camera_flash()
-	anti_poo.play("default")
-	await get_tree().create_timer(1.0).timeout
-	await _cena(5)
-
-	var tween_a = create_tween()
-	var tween_b = create_tween()
-	magic.show()
-	magic.play("default")
-	kath.play("run_left")
-	tween_a.set_parallel(true)
-	tween_a.tween_property(magic, "scale", Vector2(4, 4), 1.5)
-	tween_a.tween_property(magic, "position", magic.get_position() + Vector2(0, 2000), 3).set_ease(Tween.EASE_OUT)
-	tween_a.tween_property(black_screen, "color", Color("#ffffff"), 1.8)
-	tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-900, 0), 0.65).set_ease(Tween.EASE_OUT)
-	tween_b.tween_callback(kath.play.bind("jump"))
-	tween_b.tween_property(kath, "position", kath.get_position() + Vector2(-1800, 0), 1.25).set_ease(Tween.EASE_OUT)
-	# "Turin, cuidado!" começa junto com a magia/clarão (como na cadeia antiga);
-	# o passo seguinte só roda quando os dois terminarem.
-	var falou := [false]  # array: lambda captura bool por valor
-	var fala := func():
-		await _cena(6)
-		falou[0] = true
-	fala.call()
-	await tween_a.finished
-	while not falou[0]:
+# Segura a linha do tempo até a conversa de _falar_junto terminar.
+func _esperar_falas() -> void:
+	if not _falando:
+		return
+	animacao.pause()
+	while _falando:
 		await get_tree().process_frame
-
-	await get_tree().create_timer(2.0).timeout
-	black_screen.color = Color("#000000")
-	await _cena(7)
-	continua.show()
+	animacao.play()
 
 
-func camera_fade_out():
-	var tween = create_tween()
-	tween.tween_property(black_screen,"color" , Color("#000000"), 2)
-	
-func camera_fade_in():
-	var tween = create_tween()
-	tween.tween_property(black_screen, "color", Color("#00000000"), 2)
+# Turin dá um pulinho para trás, de susto.
+func _recuar(distancia: float) -> void:
+	var p: Vector2 = player.position
+	var t := create_tween()
+	t.tween_property(player, "position", p + Vector2(0, distancia * 1.25), 0.15).set_ease(Tween.EASE_OUT)
+	t.tween_property(player, "position", p + Vector2(0, distancia), 0.2).set_ease(Tween.EASE_IN)
 
-func camera_flash():
-	var tween = create_tween()
-	tween.tween_property(black_screen, "color", Color("#ffffff00"), 0)
-	tween.tween_property(black_screen, "color", Color("#ffffff"), 0.2)
-	tween.tween_property(black_screen, "color", Color("#ffffff00"), 0.1)
+
+# Tremor de tela que diminui até parar. Usa a posição da câmera: o offset é da linha do tempo.
+func tremer(duracao: float, forca: float) -> void:
+	if _tremor:
+		_tremor.kill()
+	var base := Vector2(101, 55)   # posição da câmera no Player (City.tscn)
+	_tremor = create_tween()
+	var passos := int(duracao / 0.04)
+	for i in passos:
+		var f := forca * (1.0 - float(i) / passos)
+		_tremor.tween_property(camera, "position", base + Vector2(randf_range(-f, f), randf_range(-f, f)), 0.04)
+	_tremor.tween_property(camera, "position", base, 0.04)
+

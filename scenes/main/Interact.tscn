@@ -1,35 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://b86f2356r1et4"]
+[gd_scene load_steps=5 format=3 uid="uid://b86f2356r1et4"]
 
 [ext_resource type="Script" path="res://scenes/main/scripts/interact.gd" id="1_3dfgq"]
-[ext_resource type="Material" uid="uid://vga6u23827v7" path="res://assets/shaders/Interact.tres" id="2_irvtk"]
-[ext_resource type="Shader" path="res://assets/shaders/Interact.gdshader" id="2_okt0n"]
+[ext_resource type="Script" path="res://scenes/main/scripts/glifos.gd" id="2_glifos"]
+[ext_resource type="Theme" path="res://ui/tema_depurar.tres" id="3_tema"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cku"]
 size = Vector2(500, 500)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uqw1g"]
-shader = ExtResource("2_okt0n")
-shader_parameter/shake_power = 0.03
-shader_parameter/shake_rate = 0.2
-shader_parameter/shake_speed = 5.0
-shader_parameter/shake_block_size = 30.5
-shader_parameter/shake_color_rate = 0.01
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6i0ow"]
-bg_color = Color(0.0588235, 0, 0.564706, 1)
-
 [node name="Interact" type="Node2D"]
 script = ExtResource("1_3dfgq")
 
-[node name="ShaderRect" type="ColorRect" parent="."]
+[node name="Glifos" type="Control" parent="."]
 visible = false
 z_index = 4
-material = ExtResource("2_irvtk")
-offset_left = -314.0
-offset_top = -255.0
-offset_right = 297.0
-offset_bottom = 261.0
-scale = Vector2(1.00609, 1.01127)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+mouse_filter = 2
+script = ExtResource("2_glifos")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -43,12 +34,11 @@ collision_layer = 2147483648
 shape = SubResource("RectangleShape2D_f7cku")
 
 [node name="MenuButton" type="MenuButton" parent="."]
-material = SubResource("ShaderMaterial_uqw1g")
 offset_left = -254.0
 offset_top = -252.0
 offset_right = 252.0
 offset_bottom = 251.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_6i0ow")
+theme = ExtResource("3_tema")
 button_pressed = true
 button_mask = 2
 item_count = 1

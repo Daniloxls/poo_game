@@ -8,14 +8,16 @@ extends Node2D
 
 # 'colision' é o corpo de colisão do objeto, por padrão, está ligado.
 @onready var colision = $StaticBody2D
-@onready var shader_rect = $ShaderRect
+@onready var glifos = $Glifos   # glifos de código subindo: marca de objeto depurável
 # 'player' é uma referência ao nó do jogador,
 # permitindo acesso para movê-lo ou alterar suas propriedades.
 @onready var player = get_tree().get_first_node_in_group("Player")
 @onready var menu_button = $MenuButton
 
+# Cor dos glifos de código que sobem de objetos depuráveis (mude no Inspetor).
+@export var cor_glifos := Color("#bff6ff")
+
 var has_popup := false
-var mouse_over := false 
 var popup
 # O nome que aparece na caixa de código.
 var nome = ""
@@ -39,18 +41,14 @@ var portraits = [""]
 var depuring = false
 var triggered : bool
 
+var _ancora_popup := Vector2.ZERO   # onde o objeto estava na tela quando o menu abriu
+
 func _ready():
 	if (codigo != {}) or (metodos != {}):
 		has_popup = true
-		shader_rect.show()
+		glifos.show()
 	ready_drop_menu()
-	if has_popup:
-		# Connect the about_to_popup signal to set the popup position
-		menu_button.get_popup().connect("about_to_popup", self._on_menu_button_about_to_popup)
-		# Connect mouse_entered and mouse_exited signals
-		area.connect("mouse_entered", self._on_mouse_entered)
-		area.connect("mouse_exited", self._on_mouse_exited)
-	else:
+	if not has_popup:
 		# Hide the MenuButton if the object doesn't need a popup
 		menu_button.hide()
 		
@@ -58,16 +56,6 @@ func _ready():
 func _process(delta):
 	pass
 
-func _unhandled_input(event: InputEvent):
-	if has_popup and event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			# Check if the mouse is over this object's Area2D
-				if mouse_over:
-					# Open the popup manually
-					menu_button.show_popup()
-					# Set the popup position to the mouse location
-					call_deferred("_set_popup_position")
-			
 func ready_drop_menu():
 	if (codigo == {}) and (metodos == {}):
 		menu_button.hide()
@@ -126,14 +114,27 @@ func _set_popup_position():
 	# o MenuButton escala o popup pelo zoom da câmera (0.11 na cidade),
 	# o que deixava o "Depurar" minúsculo; volta para o tamanho normal da interface
 	popup.content_scale_factor = 1.0
+	popup.transparent_bg = true   # cantos arredondados do tema_depurar
 	popup.reset_size()
-	popup.connect("index_pressed", depure)
+	if not popup.index_pressed.is_connected(depure):
+		popup.index_pressed.connect(depure)
+		popup.window_input.connect(_on_popup_input)
 	popup.set_position(get_viewport().get_mouse_position())
-	
-func _on_mouse_entered():
-	# Mouse entered the Area2D
-	mouse_over = true
+	_ancora_popup = get_global_transform_with_canvas().origin
+	if not get_tree().process_frame.is_connected(_fechar_popup_se_mexeu):
+		get_tree().process_frame.connect(_fechar_popup_se_mexeu)
 
-func _on_mouse_exited():
-	# Mouse exited the Area2D
-	mouse_over = false
+
+# O menu aberto recebe todos os cliques; o direito fora dele só fechava com
+# o esquerdo. Agora qualquer clique fora fecha, sem reabrir no lugar novo.
+func _on_popup_input(event: InputEvent):
+	if event is InputEventMouseButton and event.pressed and not Rect2(Vector2.ZERO, popup.size).has_point(event.position):
+		popup.hide()
+
+
+# A câmera (ou o objeto) andou: o menu ficaria solto na tela, então fecha.
+func _fechar_popup_se_mexeu():
+	if popup.visible and get_global_transform_with_canvas().origin.distance_to(_ancora_popup) < 1.0:
+		return
+	popup.hide()
+	get_tree().process_frame.disconnect(_fechar_popup_se_mexeu)

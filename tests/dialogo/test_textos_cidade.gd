@@ -5,7 +5,7 @@ const CUES := {
 	"excalibur": ["conversa"],
 	"tatame": ["desafio", "vitoria", "derrota", "descansando", "montanha"],
 	"teste_forca": ["convite", "ganhou", "perdeu", "dica", "ja_ganhou"],
-	"tritomos": ["boas_vindas", "acertou", "errou"],
+	"tritomos": ["boas_vindas", "acertou", "errou", "embacada"],
 	"espada": ["cena_1", "cena_2", "cena_3", "cena_4", "cena_5", "cena_6", "cena_7"],
 	"cidade": ["cmdzinho_afogando", "cmdzinho_resgate", "cmdzinho", "kath", "tenda", "npc1", "npc2", "npc3", "trocador"],
 }

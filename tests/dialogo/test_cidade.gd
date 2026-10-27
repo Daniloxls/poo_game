@@ -159,8 +159,12 @@ func _forca_e_tritomos(cidade: Node) -> void:
 	Engine.time_scale = 1.0
 	var tenda = cidade.get_node("TendaVidente")
 	antes = tickets.get_tickets()
-	tenda.correct_answer = true
-	tenda.retorno = "'sol'"
+	# código com erro: Tritomos só diz que a bola está embaçada, sem tickets
+	tenda.codigo_editado = tenda.get_codigo_java_atual().replace("return resposta;", "return 5;")
+	tenda.pensamento_field.text = "lua"
+	await _jogar("tritomos embaçada", tenda._on_button_pressed, 0)
+	checar("embaçada: Tritomos fala, sem tickets, continua na tenda", vistos.has("Tritomos") and tickets.get_tickets() == antes and not tenda.bilhete.visible, [vistos, tickets.get_tickets() - antes])
+	tenda.codigo_editado = tenda.get_codigo_java_atual().replace("return 5;", "return \"sol\";")
 	tenda.pensamento_field.text = "lua"
 	var duas_vezes := func():
 		tenda._on_button_pressed()   # sem await: o 2º clique chega durante a conversa
@@ -170,7 +174,7 @@ func _forca_e_tritomos(cidade: Node) -> void:
 	await _jogar("tritomos errou (2 cliques)", duas_vezes, 0)
 	checar("tritomos: escolha verdade", hist.tritomos == "verdade", hist.tritomos)
 	checar("tritomos: +10 tickets uma vez só", tickets.get_tickets() == antes + 10, tickets.get_tickets() - antes)
-	checar("tritomos: foi embora", tenda.left_label.visible)
+	checar("tritomos: foi embora", tenda.bilhete.visible)
 
 
 func _contar_fim(_r = null) -> void:
@@ -179,18 +183,27 @@ func _contar_fim(_r = null) -> void:
 
 func _cutscene_espada(cidade: Node) -> void:
 	var cena = cidade.get_node("Cutscene")
+	# A camada "wall" (z 1) cobria tudo da cutscene com z 0: a pedra, o Runis e o vulto sumiam.
+	var parede: Node2D = cidade.get_node("TileMap/wall")
+	var z := func(n: String) -> int: return cena.z_index + cena.get_node(n).z_index   # z relativo ao Cutscene
+	checar("espada: atores acima da camada wall", z.call("Stone") >= parede.z_index and z.call("NpcChutado") >= parede.z_index, [z.call("Stone"), parede.z_index])
+	checar("espada: vulto e Kath escondidos até entrarem", not cena.get_node("AntiPOO").visible and not cena.get_node("Kath").visible)
 	root.get_node("DialogueManager").dialogue_ended.connect(_contar_fim)
 	var y0: float = cena.magic.position.y
 	var y_na_cena_6 := -1.0
+	var escuro_na_cena_1 := -1.0
 	cena.play()
 	var t := Time.get_ticks_msec()
 	while Time.get_ticks_msec() - t < 40000 and not cena.continua.visible:
 		await process_frame
 		var bs := _baloes()
 		if not bs.is_empty():
+			if conversas == 0 and escuro_na_cena_1 < 0.0:
+				escuro_na_cena_1 = cena.get_node("BlackScreen/ColorRect").color.a
 			if conversas == 5 and y_na_cena_6 < 0.0:
 				y_na_cena_6 = cena.magic.position.y - y0 + 1.0   # 1 + deslocamento da magia
 			bs[0].avancar()
+	checar("espada: tela limpa quando a cena_1 começa", is_zero_approx(escuro_na_cena_1), escuro_na_cena_1)
 	checar("espada: cena_6 começa antes da magia terminar", y_na_cena_6 > 0.0 and y_na_cena_6 < 2000.0, y_na_cena_6)
 	checar("espada: label continua visível", cena.continua.visible)
 	checar("espada: sete conversas", conversas == 7, conversas)

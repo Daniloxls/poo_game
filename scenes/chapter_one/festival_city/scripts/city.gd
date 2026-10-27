@@ -15,6 +15,12 @@ func _ready():
 	#MusicPlayer.play()
 
 
+# Atalho de teste: F9 toca a cutscene da espada (só em build de debug, ex.: F5/F6 no editor).
+func _unhandled_input(event):
+	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F9:
+		sword_scene.play()
+
+
 func _on_battle_lost():
 	battle_lost.emit()
 	

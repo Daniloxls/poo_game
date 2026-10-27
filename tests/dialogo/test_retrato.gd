@@ -40,8 +40,10 @@ func _rodar() -> void:
 	r.trocar_expressao("surpreso")
 	checar("trocar: textura muda", img.texture == cmd.retrato("surpreso"))
 	checar("trocar: em_animacao", r.em_animacao)
+	checar("trocar: clarão só no desenho (shader), sem retângulo", img.material.get_shader_parameter("brilho") > 0.0 and not r.has_node("Flash"))
 	await create_timer(0.5).timeout
 	checar("trocar: termina", not r.em_animacao)
+	checar("trocar: clarão apaga", is_zero_approx(img.material.get_shader_parameter("brilho")))
 	checar("trocar: escala 1", r.scale == Vector2.ONE, r.scale)
 
 	for nome in ["hop", "shake"]:

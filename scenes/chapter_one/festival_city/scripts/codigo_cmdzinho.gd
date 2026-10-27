@@ -5,7 +5,7 @@ var ultima_chamada := ""
 
 
 func _ready():
-	shader_rect.show()
+	glifos.show()
 	nome = "Cmdzinho"
 	classe_java = "Cmdzinho"
 	dica_java = "Você só pode mudar a chamada dentro de reagirAgua()."
@@ -21,6 +21,7 @@ func _ready():
 """
 	ready_drop_menu()
 	set_colision(false)   # a área grande daria uma parede invisível em volta da fonte
+	area.position.y = 300   # desce a área até a borda da fonte, onde o Turin para
 
 
 # A área grande cobre a do Cmdzinho: o Space cai aqui e segue para o NPC.

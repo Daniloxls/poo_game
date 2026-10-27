@@ -7,7 +7,8 @@ extends Node
 ## - Compila e executa o código de cada objeto, mostrando os erros no painel.
 ##
 ## Classes que o jogo oferece ao código Java dos objetos:
-##   Personagem: getNome(), getHp(), getMaxHp(), getForca(), getAtaque(), getDefesa()
+##   Personagem: getNome(), getHp(), getMaxHp(), getForca(), getAtaque(), getDefesa(),
+##               getPensamento()
 ## E todo método declarado como `native` no Java chama o método de mesmo nome
 ## no script GDScript do objeto (ex.: `private native void causarDano(int dano);`).
 
@@ -111,6 +112,7 @@ func _definir_classes_do_jogo() -> void:
 	p.add_method("getForca", func(t, _a): return int(_ler(t.host, ["forca", "atk"], 0)), [], "int")
 	p.add_method("getAtaque", func(t, _a): return int(_ler(t.host, ["atk", "forca"], 0)), [], "int")
 	p.add_method("getDefesa", func(t, _a): return int(_ler(t.host, ["def"], 0)), [], "int")
+	p.add_method("getPensamento", func(t, _a): return str(_ler(t.host, ["pensamento"], "")), [], "String")
 
 
 func _ler(fonte, nomes: Array, padrao):
@@ -128,10 +130,12 @@ func _on_executar(_codigo: String) -> void:
 		return
 	_guardar_estado(objeto)
 	painel.clear_output()
+	objeto.ultimo_erro = ""
 	if not compilar(objeto):
 		return
-	painel.print_success("Código compilado sem erros.")
-	objeto.ao_executar_codigo()
+	objeto.ao_executar_codigo()   # o objeto pode rodar o código: erros de execução aparecem aqui
+	if objeto.ultimo_erro == "":
+		painel.print_success("Código compilado sem erros.")
 
 
 func _on_painel_toggled(aberto: bool) -> void:
@@ -149,6 +153,14 @@ func _guardar_estado(objeto: Node) -> void:
 	if objeto == _objeto_atual:
 		objeto.estado_editor = painel.editor.get_state()
 		objeto.codigo_editado = painel.get_code()
+
+
+## Erro que o jogo encontrou no resultado do código (ex.: um retorno null).
+## Fica em `ultimo_erro` e aparece no painel se o código do objeto estiver aberto.
+func erro_do_jogo(objeto: Node, mensagem: String) -> void:
+	objeto.ultimo_erro = mensagem
+	if objeto == _objeto_atual:
+		painel.show_error(mensagem)
 
 
 func _reportar_erro(objeto: Node) -> void:

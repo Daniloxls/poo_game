@@ -75,7 +75,8 @@ func esconder():
 func process_input():
 	if PlayerState.is_on_dialogue():
 		return
-	if Input.is_action_just_pressed("e"):
+	var foco := get_viewport().gui_get_focus_owner()
+	if Input.is_action_just_pressed("e") and not (foco is LineEdit or foco is TextEdit):   # "e" digitado num campo de texto
 			aparecer()
 	if Input.is_action_just_pressed("Escape"):
 			esconder()

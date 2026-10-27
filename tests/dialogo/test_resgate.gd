@@ -55,6 +55,21 @@ func _rodar() -> void:
 		_fim()
 		return
 
+	# Turin sobe até a borda da fonte e a caixa de cima alcança o Cmdzinho.
+	for i in 3:
+		await physics_frame
+	var turin: CharacterBody2D = get_first_node_in_group("Player")
+	var p_antes := turin.global_position
+	turin.global_position = cmd.global_position + Vector2(0, 2500)
+	for i in 400:
+		if turin.move_and_collide(Vector2.UP * 10):
+			break
+	var caixa_de: Callable = func(cs: CollisionShape2D): return cs.global_transform * cs.shape.get_rect()
+	var caixa: Rect2 = caixa_de.call(turin.get_node("Collision_interact/Box_up"))
+	var alcanca := [cmd.get_node("Area2D/CollisionShape2D"), codigo.get_node("Area2D/CollisionShape2D")].any(func(cs): return caixa_de.call(cs).intersects(caixa))
+	checar("Turin alcança o Cmdzinho da borda da fonte", alcanca, caixa)
+	turin.global_position = p_antes
+
 	checar("seguidor começa escondido", not seguidor.visible)
 	var p0: Vector2 = seguidor.position
 	for i in 5:

@@ -11,6 +11,20 @@ func checar(titulo: String, ok: bool, detalhe = "") -> void:
 		falhas += 1
 
 
+# Abre o painel do Tritomos, troca o que vem depois do 'return' e aperta Executar.
+func _trocar_retorno(rt, tenda, novo: String) -> void:
+	rt.editar(tenda)
+	var ed: LockedCodeEdit = rt.painel.editor
+	for l in ed.get_line_count():
+		var texto := ed.get_line(l)
+		if texto.contains("return "):
+			ed.select(l, texto.find("return ") + 7, l, texto.find(";"))
+			ed.insert_text_at_caret(novo)
+	await process_frame
+	await process_frame
+	rt._on_executar(rt.painel.get_code())
+
+
 func _initialize() -> void:
 	var cidade = load("res://scenes/chapter_one/festival_city/City.tscn").instantiate()
 	root.add_child(cidade)
@@ -70,6 +84,66 @@ func _initialize() -> void:
 	checar("expressão com o personagem", lutador.calcular_dano(turin) == 3, lutador.ultimo_erro)
 	lutador.codigo_editado = lutador.get_codigo_java_atual().replace("jogador.getHp() / 10", "jogador.getVida()")
 	checar("método inexistente vira erro (-1)", lutador.calcular_dano(turin) == -1 and lutador.ultimo_erro.contains("getVida"), lutador.ultimo_erro)
+
+	print("== Tritomos ==")
+	var tenda = cidade.get_node("TendaVidente")
+	checar("original: bola mostra o pensamento", tenda.ler_pensamento("lua") == "lua", tenda.ultimo_erro)
+	tenda.codigo_editado = tenda.get_codigo_java_atual().replace("return resposta;", "return \"sol\";")
+	checar("retorna String literal", tenda.ler_pensamento("lua") == "sol", tenda.ultimo_erro)
+	tenda.codigo_editado = tenda.get_codigo_java_atual().replace("return \"sol\";", "return 5;")
+	checar("retornar int dá erro de tipo", tenda.ler_pensamento("lua") == null and tenda.ultimo_erro.contains("esperado String"), tenda.ultimo_erro)
+	tenda.codigo_editado = tenda.get_codigo_java_atual().replace("return 5;", "return sol;")
+	checar("sem aspas dá erro", tenda.ler_pensamento("lua") == null and tenda.ultimo_erro != "", tenda.ultimo_erro)
+	tenda.codigo_editado = tenda.get_codigo_java_atual().replace("return sol;", "return null;")
+	checar("retornar null dá erro", tenda.ler_pensamento("lua") == null and tenda.ultimo_erro != "", tenda.ultimo_erro)
+	tenda.resetar_codigo_java()
+	# Erros do Tritomos aparecem no painel de código ao apertar Executar, não na tela dele.
+	for caso in [["null", "não null"], ["5", "esperado String"]]:
+		await _trocar_retorno(rt, tenda, caso[0])
+		var saida: String = rt.painel.console.get_parsed_text()
+		checar("Executar com return %s mostra o erro no painel" % caso[0], saida.contains(caso[1]) and not saida.contains("sem erros"), saida)
+		rt.fechar()
+		await create_timer(0.5).timeout
+	tenda.first_interaction = false
+	tenda.interaction()
+	await process_frame
+	checar("abrir com erro não mostra erro na tela", tenda.linha.visible and not tenda.bolha.visible)
+	tenda.close_window()
+	await _trocar_retorno(rt, tenda, "resposta")
+	checar("código certo: Executar diz que compilou", rt.painel.console.get_parsed_text().contains("sem erros"), rt.painel.console.get_parsed_text())
+	rt.fechar()
+	await create_timer(0.5).timeout
+	tenda.resetar_codigo_java()
+
+	# Tela: balão ao lado da bola com o que ela mostrou; palavra comprida cabe na moldura.
+	tenda.interaction()
+	tenda._mostrar_palavra("sol")
+	checar("balão mostra a palavra", tenda.bolha.visible and tenda.get_node("VidenteInterface/%Palavra").text == "sol")
+	tenda._mostrar_palavra("paralelepipedo-gigante-demais")
+	checar("palavra comprida cabe na moldura", tenda.bolha.size.x <= tenda.LARGURA_MAXIMA_BOLHA, tenda.bolha.size.x)
+	tenda._mostrar_nevoa()
+	checar("névoa troca o balão", tenda.nevoa.visible and not tenda.bolha.visible)
+	tenda.close_window()
+	checar("fechar limpa a bola", not tenda.nevoa.visible and not tenda.bolha.visible)
+
+	# digitar "e" no pensamento não abre o inventário
+	var inv: Node = root.get_node("Inventory")
+	tenda.interface.show()
+	tenda.pensamento_field.grab_focus()
+	Input.action_press("e")
+	await process_frame
+	await process_frame
+	Input.action_release("e")
+	checar("'e' no campo de texto não abre o inventário", not inv.visible)
+	tenda.close_window()
+
+	print("== Glifos dos objetos depuráveis ==")
+	var glifos = teste.glifos
+	checar("glifos visíveis no objeto depurável", glifos.is_visible_in_tree())
+	await create_timer(0.8).timeout
+	checar("glifos sobem do objeto", glifos._glifos.size() > 0, glifos._glifos.size())
+	teste.cor_glifos = Color.RED
+	checar("cor dos glifos vem do objeto", glifos.cor() == Color.RED, glifos.cor())
 
 	print("\n%s" % ("TUDO OK" if falhas == 0 else "%d falha(s)" % falhas))
 	quit(falhas)
