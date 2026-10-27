@@ -46,6 +46,8 @@ var vel : int
 var xp : int
 var original_pos
 var xp_needed = [0,100,300,650,1200,2000,3000,4200,5600]
+# Sprite de cada classe (CLASS_NAME -> textura); sem ele o menu usa a cor da classe
+@export var sprites_classe: Dictionary = {}
 
 
 var equipment = {
@@ -105,7 +107,7 @@ func get_hp():
 	return hp
 
 func get_max_hp():
-	var current_max_hp = max_hp
+	var current_max_hp = max_hp + _bonus_classe("HP_BONUS")
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_max_hp += equipment[equip].get_hp_bonus()
@@ -115,18 +117,14 @@ func get_pp():
 	return pp
 
 func get_max_pp():
-	var current_max_pp = max_pp
+	var current_max_pp = max_pp + _bonus_classe("PP_BONUS")
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_max_pp += equipment[equip].get_pp_bonus()
 	return current_max_pp
 	
 func get_health_percentage():
-	var current_max_hp = max_hp
-	for equip in equipment.keys():
-		if equipment[equip]:
-			current_max_hp += equipment[equip].get_hp_bonus()
-	return float(hp)/current_max_hp
+	return float(hp)/get_max_hp()
 
 func get_level():
 	return level
@@ -140,21 +138,21 @@ func get_next_level_xp():
 	return xp_needed[level] - xp
 	
 func get_atk():
-	var current_atk = atk
+	var current_atk = atk + _bonus_classe("ATK_BONUS")
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_atk += equipment[equip].get_atk_bonus()
 	return current_atk
 
 func get_def():
-	var current_def = def
+	var current_def = def + _bonus_classe("DEF_BONUS")
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_def += equipment[equip].get_def_bonus()
 	return current_def
 	
 func get_vel():
-	var current_vel = vel
+	var current_vel = vel + _bonus_classe("VEL_BONUS")
 	for equip in equipment.keys():
 		if equipment[equip]:
 			current_vel += equipment[equip].get_vel_bonus()
@@ -165,6 +163,30 @@ func get_skills():
 	
 func get_class_name():
 	return rpg_class.get_class_name()
+
+func get_habilidades() -> Array[SKILL]:
+	return rpg_class.HABILIDADES
+
+# kath = new BlackHat(kath): mesmo nome, nível, xp e equipamento; muda classe e atributos
+func mudar_classe(nova: RPG_CLASS) -> void:
+	rpg_class = nova
+	hp = mini(hp, get_max_hp())
+	pp = mini(pp, get_max_pp())
+
+func _bonus_classe(campo: String) -> int:
+	return rpg_class.get(campo) if rpg_class else 0
+
+# Retrato do menu: o sprite da classe, se já existir, senão o retrato padrão
+func get_retrato() -> Texture2D:
+	if rpg_class and sprites_classe.has(rpg_class.CLASS_NAME):
+		return sprites_classe[rpg_class.CLASS_NAME]
+	return get_pic()
+
+# Cor provisória da classe enquanto o personagem não tem sprite dela
+func get_cor_classe() -> Color:
+	if not rpg_class or sprites_classe.has(rpg_class.CLASS_NAME):
+		return Color.WHITE
+	return rpg_class.COR
 	
 func get_sprite():
 	var frameIndex: int = sprite.get_frame()
@@ -203,11 +225,8 @@ func is_party_member() -> bool:
 
 # Função de cura do personagem, toca animação de cura e retorna porcentagem da vida atual
 func gain_health(value):
-	var current_max_hp = max_hp
+	var current_max_hp = get_max_hp()
 	var old_hp = hp
-	for equip in equipment.keys():
-		if equipment[equip]:
-			current_max_hp += equipment[equip].get_hp_bonus()
 	hp += value
 	if hp > current_max_hp:
 		value = current_max_hp - old_hp

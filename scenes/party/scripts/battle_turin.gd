@@ -17,9 +17,7 @@ func _ready():
 	def = 14
 	vel = 13
 	xp = 0
-	var guigo = load("res://rpg_classes/comumzera.tres")
-	rpg_class = load("res://rpg_classes/comumzera.tres")
-	print("rpg_class: ", rpg_class)
+	rpg_class = load("res://rpg_classes/commoner.tres")
 	original_pos = self.get_global_position()
 	sprite.connect("sprite_clicked", on_sprite_clicked)
 	sprite.connect("mouse_entered", on_sprite_mouse_in)
