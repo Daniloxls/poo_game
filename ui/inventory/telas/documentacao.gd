@@ -55,6 +55,7 @@ func abrir_tela(_p) -> void:
 	for pg in paginas:
 		var livre := Progresso.tem(pg.REQUER)
 		var b := UiInv.comando(pg.get_meta("id"), pg.TITULO if livre else "???")
+		b.toggle_mode = true  # a página aberta fica amarela
 		b.disabled = not livre
 		if livre:
 			b.pressed.connect(abrir_pagina.bind(pg))
@@ -91,6 +92,8 @@ func botao(id: String) -> Button:
 func abrir_pagina(pg: PaginaDoc) -> void:
 	if not Progresso.tem(pg.REQUER):
 		return
+	for b in _lista.get_children():
+		b.set_pressed_no_signal(b.name == pg.get_meta("id"))
 	_titulo.text = pg.TITULO
 	_texto.text = pg.TEXTO
 	exemplo.get_parent().visible = pg.EXEMPLO.strip_edges() != ""

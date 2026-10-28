@@ -54,6 +54,7 @@ func _initialize() -> void:
 		checar("nada cobre o botão %s" % id, tampa.is_empty(), tampa)
 
 	d.abrir_pagina(d.pagina("objeto"))
+	checar("página aberta marcada", d.botao("objeto").button_pressed and not d.botao("bool").button_pressed)
 	checar("exemplo de objeto usa new", d.exemplo.get_parsed_text().contains("new"), d.exemplo.get_parsed_text())
 
 	inv.voltar()

@@ -30,6 +30,8 @@ func _initialize() -> void:
 		_fim()
 		return
 	checar("quatro classes", c.botoes().size() == 4, c.botoes().size())
+	await process_frame
+	checar("tela de classe do tamanho das outras", c.frente.size.x > 520 and c.size.x > 900, [c.frente.size, c.size])
 	checar("abrir apaga a novidade", not prog.novo("classes"))
 	c.botao("BlackHat").pressed.emit()
 	checar("trocou a classe", turin.get_class_name() == "BlackHat")

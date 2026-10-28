@@ -12,15 +12,14 @@ var _p
 
 func _ready() -> void:
 	add_theme_constant_override("separation", 18)
-	alignment = BoxContainer.ALIGNMENT_CENTER
-	frente = UiInv.painel()
-	frente.custom_minimum_size = StatusTela.TAMANHO
-	frente.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	frente = UiInv.painel()  # ocupa a área toda, como as outras seções
+	frente.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	frente.size_flags_stretch_ratio = 1.8
 	add_child(frente)
 	var lado := UiInv.caixa(true, 12)
-	lado.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	lado.custom_minimum_size.x = 380
+	lado.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var p := UiInv.painel()
+	p.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_lista = UiInv.caixa(true, 4)
 	_lista.add_child(UiInv.rotulo("Mudar classe", 22))
 	for c in RPG_CLASS.jogaveis():
@@ -64,6 +63,6 @@ func escolher(c: RPG_CLASS) -> void:
 
 
 func _atualizar() -> void:
-	StatusTela.preencher_frente(frente, _p)
+	StatusTela.preencher_frente(frente, _p, true)
 	for b in botoes():
 		b.set_pressed_no_signal(b.name == _p.get_class_name())

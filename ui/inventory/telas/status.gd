@@ -3,7 +3,6 @@ extends MarginContainer
 ## O { } vira a carta; o verso acompanha o jogo mesmo quando está escondido.
 ## Ocupa a área toda do menu, como as outras seções.
 
-const TAMANHO := Vector2(460, 500)  # carta compacta (a troca de classe usa)
 
 var carta: Control
 var frente: PanelContainer
