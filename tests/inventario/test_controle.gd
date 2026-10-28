@@ -62,7 +62,7 @@ func _initialize() -> void:
 	inv.voltar()
 	await process_frame
 
-	inv.tela_atual().comando("Itens").grab_focus()
+	inv.get_node("Menu/Barra").find_child("Itens", true, false).grab_focus()
 	await acao("ui_accept")
 	checar("ui_accept em Itens abre a mochila", inv.tela_atual().name == "Itens", inv.tela_atual().name)
 	var itens: Control = inv.tela_atual()

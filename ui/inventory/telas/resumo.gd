@@ -1,24 +1,16 @@
 extends HBoxContainer
-## Resumo (o que o E abre): grupo à esquerda, comandos à direita, dinheiro e lugar embaixo.
+## Resumo (o que o E abre): grupo à esquerda; à direita, a mochila e dinheiro, lugar e tempo.
+## A navegação entre seções fica na barra de cima.
 
-# comando -> [texto, tela, precisa escolher personagem]
-const COMANDOS := {
-	"Itens": ["Itens", "itens", false],
-	"Status": ["Status", "status", true],
-	"Equipamento": ["Equipamento", "equipamento", true],
-	"Classe": ["Classe", "classe", true],
-	"Documentacao": ["Documentação", "documentacao", false],
-	"Opcoes": ["Opções", "opcoes", false],
-}
+const ITENS_NA_PREVIA := 6
 
 var _linhas: VBoxContainer
 var _trilha: TrilhaConceitos
-var _comandos: VBoxContainer
+var _previa: Button
+var _previa_itens: GridContainer
 var _dinheiro: Label
 var _lugar: Label
 var _tempo: Label
-var _escolhendo := ""  # tela esperando o jogador escolher um personagem
-var _ultimo_comando: Button
 
 
 func _ready() -> void:
@@ -36,18 +28,30 @@ func _ready() -> void:
 	add_child(grupo)
 
 	var lado := UiInv.caixa(true, 14)
-	lado.custom_minimum_size.x = 230
-	var p_cmd := UiInv.painel()
-	_comandos = UiInv.caixa(true, 2)
-	for nome in COMANDOS:
-		var b := UiInv.comando(nome, COMANDOS[nome][0])
-		b.pressed.connect(_on_comando.bind(b))
-		_comandos.add_child(b)
-	p_cmd.add_child(_comandos)
-	lado.add_child(p_cmd)
-	var espaco := Control.new()
-	espaco.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	lado.add_child(espaco)
+	lado.custom_minimum_size.x = 300
+	# prévia da mochila: um botão grande que abre os Itens
+	_previa = Button.new()
+	_previa.name = "PreviaMochila"
+	_previa.theme_type_variation = &"InvCelula"
+	_previa.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_previa.pressed.connect(func(): Inventory.clique(); Inventory.trocar("itens"))
+	var m := MarginContainer.new()
+	m.set_anchors_preset(Control.PRESET_FULL_RECT)
+	for lado_m in ["left", "top", "right", "bottom"]:
+		m.add_theme_constant_override("margin_" + lado_m, 12)
+	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var v := UiInv.caixa(true, 10)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(UiInv.rotulo("Mochila", 20))
+	_previa_itens = GridContainer.new()
+	_previa_itens.columns = 1
+	_previa_itens.add_theme_constant_override("h_separation", 10)
+	_previa_itens.add_theme_constant_override("v_separation", 8)
+	_previa_itens.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(_previa_itens)
+	m.add_child(v)
+	_previa.add_child(m)
+	lado.add_child(_previa)
 	var rodape := UiInv.painel()
 	var r := UiInv.caixa(true, 4)
 	_dinheiro = UiInv.rotulo("", 16)
@@ -62,17 +66,12 @@ func _ready() -> void:
 
 
 func abrir_tela(_p) -> void:
-	_escolhendo = ""
 	_atualizar()
-	(_ultimo_comando if _ultimo_comando and _ultimo_comando.visible else comando("Itens")).grab_focus()
+	linhas()[0].grab_focus()
 
 
 func linhas() -> Array:
 	return _linhas.get_children()
-
-
-func comando(nome: String) -> Button:
-	return _comandos.get_node(nome)
 
 
 func texto_dinheiro() -> String:
@@ -92,13 +91,7 @@ func _atualizar() -> void:
 	for p in Party.get_children():
 		_linhas.add_child(_linha(p))
 	_trilha.atualizar()
-	var classe := comando("Classe")
-	classe.visible = Progresso.tem("classes")
-	classe.get_node("Badge").visible = Progresso.novo("classes")
-	var doc_nova := Progresso.novo("basico")
-	for id in Progresso.CONCEITOS:
-		doc_nova = doc_nova or Progresso.novo(id)
-	comando("Documentacao").get_node("Badge").visible = doc_nova
+	_atualizar_previa()
 	_dinheiro.text = "%d %s" % [Inventory.dinheiro, Inventory.MOEDA]
 	var cena := get_tree().current_scene
 	var lugar = cena.get("nome_local") if cena else null
@@ -133,28 +126,30 @@ func _linha(p) -> Button:
 	return b
 
 
-func _on_comando(b: Button) -> void:
-	Inventory.clique()
-	_ultimo_comando = b
-	var c: Array = COMANDOS[b.name]
-	if not c[2]:
-		Inventory.ir(c[1])
-	elif Party.get_child_count() == 1:
-		Inventory.ir(c[1], Party.get_child(0))
-	else:
-		_escolhendo = c[1]
-		linhas()[0].grab_focus()
+func _atualizar_previa() -> void:
+	UiInv.limpar(_previa_itens)
+	var itens := Inventory.mochila.comuns()
+	for it in itens.slice(0, ITENS_NA_PREVIA):
+		var h := UiInv.caixa(false, 6)
+		h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var ic := TextureRect.new()
+		ic.texture = it.get_icon()
+		ic.custom_minimum_size = Vector2(32, 32)
+		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		h.add_child(ic)
+		var l := UiInv.rotulo("%s x%d" % [it.ITEM_NAME, it.QUANTITY], 14)
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		h.add_child(l)
+		_previa_itens.add_child(h)
+	if itens.is_empty():
+		_previa_itens.add_child(UiInv.rotulo("vazia", 14, &"InvTextoBloqueado"))
+	elif itens.size() > ITENS_NA_PREVIA:
+		_previa_itens.add_child(UiInv.rotulo("+%d" % (itens.size() - ITENS_NA_PREVIA), 14))
 
 
 func _on_personagem(p) -> void:
 	Inventory.clique()
-	var tela := _escolhendo if _escolhendo else "status"
-	_escolhendo = ""
-	Inventory.ir(tela, p)
-
-
-func _unhandled_input(e: InputEvent) -> void:
-	if _escolhendo and is_visible_in_tree() and e.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
-		_escolhendo = ""
-		_ultimo_comando.grab_focus()
+	Inventory.ir("status", p)

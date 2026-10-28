@@ -52,6 +52,7 @@ func _ready() -> void:
 	mochila.mudou.connect(mudou.emit)
 	_cache["opcoes"] = $Menu/Telas/Opcoes
 	_montar_barra()
+	Progresso.desbloqueado.connect(func(_id): _atualizar_barra())
 	menu.hide()
 
 
@@ -79,7 +80,6 @@ func _montar_barra() -> void:
 	h.add_child(fechar_btn)
 	_barra.add_child(h)
 	menu.add_child(_barra)
-	_barra.hide()
 	telas.add_theme_constant_override("margin_top", 100)
 
 
@@ -201,17 +201,28 @@ func liberar_tudo() -> void:
 
 func _mostrar_topo() -> void:
 	var topo: Array = _pilha[-1]
-	_barra.visible = true  # sempre à vista, também no resumo
-	for b in _barra.get_child(0).get_children():
-		if b is Button and b.name != "Fechar":
-			b.set_pressed_no_signal(b.name == topo[0].capitalize())
-	_barra.get_child(0).get_node("Classe").visible = Progresso.tem("classes")
 	for t in telas.get_children():
 		t.hide()
 	var tela := _tela(topo[0])
 	tela.show()
 	if tela.has_method("abrir_tela"):
 		tela.abrir_tela(topo[1])
+	_atualizar_barra()  # depois de abrir: a tela pode ter marcado a novidade como vista
+
+
+## Barra de cima: seção atual em amarelo, Classe só depois de liberada, ! no que é novo.
+func _atualizar_barra() -> void:
+	var botoes := _barra.get_child(0)
+	var atual: String = _pilha[-1][0].capitalize() if not _pilha.is_empty() else ""
+	for b in botoes.get_children():
+		if b is Button and b.name != "Fechar":
+			b.set_pressed_no_signal(b.name == atual)
+	botoes.get_node("Classe").visible = Progresso.tem("classes")
+	botoes.get_node("Classe/Badge").visible = Progresso.novo("classes")
+	var doc_nova := Progresso.novo("basico")
+	for id in Progresso.CONCEITOS:
+		doc_nova = doc_nova or Progresso.novo(id)
+	botoes.get_node("Documentacao/Badge").visible = doc_nova
 
 
 func _tela(nome: String) -> Control:

@@ -48,33 +48,42 @@ func _initialize() -> void:
 		vaza = vaza or c.find_child("*", true, false).text.contains("Métodos")
 	checar("nome trancado não aparece", not vaza)
 
-	var classe: Button = r.comando("Classe")
+	# sem o menu lateral: a navegação é a barra de cima
+	checar("sem menu lateral no resumo", r.find_child("Opcoes", true, false) == null)
+	var barra: Control = inv.get_node("Menu/Barra")
+	var classe: Button = barra.find_child("Classe", true, false)
 	checar("Classe escondido antes de desbloquear", not classe.visible)
 	prog.desbloquear("classes")
-	r.abrir_tela(null)
-	checar("Classe aparece com badge", classe.visible and classe.get_node("Badge").visible)
+	await process_frame
+	checar("Classe aparece na barra com !", classe.visible and classe.get_node("Badge").visible)
 	var badge = classe.get_node("Badge")
 	checar("badge é o emote de !", badge is TextureRect and badge.texture != null and badge.texture.resource_path.ends_with("exclamacao.png"), badge)
 	prog.resetar()
+	inv.trocar("resumo")
+	await process_frame
 
-	var itens_cmd: Button = r.comando("Itens")
-	var status_cmd: Button = r.comando("Status")
+	var itens_cmd: Button = barra.find_child("Itens", true, false)
+	var status_cmd: Button = barra.find_child("Status", true, false)
 	status_cmd.grab_focus()
 	await process_frame
 	checar("seta no comando com foco", status_cmd.icon != null and status_cmd.icon.resource_path.ends_with("seta.png"), status_cmd.icon)
 	checar("sem seta nos outros", itens_cmd.icon == null, itens_cmd.icon)
 	checar("divisor entre o grupo e a trilha", r.find_child("Divisor", true, false) is HBoxContainer and r.find_child("Divisor", true, false).get_child_count() == 2)
-	r.abrir_tela(null)
 
+	# no lugar do menu: uma prévia da mochila
+	inv.mochila.adicionar(load("res://scenes/items/repo/potion.tres"), 6)
 	inv.dinheiro = 1250
 	r.abrir_tela(null)
 	checar("dinheiro com a moeda", r.texto_dinheiro().contains("1250") and r.texto_dinheiro().contains("bits"), r.texto_dinheiro())
-
-	r.comando("Itens").pressed.emit()
-	checar("Itens abre a mochila", inv.tela_atual().name == "Itens", inv.tela_atual().name)
+	var previa: Button = r.find_child("PreviaMochila", true, false)
+	checar("prévia da mochila mostra a poção", previa != null and previa.find_children("*", "Label", true, false).any(func(l): return l.text.contains("Poção")))
+	previa.pressed.emit()
+	checar("prévia abre a mochila", inv.tela_atual().name == "Itens", inv.tela_atual().name)
 	inv.voltar()
-	r.comando("Status").pressed.emit()
-	checar("com um membro, Status vai direto", inv.tela_atual().name == "Status", inv.tela_atual().name)
+	r.linhas()[0].pressed.emit()
+	checar("clicar no personagem abre o Status", inv.tela_atual().name == "Status", inv.tela_atual().name)
+	inv.mochila.itens.clear()
+	inv.dinheiro = 0
 	inv.fechar()
 	_fim()
 
