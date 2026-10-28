@@ -183,7 +183,7 @@ func liberar_tudo() -> void:
 
 func _mostrar_topo() -> void:
 	var topo: Array = _pilha[-1]
-	_barra.visible = topo[0] != "resumo"  # o resumo já lista as seções
+	_barra.visible = true  # sempre à vista, também no resumo
 	for b in _barra.get_child(0).get_children():
 		if b is Button and b.name != "Fechar":
 			b.set_pressed_no_signal(b.name == topo[0].capitalize())

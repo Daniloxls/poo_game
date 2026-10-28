@@ -91,7 +91,7 @@ func _initialize() -> void:
 	# barra de navegação: de uma seção direto para outra, e um botão de fechar
 	var barra: Control = inv.get_node("Menu/Barra")
 	await process_frame
-	checar("sem barra no resumo", not barra.visible)
+	checar("barra também no resumo", barra.visible)
 	inv.ir("itens")
 	await process_frame
 	checar("barra aparece nas seções", barra.visible)

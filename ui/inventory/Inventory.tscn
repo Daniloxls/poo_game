@@ -44,8 +44,8 @@ theme_override_constants/margin_bottom = 32
 [node name="Opcoes" type="PanelContainer" parent="Menu/Telas"]
 visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_type_variation = &"InvPainel"
 script = ExtResource("3_opcoes")
 
