@@ -17,6 +17,7 @@ func _initialize() -> void:
 	await process_frame  # autoloads só ficam prontos após o primeiro frame
 	await process_frame
 	var inv: Node = root.get_node("Inventory")
+	root.get_node("PlayerState").set_on_interface(false)  # já passou da tela de título
 	var prog: Node = root.get_node("Progresso")
 	inv.abrir()
 	inv.ir("documentacao")
@@ -30,6 +31,9 @@ func _initialize() -> void:
 	checar("bool liberado", not d.botao("bool").disabled)
 	checar("classe liberada", not d.botao("classe").disabled)
 	checar("métodos trancado como ???", d.botao("metodos").disabled and d.botao("metodos").text == "???", d.botao("metodos").text)
+	checar("trancado não recebe foco", d.botao("metodos").focus_mode == Control.FOCUS_NONE)
+	d.abrir_pagina(d.pagina("metodos"))
+	checar("página trancada não abre", d.find_children("*", "Label", true, false).all(func(l): return l.text != "Métodos"))
 
 	for pg in d.paginas:
 		if pg.TEXTO != "Em breve.":

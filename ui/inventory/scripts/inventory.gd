@@ -63,8 +63,10 @@ func esta_aberto() -> bool:
 
 
 func pode_abrir() -> bool:
+	# on_interface: título, Tritomos, codebox... (o próprio menu também liga, mas aí já está aberto)
 	return Progresso.tem("inventario") and not PlayerState.is_on_dialogue() \
-			and not PlayerState.is_on_scene() and process_mode != PROCESS_MODE_DISABLED
+			and not PlayerState.is_on_scene() and not PlayerState.is_on_interface() \
+			and process_mode != PROCESS_MODE_DISABLED
 
 
 func abrir() -> void:

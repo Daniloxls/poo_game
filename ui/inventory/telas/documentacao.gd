@@ -54,8 +54,11 @@ func abrir_tela(_p) -> void:
 		var livre := Progresso.tem(pg.REQUER)
 		var b := UiInv.comando(pg.get_meta("id"), pg.TITULO if livre else "???")
 		b.disabled = not livre
-		b.pressed.connect(abrir_pagina.bind(pg))
-		b.focus_entered.connect(abrir_pagina.bind(pg))
+		if livre:
+			b.pressed.connect(abrir_pagina.bind(pg))
+			b.focus_entered.connect(abrir_pagina.bind(pg))
+		else:
+			b.focus_mode = Control.FOCUS_NONE  # senão o foco abriria a página e mostraria o nome
 		_lista.add_child(b)
 	trilha.atualizar()
 	for id in Progresso.CONCEITOS:  # primeira vez: o ??? vira o nome
@@ -80,6 +83,8 @@ func botao(id: String) -> Button:
 
 
 func abrir_pagina(pg: PaginaDoc) -> void:
+	if not Progresso.tem(pg.REQUER):
+		return
 	_titulo.text = pg.TITULO
 	_texto.text = pg.TEXTO
 	exemplo.get_parent().visible = pg.EXEMPLO.strip_edges() != ""

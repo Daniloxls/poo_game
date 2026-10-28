@@ -11,5 +11,5 @@ func _ready() -> void:
 
 # PROCESS_MODE_ALWAYS: roda mesmo com o inventário desligado pela batalha, para se esconder
 func _process(_delta: float) -> void:
-	visible = inventario.pode_abrir() and not inventario.esta_aberto() and not PlayerState.is_on_interface()
+	visible = inventario.pode_abrir() and not inventario.esta_aberto()
 	badge.visible = Progresso.algum_novo()

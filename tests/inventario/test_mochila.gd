@@ -53,6 +53,12 @@ func _initialize() -> void:
 	checar("descartar item comum", m.descartar(m.itens[1]) and m.comuns().is_empty())
 	m.adicionar(ferro)
 	checar("equipamento por slot", m.de_slot([EQUIP_ITEM.Slot.BODY]).size() == 1 and m.de_slot([EQUIP_ITEM.Slot.HEAD]).is_empty())
+	var vestida: ITEM = m.de_slot([EQUIP_ITEM.Slot.BODY])[0]
+	m.gastar(vestida)      # equipou a única
+	m.adicionar(vestida)   # tirou: volta para a mochila
+	m.adicionar(ferro)     # achou outra
+	var pilhas := m.de_slot([EQUIP_ITEM.Slot.BODY])
+	checar("equipar e tirar não divide a pilha", pilhas.size() == 1 and pilhas[0].QUANTITY == 2, pilhas.map(func(i): return [i.ITEM_NAME, i.QUANTITY]))
 	_fim()
 
 

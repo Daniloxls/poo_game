@@ -42,9 +42,9 @@ func _initialize() -> void:
 	checar("classe", CodigoJava.linha_classe(turin, black_hat) == "turin = new BlackHat(turin);")
 
 	var v = CodigoJava.verso(turin, OBJ, false)
-	checar("verso começa com a declaração", v.slice(0, 4) == ["Personagem turin;", "turin = new Personagem(\"Turin\");", "turin.nome = \"Turin\";", "turin.hp = 18;"], v.slice(0, 4))
+	checar("verso começa com a declaração", v.slice(0, 3) == ["Personagem turin = new Personagem(\"Turin\");", "turin.nome = \"Turin\";", "turin.hp = 18;"], v.slice(0, 3))
 	checar("verso soma o ataque", v.has("turin.atk = atkBase + classe.atk;  // %d" % turin.get_atk()), v)
-	checar("métodos trancados", v[-1] == "// métodos 🔒 ???", v[-1])
+	checar("métodos trancados sem o nome", v[-1] == "// ??? 🔒", v[-1])
 	turin.set_equip("body_slot", ferro)
 	v = CodigoJava.verso(turin, OBJ, false)
 	checar("equipamento entra na soma", v.has("turin.atk = atkBase + classe.atk + corpo.atk;  // %d" % turin.get_atk()), v)
@@ -53,7 +53,9 @@ func _initialize() -> void:
 
 	turin.mudar_classe(black_hat)
 	v = CodigoJava.verso(turin, OBJ, false)
-	checar("verso depois da troca de classe", v[1] == "turin = new BlackHat(turin);", v[1])
+	checar("verso depois da troca: turin já existe antes do new BlackHat(turin)", v.slice(0, 2) == ["Personagem turin = new Personagem(\"Turin\");", "turin = new BlackHat(turin);"], v.slice(0, 2))
+	v = CodigoJava.verso(turin, ENC, true)
+	checar("encapsulamento usa setter", v.has("turin.setHp(18);") and not v.any(func(l): return l.begins_with("turin.hp =")), v)
 	v = CodigoJava.verso(turin, MET, true)
 	checar("getter com métodos", v.has("int getAtk() { return atkBase + classe.atk; }  // %d" % turin.get_atk()), v)
 	checar("métodos da classe", v.slice(-2) == ["void invadir(Inimigo alvo) {}", "void roubar(Inimigo alvo) {}"], v.slice(-2))

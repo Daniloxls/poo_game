@@ -17,6 +17,7 @@ func _initialize() -> void:
 	await process_frame  # autoloads só ficam prontos após o primeiro frame
 	await process_frame
 	var inv: Node = root.get_node("Inventory")
+	root.get_node("PlayerState").set_on_interface(false)  # já passou da tela de título
 	var prog: Node = root.get_node("Progresso")
 	var turin = root.get_node("Party/Turin")
 	prog.desbloquear("classes")

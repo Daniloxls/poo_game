@@ -170,6 +170,10 @@ func get_habilidades() -> Array[SKILL]:
 # kath = new BlackHat(kath): mesmo nome, nível, xp e equipamento; muda classe e atributos
 func mudar_classe(nova: RPG_CLASS) -> void:
 	rpg_class = nova
+	ajustar_limites()
+
+# hp e pp não passam do máximo (depois de trocar classe ou equipamento)
+func ajustar_limites() -> void:
 	hp = mini(hp, get_max_hp())
 	pp = mini(pp, get_max_pp())
 

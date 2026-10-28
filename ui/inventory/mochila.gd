@@ -15,7 +15,7 @@ func adicionar(item: ITEM, qtd: int = 1) -> void:
 			return
 	var copia: ITEM = item.duplicate()
 	copia.QUANTITY = qtd
-	copia.set_meta("origem", item.resource_path)
+	copia.set_meta("origem", item.get_meta("origem", item.resource_path))  # cópia de cópia mantém a origem
 	itens.append(copia)
 	mudou.emit()
 

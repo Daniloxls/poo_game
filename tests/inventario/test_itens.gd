@@ -17,6 +17,7 @@ func _initialize() -> void:
 	await process_frame  # autoloads só ficam prontos após o primeiro frame
 	await process_frame
 	var inv: Node = root.get_node("Inventory")
+	root.get_node("PlayerState").set_on_interface(false)  # já passou da tela de título
 	var prog: Node = root.get_node("Progresso")
 	var turin = root.get_node("Party/Turin")
 	var pocao: ITEM = load("res://scenes/items/repo/potion.tres")
@@ -38,6 +39,14 @@ func _initialize() -> void:
 	s.selecionar(item)
 	checar("valor em bits", s.valor.text == "Vale 30 bits", s.valor.text)
 	checar("poção tem Usar", s.usar_btn.visible)
+	inv.mochila.adicionar(ferro)
+	await process_frame
+	s.selecionar(item)
+	s.grade_comuns.get_node("Armadura de Ferro").mouse_entered.emit()  # mouse passando a caminho do Usar
+	checar("passar o mouse não troca a seleção", s.selecionado() == item, s.selecionado())
+	inv.mochila.gastar(inv.mochila.comuns()[1])
+	await process_frame
+	s.selecionar(item)
 	var esperado: int = mini(turin.get_max_hp() - 30 + 40, turin.get_max_hp())
 	s.usar_em(item, turin)
 	await create_timer(1.0).timeout
@@ -70,6 +79,22 @@ func _initialize() -> void:
 	s.descartar(arm)
 	checar("descartou", inv.mochila.comuns().is_empty())
 	checar("linha do descarte", s.linha.get_parsed_text() == "mochila.remove(armaduraDeFerro);", s.linha.get_parsed_text())
+
+	inv.mochila.itens.clear()
+	inv.mochila.adicionar(pocao, 1)
+	inv.mochila.adicionar(load("res://scenes/items/repo/small_potion.tres"), 1)
+	await process_frame
+	s.selecionar(inv.mochila.itens[0])
+	inv.fechar()
+	await create_timer(0.3).timeout
+	var fora := Button.new()
+	root.add_child(fora)
+	fora.grab_focus()
+	inv.mochila.gastar(inv.mochila.itens[0])  # batalha gastou a poção selecionada
+	await process_frame
+	var f := root.get_viewport().gui_get_focus_owner()
+	checar("tela escondida não rouba o foco", f == fora, f)
+	fora.queue_free()
 
 	inv.mochila.itens.clear()
 	turin.hp = turin.get_max_hp()

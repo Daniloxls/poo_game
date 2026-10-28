@@ -34,6 +34,9 @@ func _initialize() -> void:
 	ps.set_on_interface(true)  # tela de título, Tritomos...
 	await process_frame
 	checar("ícone some com outra interface aberta", not icone.visible)
+	await apertar_e()
+	checar("e não abre sobre outra interface", not inv.esta_aberto())
+	checar("outra interface continua travando o jogador", ps.is_on_interface())
 	ps.set_on_interface(false)
 	await process_frame
 	checar("ícone aparece com o inventário liberado", icone.visible)

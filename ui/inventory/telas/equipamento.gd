@@ -46,6 +46,7 @@ func abrir_tela(p) -> void:
 func escolher_slot(slot: String) -> void:
 	_slot = slot
 	_montar()
+	_focar_slot()
 
 
 ## Mostra como os atributos ficariam com 'item' no slot escolhido (null = tirar).
@@ -85,7 +86,15 @@ func equipar(p, slot: String, item) -> void:
 		Inventory.mochila.adicionar(e)
 	if item:
 		Inventory.mochila.gastar(item)
+	p.ajustar_limites()  # tirar um bônus de HP não deixa o hp acima do máximo
 	Inventory.mudou.emit()
+	_focar_slot()
+
+
+# _montar recria os botões: o foco volta para o slot escolhido
+func _focar_slot() -> void:
+	if is_visible_in_tree() and _slots:
+		_slots.get_node(_slot).grab_focus()
 
 
 # Coloca a peça no slot e devolve o que saiu (a de duas mãos ocupa as duas).

@@ -111,7 +111,8 @@ func _atualizar() -> void:
 			par[0].add_child(_celula(it))
 	if _sel and not Inventory.mochila.itens.has(_sel):  # o último foi usado ou descartado
 		_sel = null
-		_selecionar_primeiro()
+		if is_visible_in_tree():  # escondida (batalha, outra tela) não pega o foco
+			_selecionar_primeiro()
 	_mostrar()
 
 
@@ -127,8 +128,7 @@ func _celula(it: ITEM) -> Button:
 	b.add_theme_constant_override("icon_max_width", 40)
 	b.add_theme_font_size_override("font_size", 13)
 	b.custom_minimum_size = Vector2(112, 100)
-	b.focus_entered.connect(selecionar.bind(it))
-	b.mouse_entered.connect(selecionar.bind(it))
+	b.focus_entered.connect(selecionar.bind(it))  # só foco ou clique: passar o mouse a caminho do Usar não troca
 	b.pressed.connect(func(): selecionar(it); (usar_btn if usar_btn.visible else descartar_btn).grab_focus())
 	return b
 

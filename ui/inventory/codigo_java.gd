@@ -56,17 +56,20 @@ static func linha_classe(p, classe: RPG_CLASS) -> String:
 
 
 ## O verso da carta de status: o personagem como objeto Java.
-static func verso(p, _estagio: int, metodos: bool) -> Array[String]:
+static func verso(p, estagio: int, metodos: bool) -> Array[String]:
 	var n := nome_variavel(p.get_nome())
 	var classe: String = p.get_class_name()
-	var argumento: String = "\"%s\"" % p.get_nome() if classe == "Personagem" else n
-	var out: Array[String] = [
-		"Personagem %s;" % n,
-		"%s = new %s(%s);" % [n, classe, argumento],
-		"%s.nome = \"%s\";" % [n, p.get_nome()],
-		"%s.hp = %d;" % [n, p.get_hp()],
-		"%s.pp = %d;" % [n, p.get_pp()],
-	]
+	# o objeto nasce Personagem; trocar de classe é reconstruí-lo com ele mesmo de argumento
+	var out: Array[String] = ["Personagem %s = new Personagem(\"%s\");" % [n, p.get_nome()]]
+	if classe != "Personagem":
+		out.append("%s = new %s(%s);" % [n, classe, n])
+	out.append("%s.nome = \"%s\";" % [n, p.get_nome()])
+	if estagio == Progresso.Estagio.ENCAPSULAMENTO:  # hp e pp viraram private
+		out.append("%s.setHp(%d);" % [n, p.get_hp()])
+		out.append("%s.setPp(%d);" % [n, p.get_pp()])
+	else:
+		out.append("%s.hp = %d;" % [n, p.get_hp()])
+		out.append("%s.pp = %d;" % [n, p.get_pp()])
 	for atr in ATRIBUTOS:
 		var soma := "%sBase + classe.%s" % [atr, atr]
 		for slot in SLOTS:
@@ -79,7 +82,7 @@ static func verso(p, _estagio: int, metodos: bool) -> Array[String]:
 		else:
 			out.append("%s.%s = %s;  // %d" % [n, atr, soma, valor])
 	if not metodos:
-		out.append("// métodos 🔒 ???")
+		out.append("// ??? 🔒")
 		return out
 	for h in p.get_habilidades():
 		var params := PackedStringArray()

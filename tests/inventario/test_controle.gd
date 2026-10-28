@@ -31,6 +31,7 @@ func _initialize() -> void:
 	await process_frame  # autoloads só ficam prontos após o primeiro frame
 	await process_frame
 	var inv: Node = root.get_node("Inventory")
+	root.get_node("PlayerState").set_on_interface(false)  # já passou da tela de título
 	var prog: Node = root.get_node("Progresso")
 	var turin = root.get_node("Party/Turin")
 	prog.desbloquear_tudo()
@@ -46,6 +47,20 @@ func _initialize() -> void:
 		checar(tela + " abre com foco", foco() != null and inv.tela_atual().is_ancestor_of(foco()), foco())
 		inv.voltar()
 		await process_frame
+
+	inv.ir("equipamento", turin)
+	await process_frame
+	var eq: Control = inv.tela_atual()
+	await acao("ui_accept")  # escolhe o slot com foco
+	checar("equipamento: foco fica depois de escolher o slot", is_instance_valid(foco()) and eq.is_ancestor_of(foco()), foco())
+	eq.escolher_slot("body_slot")
+	await process_frame
+	eq.equipar(turin, "body_slot", inv.mochila.de_slot([EQUIP_ITEM.Slot.BODY])[0])
+	await process_frame
+	checar("equipamento: foco fica depois de equipar", is_instance_valid(foco()) and eq.is_ancestor_of(foco()), foco())
+	eq.equipar(turin, "body_slot", null)
+	inv.voltar()
+	await process_frame
 
 	inv.tela_atual().comando("Itens").grab_focus()
 	await acao("ui_accept")

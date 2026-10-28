@@ -17,6 +17,7 @@ func _initialize() -> void:
 	await process_frame  # autoloads só ficam prontos após o primeiro frame
 	await process_frame
 	var inv: Node = root.get_node("Inventory")
+	root.get_node("PlayerState").set_on_interface(false)  # já passou da tela de título
 	var turin = root.get_node("Party/Turin")
 	inv.mochila.adicionar(load("res://scenes/items/repo/armadura_ferro.tres"))
 	inv.mochila.adicionar(load("res://scenes/items/repo/armadura_couro.tres"))
@@ -54,6 +55,17 @@ func _initialize() -> void:
 	checar("linha de tirar", s.linha.get_parsed_text() == "turin.corpo = null;", s.linha.get_parsed_text())
 	s.equipar(turin, "body_slot", null)
 	checar("tirar devolve à mochila", turin.get_equip("body_slot") == null and corpo.call("Armadura de Ferro") != null)
+
+	var anel := EQUIP_ITEM.new()
+	anel.ITEM_NAME = "Anel de Vida"
+	anel.HP = 20
+	anel.SLOT = EQUIP_ITEM.Slot.ACESSORY
+	inv.mochila.adicionar(anel)
+	s.equipar(turin, "acessory_slot", inv.mochila.de_slot([EQUIP_ITEM.Slot.ACESSORY])[0])
+	turin.hp = turin.get_max_hp()
+	s.equipar(turin, "acessory_slot", null)
+	checar("tirar bônus de HP não deixa hp acima do máximo", turin.hp <= turin.get_max_hp(), [turin.hp, turin.get_max_hp()])
+	turin.hp = turin.get_max_hp()
 
 	inv.mochila.itens.clear()
 	inv.fechar()
