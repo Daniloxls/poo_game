@@ -40,6 +40,19 @@ func _initialize() -> void:
 			checar("exemplo de %s preenchido" % pg.TITULO, pg.EXEMPLO.strip_edges() != "")
 			checar("texto de %s curto" % pg.TITULO, pg.TEXTO.split(" ", false).size() <= 120, pg.TEXTO.split(" ", false).size())
 
+	# clique do mouse não funciona headless: confere que nada numa camada acima do menu
+	# pega o mouse em cima dos botões (o retrato vazio do Textbox antigo pegava)
+	await create_timer(0.3).timeout
+	for id in ["bool", "classe", "objeto"]:
+		var centro: Vector2 = d.botao(id).get_global_rect().get_center()
+		var tampa := []
+		for c in root.find_children("*", "Control", true, false):
+			var camada: CanvasLayer = c.get_canvas_layer_node()
+			if c.is_visible_in_tree() and c.mouse_filter != Control.MOUSE_FILTER_IGNORE \
+					and camada and camada.layer > inv.layer and c.get_global_rect().has_point(centro):
+				tampa.append(c.get_path())
+		checar("nada cobre o botão %s" % id, tampa.is_empty(), tampa)
+
 	d.abrir_pagina(d.pagina("objeto"))
 	checar("exemplo de objeto usa new", d.exemplo.get_parsed_text().contains("new"), d.exemplo.get_parsed_text())
 

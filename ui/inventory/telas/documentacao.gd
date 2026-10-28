@@ -78,6 +78,10 @@ func pagina(id: String) -> PaginaDoc:
 	return null
 
 
+func titulo() -> String:
+	return _titulo.text
+
+
 func botao(id: String) -> Button:
 	return _lista.get_node_or_null(id)
 

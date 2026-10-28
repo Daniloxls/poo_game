@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bdx12agaryr3k" path="res://assets/sounds/interface/click7.mp3" id="5_click"]
 
 [node name="Inventory" type="CanvasLayer"]
-layer = 2
+layer = 9
 script = ExtResource("1_bnrs2")
 
 [node name="Menu" type="Control" parent="."]
