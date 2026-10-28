@@ -25,6 +25,8 @@ func _initialize() -> void:
 			["normal", "InvCelula"], ["focus", "InvCelula"]]:
 		checar("%s tem %s" % [par[1], par[0]], t.has_stylebox(par[0], par[1]))
 	checar("InvCodigoTexto usa fonte mono", t.has_font("normal_font", "InvCodigoTexto"))
+	checar("margem interna do painel não é zerada pelo script", t.get_stylebox("panel", "InvPainel").content_margin_left == 14.0, t.get_stylebox("panel", "InvPainel").content_margin_left)
+	checar("margem interna do verso", t.get_stylebox("panel", "InvVerso").content_margin_left == 22.0, t.get_stylebox("panel", "InvVerso").content_margin_left)
 	var painel = t.get_stylebox("panel", "TabContainer")
 	checar("painel das abas tem canto quadrado", painel is HardShadowStyleBox and painel.square_top_left)
 	var aba = t.get_stylebox("tab_selected", "TabContainer")

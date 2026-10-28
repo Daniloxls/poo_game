@@ -84,10 +84,36 @@ func _initialize() -> void:
 	checar("visto apaga o badge", not badge.visible)
 	prog.resetar()
 
+	checar("ícone escuro no botão creme", icone.get_theme_color("icon_normal_color").is_equal_approx(Color("#1b1b1b")), icone.get_theme_color("icon_normal_color"))
 	icone.pressed.emit()
 	checar("ícone abre o menu", inv.esta_aberto())
-	inv.fechar()
-	checar("fechar fecha", not inv.esta_aberto())
+
+	# barra de navegação: de uma seção direto para outra, e um botão de fechar
+	var barra: Control = inv.get_node("Menu/Barra")
+	await process_frame
+	checar("sem barra no resumo", not barra.visible)
+	inv.ir("itens")
+	await process_frame
+	checar("barra aparece nas seções", barra.visible)
+	checar("seção atual marcada", barra.find_child("Itens", true, false).button_pressed)
+	barra.find_child("Equipamento", true, false).pressed.emit()
+	await process_frame
+	checar("barra troca direto de seção", inv.tela_atual().name == "Equipamento", inv.tela_atual().name)
+	inv.voltar()
+	checar("voltar depois da barra vai ao resumo", inv.esta_aberto() and inv.tela_atual().name == "Resumo", inv.tela_atual().name)
+	inv.ir("itens")
+	barra.find_child("Fechar", true, false).pressed.emit()
+	checar("botão fechar fecha", not inv.esta_aberto())
+
+	inv.liberar_tudo()
+	var slots := []
+	for i in inv.mochila.itens:
+		if i is EQUIP_ITEM and not i.SLOT in slots:
+			slots.append(i.SLOT)
+	checar("F10 traz equipamento de todo tipo", slots.size() == EQUIP_ITEM.Slot.size(), slots)
+	inv.mochila.itens.clear()
+	inv.dinheiro = 0
+	prog.resetar()
 	_fim()
 
 

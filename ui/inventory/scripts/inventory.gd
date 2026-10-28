@@ -13,8 +13,15 @@ const TELAS := {
 	"equipamento": "res://ui/inventory/telas/Equipamento.tscn",
 	"documentacao": "res://ui/inventory/telas/Documentacao.tscn",
 }
+# barra de navegação: seção -> texto do botão
+const SECOES := {"resumo": "Resumo", "itens": "Itens", "status": "Status", "equipamento": "Equipamento",
+		"classe": "Classe", "documentacao": "Documentação", "opcoes": "Opções"}
+const COM_PERSONAGEM := ["status", "equipamento", "classe"]
 const ITENS_TESTE := ["res://scenes/items/repo/potion.tres", "res://scenes/items/repo/small_potion.tres",
-		"res://scenes/items/repo/armadura_ferro.tres", "res://scenes/items/repo/armadura_couro.tres"]
+		"res://scenes/items/repo/armadura_ferro.tres", "res://scenes/items/repo/armadura_couro.tres",
+		"res://scenes/items/repo/teste/bone.tres", "res://scenes/items/repo/teste/botas_leves.tres",
+		"res://scenes/items/repo/teste/espada_curta.tres", "res://scenes/items/repo/teste/escudo_madeira.tres",
+		"res://scenes/items/repo/teste/machado_pesado.tres", "res://scenes/items/repo/teste/anel_vida.tres"]
 
 @onready var menu: Control = $Menu
 @onready var telas: Control = $Menu/Telas
@@ -28,12 +35,43 @@ var _aberto := false
 var _pilha: Array = []  # [nome, personagem]
 var _cache := {}
 var _tween: Tween
+var _barra: PanelContainer
+var _personagem  # último personagem escolhido; a barra reusa ao trocar de seção
 
 
 func _ready() -> void:
 	mochila.mudou.connect(mudou.emit)
 	_cache["opcoes"] = $Menu/Telas/Opcoes
+	_montar_barra()
 	menu.hide()
+
+
+func _montar_barra() -> void:
+	_barra = UiInv.painel()
+	_barra.name = "Barra"
+	_barra.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	_barra.offset_left = 40
+	_barra.offset_right = -40
+	_barra.offset_top = 16
+	var h := UiInv.caixa(false, 4)
+	for secao in SECOES:
+		var b := UiInv.comando(secao.capitalize(), SECOES[secao])
+		b.toggle_mode = true
+		b.add_theme_font_size_override("font_size", 17)
+		b.pressed.connect(trocar.bind(secao))
+		h.add_child(b)
+	var espaco := Control.new()
+	espaco.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(espaco)
+	var fechar_btn := UiInv.comando("Fechar", "✕")
+	fechar_btn.add_theme_font_size_override("font_size", 17)
+	fechar_btn.tooltip_text = "Fechar (Esc)"
+	fechar_btn.pressed.connect(fechar)
+	h.add_child(fechar_btn)
+	_barra.add_child(h)
+	menu.add_child(_barra)
+	_barra.hide()
+	telas.add_theme_constant_override("margin_top", 100)
 
 
 func _process(delta: float) -> void:
@@ -89,8 +127,23 @@ func fechar() -> void:
 
 
 func ir(tela: String, personagem = null) -> void:
+	if personagem != null:
+		_personagem = personagem
 	_pilha.append([tela, personagem])
 	_mostrar_topo()
+
+
+## Pela barra: vai direto para a seção; Esc depois volta ao resumo.
+func trocar(tela: String) -> void:
+	clique()
+	_pilha = [["resumo", null]]
+	if tela == "resumo":
+		_mostrar_topo()
+		return
+	var p = null
+	if tela in COM_PERSONAGEM:
+		p = _personagem if is_instance_valid(_personagem) else Party.get_child(0)
+	ir(tela, p)
 
 
 func voltar() -> void:
@@ -130,6 +183,11 @@ func liberar_tudo() -> void:
 
 func _mostrar_topo() -> void:
 	var topo: Array = _pilha[-1]
+	_barra.visible = topo[0] != "resumo"  # o resumo já lista as seções
+	for b in _barra.get_child(0).get_children():
+		if b is Button and b.name != "Fechar":
+			b.set_pressed_no_signal(b.name == topo[0].capitalize())
+	_barra.get_child(0).get_node("Classe").visible = Progresso.tem("classes")
 	for t in telas.get_children():
 		t.hide()
 	var tela := _tela(topo[0])

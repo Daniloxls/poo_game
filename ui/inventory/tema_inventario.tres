@@ -5,19 +5,19 @@
 [ext_resource type="FontFile" uid="uid://cuoffplbyts5n" path="res://assets/fonts/JetBrainsMono.ttf" id="3_mono"]
 
 [sub_resource type="StyleBox" id="StyleBox_painel"]
+script = ExtResource("1_sombra")
 content_margin_left = 14.0
 content_margin_top = 14.0
 content_margin_right = 14.0
 content_margin_bottom = 14.0
-script = ExtResource("1_sombra")
 corner_radius = 12
 
 [sub_resource type="StyleBox" id="StyleBox_painel_aba"]
+script = ExtResource("1_sombra")
 content_margin_left = 14.0
 content_margin_top = 14.0
 content_margin_right = 14.0
 content_margin_bottom = 14.0
-script = ExtResource("1_sombra")
 corner_radius = 12
 square_top_left = true
 
@@ -151,6 +151,17 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBox" id="StyleBox_verso"]
+script = ExtResource("1_sombra")
+content_margin_left = 22.0
+content_margin_top = 20.0
+content_margin_right = 22.0
+content_margin_bottom = 20.0
+bg_color = Color(0.117647, 0.133333, 0.188235, 1)
+border_color = Color(1, 0.992157, 0.968627, 1)
+border_width = 6
+corner_radius = 12
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_celula"]
 content_margin_left = 8.0
 content_margin_top = 6.0
@@ -244,6 +255,8 @@ InvPainel/styles/panel = SubResource("StyleBox_painel")
 InvPainelAba/base_type = &"PanelContainer"
 InvPainelAba/styles/panel = SubResource("StyleBox_painel_aba")
 InvTextoBloqueado/base_type = &"Label"
+InvVerso/base_type = &"PanelContainer"
+InvVerso/styles/panel = SubResource("StyleBox_verso")
 InvTextoBloqueado/colors/font_color = Color(0.419608, 0.392157, 0.341176, 1)
 Label/colors/font_color = Color(0.105882, 0.105882, 0.105882, 1)
 TabContainer/colors/font_hovered_color = Color(0.105882, 0.105882, 0.105882, 1)

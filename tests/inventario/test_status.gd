@@ -33,6 +33,9 @@ func _initialize() -> void:
 	await process_frame
 	checar("{ } fica dentro da carta", Rect2(Vector2.ZERO, s.carta.size).encloses(Rect2(s.botao_virar.position, s.botao_virar.size)), [s.botao_virar.position, s.carta.size])
 	checar("frente mostra o nome", s.frente.find_children("*", "Label", true, false).any(func(l): return l.text == "Turin"))
+	checar("carta do tamanho das outras telas", s.carta.size.is_equal_approx(s.size) and s.size.x > 900, [s.carta.size, s.size])
+	var borda = s.verso.get_theme_stylebox("panel")
+	checar("verso com borda clara", borda is HardShadowStyleBox and borda.border_color.v > 0.9 and borda.border_width >= 4, borda)
 
 	s.virar()
 	await create_timer(0.6).timeout
