@@ -73,6 +73,21 @@ func _atualizar() -> void:
 	codigo.text = "\n".join(bb)
 
 
+## Habilidade escrita como método: invadir(Inimigo alvo); a descrição aparece no mouse.
+static func _metodo(h: SKILL) -> Button:
+	var params := PackedStringArray()
+	for tipo in h.get_target_argument():
+		params.append(tipo + " alvo")
+	var b := Button.new()
+	b.text = "%s(%s)" % [BattleContext.method_name(h), ", ".join(params)]
+	b.tooltip_text = h.get_description()
+	b.theme_type_variation = &"InvCelula"
+	b.custom_minimum_size.y = 44
+	b.add_theme_font_override("font", BattleFonts.mono())
+	b.add_theme_font_size_override("font_size", 16)
+	return b
+
+
 ## A frente da carta; a troca de classe usa a compacta, o Status a larga (duas colunas).
 static func preencher_frente(painel: Control, p, larga := false) -> void:
 	UiInv.limpar(painel)
@@ -104,9 +119,10 @@ static func preencher_frente(painel: Control, p, larga := false) -> void:
 		dir.add_child(linha)
 	dir.add_child(UiInv.rotulo("Habilidades", 14))
 	var habs := HFlowContainer.new()
-	habs.add_theme_constant_override("h_separation", 6)
+	habs.add_theme_constant_override("h_separation", 8)
+	habs.add_theme_constant_override("v_separation", 8)
 	for h in p.get_habilidades():
-		habs.add_child(UiInv.chip(h.get_skill_name()))
+		habs.add_child(_metodo(h))
 	if habs.get_child_count() == 0:
 		habs.add_child(UiInv.rotulo("—", 14))
 	dir.add_child(habs)

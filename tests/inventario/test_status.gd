@@ -52,6 +52,11 @@ func _initialize() -> void:
 	inv.mudou.emit()
 	checar("verso mostra a troca de classe", s.codigo.get_parsed_text().contains("turin = new BlackHat(turin);"))
 	checar("frente mostra a classe nova", s.frente.find_children("*", "Label", true, false).any(func(l): return l.text == "BlackHat"))
+	var metodos: Array = s.frente.find_children("*", "Button", true, false).filter(func(b): return b.text == "invadir(Inimigo alvo)")
+	checar("habilidade escrita como método", metodos.size() == 1, s.frente.find_children("*", "Button", true, false).map(func(b): return b.text))
+	if metodos.size() == 1:
+		checar("descrição ao passar o mouse", metodos[0].tooltip_text == "Entra no código do inimigo", metodos[0].tooltip_text)
+		checar("botão grande", metodos[0].custom_minimum_size.y >= 40)
 
 	turin.mudar_classe(load("res://rpg_classes/commoner.tres"))
 	turin.hp = turin.get_max_hp()
