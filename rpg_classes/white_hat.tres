@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="RPG_CLASS" load_steps=7 format=3]
+
+[ext_resource type="Resource" uid="uid://dutwj43v2ybft" path="res://rpg_classes/skills/attack.tres" id="1_atk"]
+[ext_resource type="Script" path="res://rpg_classes/skills/skill.gd" id="1_skill"]
+[ext_resource type="Script" path="res://rpg_classes/rpg_class.gd" id="1_cls"]
+[ext_resource type="Resource" uid="uid://bl8mjvs2mwfme" path="res://rpg_classes/skills/use_item.tres" id="2_item"]
+
+[sub_resource type="Resource" id="Resource_h1"]
+script = ExtResource("1_skill")
+SKLL_NAME = "Curar"
+TARGET = Array[int]([2])
+DESCRIPTION = "Restaura o HP de um aliado"
+
+[sub_resource type="Resource" id="Resource_h2"]
+script = ExtResource("1_skill")
+SKLL_NAME = "Depurar"
+TARGET = Array[int]([2])
+DESCRIPTION = "Remove um erro de um aliado"
+
+[resource]
+script = ExtResource("1_cls")
+CLASS_NAME = "WhiteHat"
+HP_BONUS = 0
+PP_BONUS = 8
+ATK_BONUS = -3
+DEF_BONUS = 0
+VEL_BONUS = 0
+SKILLS = Array[ExtResource("1_skill")]([ExtResource("1_atk"), ExtResource("2_item")])
+HABILIDADES = Array[ExtResource("1_skill")]([SubResource("Resource_h1"), SubResource("Resource_h2")])
+JOGAVEL = true
+COR = Color(0.957, 0.957, 0.957, 1)

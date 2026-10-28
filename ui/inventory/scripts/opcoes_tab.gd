@@ -1,4 +1,4 @@
-extends MarginContainer
+extends PanelContainer
 ## Opções de diálogo: velocidade do texto e avanço automático.
 
 @onready var velocidade: OptionButton = %Velocidade
@@ -10,6 +10,11 @@ func _ready() -> void:
 	_sincronizar.call_deferred()
 	velocidade.item_selected.connect(func(i: int) -> void: opcoes().velocidade_texto = velocidade.get_item_id(i))
 	avanco.toggled.connect(func(on: bool) -> void: opcoes().avanco_automatico = on)
+
+
+func abrir_tela(_p) -> void:
+	_sincronizar()
+	velocidade.grab_focus()
 
 
 func _sincronizar() -> void:

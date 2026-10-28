@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PaginaDoc" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/documentacao/pagina_doc.gd" id="1_pag"]
+
+[resource]
+script = ExtResource("1_pag")
+REQUER = "basico"
+ORDEM = 3
+TITULO = "String"
+TEXTO = "Uma [b]String[/b] guarda texto. O texto vai sempre entre aspas duplas: \"Turin\", \"sol\", \"Poção\". Sem as aspas, o Java acha que a palavra é o nome de uma variável. Duas Strings podem ser juntadas com o sinal de +."
+EXEMPLO = "String nome = \"Turin\";\nString saudacao = \"Oi, \" + nome;"

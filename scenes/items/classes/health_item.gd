@@ -10,3 +10,9 @@ func get_type():
 
 func get_health_restore():
 	return HEALTH_RESTORE
+
+func pode_usar() -> bool:
+	return true
+
+func usar(alvo) -> int:
+	return alvo.apply_heal(HEALTH_RESTORE)

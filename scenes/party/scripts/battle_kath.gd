@@ -16,7 +16,7 @@ func _ready():
 	def = 12
 	vel = 17
 	xp = 0
-	rpg_class = load("res://scenes/inventory/classes/commoner.tres")
+	rpg_class = load("res://rpg_classes/commoner.tres")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

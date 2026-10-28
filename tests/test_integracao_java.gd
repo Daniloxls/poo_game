@@ -134,7 +134,7 @@ func _initialize() -> void:
 	await process_frame
 	await process_frame
 	Input.action_release("e")
-	checar("'e' no campo de texto não abre o inventário", not inv.visible)
+	checar("'e' no campo de texto não abre o inventário", not inv.esta_aberto())
 	tenda.close_window()
 
 	print("== Glifos dos objetos depuráveis ==")

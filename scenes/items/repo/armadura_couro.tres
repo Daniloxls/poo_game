@@ -16,4 +16,4 @@ QUANTITY = 0
 ITEM_ICON = ExtResource("1_jc1aj")
 ITEM_TEXT = "Armadura simples de couro."
 SELECTION = 5
-PRICE = 0
+PRICE = 60

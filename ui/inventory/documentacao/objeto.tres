@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PaginaDoc" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/documentacao/pagina_doc.gd" id="1_pag"]
+
+[resource]
+script = ExtResource("1_pag")
+REQUER = "objeto"
+ORDEM = 11
+TITULO = "Objeto"
+TEXTO = "Um [b]objeto[/b] é algo criado a partir de uma classe, com seus próprios valores. A palavra [b]new[/b] cria o objeto. O Turin é um objeto da classe Personagem: tem o nome \"Turin\" e o hp dele. Outro personagem feito do mesmo molde teria valores diferentes. Para ler ou mudar um valor, use o ponto: turin.hp."
+EXEMPLO = "Personagem turin = new Personagem(\"Turin\");\nturin.hp = 42;\nturin.atk = turin.atk + 2;"
