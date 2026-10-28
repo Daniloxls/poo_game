@@ -3,6 +3,9 @@ extends HFlowContainer
 ## Um chip por conceito de POO: o nome quando já visto, "???" enquanto trancado ou ainda não revelado.
 
 
+var tamanho := 12  # fonte dos chips; a Documentação usa maior
+
+
 func _init() -> void:
 	name = "TrilhaConceitos"
 	add_theme_constant_override("h_separation", 6)
@@ -13,7 +16,7 @@ func atualizar() -> void:
 	UiInv.limpar(self)
 	for id in Progresso.CONCEITOS:
 		var aberto: bool = Progresso.tem(id) and not Progresso.novo(id)
-		var c := UiInv.chip(Progresso.NOMES[id] if aberto else "???", aberto)
+		var c := UiInv.chip(Progresso.NOMES[id] if aberto else "???", aberto, tamanho)
 		c.name = id
 		add_child(c)
 
@@ -28,7 +31,7 @@ func revelar(id: String) -> void:
 	if c == null:
 		return
 	c.name = id + "_velho"  # libera o nome para o chip novo
-	var novo := UiInv.chip(Progresso.NOMES[id])
+	var novo := UiInv.chip(Progresso.NOMES[id], true, tamanho)
 	novo.name = id
 	add_child(novo)
 	move_child(novo, c.get_index())

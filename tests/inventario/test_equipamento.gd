@@ -38,6 +38,12 @@ func _initialize() -> void:
 		return
 	checar("uma aba por membro", s.abas.get_tab_count() == 1 and s.abas.get_tab_title(0) == "Turin")
 
+	# boneco no meio, slots em volta, com ícones
+	checar("personagem no meio", s.find_child("Boneco", true, false) is TextureRect)
+	var vazio: Button = s.botao_slot("body_slot")
+	checar("slot vazio mostra o ícone do tipo apagado", vazio.icon != null and vazio.self_modulate.a == 1.0 and vazio.get_meta("vazio", false), vazio.icon)
+	checar("peças com ícone", s.botao_peca("Armadura de Ferro") != null and s.botao_peca("Armadura de Ferro").icon == ferro.ITEM_ICON)
+
 	var def0: int = turin.get_def()
 	checar("prévia da defesa", s.previsao(turin, "body_slot", ferro)["def"] == [def0, def0 + 5], s.previsao(turin, "body_slot", ferro))
 	checar("prévia não muda o personagem", turin.get_equip("body_slot") == null and turin.get_def() == def0)
@@ -46,6 +52,7 @@ func _initialize() -> void:
 	checar("couro saiu da mochila", corpo.call("Armadura de couro") == null)
 	s.equipar(turin, "body_slot", ferro)
 	checar("ferro equipado", turin.get_equip("body_slot").ITEM_NAME == "Armadura de Ferro")
+	checar("slot mostra o ícone da peça", s.botao_slot("body_slot").icon == turin.get_equip("body_slot").ITEM_ICON and not s.botao_slot("body_slot").get_meta("vazio", false))
 	checar("couro voltou para a mochila", corpo.call("Armadura de couro") != null)
 
 	s.escolher_slot("body_slot")

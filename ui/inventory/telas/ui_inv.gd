@@ -70,9 +70,9 @@ static func medidor(texto: String, valor: int, maximo: int, cor: Color) -> VBoxC
 
 
 ## Etiqueta amarela (classe, conceito); bloqueado = cinza.
-static func chip(texto: String, ligado := true) -> PanelContainer:
+static func chip(texto: String, ligado := true, tamanho := 12) -> PanelContainer:
 	var p := painel(&"InvChip" if ligado else &"InvChipBloqueado")
-	var l := rotulo(texto, 12, &"" if ligado else &"InvTextoBloqueado")
+	var l := rotulo(texto, tamanho, &"" if ligado else &"InvTextoBloqueado")
 	l.name = "Texto"
 	p.add_child(l)
 	return p

@@ -14,14 +14,26 @@ const ATRIBUTOS := {"atk": ["Ataque", "get_atk", "ATTACK"], "def": ["Defesa", "g
 		"pp": ["PP máx.", "get_max_pp", "PP"]}
 const C_SOBE := "#2f9e4f"
 const C_DESCE := "#c9372c"
+# boneco: slots à esquerda (de cima para baixo no corpo) e à direita
+const LADO_ESQ := ["head_slot", "body_slot", "feet_slot"]
+const LADO_DIR := ["rhand_slot", "lhand_slot", "acessory_slot"]
+# ícone apagado do slot vazio
+const ICONE_VAZIO := {
+	"head_slot": preload("res://assets/gui/icones/itens/bone.png"),
+	"body_slot": preload("res://assets/gui/icones/itens/armadura_ferro.png"),
+	"feet_slot": preload("res://assets/gui/icones/itens/botas_leves.png"),
+	"rhand_slot": preload("res://assets/gui/icones/itens/espada_curta.png"),
+	"lhand_slot": preload("res://assets/gui/icones/itens/escudo_madeira.png"),
+	"acessory_slot": preload("res://assets/gui/icones/itens/anel_vida.png"),
+}
 
 var abas: TabContainer = self
 var valores := {}  # atributo -> RichTextLabel
 var linha: RichTextLabel
 var _p
 var _slot := "body_slot"
-var _slots: VBoxContainer
-var _pecas: VBoxContainer
+var _botoes := {}  # slot -> Button
+var _pecas: GridContainer
 var _linhas_atr := {}
 
 
@@ -40,7 +52,15 @@ func abrir_tela(p) -> void:
 	current_tab = maxi(Party.get_children().find(p), 0)
 	_p = p
 	_montar()
-	_slots.get_child(1).grab_focus()
+	_botoes[_slot].grab_focus()
+
+
+func botao_slot(slot: String) -> Button:
+	return _botoes.get(slot)
+
+
+func botao_peca(nome: String) -> Button:
+	return _pecas.get_node_or_null(nome) if _pecas else null
 
 
 func escolher_slot(slot: String) -> void:
@@ -93,8 +113,8 @@ func equipar(p, slot: String, item) -> void:
 
 # _montar recria os botões: o foco volta para o slot escolhido
 func _focar_slot() -> void:
-	if is_visible_in_tree() and _slots:
-		_slots.get_node(_slot).grab_focus()
+	if is_visible_in_tree() and _botoes.has(_slot):
+		_botoes[_slot].grab_focus()
 
 
 # Coloca a peça no slot e devolve o que saiu (a de duas mãos ocupa as duas).
@@ -126,32 +146,26 @@ func _montar() -> void:
 	if conteudo == null or _p == null:
 		return
 	UiInv.limpar(conteudo)
-	_slots = UiInv.caixa(true, 4)
-	_slots.custom_minimum_size.x = 210
-	_slots.add_child(UiInv.rotulo("Equipado", 14))
-	for s in SLOTS:
-		var e = _p.get_equip(s)
-		var b := UiInv.comando(s, "%s\n%s" % [NOMES[s], e.ITEM_NAME if e else "vazio"])
-		b.add_theme_font_size_override("font_size", 15)
-		b.toggle_mode = true
-		b.set_pressed_no_signal(s == _slot)
-		b.pressed.connect(escolher_slot.bind(s))
-		_slots.add_child(b)
-	conteudo.add_child(_slots)
+	conteudo.add_theme_constant_override("separation", 28)
+	conteudo.add_child(_boneco())
 
-	_pecas = UiInv.caixa(true, 4)
-	_pecas.custom_minimum_size.x = 230
-	_pecas.add_child(UiInv.rotulo("Trocar " + NOMES[_slot].to_lower(), 14))
+	var dir := UiInv.caixa(true, 8)
+	dir.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	dir.add_child(UiInv.rotulo("Trocar " + NOMES[_slot].to_lower(), 14))
+	_pecas = GridContainer.new()
+	_pecas.columns = 4
+	_pecas.add_theme_constant_override("h_separation", 8)
+	_pecas.add_theme_constant_override("v_separation", 8)
 	for e in Inventory.mochila.de_slot(CABE[_slot]):
 		_pecas.add_child(_peca(e.ITEM_NAME, e))
 	if _p.get_equip(_slot):
 		_pecas.add_child(_peca("Tirar", null))
-	if _pecas.get_child_count() == 1:
-		_pecas.add_child(UiInv.rotulo("nada na mochila", 14, &"InvTextoBloqueado"))
-	conteudo.add_child(_pecas)
+	dir.add_child(_pecas)
+	if _pecas.get_child_count() == 0:
+		dir.add_child(UiInv.rotulo("nada na mochila", 14, &"InvTextoBloqueado"))
+	dir.add_child(UiInv.divisor())
 
-	var atr_col := UiInv.caixa(true, 6)
-	atr_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var atr_col := dir
 	atr_col.add_child(UiInv.rotulo("Atributos", 14))
 	valores.clear()
 	_linhas_atr.clear()
@@ -176,13 +190,76 @@ func _montar() -> void:
 	var cod := UiInv.codigo()
 	linha = cod.get_node("Codigo")
 	atr_col.add_child(cod)
-	conteudo.add_child(atr_col)
+	conteudo.add_child(dir)
 	_sem_previa()
 
 
+## O personagem no meio, com os slots em volta como no corpo dele.
+func _boneco() -> HBoxContainer:
+	var h := UiInv.caixa(false, 14)
+	var esq := UiInv.caixa(true, 10)
+	var dir := UiInv.caixa(true, 10)
+	for par in [[esq, LADO_ESQ], [dir, LADO_DIR]]:
+		par[0].alignment = BoxContainer.ALIGNMENT_CENTER
+		for s in par[1]:
+			par[0].add_child(_botao_slot(s))
+	var meio := UiInv.caixa(true, 6)
+	meio.alignment = BoxContainer.ALIGNMENT_CENTER
+	var nome := UiInv.rotulo(_p.get_nome(), 26)
+	nome.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	meio.add_child(nome)
+	var tag := UiInv.chip(_p.get_class_name())
+	tag.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	meio.add_child(tag)
+	var boneco := UiInv.retrato(_p, 200)
+	boneco.name = "Boneco"
+	boneco.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	meio.add_child(boneco)
+	h.add_child(esq)
+	h.add_child(meio)
+	h.add_child(dir)
+	return h
+
+
+func _botao_slot(s: String) -> Button:
+	var e = _p.get_equip(s)
+	var b := Button.new()
+	b.name = s
+	b.theme_type_variation = &"InvCelula"
+	b.toggle_mode = true
+	b.set_pressed_no_signal(s == _slot)
+	b.text = "%s\n%s" % [NOMES[s], e.ITEM_NAME if e else "vazio"]
+	b.icon = e.ITEM_ICON if e and e.ITEM_ICON else ICONE_VAZIO[s]
+	b.set_meta("vazio", e == null)
+	if e == null:  # ícone do tipo, apagado
+		for estado in ["normal", "hover", "pressed", "focus"]:
+			b.add_theme_color_override("icon_%s_color" % estado, Color(1, 1, 1, 0.3))
+	_formatar_celula(b, Vector2(132, 112))
+	b.pressed.connect(escolher_slot.bind(s))
+	_botoes[s] = b
+	return b
+
+
+# célula quadrada com o ícone em cima e o texto embaixo, em pixel art
+func _formatar_celula(b: Button, tamanho: Vector2) -> void:
+	b.custom_minimum_size = tamanho
+	b.expand_icon = true
+	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+	b.add_theme_constant_override("icon_max_width", 44)
+	b.add_theme_font_size_override("font_size", 13)
+	b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
+
 func _peca(texto: String, e) -> Button:
-	var b := UiInv.comando(texto.replace(" ", "_") if e else "Tirar", texto)
-	b.add_theme_font_size_override("font_size", 16)
+	var b := Button.new()
+	b.name = texto
+	b.text = texto
+	b.theme_type_variation = &"InvCelula"
+	if e:
+		b.icon = e.ITEM_ICON
+	_formatar_celula(b, Vector2(112, 96))
 	b.mouse_entered.connect(prever.bind(e))
 	b.focus_entered.connect(prever.bind(e))
 	b.mouse_exited.connect(_sem_previa)

@@ -61,6 +61,8 @@ func _initialize() -> void:
 	inv.ir("documentacao")
 	await create_timer(0.5).timeout
 	checar("chip novo revelado", d.trilha.chip_texto("metodos") == "Métodos", d.trilha.chip_texto("metodos"))
+	var tam: int = d.trilha.get_node("classe/Texto").get_theme_font_size("font_size")
+	checar("chips grandes na documentação", tam >= 18, tam)
 	checar("métodos marcado como visto", not prog.novo("metodos"))
 	checar("página de métodos liberada", not d.botao("metodos").disabled and d.botao("metodos").text == "Métodos")
 

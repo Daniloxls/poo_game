@@ -20,6 +20,8 @@ func _ready() -> void:
 			paginas.append(pg)
 	paginas.sort_custom(func(a, b): return a.ORDEM < b.ORDEM)
 	trilha = TrilhaConceitos.new()
+	trilha.tamanho = 18
+	trilha.add_theme_constant_override("h_separation", 10)
 	add_child(trilha)
 	var h := UiInv.caixa(false, 18)
 	h.size_flags_vertical = Control.SIZE_EXPAND_FILL
