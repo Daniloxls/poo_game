@@ -126,6 +126,7 @@ func _celula(it: ITEM) -> Button:
 	b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	b.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
 	b.add_theme_constant_override("icon_max_width", 40)
+	b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST  # ícones em pixel art
 	b.add_theme_font_size_override("font_size", 13)
 	b.custom_minimum_size = Vector2(112, 100)
 	b.focus_entered.connect(selecionar.bind(it))  # só foco ou clique: passar o mouse a caminho do Usar não troca

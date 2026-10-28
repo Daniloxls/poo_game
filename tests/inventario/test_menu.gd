@@ -111,6 +111,8 @@ func _initialize() -> void:
 		if i is EQUIP_ITEM and not i.SLOT in slots:
 			slots.append(i.SLOT)
 	checar("F10 traz equipamento de todo tipo", slots.size() == EQUIP_ITEM.Slot.size(), slots)
+	var sem_icone: Array = inv.mochila.itens.filter(func(i): return i.ITEM_ICON == null or not i.ITEM_ICON.resource_path.begins_with("res://assets/gui/icones/itens/"))
+	checar("todo item com ícone próprio", sem_icone.is_empty(), sem_icone.map(func(i): return i.ITEM_NAME))
 	inv.mochila.itens.clear()
 	inv.dinheiro = 0
 	prog.resetar()

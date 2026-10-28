@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EQUIP_ITEM" load_steps=3 format=3 uid="uid://dxegh7jhrkwtn"]
 
-[ext_resource type="Texture2D" uid="uid://bqd5hueexarwm" path="res://assets/gui/icons/armor_icon.png" id="1_jc1aj"]
+[ext_resource type="Texture2D" path="res://assets/gui/icones/itens/armadura_couro.png" id="1_icone"]
 [ext_resource type="Script" path="res://scenes/items/classes/equip_item.gd" id="1_yg2ni"]
 
 [resource]
@@ -13,7 +13,7 @@ VELOCITY = 0
 SLOT = 3
 ITEM_NAME = "Armadura de couro"
 QUANTITY = 0
-ITEM_ICON = ExtResource("1_jc1aj")
+ITEM_ICON = ExtResource("1_icone")
 ITEM_TEXT = "Armadura simples de couro."
 SELECTION = 5
 PRICE = 60

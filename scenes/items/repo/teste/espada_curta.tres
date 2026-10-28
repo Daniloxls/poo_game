@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EQUIP_ITEM" load_steps=3 format=3]
 
-[ext_resource type="Texture2D" uid="uid://b2p3b8fdfmn6d" path="res://assets/gui/icons/breastplate.png" id="1_icone"]
+[ext_resource type="Texture2D" path="res://assets/gui/icones/itens/espada_curta.png" id="1_icone"]
 [ext_resource type="Script" path="res://scenes/items/classes/equip_item.gd" id="2_equip"]
 
 [resource]
