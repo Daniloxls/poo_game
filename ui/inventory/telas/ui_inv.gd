@@ -5,6 +5,11 @@ extends RefCounted
 const TINTA := Color("#1b1b1b")
 const VERDE := Color("#3fae5a")
 const AZUL := Color("#3b7dd8")
+# toques dos pacotes da Kenney (assets/gui/kenney/LEIAME.txt)
+const SETA := preload("res://assets/gui/kenney/seta.png")
+const EXCLAMACAO := preload("res://assets/gui/kenney/exclamacao.png")
+const DIVISOR_ESQ := preload("res://assets/gui/kenney/divisor_esq.png")
+const DIVISOR_DIR := preload("res://assets/gui/kenney/divisor_dir.png")
 
 
 static func rotulo(texto: String, tamanho := 0, variacao := &"") -> Label:
@@ -73,18 +78,40 @@ static func chip(texto: String, ligado := true) -> PanelContainer:
 	return p
 
 
-static func badge() -> Panel:
-	var b := Panel.new()
+## O "!" de algo novo desbloqueado.
+static func badge() -> TextureRect:
+	var b := TextureRect.new()
 	b.name = "Badge"
-	b.theme_type_variation = &"InvBadge"
+	b.texture = EXCLAMACAO
+	b.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	b.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	b.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	b.offset_left = -10
-	b.offset_top = -6
+	b.offset_left = -20
+	b.offset_top = -10
 	b.offset_right = 6
-	b.offset_bottom = 10
+	b.offset_bottom = 16
 	b.hide()
 	return b
+
+
+## Linha decorativa ── ◇◇ ── entre partes de um painel: duas metades espelhadas,
+## a linha estica e o enfeite do meio fica do tamanho certo.
+static func divisor() -> HBoxContainer:
+	var d := HBoxContainer.new()
+	d.name = "Divisor"
+	d.modulate = TINTA
+	d.add_theme_constant_override("separation", 0)
+	d.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for lado in [[DIVISOR_ESQ, "patch_margin_right"], [DIVISOR_DIR, "patch_margin_left"]]:
+		var metade := NinePatchRect.new()
+		metade.texture = lado[0]
+		metade.set(lado[1], 48)  # o enfeite ocupa a metade da imagem
+		metade.custom_minimum_size = Vector2(48, 14)
+		metade.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		metade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		d.add_child(metade)
+	return d
 
 
 ## Painel escuro com um RichTextLabel de código; devolve o painel (o texto é o filho "Codigo").
@@ -109,6 +136,13 @@ static func comando(nome: String, texto: String) -> Button:
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.add_theme_font_size_override("font_size", 20)
 	b.add_child(badge())
+	# a seta aparece no comando com foco ou com o mouse em cima
+	var mostrar := func(): b.icon = SETA
+	var esconder := func(): if not b.has_focus() and not b.is_hovered(): b.icon = null
+	b.focus_entered.connect(mostrar)
+	b.mouse_entered.connect(mostrar)
+	b.focus_exited.connect(esconder)
+	b.mouse_exited.connect(func(): if not b.has_focus(): b.icon = null)
 	return b
 
 

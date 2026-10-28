@@ -41,7 +41,7 @@ func _ready() -> void:
 	var cod := UiInv.codigo()
 	exemplo = cod.get_node("Codigo")
 	exemplo.add_theme_font_size_override("normal_font_size", 15)
-	for n in [_titulo, _texto, cod]:
+	for n in [_titulo, UiInv.divisor(), _texto, cod]:
 		v.add_child(n)
 	p_pag.add_child(v)
 	h.add_child(p_pag)

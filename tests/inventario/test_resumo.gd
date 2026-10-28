@@ -53,7 +53,17 @@ func _initialize() -> void:
 	prog.desbloquear("classes")
 	r.abrir_tela(null)
 	checar("Classe aparece com badge", classe.visible and classe.get_node("Badge").visible)
+	var badge = classe.get_node("Badge")
+	checar("badge é o emote de !", badge is TextureRect and badge.texture != null and badge.texture.resource_path.ends_with("exclamacao.png"), badge)
 	prog.resetar()
+
+	var itens_cmd: Button = r.comando("Itens")
+	var status_cmd: Button = r.comando("Status")
+	status_cmd.grab_focus()
+	await process_frame
+	checar("seta no comando com foco", status_cmd.icon != null and status_cmd.icon.resource_path.ends_with("seta.png"), status_cmd.icon)
+	checar("sem seta nos outros", itens_cmd.icon == null, itens_cmd.icon)
+	checar("divisor entre o grupo e a trilha", r.find_child("Divisor", true, false) is HBoxContainer and r.find_child("Divisor", true, false).get_child_count() == 2)
 	r.abrir_tela(null)
 
 	inv.dinheiro = 1250

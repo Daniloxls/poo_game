@@ -30,6 +30,7 @@ func _ready() -> void:
 	_linhas.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_trilha = TrilhaConceitos.new()
 	g.add_child(_linhas)
+	g.add_child(UiInv.divisor())
 	g.add_child(_trilha)
 	grupo.add_child(g)
 	add_child(grupo)

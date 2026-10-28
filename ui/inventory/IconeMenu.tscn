@@ -4,6 +4,7 @@
 [ext_resource type="Theme" path="res://ui/inventory/tema_inventario.tres" id="2_tema"]
 [ext_resource type="Script" uid="uid://bkjuntof6gywq" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="3_sombra"]
 [ext_resource type="Texture2D" path="res://assets/gui/icons/classes.png" id="4_png"]
+[ext_resource type="Texture2D" path="res://assets/gui/kenney/exclamacao.png" id="5_excl"]
 
 [sub_resource type="StyleBox" id="StyleBox_icone"]
 script = ExtResource("3_sombra")
@@ -40,15 +41,17 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("1_icone")
 
-[node name="Badge" type="Panel" parent="."]
+[node name="Badge" type="TextureRect" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -12.0
-offset_top = -6.0
-offset_right = 4.0
-offset_bottom = 10.0
+offset_left = -18.0
+offset_top = -14.0
+offset_right = 10.0
+offset_bottom = 14.0
 mouse_filter = 2
-theme_type_variation = &"InvBadge"
+texture = ExtResource("5_excl")
+expand_mode = 1
+stretch_mode = 5
