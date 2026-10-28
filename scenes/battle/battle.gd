@@ -7,7 +7,6 @@ signal battle_lost
 signal turn_started(entity)
 signal _acted  # o membro do grupo terminou a ação do turno
 
-const BACKPACK := "TabContainer/Mochila"
 const MARKER_OFFSET := Vector2(-10, -110)
 
 var stack := CallStack.new()
@@ -89,7 +88,7 @@ func context() -> BattleContext:
 		c.running = top.entity
 		if not top.entity.is_party_member() or top.entity == _acting:
 			c.active = top.entity
-	c.items = Inventory.get_node(BACKPACK).get_items().filter(func(i): return i.QUANTITY > 0)
+	c.items = Inventory.mochila.itens.filter(func(i): return i.QUANTITY > 0)
 	return c
 
 
@@ -108,7 +107,7 @@ func run_command(cmd: ResolvedCommand, from_console: bool) -> void:
 	var outcomes: Array = cmd.skill.SKILL_SCRIPT.new().resolve(cmd.actor, cmd.targets, mult)
 	for t in cmd.targets:
 		if t is ITEM:
-			Inventory.get_node(BACKPACK).spend_item(t)
+			Inventory.mochila.gastar(t)
 	await _play(cmd.actor, BattleContext.method_name(cmd.skill) + "()", outcomes)
 	await _after_action()
 	_acted.emit()

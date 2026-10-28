@@ -29,7 +29,7 @@ func _ready():
     }
 }
 """
-	shader_rect.show()
+	glifos.show()
 
 # Chamado pelo Java: private native void causarDano(int dano);
 func causarDano(dano: int) -> void:

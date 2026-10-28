@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PaginaDoc" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/documentacao/pagina_doc.gd" id="1_pag"]
+
+[resource]
+script = ExtResource("1_pag")
+REQUER = "classe"
+ORDEM = 10
+TITULO = "Classe"
+TEXTO = "Uma [b]classe[/b] é um molde. Ela diz quais informações (atributos) e quais ações (métodos) algo vai ter, mas ainda não é a coisa em si. A classe Personagem diz que todo personagem tem nome, hp e ataque. As classes do jogo, como BlackHat e Protector, também são moldes: cada uma dá atributos e habilidades diferentes."
+EXEMPLO = "class Personagem {\n    String nome;\n    int hp;\n    int atk;\n}"

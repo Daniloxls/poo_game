@@ -1,0 +1,436 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://ui/dialogue/tema_dialogo.tres" id="1_tema"]
+[ext_resource type="Script" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="2_caixa"]
+[ext_resource type="Texture2D" path="res://assets/props/city/vidente.png" id="3_vidente"]
+[ext_resource type="FontFile" path="res://assets/fonts/JetBrainsMono.ttf" id="4_mono"]
+[ext_resource type="FontFile" path="res://assets/fonts/Juicy Fills.ttf" id="5_juicy"]
+[ext_resource type="FontFile" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="6_chakra"]
+
+[sub_resource type="StyleBox" id="StyleBox_painel"]
+script = ExtResource("2_caixa")
+corner_radius = 14
+shadow_offset = Vector2(8, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arte"]
+bg_color = Color(0.141, 0.11, 0.2, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_moldura"]
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Gradient" id="Gradient_brilho"]
+colors = PackedColorArray(0.55, 0.92, 1, 0.8, 0.55, 0.92, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_brilho"]
+gradient = SubResource("Gradient_brilho")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_nevoa"]
+colors = PackedColorArray(0.82, 0.8, 0.88, 0.9, 0.82, 0.8, 0.88, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nevoa"]
+gradient = SubResource("Gradient_nevoa")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="StyleBox" id="StyleBox_bolha"]
+content_margin_left = 22.0
+content_margin_top = 4.0
+content_margin_right = 22.0
+content_margin_bottom = 6.0
+script = ExtResource("2_caixa")
+corner_radius = 16
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rabo"]
+bg_color = Color(1, 0.972549, 0.905882, 1)
+border_width_left = 4
+border_width_bottom = 4
+border_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etiqueta"]
+content_margin_left = 22.0
+content_margin_top = 2.0
+content_margin_right = 22.0
+content_margin_bottom = 2.0
+bg_color = Color(0.42, 0.31, 0.63, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+skew = Vector2(0.18, 0)
+
+[sub_resource type="FontVariation" id="FontVariation_mono"]
+base_font = ExtResource("4_mono")
+variation_opentype = {
+"wght": 700
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_campo"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_campo_foco"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.8235294, 0.24705882, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBox" id="StyleBox_pensar"]
+content_margin_left = 28.0
+content_margin_right = 28.0
+script = ExtResource("2_caixa")
+bg_color = Color(1, 0.8235294, 0.24705882, 1)
+border_width = 3
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBox" id="StyleBox_pensar_hover"]
+content_margin_left = 28.0
+content_margin_right = 28.0
+script = ExtResource("2_caixa")
+bg_color = Color(1, 0.89, 0.48, 1)
+border_width = 3
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBox" id="StyleBox_pensar_apertado"]
+content_margin_left = 28.0
+content_margin_right = 28.0
+script = ExtResource("2_caixa")
+bg_color = Color(1, 0.8235294, 0.24705882, 1)
+border_width = 3
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_foco"]
+
+[sub_resource type="StyleBox" id="StyleBox_fechar"]
+script = ExtResource("2_caixa")
+corner_radius = 26
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBox" id="StyleBox_fechar_hover"]
+script = ExtResource("2_caixa")
+bg_color = Color(1, 0.8235294, 0.24705882, 1)
+corner_radius = 26
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="FontVariation" id="FontVariation_bilhete"]
+base_font = ExtResource("5_juicy")
+fallbacks = Array[Font]([ExtResource("6_chakra")])
+
+[sub_resource type="StyleBox" id="StyleBox_bilhete"]
+script = ExtResource("2_caixa")
+bg_color = Color(1, 0.99, 0.95, 1)
+corner_radius = 0
+shadow_offset = Vector2(5, 5)
+
+[node name="VidenteInterface" type="CanvasLayer"]
+visible = false
+
+[node name="Tela" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tema")
+
+[node name="Fundo" type="ColorRect" parent="Tela"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.086, 0.055, 0.133, 0.6)
+
+[node name="Painel" type="Panel" parent="Tela"]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 50.0
+offset_right = 1016.0
+offset_bottom = 598.0
+theme_override_styles/panel = SubResource("StyleBox_painel")
+
+[node name="Arte" type="Panel" parent="Tela/Painel"]
+clip_children = 2
+layout_mode = 0
+offset_left = 36.0
+offset_top = 70.0
+offset_right = 836.0
+offset_bottom = 343.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_arte")
+
+[node name="Imagem" type="TextureRect" parent="Tela/Painel/Arte"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_vidente")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Brilho" type="TextureRect" parent="Tela/Painel/Arte"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 319.0
+offset_top = 158.0
+offset_right = 479.0
+offset_bottom = 318.0
+pivot_offset = Vector2(80, 80)
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_brilho")
+expand_mode = 1
+
+[node name="Nevoa" type="Control" parent="Tela/Painel/Arte"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 339.0
+offset_top = 178.0
+offset_right = 459.0
+offset_bottom = 298.0
+pivot_offset = Vector2(60, 60)
+mouse_filter = 2
+
+[node name="Nuvem1" type="TextureRect" parent="Tela/Painel/Arte/Nevoa"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 6.0
+offset_right = 90.0
+offset_bottom = 96.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_nevoa")
+expand_mode = 1
+
+[node name="Nuvem2" type="TextureRect" parent="Tela/Painel/Arte/Nevoa"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = -10.0
+offset_right = 134.0
+offset_bottom = 90.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_nevoa")
+expand_mode = 1
+
+[node name="Nuvem3" type="TextureRect" parent="Tela/Painel/Arte/Nevoa"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 44.0
+offset_right = 126.0
+offset_bottom = 124.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_nevoa")
+expand_mode = 1
+
+[node name="Moldura" type="Panel" parent="Tela/Painel"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 70.0
+offset_right = 836.0
+offset_bottom = 343.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_moldura")
+
+[node name="Bolha" type="PanelContainer" parent="Tela/Painel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 510.0
+offset_top = 276.0
+offset_right = 630.0
+offset_bottom = 326.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_bolha")
+
+[node name="Palavra" type="Label" parent="Tela/Painel/Bolha"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "banana"
+horizontal_alignment = 1
+
+[node name="Rabo" type="Panel" parent="Tela/Painel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 497.0
+offset_top = 290.0
+offset_right = 519.0
+offset_bottom = 312.0
+rotation = 0.7853982
+pivot_offset = Vector2(11, 11)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rabo")
+
+[node name="Etiqueta" type="PanelContainer" parent="Tela/Painel"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 24.0
+offset_right = 420.0
+offset_bottom = 66.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_etiqueta")
+
+[node name="Nome" type="Label" parent="Tela/Painel/Etiqueta"]
+layout_mode = 2
+theme_type_variation = &"NomeTag"
+theme_override_font_sizes/font_size = 26
+text = "Tritomos, o Grande Adivinho"
+vertical_alignment = 1
+
+[node name="Linha" type="VBoxContainer" parent="Tela/Painel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 36.0
+offset_top = 372.0
+offset_right = 836.0
+offset_bottom = 500.0
+theme_override_constants/separation = 12
+
+[node name="Dica" type="Label" parent="Tela/Painel/Linha"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.29, 0.267, 0.212, 1)
+theme_override_font_sizes/font_size = 19
+text = "Pense em uma palavra. Se ele errar, você ganha 10 tickets."
+horizontal_alignment = 1
+
+[node name="Campo" type="HBoxContainer" parent="Tela/Painel/Linha"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Pensamento" type="LineEdit" parent="Tela/Painel/Linha/Campo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(380, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+theme_override_colors/font_placeholder_color = Color(0.54, 0.51, 0.44, 1)
+theme_override_colors/caret_color = Color(0.105882354, 0.105882354, 0.105882354, 1)
+theme_override_fonts/font = SubResource("FontVariation_mono")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_campo")
+theme_override_styles/focus = SubResource("StyleBoxFlat_campo_foco")
+placeholder_text = "seu pensamento..."
+caret_blink = true
+
+[node name="Pensar" type="Button" parent="Tela/Painel/Linha/Campo"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBox_pensar")
+theme_override_styles/hover = SubResource("StyleBox_pensar_hover")
+theme_override_styles/pressed = SubResource("StyleBox_pensar_apertado")
+theme_override_styles/hover_pressed = SubResource("StyleBox_pensar_apertado")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_foco")
+text = "Pensar"
+
+[node name="Bilhete" type="Control" parent="Tela/Painel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 230.0
+offset_top = 392.0
+offset_right = 650.0
+offset_bottom = 476.0
+rotation = -0.0523599
+pivot_offset = Vector2(210, 42)
+mouse_filter = 2
+
+[node name="Papel" type="PanelContainer" parent="Tela/Painel/Bilhete"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_bilhete")
+
+[node name="Texto" type="Label" parent="Tela/Painel/Bilhete/Papel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.31, 0.63, 1)
+theme_override_fonts/font = SubResource("FontVariation_bilhete")
+theme_override_font_sizes/font_size = 34
+text = "SAIU PARA ALMOÇAR!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fita1" type="ColorRect" parent="Tela/Painel/Bilhete"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = -12.0
+offset_right = 84.0
+offset_bottom = 12.0
+rotation = -0.14
+mouse_filter = 2
+color = Color(1, 0.8235294, 0.24705882, 0.85)
+
+[node name="Fita2" type="ColorRect" parent="Tela/Painel/Bilhete"]
+layout_mode = 0
+offset_left = 336.0
+offset_top = -16.0
+offset_right = 406.0
+offset_bottom = 8.0
+rotation = 0.12
+mouse_filter = 2
+color = Color(1, 0.8235294, 0.24705882, 0.85)
+
+[node name="Fechar" type="Button" parent="Tela/Painel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 850.0
+offset_top = -22.0
+offset_right = 902.0
+offset_bottom = 30.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBox_fechar")
+theme_override_styles/hover = SubResource("StyleBox_fechar_hover")
+theme_override_styles/pressed = SubResource("StyleBox_fechar_hover")
+theme_override_styles/hover_pressed = SubResource("StyleBox_fechar_hover")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_foco")
+text = "X"

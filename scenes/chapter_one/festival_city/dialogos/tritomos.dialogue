@@ -1,5 +1,5 @@
 # Tenda do vidente Tritomos. A bola de cristal mostra o retorno da função leitorDePensamento
-# (que devolve jogador.get_pensamento()); ele não lê o código de ninguém.
+# (o jogador pode mudar o return, que precisa ser uma String); ele não lê o código de ninguém.
 # Contexto (medium_tent.gd): palavra: String (o que Tritomos "leu").
 # Escolha de Turin depois de vencer: Historia.tritomos = "verdade" ou "acreditou".
 
@@ -36,4 +36,11 @@ Tritomos: Minha bola de cristal [shake]nunca[/shake] falha!
 	Tritomos: Sorte...[wait=0.4] é. Só pode ter sido sorte.
 	Tritomos: Deve ter uma mancha na minha bola de cristal...
 	Tritomos: Pegue seus tickets. [whisper]Acho que eu preciso de um tempo...[/whisper]
+=> END
+
+# O código do leitor tem erro (ou devolve null): a bola não mostra nada.
+~ embacada
+Tritomos: Vejamos...[wait=0.5]
+Tritomos: Hmm...[wait=0.4] minha bola de cristal está toda [shake]embaçada[/shake].
+Tritomos: Não consigo ver nada assim. Tem alguma coisa errada com ela...
 => END

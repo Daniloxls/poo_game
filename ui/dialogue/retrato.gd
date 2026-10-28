@@ -21,12 +21,10 @@ var _t_escala: Tween
 var _t_flash: Tween
 
 @onready var _imagem: TextureRect = %Imagem
-@onready var _flash: ColorRect = %Flash
 
 
 func _ready() -> void:
 	visible = false
-	_flash.color.a = 0.0
 	resized.connect(func():
 		pivot_offset = Vector2(size.x / 2.0, size.y)
 		_usar(_imagem.texture))
@@ -91,11 +89,9 @@ func trocar_expressao(exp: String) -> void:
 	_t_escala.tween_property(self, "scale", Vector2.ONE, 0.13)
 	if _t_flash:
 		_t_flash.kill()
-	_flash.visible = true
-	_flash.color.a = 0.7
+	_imagem.material.set_shader_parameter("brilho", 0.7)
 	_t_flash = create_tween()
-	_t_flash.tween_property(_flash, "color:a", 0.0, 0.25)
-	_t_flash.tween_callback(func(): _flash.visible = false)
+	_t_flash.tween_property(_imagem.material, "shader_parameter/brilho", 0.0, 0.25)
 
 
 func animar(nome: String) -> void:
@@ -151,7 +147,7 @@ func _parar() -> void:
 	rotation = 0.0
 	scale = Vector2.ONE
 	modulate.a = 1.0
-	_flash.visible = false
+	_imagem.material.set_shader_parameter("brilho", 0.0)
 	_imagem.material.set_shader_parameter("saturacao", 1.0)
 	# Uma troca de personagem interrompida (ex.: animar() logo após mostrar())
 	# não pode deixar a arte do anterior na tela.

@@ -20,7 +20,7 @@ var ganhou := false
 var quer_lutar := false   # escrito por tatame.dialogue
 
 
-# O nó do tatame é um NPC.tscn, sem o MenuButton/ShaderRect que o _ready de interact.gd espera.
+# O nó do tatame é um NPC.tscn, sem o MenuButton/Glifos que o _ready de interact.gd espera.
 # Não chamar super(): sem esta sobrescrita o jogo para com erro de script ao abrir a cidade.
 func _ready():
 	pass

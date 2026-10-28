@@ -1,0 +1,4 @@
+Imagens dos pacotes da Kenney (www.kenney.nl), licença CC0 1.0 (domínio público):
+- seta.png: UI Pack RPG Expansion (arrowBeige_right.png)
+- exclamacao.png: Emotes Pack (Vector/Style 1/emote_exclamation.png)
+- divisor_esq.png / divisor_dir.png: Fantasy UI Borders (Default/Divider Fade/divider-fade-004.png, a direita espelhada)

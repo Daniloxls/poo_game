@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PaginaDoc" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/documentacao/pagina_doc.gd" id="1_pag"]
+
+[resource]
+script = ExtResource("1_pag")
+REQUER = "abstracao"
+ORDEM = 14
+TITULO = "Abstração"
+TEXTO = "Em breve."
+EXEMPLO = ""

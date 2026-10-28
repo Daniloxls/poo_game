@@ -80,7 +80,8 @@ func resetar_codigo_java() -> void:
 func ao_abrir_codigo() -> void:
 	pass
 
-# O jogador apertou Executar e o código compilou.
+# O jogador apertou Executar e o código compilou. Rode o código aqui
+# (executar_java) para os erros de execução aparecerem no painel.
 func ao_executar_codigo() -> void:
 	pass
 

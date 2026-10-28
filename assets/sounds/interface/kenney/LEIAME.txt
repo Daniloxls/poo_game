@@ -1,0 +1,3 @@
+Sons do pacote de interface da Kenney (www.kenney.nl), licença CC0 1.0:
+clique=select_001, abrir=open_001, fechar=close_001, voltar=back_001,
+confirmar=confirmation_001, virar=switch_001, descartar=drop_001

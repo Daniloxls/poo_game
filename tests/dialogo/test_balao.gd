@@ -76,7 +76,11 @@ func _rodar() -> void:
 	var caixa: Control = b.get_node("%Caixa")
 	checar("busto embaixo à esquerda, por cima da borda da caixa",
 		r.position.x < 60 and r.get_rect().position.y < caixa.get_rect().position.y and r.get_rect().end.y > caixa.get_rect().position.y + 100, r.get_rect())
-	checar("texto à direita do busto", b.get_node("%Texto").get_global_rect().position.x >= r.get_rect().end.x - 20, b.get_node("%Texto").get_global_rect())
+	# O corte de baixo do busto encosta na borda da caixa (4 px) e a moldura corta o que descer.
+	var fundo_img: float = r.get_node("%Imagem").get_global_rect().end.y
+	checar("busto termina na borda de baixo da caixa", absf(fundo_img - (caixa.get_global_rect().end.y - 4)) <= 1.0, [fundo_img, caixa.get_global_rect().end.y])
+	checar("moldura corta o busto que descer", r.get_parent().clip_contents)
+	checar("texto à direita do busto", b.get_node("%Texto").get_global_rect().position.x >= r.get_rect().end.x + 4, b.get_node("%Texto").get_global_rect())
 	await _fechar(b)
 
 	# Rótulo de exibição: Vulto aparece como "???"

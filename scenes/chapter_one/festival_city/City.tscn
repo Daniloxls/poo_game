@@ -25,7 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://cy83m4onprq8e" path="res://assets/characters/cmdzinho_afogado.png" id="32_75rax"]
 [ext_resource type="Script" uid="uid://bcbjn5vlualrt" path="res://scenes/chapter_one/festival_city/scripts/medium_tent.gd" id="32_o7n4g"]
 [ext_resource type="Texture2D" uid="uid://dwdstkmrqlhlw" path="res://assets/characters/campones_5.png" id="32_sp7vb"]
-[ext_resource type="StyleBox" uid="uid://xdtsowj2khkl" path="res://scenes/common/resources/medium_style_box.tres" id="33_u7icb"]
 [ext_resource type="PackedScene" uid="uid://bdpjpq4yd4vic" path="res://entities/npc/NPC.tscn" id="34_diajr"]
 [ext_resource type="Texture2D" uid="uid://dfe5s4l7q3aya" path="res://assets/characters/campones_3.png" id="35_sfxfl"]
 [ext_resource type="PackedScene" uid="uid://bkhxngjgk5aqn" path="res://entities/npc/CmdzinhoFollower.tscn" id="36_s1i3v"]
@@ -34,14 +33,16 @@
 [ext_resource type="Script" uid="uid://cruk32u22s3hi" path="res://scenes/chapter_one/festival_city/scripts/tatame_npc.gd" id="39_itd5i"]
 [ext_resource type="Script" uid="uid://cygb308ny0j7f" path="res://scenes/chapter_one/festival_city/scripts/fighter_npc.gd" id="41_xe8ug"]
 [ext_resource type="Script" uid="uid://bcyjbd4gr0vov" path="res://scenes/chapter_one/festival_city/scripts/excalibur_npc.gd" id="42_6veai"]
-[ext_resource type="Script" path="res://scenes/chapter_one/festival_city/scripts/codigo_cmdzinho.gd" id="cmd_codigo"]
-[ext_resource type="Resource" path="res://scenes/chapter_one/festival_city/dialogos/cidade.dialogue" id="cmd_cidade"]
-[ext_resource type="Resource" path="res://scenes/chapter_one/festival_city/dialogos/tatame.dialogue" id="tat_tatame"]
 [ext_resource type="Script" uid="uid://7nfi1xdde7sb" path="res://scenes/chapter_one/festival_city/scripts/cmdzinho.gd" id="43_vr8h8"]
 [ext_resource type="Script" uid="uid://72em1sbbae8g" path="res://scenes/chapter_one/festival_city/scripts/tickets.gd" id="48_x1l38"]
 [ext_resource type="FontFile" uid="uid://vw38fsht6n3" path="res://assets/fonts/Juicy Fills.ttf" id="49_cxheh"]
 [ext_resource type="Texture2D" uid="uid://da82cqh8330ll" path="res://assets/gui/ticket.png" id="50_vv0r0"]
+[ext_resource type="Resource" uid="uid://dw0if2e0aqs63" path="res://scenes/chapter_one/festival_city/dialogos/cidade.dialogue" id="cmd_cidade"]
+[ext_resource type="Script" uid="uid://bb35bh6iwnv8d" path="res://scenes/chapter_one/festival_city/scripts/codigo_cmdzinho.gd" id="cmd_codigo"]
+[ext_resource type="AnimationLibrary" path="res://scenes/chapter_one/festival_city/roubo_espada.tres" id="roubo_lib"]
+[ext_resource type="Resource" uid="uid://7nmc5vnqfcvw" path="res://scenes/chapter_one/festival_city/dialogos/tatame.dialogue" id="tat_tatame"]
 
+[ext_resource type="PackedScene" path="res://scenes/chapter_one/festival_city/TelaTritomos.tscn" id="tela_trit"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_26v0d"]
 atlas = ExtResource("21_cv2aw")
 region = Rect2(0, 0, 500, 700)
@@ -453,35 +454,36 @@ animations = [{
 "speed": 17.0
 }]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vd5i4"]
-bg_color = Color(0, 0, 0.305882, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fsg5"]
+atlas = ExtResource("32_sp7vb")
+region = Rect2(0, 0, 500, 700)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f16kx"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
+[sub_resource type="SpriteFrames" id="SpriteFrames_bhtm3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fsg5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hd430"]
-bg_color = Color(1, 1, 1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0.305882, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[sub_resource type="AtlasTexture" id="AtlasTexture_lasca"]
+atlas = ExtResource("7_mxx4p")
+region = Rect2(70, 250, 100, 100)
+
+[sub_resource type="Gradient" id="Gradient_some"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_poeira"]
+colors = PackedColorArray(1, 1, 1, 0.9, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_poeira"]
+gradient = SubResource("Gradient_poeira")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6kt5q"]
 atlas = ExtResource("22_mouhb")
@@ -552,21 +554,6 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bnnmi")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4fsg5"]
-atlas = ExtResource("32_sp7vb")
-region = Rect2(0, 0, 500, 700)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_bhtm3"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4fsg5")
 }],
 "loop": 1,
 "name": &"default",
@@ -691,6 +678,7 @@ tile_set = ExtResource("3_bvfsl")
 y_sort_origin = 1
 
 [node name="Cutscene" type="Node2D" parent="." unique_id=592471242]
+z_index = 1
 position = Vector2(13285, -1796)
 script = ExtResource("19_knkt0")
 
@@ -700,10 +688,10 @@ position = Vector2(-13242, -38029)
 texture = ExtResource("20_4ep3b")
 
 [node name="AntiPOO" type="AnimatedSprite2D" parent="Cutscene" unique_id=1511417474]
+visible = false
 position = Vector2(-12998, -39709)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_0edno")
-animation = &"grabbing_sword"
 
 [node name="BlackScreen" type="CanvasLayer" parent="Cutscene" unique_id=1040796347]
 layer = 0
@@ -747,105 +735,82 @@ sprite_frames = SubResource("SpriteFrames_kxsdj")
 frame_progress = 0.0875829
 
 [node name="Kath" type="AnimatedSprite2D" parent="Cutscene" unique_id=1141506650]
-position = Vector2(-11143, -36026)
+visible = false
+position = Vector2(-7543, -36800)
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_m240m")
+
+[node name="Destrocos" type="CPUParticles2D" parent="Cutscene" unique_id=1444657542]
+z_index = 2
+position = Vector2(-13255, -37800)
+emitting = false
+amount = 14
+texture = SubResource("AtlasTexture_lasca")
+lifetime = 1.1
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(0, -1)
+spread = 75.0
+gravity = Vector2(0, 4200)
+initial_velocity_min = 1100.0
+initial_velocity_max = 2000.0
+angular_velocity_min = -540.0
+angular_velocity_max = 540.0
+scale_amount_min = 0.7
+scale_amount_max = 1.5
+color_ramp = SubResource("Gradient_some")
+
+[node name="PoeiraPedra" type="CPUParticles2D" parent="Cutscene" unique_id=1494729462]
+z_index = 1
+position = Vector2(-13255, -37650)
+emitting = false
+amount = 12
+texture = SubResource("GradientTexture2D_poeira")
+lifetime = 1.2
+one_shot = true
+explosiveness = 0.9
+emission_shape = 3
+emission_rect_extents = Vector2(250, 60)
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -150)
+initial_velocity_min = 250.0
+initial_velocity_max = 700.0
+damping_min = 300.0
+damping_max = 500.0
+scale_amount_min = 6.0
+scale_amount_max = 11.0
+color = Color(0.86, 0.8, 0.7, 1)
+color_ramp = SubResource("Gradient_some")
+
+[node name="PoeiraRunis" type="CPUParticles2D" parent="Cutscene" unique_id=845010860]
+z_index = 1
+position = Vector2(-16921, -38050)
+emitting = false
+texture = SubResource("GradientTexture2D_poeira")
+one_shot = true
+explosiveness = 0.9
+direction = Vector2(0, -1)
+spread = 120.0
+gravity = Vector2(0, -150)
+initial_velocity_min = 200.0
+initial_velocity_max = 500.0
+damping_min = 300.0
+damping_max = 500.0
+scale_amount_min = 5.0
+scale_amount_max = 8.0
+color = Color(0.86, 0.8, 0.7, 1)
+color_ramp = SubResource("Gradient_some")
+
+[node name="Animacao" type="AnimationPlayer" parent="Cutscene" unique_id=1116565037]
+libraries/ = ExtResource("roubo_lib")
 
 [node name="TendaVidente" parent="." unique_id=1426568337 instance=ExtResource("31_ltj3v")]
 position = Vector2(-6769, -13592)
 scale = Vector2(6.474, 3.738)
 script = ExtResource("32_o7n4g")
 
-[node name="VidenteInterface" type="CanvasLayer" parent="TendaVidente" unique_id=574671254]
-layer = 0
-visible = false
-
-[node name="BackPanel" type="Panel" parent="TendaVidente/VidenteInterface" unique_id=1194278042]
-offset_left = 14.0
-offset_top = 17.0
-offset_right = 1130.0
-offset_bottom = 622.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_vd5i4")
-
-[node name="ErrorLabel" type="Label" parent="TendaVidente/VidenteInterface/BackPanel" unique_id=2000692210]
-visible = false
-layout_mode = 0
-offset_left = 36.0
-offset_top = 35.0
-offset_right = 816.0
-offset_bottom = 72.0
-theme_override_fonts/font = ExtResource("25_m7kte")
-theme_override_font_sizes/font_size = 36
-text = "Tipos incompatíveis: não se pode converter de int para String"
-autowrap_mode = 2
-
-[node name="MediumPanel" type="Panel" parent="TendaVidente/VidenteInterface" unique_id=1944363749]
-offset_left = 207.0
-offset_top = 145.0
-offset_right = 926.0
-offset_bottom = 389.0
-theme_override_styles/panel = ExtResource("33_u7icb")
-
-[node name="MediumBorder" type="Panel" parent="TendaVidente/VidenteInterface/MediumPanel" unique_id=1420779942]
-layout_mode = 0
-offset_right = 719.0
-offset_bottom = 244.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_f16kx")
-
-[node name="Tritomos" type="Label" parent="TendaVidente/VidenteInterface/MediumPanel" unique_id=1491115934]
-layout_mode = 0
-offset_left = 88.0
-offset_top = -56.0
-offset_right = 628.0
-offset_bottom = -19.0
-theme_override_fonts/font = ExtResource("25_m7kte")
-theme_override_font_sizes/font_size = 36
-text = "Tritomos, O Grande Adivinho"
-
-[node name="Pensamento" type="LineEdit" parent="TendaVidente/VidenteInterface" unique_id=1502567478]
-offset_left = 443.0
-offset_top = 434.0
-offset_right = 687.0
-offset_bottom = 485.0
-theme_override_fonts/font = ExtResource("25_m7kte")
-theme_override_font_sizes/font_size = 18
-placeholder_text = "Digite seu pensamento..."
-caret_blink = true
-
-[node name="Button" type="Button" parent="TendaVidente/VidenteInterface" unique_id=1104841645]
-offset_left = 487.0
-offset_top = 508.0
-offset_right = 628.0
-offset_bottom = 554.0
-focus_mode = 0
-theme_override_colors/font_color = Color(0, 0, 0.305882, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0.305882, 1)
-theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("25_m7kte")
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_hd430")
-text = "Pensar"
-
-[node name="LeftLabel" type="Label" parent="TendaVidente/VidenteInterface" unique_id=1727920526]
-visible = false
-offset_left = 176.0
-offset_top = 423.0
-offset_right = 956.0
-offset_bottom = 500.0
-theme_override_fonts/font = ExtResource("25_m7kte")
-theme_override_font_sizes/font_size = 36
-text = "Saiu para Almoçar"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="Close" type="Button" parent="TendaVidente/VidenteInterface" unique_id=1185066373]
-offset_left = 1002.0
-offset_top = 8.0
-offset_right = 1144.0
-offset_bottom = 56.0
-theme_override_fonts/font = ExtResource("25_m7kte")
-theme_override_font_sizes/font_size = 32
-text = "Fechar"
+[node name="VidenteInterface" parent="TendaVidente" instance=ExtResource("tela_trit")]
 
 [node name="TendaNPC" parent="." unique_id=1207369494 instance=ExtResource("34_diajr")]
 z_index = 2
@@ -858,17 +823,16 @@ cue_dialogo = "tenda"
 
 [node name="Cmdzinho" parent="." unique_id=461170962 instance=ExtResource("34_diajr")]
 z_index = 2
-position = Vector2(365, -15549)
+position = Vector2(372, -15650)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("43_vr8h8")
 SPRITE = SubResource("SpriteFrames_aog5f")
 
-[node name="CodigoCmdzinho" parent="Cmdzinho" instance=ExtResource("31_ltj3v")]
+[node name="CodigoCmdzinho" parent="Cmdzinho" unique_id=2104341513 instance=ExtResource("31_ltj3v")]
 z_index = 1
 position = Vector2(80, -56)
 scale = Vector2(1.3, 1.3)
 script = ExtResource("cmd_codigo")
-
 
 [node name="Cmdzinho_Follower" parent="." unique_id=138643360 instance=ExtResource("36_s1i3v")]
 z_index = 1
@@ -900,6 +864,7 @@ z_index = 2
 position = Vector2(-4813, -17531)
 scale = Vector2(1.2, 1.2)
 script = ExtResource("39_itd5i")
+cor_glifos = Color(0.7490196, 0.9647059, 1, 1)
 
 [node name="LutadorNPC" parent="." unique_id=1451464520 instance=ExtResource("34_diajr")]
 z_index = 2
@@ -981,5 +946,3 @@ stretch_mode = 4
 
 [connection signal="battle_lost" from="." to="TatameNPC" method="_on_city_battle_lost"]
 [connection signal="battle_won" from="." to="TatameNPC" method="_on_city_battle_won"]
-[connection signal="pressed" from="TendaVidente/VidenteInterface/Button" to="TendaVidente" method="_on_button_pressed"]
-[connection signal="pressed" from="TendaVidente/VidenteInterface/Close" to="TendaVidente" method="_on_close_pressed"]

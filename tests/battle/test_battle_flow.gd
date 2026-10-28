@@ -222,7 +222,7 @@ func controls() -> void:
 	await process_frame
 	await key(KEY_E, 101)
 	eq("console recebe o e", battle.console.text, "e")
-	eq("inventário fica fechado", inv.visible, false)
+	eq("inventário fica fechado", inv.esta_aberto(), false)
 	battle.console.text = ""
 	battle.console.close()
 	# combo cheio pelo console, para o botão zerar depois

@@ -26,6 +26,11 @@ extends StyleBox
 	set(v):
 		shadow_color = v
 		emit_changed()
+## Canto de cima à esquerda reto, para a aba selecionada encaixar no painel.
+@export var square_top_left := false:
+	set(v):
+		square_top_left = v
+		emit_changed()
 
 func _init() -> void:
 	content_margin_left = 10; content_margin_right = 10
@@ -35,12 +40,15 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 	var sombra := StyleBoxFlat.new()
 	sombra.bg_color = shadow_color
 	sombra.set_corner_radius_all(corner_radius)
-	sombra.draw(to_canvas_item, Rect2(rect.position + shadow_offset, rect.size))
 	var painel := StyleBoxFlat.new()
 	painel.bg_color = bg_color
 	painel.border_color = border_color
 	painel.set_border_width_all(border_width)
 	painel.set_corner_radius_all(corner_radius)
+	if square_top_left:
+		sombra.corner_radius_top_left = 0
+		painel.corner_radius_top_left = 0
+	sombra.draw(to_canvas_item, Rect2(rect.position + shadow_offset, rect.size))
 	painel.draw(to_canvas_item, rect)
 
 func _get_draw_rect(rect: Rect2) -> Rect2:

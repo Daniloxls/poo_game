@@ -2,7 +2,7 @@ extends "res://scenes/main/scripts/java_interact.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	shader_rect.show()
+	glifos.show()
 	nome = "TesteDeForca"
 	classe_java = "TesteDeForca"
 	dica_java = "Você só pode mudar a condição do if."

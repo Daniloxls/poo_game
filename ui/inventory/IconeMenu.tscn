@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/scripts/icone_menu.gd" id="1_icone"]
+[ext_resource type="Theme" path="res://ui/inventory/tema_inventario.tres" id="2_tema"]
+[ext_resource type="Script" uid="uid://bkjuntof6gywq" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="3_sombra"]
+[ext_resource type="Texture2D" path="res://assets/gui/icons/classes.png" id="4_png"]
+[ext_resource type="Texture2D" path="res://assets/gui/kenney/exclamacao.png" id="5_excl"]
+
+[sub_resource type="StyleBox" id="StyleBox_icone"]
+script = ExtResource("3_sombra")
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+border_width = 3
+corner_radius = 10
+shadow_offset = Vector2(4, 4)
+
+[node name="IconeMenu" type="Button"]
+process_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 72.0
+grow_horizontal = 0
+focus_mode = 0
+theme = ExtResource("2_tema")
+theme_override_colors/icon_normal_color = Color(0.105882, 0.105882, 0.105882, 1)
+theme_override_colors/icon_hover_color = Color(0.105882, 0.105882, 0.105882, 1)
+theme_override_colors/icon_pressed_color = Color(0.105882, 0.105882, 0.105882, 1)
+theme_override_colors/icon_focus_color = Color(0.105882, 0.105882, 0.105882, 1)
+theme_override_styles/normal = SubResource("StyleBox_icone")
+theme_override_styles/hover = SubResource("StyleBox_icone")
+theme_override_styles/pressed = SubResource("StyleBox_icone")
+tooltip_text = "Menu (E)"
+icon = ExtResource("4_png")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_icone")
+
+[node name="Badge" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -18.0
+offset_top = -14.0
+offset_right = 10.0
+offset_bottom = 14.0
+mouse_filter = 2
+texture = ExtResource("5_excl")
+expand_mode = 1
+stretch_mode = 5

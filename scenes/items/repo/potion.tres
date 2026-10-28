@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ITEM" load_steps=3 format=3 uid="uid://xqlvgkalx65c"]
+[gd_resource type="Resource" script_class="HEALTH_ITEM" load_steps=3 format=3 uid="uid://xqlvgkalx65c"]
 
-[ext_resource type="Texture2D" uid="uid://bvqkfdgimlge7" path="res://assets/gui/icons/potion_icon.png" id="1_pcvpv"]
-[ext_resource type="Script" path="res://scenes/items/classes/item_class.gd" id="1_xhk5p"]
+[ext_resource type="Texture2D" path="res://assets/gui/icones/itens/pocao.png" id="1_icone"]
+[ext_resource type="Script" uid="uid://c2rl5l37e0y80" path="res://scenes/items/classes/health_item.gd" id="1_xhk5p"]
 
 [resource]
 script = ExtResource("1_xhk5p")
+HEALTH_RESTORE = 40
 ITEM_NAME = "Poção"
 QUANTITY = 6
-ITEM_ICON = ExtResource("1_pcvpv")
-ITEM_TEXT = "Poção das boas"
-SELECTION = null
-PRICE = null
+ITEM_ICON = ExtResource("1_icone")
+ITEM_TEXT = "Poção das boas. Recupera 40 HP."
+SELECTION = 0
+PRICE = 30
