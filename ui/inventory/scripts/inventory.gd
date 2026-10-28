@@ -17,6 +17,15 @@ const TELAS := {
 const SECOES := {"resumo": "Resumo", "itens": "Itens", "status": "Status", "equipamento": "Equipamento",
 		"classe": "Classe", "documentacao": "Documentação", "opcoes": "Opções"}
 const COM_PERSONAGEM := ["status", "equipamento", "classe"]
+const SONS := {
+	"clique": preload("res://assets/sounds/interface/kenney/clique.ogg"),
+	"abrir": preload("res://assets/sounds/interface/kenney/abrir.ogg"),
+	"fechar": preload("res://assets/sounds/interface/kenney/fechar.ogg"),
+	"voltar": preload("res://assets/sounds/interface/kenney/voltar.ogg"),
+	"confirmar": preload("res://assets/sounds/interface/kenney/confirmar.ogg"),
+	"virar": preload("res://assets/sounds/interface/kenney/virar.ogg"),
+	"descartar": preload("res://assets/sounds/interface/kenney/descartar.ogg"),
+}
 const ITENS_TESTE := ["res://scenes/items/repo/potion.tres", "res://scenes/items/repo/small_potion.tres",
 		"res://scenes/items/repo/armadura_ferro.tres", "res://scenes/items/repo/armadura_couro.tres",
 		"res://scenes/items/repo/teste/bone.tres", "res://scenes/items/repo/teste/botas_leves.tres",
@@ -111,6 +120,7 @@ func abrir() -> void:
 	if _aberto or not pode_abrir():
 		return
 	_aberto = true
+	tocar("abrir")
 	PlayerState.set_on_interface(true)
 	menu.show()
 	_animar(true)
@@ -121,6 +131,7 @@ func fechar() -> void:
 	if not _aberto:
 		return
 	_aberto = false
+	tocar("fechar")
 	_pilha.clear()
 	PlayerState.set_on_interface(false)
 	_animar(false)
@@ -151,6 +162,7 @@ func voltar() -> void:
 	if _pilha.is_empty():
 		fechar()
 	else:
+		tocar("voltar")
 		_mostrar_topo()
 
 
@@ -159,6 +171,12 @@ func tela_atual() -> Control:
 
 
 func clique() -> void:
+	tocar("clique")
+
+
+## Sons da interface (pacote da Kenney): clique, abrir, fechar, voltar, confirmar, virar, descartar.
+func tocar(som: String) -> void:
+	audio_click.stream = SONS[som]
 	audio_click.play()
 
 

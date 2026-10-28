@@ -66,7 +66,7 @@ func selecionar(item: ITEM) -> void:
 
 
 func usar_em(item: ITEM, alvo) -> void:
-	Inventory.clique()
+	Inventory.tocar("confirmar")
 	item.usar(alvo)
 	Inventory.mochila.gastar(item)
 	_digitar("\n".join(CodigoJava.linha_usar(item, alvo, Progresso.estagio()).map(CodigoJava.colorir)))
@@ -77,7 +77,7 @@ func usar_em(item: ITEM, alvo) -> void:
 
 func descartar(item: ITEM) -> void:
 	if Inventory.mochila.descartar(item):
-		Inventory.clique()
+		Inventory.tocar("descartar")
 		_digitar(CodigoJava.colorir(CodigoJava.linha_descartar(item)))
 
 

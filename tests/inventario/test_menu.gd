@@ -43,6 +43,7 @@ func _initialize() -> void:
 
 	await apertar_e()
 	checar("e abre", inv.esta_aberto() and inv.get_node("Menu").visible)
+	checar("som de abrir", inv.audio_click.stream != null and inv.audio_click.stream.resource_path.ends_with("kenney/abrir.ogg"), inv.audio_click.stream)
 	checar("abre no resumo", inv.tela_atual() != null and inv.tela_atual().name.to_lower().begins_with("resumo"), inv.tela_atual())
 	checar("jogador para enquanto o menu está aberto", ps.is_on_interface())
 	await process_frame
@@ -53,6 +54,7 @@ func _initialize() -> void:
 	checar("voltar volta para o resumo", inv.esta_aberto() and inv.tela_atual().name.to_lower().begins_with("resumo"))
 	inv.voltar()
 	checar("voltar no resumo fecha", not inv.esta_aberto() and not ps.is_on_interface())
+	checar("som de fechar", inv.audio_click.stream.resource_path.ends_with("kenney/fechar.ogg"), inv.audio_click.stream.resource_path)
 
 	prog._tem.erase("inventario")
 	await apertar_e()

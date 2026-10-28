@@ -80,7 +80,7 @@ func previsao(p, slot: String, item) -> Dictionary:
 
 
 func equipar(p, slot: String, item) -> void:
-	Inventory.clique()
+	Inventory.tocar("confirmar")
 	var saiu := _por(p, slot, item)
 	for e in saiu:
 		Inventory.mochila.adicionar(e)

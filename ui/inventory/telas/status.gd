@@ -50,7 +50,7 @@ func abrir_tela(p) -> void:
 
 
 func virar() -> void:
-	Inventory.clique()
+	Inventory.tocar("virar")
 	virada = not virada
 	if _tween:
 		_tween.kill()

@@ -56,7 +56,7 @@ func botao(nome: String) -> Button:
 
 
 func escolher(c: RPG_CLASS) -> void:
-	Inventory.clique()
+	Inventory.tocar("confirmar")
 	_p.mudar_classe(c)
 	linha.text = CodigoJava.colorir(CodigoJava.linha_classe(_p, c))
 	Inventory.mudou.emit()
