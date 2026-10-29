@@ -58,16 +58,40 @@ func _initialize() -> void:
 	check("turno de Turin 3", await turin_turn())
 	eq("destravado", battle.locked_skills, [])
 
-	for i in 20:
-		if won > 0 or not await wait_until(func(): return battle._acting == turin or won > 0):
-			break
-		if won > 0:
-			break
-		await battle.run_command(cmd("Turin.atacar(Boneco_de_Teste)"), false)
-	await wait_until(func(): return won > 0)
-	check("venceu", won > 0)
+	await vencer("venceu")
+	await pocao_cedo()
 	check("Turin nunca caiu", hps.all(func(h): return h >= 1), hps)
 	finish()
+
+
+## Poção no primeiro turno: o glitch vem igual, mas Atacar não trava.
+func pocao_cedo() -> void:
+	turin.hp = turin.get_max_hp()
+	battle.start_battle(LUTA, false)
+	check("cedo: turno de Turin", await turin_turn())
+	var dummy = battle.context().find_combatant("Boneco_de_Teste")
+	await battle.run_command(cmd("Turin.usarItem(Poção, Turin)"), false)
+	check("cedo: pocao_usada", dummy.pocao_usada)
+	check("cedo: turno 2", await turin_turn())
+	await battle.run_command(cmd("Turin.atacar(Boneco_de_Teste)"), false)
+	eq("cedo: boneco no limiar", dummy.hp, 13)
+	check("cedo: turno 3", await turin_turn())
+	eq("cedo: glitch deixa Turin em 3", turin.hp, 3)
+	eq("cedo: não trava", battle.locked_skills, [])
+	check("cedo: atacar livre", not battle.action_menu.buttons()[0].disabled)
+	await vencer("cedo: venceu")
+
+
+## Ataca até vencer (no máximo 20 turnos de Turin).
+func vencer(nome: String) -> void:
+	var antes := won
+	for i in 20:
+		if not await wait_until(func(): return battle._acting == turin or won > antes):
+			break
+		if won > antes:
+			break
+		await battle.run_command(cmd("Turin.atacar(Boneco_de_Teste)"), false)
+	check(nome, await wait_until(func(): return won > antes))
 
 
 func pocoes() -> int:

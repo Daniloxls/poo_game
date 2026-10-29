@@ -1,7 +1,7 @@
 extends "res://scenes/encounters/test_dummy.gd"
 ## Boneco do tutorial: não cai antes da Poção, dá um golpe "com glitch" e nunca derruba Turin.
 
-const LIMIAR := 13  # piso de HP do boneco até a Poção ser usada
+const LIMIAR := 13  # piso de HP do boneco até o glitch e a Poção acontecerem
 const VIDA_APOS_GLITCH := 3
 const POCAO := preload("res://scenes/items/repo/potion.tres")
 const ATTACK := preload("res://rpg_classes/skills/attack.tres")
@@ -48,7 +48,7 @@ func _on_turn_started(who) -> void:
 
 
 func apply_damage(amount: int) -> int:
-	if not pocao_usada:
+	if not (glitch_feito and pocao_usada):  # o boneco sempre sobrevive até o glitch
 		amount = dano_limitado(hp, amount, LIMIAR)
 	return super(amount)
 
@@ -60,7 +60,7 @@ func choose_action(party: Array, enemies: Array) -> EnemyAction:
 		return action
 	var alvo = vivos.pick_random()
 	var dano: int
-	if hp <= LIMIAR and not glitch_feito and not pocao_usada:
+	if hp <= LIMIAR and not glitch_feito:  # Poção antes do glitch: o golpe vem igual, só não trava
 		glitch_feito = true
 		_glitch()
 		dano = maxi(alvo.hp - VIDA_APOS_GLITCH, 0)
