@@ -1,0 +1,19 @@
+[gd_resource type="TileSet" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/tileset/tutorial/sala_testes_placeholder.png" id="1_d4v2a"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kpgan"]
+texture = ExtResource("1_d4v2a")
+texture_region_size = Vector2i(500, 500)
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-250, -250, 250, -250, 250, 250, -250, 250)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-250, -250, 250, -250, 250, 250, -250, 250)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-250, -250, 250, -250, 250, 250, -250, 250)
+
+[resource]
+tile_size = Vector2i(500, 500)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_kpgan")
