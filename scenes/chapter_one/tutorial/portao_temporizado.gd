@@ -4,6 +4,7 @@ extends "res://scenes/main/scripts/interact.gd"
 signal atravessou
 
 # Menor que o tempo de andar até o portão, maior que o de correr (com folga).
+# Regra: menor que o tempo de andar até o portão (d/3600 ≈ 1,1 s) e ≥ 1,25 × o de correr (d/6300 ≈ 0,63 s), d ≈ 4000 px
 @export var tempo_aberto := 0.9
 
 const ABERTO := 1

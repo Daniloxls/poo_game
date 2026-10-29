@@ -53,7 +53,7 @@ scale = Vector2(0.66, 0.66)
 sprite_frames = SubResource("SpriteFrames_alavanca")
 
 [node name="Portao" type="StaticBody2D" parent="." index="1"]
-position = Vector2(1740, 1794)
+position = Vector2(4000, 1794)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Portao"]
 position = Vector2(-7, -580)
@@ -64,14 +64,14 @@ position = Vector2(-4, 61)
 shape = SubResource("RectangleShape2D_portao")
 
 [node name="Ocupado" type="Area2D" parent="." index="2"]
-position = Vector2(1740, 1794)
+position = Vector2(4000, 1794)
 collision_layer = 0
 
 [node name="Shape" type="CollisionShape2D" parent="Ocupado"]
 shape = SubResource("RectangleShape2D_vao")
 
 [node name="Passagem" type="Area2D" parent="." index="3"]
-position = Vector2(2540, 1794)
+position = Vector2(4800, 1794)
 collision_layer = 0
 
 [node name="Shape" type="CollisionShape2D" parent="Passagem"]
