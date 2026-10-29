@@ -14,7 +14,9 @@ func _ready():
 	colision = $StaticBody2D/Collision
 
 func interaction():
-	Battle.start_battle("res://scenes/encounters/testdummy.tscn")
+	var turin = Party.get_node("Turin")
+	turin.hp = turin.get_max_hp()  # o tutorial começa com Turin inteiro
+	Battle.start_battle("res://scenes/encounters/tutorial_dummy.tscn", false)
 
 func _on_tutorial_battle_tutorial_end():
 	sprite.hide()

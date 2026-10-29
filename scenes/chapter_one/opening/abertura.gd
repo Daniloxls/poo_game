@@ -6,21 +6,22 @@ const CORES := {"k": "#c084fc", "m": "#60a5fa", "ok": "#4ade80", "av": "#f87171"
 const SEG_POR_CHAR := 0.02
 const TUTORIAL := "res://scenes/chapter_one/tutorial/Tutorial.tscn"
 
-# [bbcode, pausa_depois]
-# ponytail: os 5 nomes ficam inline; a Task 4 troca por ChecklistHud.ITENS_TESTE.
-const LINHAS: Array = [
+# [bbcode, pausa_depois]; os testes do meio vêm de ChecklistHud.ITENS_TESTE
+const ANTES: Array = [
 	["[color=#9ca3af]>[/color] SalaDeTestes v0.1 — iniciando sonho...", 0.3],
 	["[color=#9ca3af]>[/color] carregando NPC \"Turin\" ........ [color=#4ade80]OK[/color]", 0.3],
 	["[color=#9ca3af]>[/color] [color=#c084fc]new[/color] [color=#60a5fa]Teste[/color](turin) {", 0.1],
-	["    [ ] turin.[color=#60a5fa]andar[/color]()", 0.1],
-	["    [ ] turin.[color=#60a5fa]interagir[/color]()", 0.1],
-	["    [ ] turin.[color=#60a5fa]correr[/color]()", 0.1],
-	["    [ ] turin.[color=#60a5fa]lutar[/color]()", 0.1],
-	["    [ ] turin.[color=#60a5fa]usarItem[/color]()", 0.1],
+]
+const DEPOIS: Array = [
 	["  }", 0.2],
 	["[color=#f87171]> aviso: acesso desconhecido em 0x00DEEP[/color]   [color=#9ca3af](ignorado)[/color]", 0.3],
 	["[color=#9ca3af]>[/color] transportando para a sala de testes...", 0.2],
 ]
+
+
+static func linhas() -> Array:
+	var testes := ChecklistHud.ITENS_TESTE.map(func(id): return ["    [ ] turin.[color=#60a5fa]%s[/color]()" % id, 0.1])
+	return ANTES + testes + DEPOIS
 
 
 func _ready() -> void:
@@ -50,7 +51,7 @@ func _ready() -> void:
 
 	rotulo.visible_characters = 0
 	var antes := 0
-	for linha in LINHAS:
+	for linha in linhas():
 		rotulo.append_text(linha[0] + "\n")
 		var total := rotulo.get_total_character_count()
 		var tp := create_tween()
