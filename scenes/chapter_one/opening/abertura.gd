@@ -62,5 +62,6 @@ func _ready() -> void:
 	var tw := create_tween()
 	tw.tween_property(papel, "modulate:a", 1.0, 0.6)
 	await tw.finished
+	PlayerState.set_on_interface(false)
 	PlayerState.set_on_scene(false)
 	LevelWarp.change_level(TUTORIAL)
