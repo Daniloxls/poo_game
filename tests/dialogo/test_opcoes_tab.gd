@@ -17,8 +17,8 @@ func _initialize() -> void:
 	await process_frame
 	var inv := root.get_node_or_null("Inventory")
 	var opcoes := root.get_node_or_null("Opcoes")
-	var vel: OptionButton = inv.get_node_or_null("%Velocidade") if inv else null
-	var auto: CheckButton = inv.get_node_or_null("%AvancoAutomatico") if inv else null
+	var vel: OptionButton = inv.get_node("Menu/Telas/Opcoes").velocidade if inv else null
+	var auto: CheckButton = inv.get_node("Menu/Telas/Opcoes").avanco if inv else null
 	checar("%Velocidade existe", vel != null)
 	checar("%AvancoAutomatico existe", auto != null)
 	if vel == null or auto == null or opcoes == null:
