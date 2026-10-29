@@ -35,7 +35,6 @@ func _clique(pos: Vector2, botao := MOUSE_BUTTON_RIGHT) -> void:
 
 
 func _initialize() -> void:
-	root.get_node("TitleScreen").queue_free()
 	var cidade = load("res://scenes/chapter_one/festival_city/City.tscn").instantiate()
 	root.add_child(cidade)
 	for i in 10:

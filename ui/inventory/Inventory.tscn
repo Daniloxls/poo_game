@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/inventory/scripts/inventory.gd" id="1_bnrs2"]
 [ext_resource type="Theme" path="res://ui/inventory/tema_inventario.tres" id="2_tema"]
-[ext_resource type="Script" path="res://ui/inventory/scripts/opcoes_tab.gd" id="3_opcoes"]
+[ext_resource type="PackedScene" path="res://ui/options/Opcoes.tscn" id="3_opcoes"]
 [ext_resource type="PackedScene" path="res://ui/inventory/IconeMenu.tscn" id="4_icone"]
 [ext_resource type="AudioStream" uid="uid://bdx12agaryr3k" path="res://assets/sounds/interface/click7.mp3" id="5_click"]
 
@@ -41,45 +41,8 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 32
 
-[node name="Opcoes" type="PanelContainer" parent="Menu/Telas"]
+[node name="Opcoes" parent="Menu/Telas" instance=ExtResource("3_opcoes")]
 visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_type_variation = &"InvPainel"
-script = ExtResource("3_opcoes")
-
-[node name="Caixa" type="VBoxContainer" parent="Menu/Telas/Opcoes"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="Titulo" type="Label" parent="Menu/Telas/Opcoes/Caixa"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 26
-text = "Opções"
-
-[node name="Rotulo" type="Label" parent="Menu/Telas/Opcoes/Caixa"]
-layout_mode = 2
-text = "Velocidade do texto"
-
-[node name="Velocidade" type="OptionButton" parent="Menu/Telas/Opcoes/Caixa"]
-unique_name_in_owner = true
-layout_mode = 2
-selected = 1
-item_count = 4
-popup/item_0/text = "Lenta"
-popup/item_0/id = 0
-popup/item_1/text = "Normal"
-popup/item_1/id = 1
-popup/item_2/text = "Rápida"
-popup/item_2/id = 2
-popup/item_3/text = "Instantânea"
-popup/item_3/id = 3
-
-[node name="AvancoAutomatico" type="CheckButton" parent="Menu/Telas/Opcoes/Caixa"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Avançar automaticamente"
 
 [node name="IconeMenu" parent="." instance=ExtResource("4_icone")]
 
