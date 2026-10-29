@@ -43,6 +43,16 @@ func _initialize() -> void:
 	menu.close()
 	eq("fechado", menu.buttons().size(), 0)
 
+	# habilidade travada: apagada, sem foco
+	menu.open_for(turin, [attack, use_item], Vector2(600, 300), [attack])
+	await process_frame
+	btns = menu.buttons()
+	check("travado: disabled", btns[0].disabled)
+	check("foco no destravado", btns[1].has_focus())
+	await press("ui_up")
+	check("ui_up não foca travado", btns[1].has_focus())
+	menu.close()
+
 	# seleção de alvo
 	var a := Node2D.new()
 	var b := Node2D.new()
