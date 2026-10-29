@@ -10,6 +10,7 @@ signal battle_tutorial_end
 @onready var down_arrow = $DesenhosParede/DownArrow
 
 var hud: ChecklistHud
+var _rachadura := Rachadura.new()
 var direcoes := {}   # direções já apertadas na sala 1
 var alavanca_puxada := false
 var bau_aberto := false
@@ -24,6 +25,7 @@ func _ready():
 	create_tween().tween_property(player, "modulate:a", 1.0, 0.8)   # Turin rabiscado no lugar
 	hud = ChecklistHud.new()
 	add_child(hud)
+	add_child(_rachadura)
 	$Alavanca.puxada.connect(_on_alavanca_puxada)
 	$Bau.aberto.connect(_on_bau_aberto)
 	$PortaoTemporizado.atravessou.connect(hud.marcar.bind("correr"))
@@ -79,12 +81,11 @@ func _on_tutorial_battle_end():
 	hud.marcar("lutar")
 	hud.marcar("usarItem")
 	$Saidas/Sala4.abrir()
-	# TODO(Task 7): começar a agitação (Rachadura.agitar(hud)).
+	_rachadura.agitar(hud)
 
 
 func _chegou_na_saida(corpo):
 	if chegou_na_saida or not corpo.is_in_group("Player"):
 		return
 	chegou_na_saida = true
-	# TODO(Task 7): Rachadura.iniciar(hud, player).
-	print("tutorial: chegou na SAÍDA")
+	_rachadura.iniciar(hud, player)
