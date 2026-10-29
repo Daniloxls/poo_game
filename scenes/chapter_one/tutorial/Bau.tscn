@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/main/Interact.tscn" id="1_interact"]
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/bau.gd" id="2_bau"]
+[ext_resource type="Texture2D" path="res://assets/props/placeholder/free_chests.png" id="3_tex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fechado"]
+atlas = ExtResource("3_tex")
+region = Rect2(0, 0, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aberto"]
+atlas = ExtResource("3_tex")
+region = Rect2(48, 0, 24, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bau"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fechado")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aberto")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="Bau" instance=ExtResource("1_interact")]
+script = ExtResource("2_bau")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." index="0"]
+scale = Vector2(14, 14)
+sprite_frames = SubResource("SpriteFrames_bau")

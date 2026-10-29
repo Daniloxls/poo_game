@@ -3,6 +3,9 @@ extends CharacterBody2D
 # 'player_script' script que contem todas funções do personagem do jogador
 # 'direction' a direção que o personagem se move
 var direction : Vector2 = Vector2()
+# Velocidade de andar e quanto ela multiplica ao segurar 'run' (Shift)
+const VELOCIDADE := 3600.0
+const FATOR_CORRIDA := 1.75
 # '_animated_sprite' o sprite do personagem
 @onready var _animated_sprite = $AnimatedSprite2D
 # 'interact_box' caixas em volta do jogador que servem para ele interagir com o mundo
@@ -40,6 +43,8 @@ func read_input():
 	# Muda a animação e acelera o jogador na direção que está sendo apertada
 	# Tambem liga a caixa de interação respectiva
 	velocity = Vector2()
+	var fator := FATOR_CORRIDA if Input.is_action_pressed("run") else 1.0
+	_animated_sprite.speed_scale = fator
 	if PlayerState.is_able_to_move():
 		if Input.is_action_pressed("up"):
 			velocity.y -= 1
@@ -99,9 +104,8 @@ func read_input():
 				_animated_sprite.play("idle_down")
 			Direction.LEFT:
 				_animated_sprite.play("idle_left")
-	# Acelera o jogador, se ele segurar shift acelera mais
-	velocity = velocity.normalized()
-	velocity = velocity * 3600
+	# Anda na velocidade base; segurando 'run' (Shift) corre mais rápido
+	velocity = velocity.normalized() * VELOCIDADE * fator
 	move_and_slide()
 	
 	# Interação
