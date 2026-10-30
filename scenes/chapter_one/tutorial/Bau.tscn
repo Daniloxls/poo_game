@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://bdrqrman6vw2p"]
 
 [ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/main/Interact.tscn" id="1_interact"]
-[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/bau.gd" id="2_bau"]
-[ext_resource type="Texture2D" path="res://assets/props/placeholder/free_chests.png" id="3_tex"]
+[ext_resource type="Script" uid="uid://oi36712h6o6r" path="res://scenes/chapter_one/tutorial/bau.gd" id="2_bau"]
+[ext_resource type="Texture2D" uid="uid://c1byj4nb3y6ue" path="res://assets/props/placeholder/free_chests.png" id="3_tex"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fechado"]
 atlas = ExtResource("3_tex")
@@ -21,14 +21,18 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aberto")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 0.0
 }]
 
-[node name="Bau" instance=ExtResource("1_interact")]
+[node name="Bau" unique_id=468297921 instance=ExtResource("1_interact")]
 script = ExtResource("2_bau")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="." index="0"]
-scale = Vector2(14, 14)
+[node name="Sprite" type="AnimatedSprite2D" parent="." index="0" unique_id=1212889338]
+position = Vector2(-1.9999847, -272)
+scale = Vector2(31.22222, 31.22222)
 sprite_frames = SubResource("SpriteFrames_bau")
+
+[node name="MenuButton" parent="." index="4"]
+popup/item_0/id = 0

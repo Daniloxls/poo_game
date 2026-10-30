@@ -1,17 +1,12 @@
-[gd_resource type="Theme" format=3]
+[gd_resource type="Theme" format=3 uid="uid://bj7gvasu0j6cf"]
 
-[ext_resource type="Script" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="1_caixa"]
-[ext_resource type="FontFile" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="2_chakra"]
-[ext_resource type="FontFile" path="res://assets/fonts/JetBrainsMono.ttf" id="3_mono"]
-
-[sub_resource type="StyleBox" id="StyleBox_caixa"]
-content_margin_left = 10.0
-content_margin_top = 6.0
-content_margin_right = 10.0
-content_margin_bottom = 6.0
-script = ExtResource("1_caixa")
+[ext_resource type="Script" uid="uid://bkjuntof6gywq" path="res://scenes/battle/ui/hard_shadow_style_box.gd" id="1_caixa"]
+[ext_resource type="FontFile" uid="uid://dx62gbs0xe5rt" path="res://assets/fonts/ChakraPetch-Bold.ttf" id="2_chakra"]
+[ext_resource type="FontFile" uid="uid://cuoffplbyts5n" path="res://assets/fonts/JetBrainsMono.ttf" id="3_mono"]
 
 [sub_resource type="StyleBox" id="StyleBox_escolha"]
+resource_local_to_scene = false
+resource_name = ""
 content_margin_left = 20.0
 content_margin_top = 6.0
 content_margin_right = 20.0
@@ -20,6 +15,8 @@ script = ExtResource("1_caixa")
 corner_radius = 8
 
 [sub_resource type="StyleBox" id="StyleBox_escolha_foco"]
+resource_local_to_scene = false
+resource_name = ""
 content_margin_left = 20.0
 content_margin_top = 6.0
 content_margin_right = 20.0
@@ -27,6 +24,15 @@ content_margin_bottom = 6.0
 script = ExtResource("1_caixa")
 bg_color = Color(1, 0.8235294, 0.24705882, 1)
 corner_radius = 8
+
+[sub_resource type="StyleBox" id="StyleBox_caixa"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+script = ExtResource("1_caixa")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etiqueta"]
 content_margin_left = 18.0
