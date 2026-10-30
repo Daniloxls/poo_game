@@ -3,8 +3,8 @@ extends "res://scenes/main/scripts/interact.gd"
 
 signal atravessou
 
-# Menor que o tempo de andar até o portão, maior que o de correr (com folga).
-# Regra: menor que o tempo de andar até o portão (d/3600 ≈ 1,1 s) e ≥ 1,25 × o de correr (d/6300 ≈ 0,63 s), d ≈ 4000 px
+# Caminho mínimo real ≈ 2960 px (o Ocupado começa 500 px antes do portão e a alavanca
+# vale até ~1040 px à direita da origem): andar ≈ 0,82 s, correr ≈ 0,47 s; 0,9 s só dá correndo.
 @export var tempo_aberto := 0.9
 
 const ABERTO := 1

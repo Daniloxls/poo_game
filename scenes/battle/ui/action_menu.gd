@@ -51,7 +51,7 @@ func open_for(_actor, skills: Array, anchor: Vector2, locked: Array = []) -> voi
 		b.resized.connect(func(): b.pivot_offset = b.size / 2)
 		b.focus_entered.connect(_on_focus.bind(b, s))
 		b.focus_exited.connect(func(): _tip.visible = false; _scale_to(b, 1.0))
-		b.mouse_entered.connect(b.grab_focus)
+		b.mouse_entered.connect(func(): if not b.disabled: b.grab_focus())
 		b.pressed.connect(func(): skill_chosen.emit(s))
 		if s in locked:
 			b.disabled = true

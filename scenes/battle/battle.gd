@@ -258,7 +258,6 @@ func _end(won: bool) -> void:
 	_acting = null
 	locked_skills = []
 	hide_hint()
-	$UI/Root/ConsoleButton.visible = true
 	action_menu.close()
 	console.close()
 	console.process_mode = Node.PROCESS_MODE_DISABLED  # F2 no painel de fim não abre o console
@@ -294,6 +293,7 @@ func _end(won: bool) -> void:
 	_party.clear()
 	PlayerState.set_on_interface(false)
 	_show(false)
+	$UI/Root/ConsoleButton.visible = true
 	_running = false
 	# por último: quem ouve (revanche, diálogo) encontra a batalha já limpa
 	(battle_won if won else battle_lost).emit()
