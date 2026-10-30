@@ -35,6 +35,9 @@ var _down: Array = []       # destruídos/nocauteados já tratados
 var _acting = null          # membro do grupo esperando comando; null fora do turno dele
 var _max_combo := 0
 var _marker_tween: Tween
+var locked_skills: Array = []  # habilidades que o menu mostra apagadas (tutorial)
+@onready var hint: PanelContainer = $UI/Root/Hint
+var _console_on := true
 var _inventory_mode := -1   # process_mode do Inventory antes da batalha
 
 
@@ -57,12 +60,15 @@ func set_background(bg: Texture2D) -> void:
 	$Background.texture = bg
 
 
-func start_battle(enemy_group_path: String) -> void:
+func start_battle(enemy_group_path: String, console_on := true) -> void:
 	if _running:
 		return
 	_running = true
 	_show(true)
-	console.process_mode = Node.PROCESS_MODE_INHERIT  # desligado desde o fim da anterior
+	# desligado desde o fim da anterior; sem console, fica assim até o fim desta
+	_console_on = console_on
+	console.process_mode = Node.PROCESS_MODE_INHERIT if console_on else Node.PROCESS_MODE_DISABLED
+	$UI/Root/ConsoleButton.visible = console_on
 	PlayerState.set_on_interface(true)
 	_down.clear()
 	_max_combo = 0
@@ -95,6 +101,10 @@ func context() -> BattleContext:
 ## Executa a ação do membro da vez (botão ou console). Fora do turno dele, não faz nada.
 func run_command(cmd: ResolvedCommand, from_console: bool) -> void:
 	if _acting == null or cmd == null or not cmd.ok or cmd.actor != _acting:
+		return
+	if cmd.skill in locked_skills:
+		fx.play_error(cmd.actor, BattleContext.method_name(cmd.skill) + "() está bloqueado")
+		_open_menu()
 		return
 	if cmd.skill.SKILL_SCRIPT == null:  # habilidade sem script: avisa e o turno não se perde
 		fx.play_error(cmd.actor, BattleContext.method_name(cmd.skill) + "() ainda não tem implementação")
@@ -154,10 +164,19 @@ func _take_turn(frame: TurnFrame) -> void:
 	_point_at(null)
 
 
+func show_hint(text: String) -> void:
+	hint.get_child(0).text = text
+	hint.visible = true
+
+
+func hide_hint() -> void:
+	hint.visible = false
+
+
 func _open_menu() -> void:
 	var typing := console.is_typing()
 	console.set_context(context())
-	action_menu.open_for(_acting, _acting.get_skills(), _acting.global_position)
+	action_menu.open_for(_acting, _acting.get_skills(), _acting.global_position, locked_skills)
 	if typing:
 		console.open.call_deferred()  # quem estava digitando continua no console
 
@@ -179,7 +198,7 @@ func _on_skill_chosen(skill: SKILL) -> void:
 			cancelled = true
 			break
 		targets.append(pick)
-	console.process_mode = Node.PROCESS_MODE_INHERIT
+	console.process_mode = Node.PROCESS_MODE_INHERIT if _console_on else Node.PROCESS_MODE_DISABLED
 	console.visible = console_open  # volta à vista sem roubar o foco de quem usou o menu
 	if _acting != actor:
 		return
@@ -237,6 +256,8 @@ func _after_action() -> void:
 
 func _end(won: bool) -> void:
 	_acting = null
+	locked_skills = []
+	hide_hint()
 	action_menu.close()
 	console.close()
 	console.process_mode = Node.PROCESS_MODE_DISABLED  # F2 no painel de fim não abre o console
@@ -272,6 +293,7 @@ func _end(won: bool) -> void:
 	_party.clear()
 	PlayerState.set_on_interface(false)
 	_show(false)
+	$UI/Root/ConsoleButton.visible = true
 	_running = false
 	# por último: quem ouve (revanche, diálogo) encontra a batalha já limpa
 	(battle_won if won else battle_lost).emit()

@@ -36,7 +36,7 @@ func buttons() -> Array:
 
 
 # Abre à esquerda do sprite (anchor = posição do sprite na tela).
-func open_for(_actor, skills: Array, anchor: Vector2) -> void:
+func open_for(_actor, skills: Array, anchor: Vector2, locked: Array = []) -> void:
 	close()
 	visible = true
 	for i in skills.size():
@@ -51,20 +51,25 @@ func open_for(_actor, skills: Array, anchor: Vector2) -> void:
 		b.resized.connect(func(): b.pivot_offset = b.size / 2)
 		b.focus_entered.connect(_on_focus.bind(b, s))
 		b.focus_exited.connect(func(): _tip.visible = false; _scale_to(b, 1.0))
-		b.mouse_entered.connect(b.grab_focus)
+		b.mouse_entered.connect(func(): if not b.disabled: b.grab_focus())
 		b.pressed.connect(func(): skill_chosen.emit(s))
+		if s in locked:
+			b.disabled = true
+			b.focus_mode = Control.FOCUS_NONE
 		_box.add_child(b)
 		b.scale = Vector2.ZERO
 		b.modulate.a = 0.0
 		var t := b.create_tween().set_parallel()
-		t.tween_property(b, "modulate:a", 1.0, 0.15).set_delay(i * 0.05)
+		t.tween_property(b, "modulate:a", 0.35 if s in locked else 1.0, 0.15).set_delay(i * 0.05)
 		t.tween_property(b, "scale", Vector2.ONE, 0.25).set_delay(i * 0.05).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		t.finished.connect(func(): if b.has_focus(): _scale_to(b, 1.1))
 		b.set_meta("pop", t)
 	_box.position = anchor - Vector2(230, 24 * skills.size())
 	_tip.position = _box.position + Vector2(0, 52 * skills.size() + 8)
 	if _box.get_child_count() > 0:
-		_box.get_child(0).grab_focus.call_deferred()
+		var first = _box.get_children().filter(func(n): return not n.disabled)
+		if not first.is_empty():
+			first[0].grab_focus.call_deferred()
 
 
 func close() -> void:

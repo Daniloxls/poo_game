@@ -30,7 +30,7 @@ func _initialize() -> void:
 	var icone: Button = inv.get_node("IconeMenu")
 	var badge: Control = icone.get_node("Badge")
 	checar("começa fechado", not inv.esta_aberto() and not inv.get_node("Menu").visible)
-	checar("Opções continua no inventário", inv.get_node_or_null("%Velocidade") != null)
+	checar("Opções continua no inventário", inv.get_node("Menu/Telas/Opcoes").velocidade != null)
 	ps.set_on_interface(true)  # tela de título, Tritomos...
 	await process_frame
 	checar("ícone some com outra interface aberta", not icone.visible)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/parede_sala.gd" id="1_parede"]
+[ext_resource type="Texture2D" uid="uid://dxd8tyqv4x7p1" path="res://assets/props/placeholder/ParedeRetratiuUp.png" id="2_up"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_parede"]
+size = Vector2(500, 1500)
+
+[node name="ParedeSala" type="StaticBody2D"]
+script = ExtResource("1_parede")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_up")
+region_enabled = true
+region_rect = Rect2(0, 0, 500, 1500)
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_parede")

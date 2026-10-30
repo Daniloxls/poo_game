@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" uid="uid://b86f2356r1et4" path="res://scenes/main/Interact.tscn" id="1_interact"]
+[ext_resource type="Script" path="res://scenes/chapter_one/tutorial/portao_temporizado.gd" id="2_portao"]
+[ext_resource type="Texture2D" uid="uid://cu40hnevtrlbc" path="res://assets/props/AlavancaPullUp.png" id="3_up"]
+[ext_resource type="Texture2D" uid="uid://dlm0sevxn22pn" path="res://assets/props/AlavancaPullDown.png" id="4_down"]
+[ext_resource type="Texture2D" uid="uid://dxd8tyqv4x7p1" path="res://assets/props/placeholder/ParedeRetratiuUp.png" id="5_pup"]
+[ext_resource type="Texture2D" uid="uid://b6gkknxt8lmob" path="res://assets/props/placeholder/ParedeRetratiuDown.png" id="6_pdown"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_alavanca"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_up")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_down")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_portao"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_pup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pdown")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portao"]
+size = Vector2(509, 2737)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vao"]
+size = Vector2(1000, 2737)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_passagem"]
+size = Vector2(600, 2737)
+
+[node name="PortaoTemporizado" instance=ExtResource("1_interact")]
+script = ExtResource("2_portao")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." index="0"]
+position = Vector2(0, 45)
+scale = Vector2(0.66, 0.66)
+sprite_frames = SubResource("SpriteFrames_alavanca")
+
+[node name="Portao" type="StaticBody2D" parent="." index="1"]
+position = Vector2(4000, 1794)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Portao"]
+position = Vector2(-7, -580)
+sprite_frames = SubResource("SpriteFrames_portao")
+
+[node name="Shape" type="CollisionShape2D" parent="Portao"]
+position = Vector2(-4, 61)
+shape = SubResource("RectangleShape2D_portao")
+
+[node name="Ocupado" type="Area2D" parent="." index="2"]
+position = Vector2(4000, 1794)
+collision_layer = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Ocupado"]
+shape = SubResource("RectangleShape2D_vao")
+
+[node name="Passagem" type="Area2D" parent="." index="3"]
+position = Vector2(4800, 1794)
+collision_layer = 0
+
+[node name="Shape" type="CollisionShape2D" parent="Passagem"]
+shape = SubResource("RectangleShape2D_passagem")
