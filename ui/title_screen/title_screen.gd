@@ -14,7 +14,7 @@ const SETA := "▶ "
 # texto, habilitado
 const ITENS := [["Novo Jogo", true], ["Continuar", false], ["Opções", true], ["Créditos", false]]
 
-var trocar: Callable = LevelWarp.change_level
+var trocar: Callable  # troca de cena; os testes substituem (LevelWarp ainda é Nil aqui)
 var _saindo := false
 var _botoes: Array[Button] = []
 var _silencio := true  # o foco inicial não toca som
@@ -25,6 +25,7 @@ var _silencio := true  # o foco inicial não toca som
 
 
 func _ready() -> void:
+	trocar = LevelWarp.change_level
 	PlayerState.set_on_interface(true)
 	MusicPlayer.stream = MUSICA
 	MusicPlayer.play()
